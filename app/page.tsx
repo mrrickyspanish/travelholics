@@ -1,4 +1,4 @@
-import Hero from '@/components/Hero';
+import Hero from '@/components/hero';
 // Main landing page
 import Footer from '@/components/footer';
 
