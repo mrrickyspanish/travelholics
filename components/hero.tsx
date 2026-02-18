@@ -1,3 +1,4 @@
+// Hero component with form submission
 'use client';
 
 import { useState } from 'react';
