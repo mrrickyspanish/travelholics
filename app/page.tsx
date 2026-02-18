@@ -1,4 +1,5 @@
 import Hero from '@/components/hero';
+// Main landing page
 import Footer from '@/components/footer';
 
 export default function Home() {
