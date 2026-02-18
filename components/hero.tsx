@@ -71,7 +71,7 @@ const Hero = () => {  const [formData, setFormData] = useState({
             </h1>
 
             <p className="text-xl text-slate-600 mb-8 max-w-lg leading-relaxed">
-              Yolanda here! With 20 years of expertise, I help you navigate the world\'s best waters. From Royal Caribbean to luxury river cruises, let\'s make your next voyage legendary.
+              Yolanda here! With 20 years of expertise, I help you navigate the world's best waters. From Royal Caribbean to luxury river cruises, let's make your next voyage legendary.
             </p>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
@@ -109,7 +109,7 @@ const Hero = () => {  const [formData, setFormData] = useState({
           >
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-navy-900 mb-2">Start Your Voyage</h2>
-              <p className="text-slate-500">Fill out the form below and I\'ll get back to you within 24 hours.</p>
+              <p className="text-slate-500">Fill out the form below and I'll get back to you within 24 hours.</p>
             </div>
 
             {isSuccess ? (
@@ -118,7 +118,7 @@ const Hero = () => {  const [formData, setFormData] = useState({
                   <CheckCircle size={40} />
                 </div>
                 <h3 className="text-2xl font-bold text-navy-900 mb-2">Message Sent!</h3>
-                <p className="text-slate-500 mb-6">I\'ve received your inquiry and will be in touch soon.</p>
+                <p className="text-slate-500 mb-6">I've received your inquiry and will be in touch soon.</p>
                 <button
                   onClick={() => setIsSuccess(false)}
                   className="text-emerald-600 font-semibold hover:underline"
