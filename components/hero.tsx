@@ -5,8 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { motion } from 'framer-motion';
 import { Ship, Phone, CheckCircle, Instagram, ExternalLink } from 'lucide-react';
 
-export const Hero = () => {
-  const [formData, setFormData] = useState({
+const Hero = () => {  const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
@@ -203,3 +202,5 @@ export const Hero = () => {
     </section>
   );
 };
+
+export default Hero;
