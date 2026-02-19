@@ -1,50 +1,90 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award, MapPin, Users, Calendar } from "lucide-react";
+import { Award, MapPin, Users, Calendar, Ship } from "lucide-react";
 
 const credentials = [
   {
     icon: Calendar,
-    title: "20+ Years Experience",
-    description: "Expert cruise planning and travel advisory services since 2004."
+    stat: "20+",
+    label: "Years",
+    title: "Seasoned Expertise",
+    description:
+      "Two decades of navigating cruise lines, negotiating upgrades, and building relationships that benefit my clients.",
   },
   {
     icon: Award,
+    stat: "6",
+    label: "Lines",
     title: "Certified Specialist",
-    description: "Official certifications from Royal Caribbean, Carnival, and more."
+    description:
+      "Official certifications from Royal Caribbean, Carnival, Norwegian, Celebrity, Disney, and Viking.",
   },
   {
     icon: Users,
-    title: "Family & Groups",
-    description: "Specializing in large family reunions and corporate group travel."
+    stat: "500+",
+    label: "Travelers",
+    title: "Families & Groups",
+    description:
+      "From intimate getaways to 40-person family reunions — I coordinate every cabin, every detail.",
   },
   {
     icon: MapPin,
-    title: "Global Destinations",
-    description: "Expertise in Caribbean, Alaska, Europe, and Mediterranean sailings."
-  }
+    stat: "30+",
+    label: "Destinations",
+    title: "Global Waters",
+    description:
+      "Caribbean, Alaska, Mediterranean, Northern Europe, river cruises — I've sailed them and I know them.",
+  },
 ];
 
 export const Credentials = () => {
   return (
-    <section className="bg-white py-16 border-y border-slate-100">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <section className="relative bg-[#1e3a8a] py-20 overflow-hidden">
+      {/* Background texture */}
+      <div className="absolute inset-0 opacity-5">
+        <div
+          className="w-full h-full"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {credentials.map((item, index) => (
-            <motion.div 
+            <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex flex-col items-center md:items-start text-center md:text-left group"
+              className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all"
             >
-              <div className="w-12 h-12 rounded-2xl bg-[#059669]/10 flex items-center justify-center text-[#059669] mb-4 group-hover:bg-[#059669] group-hover:text-white transition-all">
-                <item.icon size={24} />
+              {/* Stat highlight */}
+              <div className="flex items-end gap-1 mb-4">
+                <span className="text-4xl font-bold text-[#059669] leading-none">
+                  {item.stat}
+                </span>
+                <span className="text-sm font-medium text-blue-200/60 pb-0.5">
+                  {item.label}
+                </span>
               </div>
-              <h3 className="text-lg font-bold text-[#1e3a8a] mb-1">{item.title}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">{item.description}</p>
+
+              <h3 className="text-lg font-bold text-white mb-2">
+                {item.title}
+              </h3>
+              <p className="text-sm text-blue-100/50 leading-relaxed">
+                {item.description}
+              </p>
+
+              {/* Icon accent */}
+              <div className="absolute top-6 right-6 text-white/5 group-hover:text-white/10 transition-colors">
+                <item.icon size={32} />
+              </div>
             </motion.div>
           ))}
         </div>
