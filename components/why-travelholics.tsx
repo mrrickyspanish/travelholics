@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Map, Compass, HeartHandshake } from "lucide-react";
+import Image from "next/image";
 
 const benefits = [
   {
@@ -9,21 +10,24 @@ const benefits = [
     title: "Your Trip, Your Way",
     description:
       "No cookie-cutter packages. I design around your pace, your people, and your passions — down to the cabin deck and dinner reservation.",
-    photoLabel: "Custom itinerary planning",
+    image: "/images/why-custom-planning.jpg",
+    alt: "Yolanda and her partner dressed elegantly on the cruise deck at sunset",
   },
   {
     icon: Compass,
     title: "Secrets Only Insiders Know",
     description:
       "The best balcony on Deck 10. The excursion that skips tourist traps. The upgrade window nobody tells you about. I know because I've been there.",
-    photoLabel: "Hidden shore excursion",
+    image: "/images/why-insider-secrets.jpg",
+    alt: "Yolanda and her partner at a formal evening aboard a cruise ship",
   },
   {
     icon: HeartHandshake,
     title: "You Pack. I Handle the Rest.",
     description:
       "Transfers, dining, excursions, cabin upgrades, group coordination — from 'yes' to stepping on deck, I've got every detail covered.",
-    photoLabel: "Stress-free boarding",
+    image: "/images/why-stress-free.jpg",
+    alt: "Yolanda smiling in her cruise cabin, ready for the voyage",
   },
 ];
 
@@ -58,20 +62,15 @@ export const WhyTravelholics = () => {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="group bg-[#FAF9F6] rounded-3xl border border-slate-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
-              {/* Image spot */}
-              <div className="h-44 bg-gradient-to-br from-[#059669]/10 to-[#f59e0b]/5 border-b border-dashed border-[#059669]/15 flex flex-col items-center justify-center text-center p-4 group-hover:from-[#059669]/15 transition-colors">
-                {/*
-                  REPLACE with destination/experience photo:
-                  <Image src={`/images/benefit-${i+1}.jpg`}
-                    alt={b.photoLabel} fill className="object-cover
-                    group-hover:scale-105 transition-transform duration-500" />
-                */}
-                <span className="text-sm font-semibold text-[#1e3a8a]">
-                  📷 {b.photoLabel}
-                </span>
-                <span className="text-[10px] text-slate-400 mt-1">
-                  Swap with photo
-                </span>
+              {/* Image */}
+              <div className="h-44 relative overflow-hidden">
+                <Image
+                  src={b.image}
+                  alt={b.alt}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
               </div>
 
               {/* Content */}
