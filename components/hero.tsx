@@ -36,7 +36,7 @@ export const Hero = () => {
             {/* Main photo container */}
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
               <Image
-                src="/images/hero-yolanda.jpg"
+                src="/images/why-stress-free.jpg"
                 alt="Yolanda — Certified Cruise Specialist and founder of Travelholics"
                 fill
                 className="object-cover"
