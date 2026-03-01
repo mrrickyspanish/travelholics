@@ -1,22 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Anchor } from "lucide-react";
-
-const PhotoPlaceholder = ({
-  label,
-  aspect = "aspect-[3/4]",
-}: {
-  label: string;
-  aspect?: string;
-}) => (
-  <div
-    className={`${aspect} rounded-2xl overflow-hidden bg-gradient-to-br from-[#059669]/10 via-[#1e3a8a]/5 to-[#f59e0b]/10 border-2 border-dashed border-[#059669]/15 flex flex-col items-center justify-center text-center p-4`}
-  >
-    <span className="text-sm font-semibold text-[#1e3a8a]">📷 {label}</span>
-    <span className="text-[10px] text-slate-400 mt-1">Swap with photo</span>
-  </div>
-);
+import Image from "next/image";
 
 export const MyStory = () => {
   return (
@@ -75,7 +60,7 @@ export const MyStory = () => {
             </p>
           </motion.div>
 
-          {/* Photo grid — 3 swap spots */}
+          {/* Photo grid — 3 real photos */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -83,11 +68,38 @@ export const MyStory = () => {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="grid grid-cols-2 gap-3"
           >
-            <div className="row-span-2">
-              <PhotoPlaceholder label="Yolanda on deck" aspect="aspect-[3/5]" />
+            {/* Tall left image — Yolanda on deck at sunset */}
+            <div className="row-span-2 relative aspect-[3/5] rounded-2xl overflow-hidden">
+              <Image
+                src="/images/about-on-deck.jpg"
+                alt="Yolanda on the deck of a cruise ship at sunset"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
             </div>
-            <PhotoPlaceholder label="At a port of call" aspect="aspect-square" />
-            <PhotoPlaceholder label="With travelers" aspect="aspect-[4/3]" />
+
+            {/* Top right — Santorini port of call */}
+            <div className="relative aspect-square rounded-2xl overflow-hidden">
+              <Image
+                src="/images/about-port-of-call.jpg"
+                alt="Yolanda at a port of call in Santorini, Greece"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
+            </div>
+
+            {/* Bottom right — Group photo with travelers */}
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+              <Image
+                src="/images/about-with-travelers.jpg"
+                alt="Yolanda with a group of happy travelers on a Mediterranean cruise"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
+            </div>
           </motion.div>
         </div>
       </div>
