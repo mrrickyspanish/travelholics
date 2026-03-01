@@ -1,13 +1,39 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const destinations = [
-  { name: "Caribbean", span: "col-span-1 md:col-span-1 md:row-span-2", accent: "from-[#059669]/15 to-[#1e3a8a]/10" },
-  { name: "Alaska", span: "col-span-1", accent: "from-[#1e3a8a]/15 to-[#059669]/10" },
-  { name: "Mediterranean", span: "col-span-1", accent: "from-[#f59e0b]/15 to-[#059669]/10" },
-  { name: "European River", span: "col-span-1", accent: "from-[#1e3a8a]/10 to-[#f59e0b]/15" },
-  { name: "Bahamas", span: "col-span-1", accent: "from-[#059669]/10 to-[#f59e0b]/10" },
+  {
+    name: "Caribbean",
+    image: "/images/dest-caribbean.jpg",
+    alt: "Yolanda and her partner at sunset on a Caribbean cruise",
+    span: "col-span-1 md:col-span-1 md:row-span-2",
+  },
+  {
+    name: "Alaska",
+    image: "/images/dest-alaska.jpg",
+    alt: "Yolanda in Alaska with glacial waters and mountains behind her",
+    span: "col-span-1",
+  },
+  {
+    name: "Mediterranean",
+    image: "/images/dest-mediterranean.jpg",
+    alt: "Yolanda and her partner at the Parthenon in Athens, Greece",
+    span: "col-span-1",
+  },
+  {
+    name: "Alaska Glaciers",
+    image: "/images/dest-alaska-glaciers.jpg",
+    alt: "Stunning glacial waters and snow-capped mountains in Alaska",
+    span: "col-span-1",
+  },
+  {
+    name: "Bahamas",
+    image: "/images/dest-bahamas.jpg",
+    alt: "Welcome sign at a Bahamas cruise port",
+    span: "col-span-1",
+  },
 ];
 
 export const DestinationMosaic = () => {
@@ -43,20 +69,18 @@ export const DestinationMosaic = () => {
           {destinations.map((d, i) => (
             <div
               key={i}
-              className={`${d.span} rounded-2xl overflow-hidden bg-gradient-to-br ${d.accent} border-2 border-dashed border-[#059669]/15 flex flex-col items-center justify-center text-center p-4 hover:border-[#059669]/30 transition-colors`}
+              className={`${d.span} rounded-2xl overflow-hidden relative group hover:shadow-lg transition-all duration-300`}
             >
-              {/*
-                REPLACE each with destination image:
-                <Image src={`/images/dest-${d.name.toLowerCase()}.jpg`}
-                  alt={d.name} fill className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <span className="absolute bottom-4 left-4 text-white font-bold text-lg">{d.name}</span>
-              */}
-              <span className="text-sm font-semibold text-[#1e3a8a]">
-                📷 {d.name}
-              </span>
-              <span className="text-[10px] text-slate-400 mt-1">
-                Swap with destination photo
+              <Image
+                src={d.image}
+                alt={d.alt}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+              <span className="absolute bottom-4 left-4 text-white font-bold text-lg drop-shadow-md">
+                {d.name}
               </span>
             </div>
           ))}
