@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Anchor } from "lucide-react";
+import Image from "next/image";
 
 export const Hero = () => {
   const scrollToContact = () => {
@@ -33,28 +34,15 @@ export const Hero = () => {
             <div className="absolute -top-3 -left-3 right-3 bottom-3 border-2 border-[#f59e0b]/20 rounded-[20px] -z-10" />
 
             {/* Main photo container */}
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-[#059669]/10 via-[#1e3a8a]/5 to-[#f59e0b]/10 border-2 border-dashed border-[#059669]/20">
-              {/*
-                REPLACE with Yolanda's actual photo:
-                <Image
-                  src="/images/yolanda-hero.jpg"
-                  alt="Yolanda — Certified Cruise Specialist and founder of Travelholics"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-                <div className="w-20 h-20 rounded-full bg-[#059669]/15 flex items-center justify-center mb-4">
-                  <Anchor size={36} className="text-[#059669]" />
-                </div>
-                <p className="text-[#1e3a8a] font-bold text-lg mb-1">
-                  Yolanda&apos;s Photo
-                </p>
-                <p className="text-slate-400 text-sm">
-                  Hero portrait — cruise, port, or professional shot
-                </p>
-              </div>
+            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
+              <Image
+                src="/images/hero-yolanda.jpg"
+                alt="Yolanda — Certified Cruise Specialist and founder of Travelholics"
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
 
             {/* Floating years badge */}
@@ -65,9 +53,7 @@ export const Hero = () => {
               className="absolute -bottom-4 -right-4 lg:-right-6 bg-[#059669] text-white rounded-2xl px-5 py-3 shadow-xl shadow-emerald-900/30"
             >
               <p className="text-3xl font-extrabold leading-none">20+</p>
-              <p className="text-xs text-emerald-100 mt-0.5">
-                Years at Sea
-              </p>
+              <p className="text-xs text-emerald-100 mt-0.5">Years at Sea</p>
             </motion.div>
           </motion.div>
 
