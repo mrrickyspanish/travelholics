@@ -59,11 +59,10 @@ export const StickyHeader = () => {
               }}
               className="flex items-center gap-2.5"
             >
-              {/
-                REPLACE with finalized logo:
+              {/* REPLACE with finalized logo:
                 <Image src="/images/travelholics-logo.png" alt="Travelholics"
                   width={130} height={28} />
-              /}
+              */}
               <div
                 className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                   scrolled ? "bg-[#059669]" : "bg-white/20 backdrop-blur-sm"
