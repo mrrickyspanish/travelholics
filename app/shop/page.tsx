@@ -102,13 +102,13 @@ const digitalProducts = [
 
 const badgeColors: Record<string, string> = {
   "Yolanda's Pick": "bg-emerald-700 text-white",
-  "Must-Have": "bg-gold-500 text-navy-900",
+  "Must-Have": "bg-amber-400 text-slate-900",
   "Fan Favorite": "bg-emerald-600 text-white",
-  "Under $10": "bg-navy-700 text-white",
+  "Under $10": "bg-slate-700 text-white",
   "Space Saver": "bg-emerald-800 text-white",
   "Best Seller": "bg-amber-500 text-white",
   "New": "bg-teal-600 text-white",
-  "For Planners": "bg-navy-800 text-white",
+  "For Planners": "bg-slate-800 text-white",
 };
 
 function ProductCard({ product, index }: { product: typeof packingProducts[0]; index: number }) {
@@ -142,16 +142,16 @@ function ProductCard({ product, index }: { product: typeof packingProducts[0]; i
         </div>
 
         {/* Content */}
-        <h3 className="font-semibold text-navy-900 text-base leading-snug mb-2 group-hover:text-emerald-700 transition-colors">
+        <h3 className="font-semibold text-slate-900 text-base leading-snug mb-2 group-hover:text-emerald-700 transition-colors">
           {product.name}
         </h3>
-        <p className="text-stone-500 text-sm leading-relaxed flex-1 mb-5">
+        <p className="text-slate-500 text-sm leading-relaxed flex-1 mb-5">
           {product.description}
         </p>
 
         {/* Footer */}
         <div className="flex items-center justify-between pt-4 border-t border-stone-100">
-          <span className="font-bold text-lg text-navy-900">{product.price}</span>
+          <span className="font-bold text-lg text-slate-900">{product.price}</span>
           <a
             href={product.url}
             target="_blank"
@@ -178,7 +178,7 @@ export default function ShopPage() {
       {/* Nav — matches existing site */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-stone-200">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="font-bold text-navy-900 text-lg tracking-tight">Travelholics</Link>
+          <Link href="/" className="font-bold text-slate-900 text-lg tracking-tight">Travelholics</Link>
           <div className="hidden md:flex items-center gap-8 text-sm text-stone-600">
             <Link href="/#about" className="hover:text-emerald-700 transition-colors">About Yolanda</Link>
             <Link href="/#testimonials" className="hover:text-emerald-700 transition-colors">What Travelers Say</Link>
@@ -192,36 +192,36 @@ export default function ShopPage() {
       </nav>
 
       {/* Hero */}
-      <section className="pt-32 pb-16 px-6 bg-white border-b border-stone-100">
+      <section className="pt-28 pb-20 px-6 bg-gradient-to-b from-slate-900 to-slate-800 border-b border-slate-700">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
+            className="flex flex-col md:flex-row md:items-end md:justify-between gap-8"
           >
             <div>
-              <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 text-sm font-semibold px-3 py-1.5 rounded-full mb-4">
+              <div className="inline-flex items-center gap-2 bg-emerald-700/30 text-emerald-400 text-sm font-semibold px-3 py-1.5 rounded-full mb-5">
                 <ShoppingBag className="w-4 h-4" />
                 Yolanda's Shop
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-navy-900 leading-tight mb-3">
+              <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
                 Everything I Actually<br />
-                <span className="text-emerald-700">Bring on Every Cruise.</span>
+                <span className="text-emerald-400">Bring on Every Cruise.</span>
               </h1>
-              <p className="text-stone-500 text-lg max-w-xl">
+              <p className="text-slate-300 text-lg max-w-xl">
                 20+ years of sailing distilled into the gear I swear by and the guides I wish someone had given me on my first trip.
               </p>
             </div>
-            <div className="flex items-center gap-3 bg-stone-50 rounded-2xl px-5 py-4 shrink-0">
+            <div className="flex items-center gap-3 bg-white/10 backdrop-blur rounded-2xl px-5 py-4 shrink-0 border border-white/10">
               <div className="flex -space-x-1">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                 ))}
               </div>
               <div>
-                <div className="text-sm font-semibold text-navy-900">500+ happy travelers</div>
-                <div className="text-xs text-stone-400">trust Yolanda's picks</div>
+                <div className="text-sm font-semibold text-white">500+ happy travelers</div>
+                <div className="text-xs text-slate-400">trust Yolanda's picks</div>
               </div>
             </div>
           </motion.div>
@@ -241,7 +241,7 @@ export default function ShopPage() {
               <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
                 <Package className="w-4 h-4 text-emerald-700" />
               </div>
-              <h2 className="text-2xl font-bold text-navy-900">Cruise Packing Essentials</h2>
+              <h2 className="text-2xl font-bold text-slate-900">Cruise Packing Essentials</h2>
             </div>
             <p className="text-stone-500 ml-11">The exact items I recommend to every client before they board.</p>
           </motion.div>
@@ -272,7 +272,7 @@ export default function ShopPage() {
               <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
                 <BookOpen className="w-4 h-4 text-amber-600" />
               </div>
-              <h2 className="text-2xl font-bold text-navy-900">Digital Guides & Itineraries</h2>
+              <h2 className="text-2xl font-bold text-slate-900">Digital Guides & Itineraries</h2>
             </div>
             <p className="text-stone-500 ml-11">Downloadable PDFs packed with 20 years of cruise knowledge. Instant access after purchase.</p>
           </motion.div>
