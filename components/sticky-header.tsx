@@ -8,6 +8,7 @@ const navLinks = [
   { label: "About Yolanda", href: "#about" },
   { label: "What Travelers Say", href: "#testimonials" },
   { label: "How It Works", href: "#process" },
+  { label: "Shop", href: "/shop" },
 ];
 
 export const StickyHeader = () => {
@@ -27,6 +28,14 @@ export const StickyHeader = () => {
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
+
+    // Route navigation (e.g. /shop)
+    if (href.startsWith("/")) {
+      window.location.href = href;
+      return;
+    }
+
+    // In-page anchor navigation (e.g. #about)
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -50,11 +59,11 @@ export const StickyHeader = () => {
               }}
               className="flex items-center gap-2.5"
             >
-              {/*
+              {/
                 REPLACE with finalized logo:
                 <Image src="/images/travelholics-logo.png" alt="Travelholics"
                   width={130} height={28} />
-              */}
+              /}
               <div
                 className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                   scrolled ? "bg-[#059669]" : "bg-white/20 backdrop-blur-sm"
