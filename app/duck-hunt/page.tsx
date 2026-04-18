@@ -2,18 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import confetti from "canvas-confetti";
 import { supabase } from "@/lib/supabase";
 
-type TravelGroup = "Solo" | "Couple" | "Family" | "Group";
+type TravelReason = "Vacation" | "Honeymoon" | "Anniversary" | "Family Reunion" | "Birthday" | "Other";
 type FormState = "idle" | "submitting" | "success" | "error";
 
 export default function DuckHuntPage() {
-  const [travelingAs, setTravelingAs] = useState<TravelGroup>("Couple");
+  const [travelReason, setTravelReason] = useState<TravelReason>("Vacation");
   const [formState, setFormState] = useState<FormState>("idle");
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
-  const [deck, setDeck] = useState("");
+  const [phone, setPhone] = useState("");
+  const duckCount = 47;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -26,20 +28,20 @@ export default function DuckHuntPage() {
             first_name: firstName,
             email,
             city: city || null,
-            deck: deck || null,
-            traveling_as: travelingAs,
+            travel_reason: travelReason,
           },
         ]);
         if (error) throw error;
       }
       setFormState("success");
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     } catch (err) {
       console.error("Duck hunt submission error:", err);
       setFormState("error");
     }
   }
 
-  const travelOptions: TravelGroup[] = ["Solo", "Couple", "Family", "Group"];
+  const travelOptions: TravelReason[] = ["Vacation", "Honeymoon", "Anniversary", "Family Reunion", "Birthday", "Other"];
 
   return (
     <div className="bg-gray-50 text-gray-900 antialiased overflow-x-hidden min-h-screen">
@@ -75,16 +77,16 @@ export default function DuckHuntPage() {
               You found something special
             </p>
             <h1 className="text-4xl font-black text-white leading-tight mb-6 tracking-tighter">
-              You found our{" "}
-              <span className="text-emerald-400 italic">duck!</span>
+              You found a{" "}
+              <span className="text-emerald-400 italic">Travelholics duck!</span>
             </h1>
             <p className="text-blue-200 text-lg font-light leading-relaxed mb-10 max-w-[280px] mx-auto">
-              A hidden treasure for the most curious travelers on deck.
+              We're fellow cruisers who love hiding ducks — and you found ours. Fill out the form below and we'll mail you a real gift, on us.
             </p>
             <div className="inline-flex items-center gap-3 bg-amber-900/30 backdrop-blur-sm px-5 py-4 rounded-full border border-amber-500/20 mb-12">
               <span className="text-2xl">🎁</span>
               <span className="text-amber-300 font-bold text-sm tracking-wide">
-                Claim your free Travelholics gift
+                We're mailing you a real gift — no catch
               </span>
             </div>
             <a
@@ -104,10 +106,10 @@ export default function DuckHuntPage() {
                 <span className="text-6xl text-white">⛵</span>
               </div>
               <h2 className="text-3xl font-black text-white mb-2 leading-none">
-                Tell us where
+                Where should
               </h2>
               <h2 className="text-3xl font-serif italic text-emerald-300 mb-8">
-                to send it.
+                we send it?
               </h2>
 
               <form className="space-y-6" onSubmit={handleSubmit}>
@@ -139,48 +141,44 @@ export default function DuckHuntPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-2 px-1 whitespace-nowrap">
-                      Where From?
-                    </label>
-                    <input
-                      type="text"
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      placeholder="City/State"
-                      className="w-full bg-[#162e6e]/40 border-none rounded-2xl py-4 px-5 text-white placeholder:text-blue-300/30 focus:ring-2 focus:ring-amber-400 transition-all outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-2 px-1">
-                      Deck/Room
-                    </label>
-                    <select
-                      value={deck}
-                      onChange={(e) => setDeck(e.target.value)}
-                      className="w-full bg-[#162e6e]/40 border-none rounded-2xl py-4 px-5 text-white focus:ring-2 focus:ring-amber-400 transition-all outline-none appearance-none"
-                    >
-                      <option value="">Select</option>
-                      <option value="Main Deck">Main Deck</option>
-                      <option value="Lido Deck">Lido Deck</option>
-                      <option value="Sun Deck">Sun Deck</option>
-                    </select>
-                  </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-2 px-1">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+1 (555) 000-0000"
+                    className="w-full bg-[#162e6e]/40 border-none rounded-2xl py-4 px-5 text-white placeholder:text-blue-300/30 focus:ring-2 focus:ring-amber-400 transition-all outline-none"
+                  />
                 </div>
 
                 <div>
                   <label className="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-2 px-1">
-                    Traveling As
+                    Where Are You From?
+                  </label>
+                  <input
+                    type="text"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    placeholder="City, State"
+                    className="w-full bg-[#162e6e]/40 border-none rounded-2xl py-4 px-5 text-white placeholder:text-blue-300/30 focus:ring-2 focus:ring-amber-400 transition-all outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-2 px-1">
+                    What&apos;s the Occasion?
                   </label>
                   <div className="flex flex-wrap gap-2">
                     {travelOptions.map((option) => (
                       <button
                         key={option}
                         type="button"
-                        onClick={() => setTravelingAs(option)}
+                        onClick={() => setTravelReason(option)}
                         className={`px-4 py-2 text-white text-xs font-bold rounded-full transition-all ${
-                          travelingAs === option
+                          travelReason === option
                             ? "bg-emerald-700 shadow-lg shadow-emerald-900/40"
                             : "bg-blue-900 border border-blue-400/30 hover:bg-blue-800"
                         }`}
@@ -224,7 +222,7 @@ export default function DuckHuntPage() {
               <span className="italic text-emerald-700">one of us.</span>
             </h2>
             <p className="text-gray-500 mb-12 max-w-[280px]">
-              Your exclusive Travelholics gift is being prepared as we speak!
+              You're duck #{duckCount} found on this voyage! Your exclusive Travelholics gift is on its way.
             </p>
             <div className="w-full space-y-4 text-left">
               <div className="bg-white p-6 rounded-3xl flex items-start gap-5 shadow-sm">
@@ -234,7 +232,7 @@ export default function DuckHuntPage() {
                 <div>
                   <h4 className="font-bold text-blue-900 mb-1">Check your inbox</h4>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    We sent a confirmation code for your branded prize.
+                    Look for an email from us — we'll ask for your mailing address there to ship your gift.
                   </p>
                 </div>
               </div>
@@ -243,9 +241,9 @@ export default function DuckHuntPage() {
                   2
                 </div>
                 <div>
-                  <h4 className="font-bold text-blue-900 mb-1">Meet us at Guest Services</h4>
+                  <h4 className="font-bold text-blue-900 mb-1">Follow us on TikTok</h4>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    Present your code and the physical duck you found.
+                    We post cruise tips, deals, and trip ideas @rjsmom1 — come sail with us.
                   </p>
                 </div>
               </div>
