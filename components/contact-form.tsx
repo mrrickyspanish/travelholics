@@ -12,14 +12,12 @@ export const ContactForm = () => {
     phone: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [website, setWebsite] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!turnstileToken) return
     setIsSubmitting(true);
 
     if (website.trim()) {
@@ -29,19 +27,8 @@ export const ContactForm = () => {
     }
 
     try {
-      // 1. Save to Supabase
       if (supabase) {
-        const verifyRes = await fetch('/api/verify-turnstile', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: turnstileToken }),
-    })
-    if (!verifyRes.ok) {
-      setIsSubmitting(false)
-      return
-    }
-
-    const { error } = await supabase.from("cruise_inquiries").insert([
+        const { error } = await supabase.from("cruise_inquiries").insert([
           {
             name: formData.name,
             email: formData.email,
@@ -52,7 +39,6 @@ export const ContactForm = () => {
         if (error) throw error;
       }
 
-      // 2. Trigger mailto (V1 fallback as requested)
       const mailtoLink = `mailto:yo@travelholics.com?bcc=rj@creativeeyemultimedia.com&subject=New Cruise Inquiry from ${formData.name}&body=Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0APhone: ${formData.phone}%0D%0AMessage: ${formData.message}`;
       window.location.href = mailtoLink;
 
@@ -72,7 +58,6 @@ export const ContactForm = () => {
       id="contact"
       className="bg-[#1e3a8a] py-24 relative overflow-hidden"
     >
-      {/* Dot pattern */}
       <div
         className="absolute inset-0 opacity-[0.04]"
         style={{
@@ -84,7 +69,6 @@ export const ContactForm = () => {
 
       <div className="max-w-[900px] mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left — Personal touch */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -102,14 +86,7 @@ export const ContactForm = () => {
               conversation about your next adventure.
             </p>
 
-            {/* Yolanda mini-portrait */}
             <div className="flex items-center gap-3">
-              {/*
-                REPLACE with Yolanda headshot:
-                <Image src="/images/yolanda-headshot.jpg" alt="Yolanda"
-                  width={52} height={52} className="rounded-full object-cover
-                  border-2 border-[#059669]" />
-              */}
               <div className="w-13 h-13 rounded-full bg-[#059669]/30 border-2 border-[#059669] flex items-center justify-center shrink-0">
                 <Anchor size={20} className="text-white" />
               </div>
@@ -122,7 +99,6 @@ export const ContactForm = () => {
             </div>
           </motion.div>
 
-          {/* Right — Form */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -228,16 +204,6 @@ export const ContactForm = () => {
                     }
                   />
                 </div>
-          <Turnstile
-            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-            onSuccess={(token) => setTurnstileToken(token)}
-            className=\"mb-2\"
-          />
-                <Turnstile
-                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-                  onSuccess={(token) => setTurnstileToken(token)}
-                  className="mb-2"
-                />
                 <button
                   disabled={isSubmitting}
                   type="submit"
@@ -247,7 +213,8 @@ export const ContactForm = () => {
                     "Submitting..."
                   ) : (
                     <>
-            <>Let&apos;s Set Sail <Ship size={18} /></>
+                      Let&apos;s Set Sail <Ship size={18} />
+                    </>
                   )}
                 </button>
                 <p className="text-center text-xs text-slate-400">
