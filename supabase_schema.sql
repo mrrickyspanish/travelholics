@@ -50,9 +50,13 @@ CREATE TABLE IF NOT EXISTS public.duck_hunt_leads (
     first_name   TEXT                     NOT NULL,
     email        TEXT                     NOT NULL,
     city         TEXT,
-    deck         TEXT,
-    traveling_as TEXT
-                     CHECK (traveling_as IN ('Solo', 'Couple', 'Family', 'Group')),
+    phone        TEXT,
+    duck_number  TEXT,
+    batch        TEXT,
+    ship         TEXT,
+    source       TEXT,
+    travel_reason TEXT
+                     CHECK (travel_reason IN ('Vacation', 'Honeymoon', 'Anniversary', 'Family Reunion', 'Birthday', 'Other')),
     status       TEXT                     NOT NULL DEFAULT 'unclaimed'
                      CHECK (status IN ('unclaimed', 'claimed', 'fulfilled'))
 );
