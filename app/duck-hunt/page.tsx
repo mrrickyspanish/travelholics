@@ -40,7 +40,6 @@ const TRAVEL_OPTIONS: TravelReason[] = [
 ];
 
 export default function DuckHuntPage() {
-  // Animation state
   const [animPhase, setAnimPhase] = useState<AnimPhase>("gift");
   const [boxBounce, setBoxBounce] = useState(false);
   const [boxShake, setBoxShake] = useState(false);
@@ -50,7 +49,6 @@ export default function DuckHuntPage() {
   const [d3Visible, setD3Visible] = useState(false);
   const [duckFloat, setDuckFloat] = useState(false);
 
-  // Form state
   const [travelReason, setTravelReason] = useState<TravelReason>("Vacation");
   const [formState, setFormState] = useState<FormState>("idle");
   const [firstName, setFirstName] = useState("");
@@ -154,17 +152,7 @@ export default function DuckHuntPage() {
 
     try {
       if (supabase) {
-        const verifyRes = await fetch('/api/verify-turnstile', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: turnstileToken }),
-    })
-    if (!verifyRes.ok) {
-      setIsSubmitting(false)
-      return
-    }
-
-    const { error } = await supabase.from("duck_hunt_leads").insert([
+        const { error } = await supabase.from("duck_hunt_leads").insert([
           {
             first_name: firstName,
             email,
@@ -223,7 +211,6 @@ export default function DuckHuntPage() {
       `}</style>
 
       <div className="bg-[#FAF9F6] text-gray-900 antialiased overflow-x-hidden min-h-screen">
-        {/* ── Top Nav ── */}
         <nav className="fixed top-0 w-full z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#E2DDD6] flex justify-between items-center px-6 h-16">
           <span
             className={`${playfair.className} text-xl font-black text-[#0D2D4A] tracking-widest uppercase`}
@@ -236,20 +223,16 @@ export default function DuckHuntPage() {
         </nav>
 
         <main className="w-full max-w-[390px] mx-auto bg-[#FAF9F6] overflow-hidden pt-16 pb-16">
-          {/* ── Hero ── */}
           <section className="relative min-h-[700px] flex flex-col justify-center items-center px-8 py-16 overflow-hidden">
-            {/* Blob — emerald bottom left */}
             <div
               className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full pointer-events-none"
               style={{ background: "rgba(16,85,60,.25)" }}
             />
-            {/* Blob — teal top right */}
             <div
               className="absolute -top-16 -right-16 w-64 h-64 rounded-full pointer-events-none"
               style={{ background: "rgba(13,100,150,.18)" }}
             />
 
-            {/* Grid watermark */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.05]">
               <svg width="360" height="360" viewBox="0 0 360 360" fill="none">
                 <g stroke="#0D2D4A">
@@ -264,7 +247,6 @@ export default function DuckHuntPage() {
               </svg>
             </div>
 
-            {/* ── Gift Scene ── */}
             {animPhase === "gift" && (
               <div className="relative z-10 flex flex-col items-center">
                 <div
@@ -277,7 +259,6 @@ export default function DuckHuntPage() {
                   }}
                   className="relative"
                 >
-                  {/* Lid */}
                   <div
                     style={{
                       animation: lidGone
@@ -289,7 +270,6 @@ export default function DuckHuntPage() {
                     <div className="absolute inset-0 flex items-center">
                       <div className="w-full h-[7px] bg-white/10" />
                     </div>
-                    {/* Bow */}
                     <div className="absolute -top-5 left-1/2 -translate-x-1/2 flex gap-0.5 items-end">
                       <div className="w-[22px] h-[18px] border-[5px] border-[#D4A853] rounded-full -rotate-[35deg]" />
                       <div className="w-3 h-3 bg-[#D4A853] rounded-full mb-0.5 z-10 relative" />
@@ -297,7 +277,6 @@ export default function DuckHuntPage() {
                     </div>
                   </div>
 
-                  {/* Box body */}
                   <div
                     className="w-[100px] h-[86px] bg-white rounded-b-md relative overflow-hidden border border-t-0 border-[#E2DDD6]"
                     style={{ boxShadow: "0 10px 30px rgba(13,45,74,.1)" }}
@@ -313,10 +292,8 @@ export default function DuckHuntPage() {
               </div>
             )}
 
-            {/* ── Duck Reveal ── */}
             {animPhase === "revealed" && (
               <div className="relative z-10 text-center px-2">
-                {/* Pill badge */}
                 <div
                   style={{
                     animation: d1Visible ? "fadeUp .5s ease forwards" : "none",
@@ -329,7 +306,6 @@ export default function DuckHuntPage() {
                   </span>
                 </div>
 
-                {/* Duck */}
                 <div
                   style={{
                     animation: !d2Visible
@@ -345,7 +321,6 @@ export default function DuckHuntPage() {
                   🦆
                 </div>
 
-                {/* Headlines + CTA */}
                 <div
                   style={{
                     animation: d3Visible ? "fadeUp .6s ease forwards" : "none",
@@ -386,7 +361,6 @@ export default function DuckHuntPage() {
             )}
           </section>
 
-          {/* ── Lead Capture Form ── */}
           {formState !== "success" && (
             <section className="px-6 py-16 bg-[#FAF9F6]" id="form">
               <div className="mb-10">
@@ -411,7 +385,7 @@ export default function DuckHuntPage() {
                 </p>
               </div>
 
-              <form className="space-y-8" onSubmit={handleSubmit}>
+              <form className="space-y-8 relative" onSubmit={handleSubmit}>
                 <div className="absolute -left-[10000px] top-auto w-px h-px overflow-hidden" aria-hidden="true">
                   <label htmlFor="website">Website</label>
                   <input
@@ -493,17 +467,7 @@ export default function DuckHuntPage() {
                     Something went wrong — please try again.
                   </p>
                 )}
-          <Turnstile
-            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-            onSuccess={(token) => setTurnstileToken(token)}
-            className=\"mb-2\"
-          />
 
-                <Turnstile
-                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-                  onSuccess={(token) => setTurnstileToken(token)}
-                  className="mb-2"
-                />
                 <button
                   type="submit"
                   disabled={formState === "submitting"}
@@ -515,7 +479,6 @@ export default function DuckHuntPage() {
             </section>
           )}
 
-          {/* ── Success State ── */}
           {formState === "success" && (
             <section className="bg-[#0D2D4A] px-8 py-16 flex flex-col items-center text-center">
               <div className="text-[56px] mb-6">🎉</div>
@@ -579,7 +542,6 @@ export default function DuckHuntPage() {
           )}
         </main>
 
-        {/* Grain overlay */}
         <div
           className="fixed inset-0 pointer-events-none opacity-[0.03]"
           style={{
