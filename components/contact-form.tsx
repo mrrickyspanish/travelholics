@@ -12,17 +12,36 @@ export const ContactForm = () => {
     phone: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [website, setWebsite] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!turnstileToken) return
     setIsSubmitting(true);
+
+    if (website.trim()) {
+      setIsSuccess(true);
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       // 1. Save to Supabase
       if (supabase) {
-        const { error } = await supabase.from("cruise_inquiries").insert([
+        const verifyRes = await fetch('/api/verify-turnstile', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: turnstileToken }),
+    })
+    if (!verifyRes.ok) {
+      setIsSubmitting(false)
+      return
+    }
+
+    const { error } = await supabase.from("cruise_inquiries").insert([
           {
             name: formData.name,
             email: formData.email,
@@ -39,6 +58,7 @@ export const ContactForm = () => {
 
       setIsSuccess(true);
       setFormData({ name: "", email: "", phone: "", message: "" });
+      setWebsite("");
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Something went wrong. Please try again.");
@@ -131,6 +151,19 @@ export const ContactForm = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3.5">
+                <div className="absolute -left-[10000px] top-auto w-px h-px overflow-hidden" aria-hidden="true">
+                  <label htmlFor="website">Website</label>
+                  <input
+                    id="website"
+                    name="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                  />
+                </div>
+
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1">
                     Full Name
@@ -195,6 +228,16 @@ export const ContactForm = () => {
                     }
                   />
                 </div>
+          <Turnstile
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+            onSuccess={(token) => setTurnstileToken(token)}
+            className=\"mb-2\"
+          />
+                <Turnstile
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                  onSuccess={(token) => setTurnstileToken(token)}
+                  className="mb-2"
+                />
                 <button
                   disabled={isSubmitting}
                   type="submit"
@@ -204,8 +247,7 @@ export const ContactForm = () => {
                     "Submitting..."
                   ) : (
                     <>
-                      Let&apos;s Set Sail <Ship size={18} />
-                    </>
+            <>Let&apos;s Set Sail <Ship size={18} /></>
                   )}
                 </button>
                 <p className="text-center text-xs text-slate-400">

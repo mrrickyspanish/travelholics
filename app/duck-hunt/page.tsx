@@ -56,6 +56,7 @@ export default function DuckHuntPage() {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
+  const [website, setWebsite] = useState("");
 
   async function fireConfetti() {
     if (typeof window === "undefined") return;
@@ -136,6 +137,12 @@ export default function DuckHuntPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setFormState("submitting");
+
+    if (website.trim()) {
+      setFormState("success");
+      return;
+    }
+
     const queryParams =
       typeof window !== "undefined"
         ? new URLSearchParams(window.location.search)
@@ -147,7 +154,17 @@ export default function DuckHuntPage() {
 
     try {
       if (supabase) {
-        const { error } = await supabase.from("duck_hunt_leads").insert([
+        const verifyRes = await fetch('/api/verify-turnstile', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: turnstileToken }),
+    })
+    if (!verifyRes.ok) {
+      setIsSubmitting(false)
+      return
+    }
+
+    const { error } = await supabase.from("duck_hunt_leads").insert([
           {
             first_name: firstName,
             email,
@@ -395,6 +412,19 @@ export default function DuckHuntPage() {
               </div>
 
               <form className="space-y-8" onSubmit={handleSubmit}>
+                <div className="absolute -left-[10000px] top-auto w-px h-px overflow-hidden" aria-hidden="true">
+                  <label htmlFor="website">Website</label>
+                  <input
+                    id="website"
+                    name="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                  />
+                </div>
+
                 <div>
                   <div className="text-[9px] font-bold text-[#10553C] uppercase tracking-[.25em] mb-2">
                     First Name
@@ -463,7 +493,17 @@ export default function DuckHuntPage() {
                     Something went wrong — please try again.
                   </p>
                 )}
+          <Turnstile
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+            onSuccess={(token) => setTurnstileToken(token)}
+            className=\"mb-2\"
+          />
 
+                <Turnstile
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                  onSuccess={(token) => setTurnstileToken(token)}
+                  className="mb-2"
+                />
                 <button
                   type="submit"
                   disabled={formState === "submitting"}
