@@ -2,14 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Ship } from "lucide-react";
+import { Ship, ShoppingBag, Handshake } from "lucide-react";
 
 export const MobileCTA = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
-      // Show after scrolling past ~80% of the viewport (past hero)
       setVisible(window.scrollY > window.innerHeight * 0.8);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -30,15 +29,31 @@ export const MobileCTA = () => {
           transition={{ duration: 0.3, ease: "easeOut" }}
           className="fixed bottom-0 inset-x-0 z-50 lg:hidden"
         >
-          {/* Gradient fade so content doesn't hard-clip */}
           <div className="h-4 bg-gradient-to-t from-white to-transparent" />
           <div className="bg-white border-t border-slate-100 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3">
-            <button
-              onClick={scrollToContact}
-              className="w-full bg-[#059669] hover:bg-[#047857] text-white font-bold py-3.5 rounded-xl shadow-lg shadow-emerald-900/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98] text-[15px]"
-            >
-              Plan My Trip <Ship size={18} />
-            </button>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                onClick={scrollToContact}
+                className="bg-[#059669] hover:bg-[#047857] text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-900/20 flex flex-col items-center justify-center gap-1 transition-all active:scale-[0.98] text-[12px]"
+              >
+                <Ship size={16} />
+                Plan
+              </button>
+              <a
+                href="/shop"
+                className="bg-[#1e3a8a] hover:bg-[#1d4ed8] text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-900/20 flex flex-col items-center justify-center gap-1 transition-all text-[12px]"
+              >
+                <ShoppingBag size={16} />
+                Shop
+              </a>
+              <a
+                href="/collaborate"
+                className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl shadow-lg shadow-slate-900/20 flex flex-col items-center justify-center gap-1 transition-all text-[12px]"
+              >
+                <Handshake size={16} />
+                Collab
+              </a>
+            </div>
           </div>
         </motion.div>
       )}
