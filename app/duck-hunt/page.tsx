@@ -8,13 +8,19 @@ import { supabase } from "@/lib/supabase";
 type TravelReason = "Vacation" | "Honeymoon" | "Anniversary" | "Family Reunion" | "Birthday" | "Other";
 type FormState = "idle" | "submitting" | "success" | "error";
 
+type SupabaseLikeError = {
+  message?: string;
+  details?: string;
+  hint?: string;
+  code?: string;
+};
+
 export default function DuckHuntPage() {
   const [travelReason, setTravelReason] = useState<TravelReason>("Vacation");
   const [formState, setFormState] = useState<FormState>("idle");
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
-  const [phone, setPhone] = useState("");
   const duckCount = 47;
 
   async function handleSubmit(e: React.FormEvent) {
@@ -22,21 +28,31 @@ export default function DuckHuntPage() {
     setFormState("submitting");
 
     try {
-      if (supabase) {
-        const { error } = await supabase.from("duck_hunt_leads").insert([
-          {
-            first_name: firstName,
-            email,
-            city: city || null,
-            travel_reason: travelReason,
-          },
-        ]);
-        if (error) throw error;
+      if (!supabase) {
+        throw new Error("Supabase client is not configured. Check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.");
       }
+
+      const { error } = await supabase.from("duck_hunt_leads").insert([
+        {
+          first_name: firstName,
+          email,
+          city: city || null,
+          phone: phone || null,
+          travel_reason: travelReason,
+        },
+      ]);
+
+      if (error) {
+        const dbError = error as SupabaseLikeError;
+        const parts = [dbError.message, dbError.details, dbError.hint].filter(Boolean);
+        throw new Error(parts.length ? parts.join(" | ") : "Unknown Supabase insert error");
+      }
+
       setFormState("success");
-    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     } catch (err) {
-      console.error("Duck hunt submission error:", err);
+      const message = err instanceof Error ? err.message : JSON.stringify(err);
+      console.error("Duck hunt submission error:", message);
       setFormState("error");
     }
   }
@@ -57,7 +73,7 @@ export default function DuckHuntPage() {
         </div>
       </nav>
 
-      <main className="w-full max-w-[390px] mx-auto bg-gray-50 overflow-hidden pt-16 pb-32">
+      <main className="w-full max-w-[390px] mx-auto bg-gray-50 overflow-hidden pt-16 pb-16">
         {/* HERO */}
         <section className="relative min-h-[700px] flex flex-col justify-center px-8 py-16 bg-blue-900 overflow-hidden">
           <div className="absolute -top-10 -right-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl" />
@@ -70,20 +86,20 @@ export default function DuckHuntPage() {
             }}
           />
           <div className="relative z-10 text-center">
-            <div className="mb-8 transform scale-150 drop-shadow-[0_20px_40px_rgba(245,158,11,0.3)]">
+            <div className="mb-10 transform scale-150 drop-shadow-[0_20px_40px_rgba(245,158,11,0.3)]">
               <span className="text-8xl">🦆</span>
             </div>
             <p className="text-amber-400 font-extrabold uppercase tracking-[0.25em] text-xs mb-4">
               You found something special
             </p>
-            <h1 className="text-4xl font-black text-white leading-tight mb-6 tracking-tighter">
+            <h1 className="text-4xl font-black text-white leading-tight mb-8 tracking-tighter">
               You found a{" "}
               <span className="text-emerald-400 italic">Travelholics duck!</span>
             </h1>
-            <p className="text-blue-200 text-lg font-light leading-relaxed mb-10 max-w-[280px] mx-auto">
+            <p className="text-blue-200 text-lg font-light leading-relaxed mb-14 max-w-[280px] mx-auto">
               We're fellow cruisers who love hiding ducks — and you found ours. Fill out the form below and we'll mail you a real gift, on us.
             </p>
-            <div className="inline-flex items-center gap-3 bg-amber-900/30 backdrop-blur-sm px-5 py-4 rounded-full border border-amber-500/20 mb-12">
+            <div className="inline-flex items-center gap-3 bg-amber-900/30 backdrop-blur-sm px-5 py-4 rounded-full border border-amber-500/20 mb-6">
               <span className="text-2xl">🎁</span>
               <span className="text-amber-300 font-bold text-sm tracking-wide">
                 We're mailing you a real gift — no catch
@@ -102,7 +118,7 @@ export default function DuckHuntPage() {
         {formState !== "success" && (
           <section className="px-6 py-20 bg-gray-50" id="form">
             <div className="bg-[#0d2744] rounded-[2.5rem] p-8 border border-[#1a5f7a] shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10">
+              <div className="absolute top-0 right-0 p-4 opacity-5">
                 <span className="text-6xl text-white">⛵</span>
               </div>
               <h2 className="text-3xl font-black text-white mb-2 leading-none">
@@ -141,20 +157,7 @@ export default function DuckHuntPage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-2 px-1">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+1 (555) 000-0000"
-                    className="w-full bg-[#162e6e]/40 border-none rounded-2xl py-4 px-5 text-white placeholder:text-blue-300/30 focus:ring-2 focus:ring-amber-400 transition-all outline-none"
-                  />
-                </div>
-
-                <div>
+<div>
                   <label className="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-2 px-1">
                     Where Are You From?
                   </label>
@@ -171,7 +174,7 @@ export default function DuckHuntPage() {
                   <label className="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-2 px-1">
                     What&apos;s the Occasion?
                   </label>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="grid grid-cols-3 gap-2">
                     {travelOptions.map((option) => (
                       <button
                         key={option}
@@ -258,25 +261,7 @@ export default function DuckHuntPage() {
         )}
       </main>
 
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-2 pb-6 bg-white/90 backdrop-blur-xl rounded-t-3xl shadow-[0_-10px_40px_rgba(30,58,138,0.06)] z-50">
-        <div className="flex flex-col items-center justify-center bg-emerald-50 text-emerald-700 rounded-2xl px-4 py-1.5">
-          <span className="text-xl">🎯</span>
-          <span className="text-[10px] font-bold uppercase tracking-widest mt-1">Hunt</span>
-        </div>
-        <div className="flex flex-col items-center justify-center text-blue-400 hover:text-amber-500 transition-all">
-          <span className="text-xl">🏅</span>
-          <span className="text-[10px] font-bold uppercase tracking-widest mt-1">Prizes</span>
-        </div>
-        <div className="flex flex-col items-center justify-center text-blue-400 hover:text-amber-500 transition-all">
-          <span className="text-xl">🗺️</span>
-          <span className="text-[10px] font-bold uppercase tracking-widest mt-1">Map</span>
-        </div>
-        <div className="flex flex-col items-center justify-center text-blue-400 hover:text-amber-500 transition-all">
-          <span className="text-xl">👤</span>
-          <span className="text-[10px] font-bold uppercase tracking-widest mt-1">Profile</span>
-        </div>
-      </nav>
+
 
       {/* Global grain overlay */}
       <div
