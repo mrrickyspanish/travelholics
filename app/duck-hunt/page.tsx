@@ -39,8 +39,6 @@ const TRAVEL_OPTIONS: TravelReason[] = [
   "Other",
 ];
 
-const DUCK_COUNT = 47;
-
 export default function DuckHuntPage() {
   // Animation state
   const [animPhase, setAnimPhase] = useState<AnimPhase>("gift");
@@ -138,6 +136,15 @@ export default function DuckHuntPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setFormState("submitting");
+    const queryParams =
+      typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search)
+        : null;
+    const duckNumber = queryParams?.get("duck")?.trim() || null;
+    const batch = queryParams?.get("batch")?.trim() || null;
+    const ship = queryParams?.get("ship")?.trim() || null;
+    const source = queryParams?.get("source")?.trim() || null;
+
     try {
       if (supabase) {
         const { error } = await supabase.from("duck_hunt_leads").insert([
@@ -146,6 +153,10 @@ export default function DuckHuntPage() {
             email,
             city: city || null,
             travel_reason: travelReason,
+            duck_number: duckNumber,
+            batch,
+            ship,
+            source,
           },
         ]);
         if (error) throw error;
@@ -297,7 +308,7 @@ export default function DuckHuntPage() {
                   className="inline-block border border-[#10553C]/25 rounded-full px-5 py-2.5 mb-8 bg-[#10553C]/6"
                 >
                   <span className="text-[#10553C] text-[11px] font-bold uppercase tracking-[.3em]">
-                    You found something rare
+                    Official Travelholics Duck Find
                   </span>
                 </div>
 
@@ -324,10 +335,6 @@ export default function DuckHuntPage() {
                     opacity: 0,
                   }}
                 >
-                  <div className="text-[#10553C]/55 text-[11px] font-bold uppercase tracking-[.22em] mb-2.5">
-                    Duck No. {DUCK_COUNT}
-                  </div>
-
                   <h1
                     className={`${playfair.className} text-[48px] font-black text-[#0D2D4A] leading-[1.05] mb-2`}
                   >
