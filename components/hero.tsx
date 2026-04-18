@@ -11,7 +11,6 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center bg-[#FAF9F6] overflow-hidden">
-      {/* Dot pattern */}
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
@@ -23,21 +22,18 @@ export const Hero = () => {
 
       <div className="container mx-auto px-6 py-20 lg:py-28 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left — Yolanda's Photo */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="relative order-2 lg:order-1"
           >
-            {/* Decorative frame offset */}
             <div className="absolute -top-3 -left-3 right-3 bottom-3 border-2 border-[#f59e0b]/20 rounded-[20px] -z-10" />
 
-            {/* Main photo container */}
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
               <Image
                 src="/images/why-stress-free.jpg"
-                alt="Yolanda — Certified Cruise Specialist and founder of Travelholics"
+                alt="Yolanda, founder of Travelholics"
                 fill
                 className="object-cover"
                 priority
@@ -45,7 +41,6 @@ export const Hero = () => {
               />
             </div>
 
-            {/* Floating years badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -57,7 +52,6 @@ export const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right — Intro Copy */}
           <div className="order-1 lg:order-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -79,53 +73,57 @@ export const Hero = () => {
             >
               I&apos;m Yolanda.
               <br />
-              <span className="text-[#059669]">I plan dream cruises.</span>
+              <span className="text-[#059669]">I help you travel better.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-lg lg:text-xl text-slate-500 leading-relaxed max-w-lg mb-8"
+              className="text-lg lg:text-xl text-slate-500 leading-relaxed max-w-xl mb-8"
             >
-              For over two decades, I&apos;ve been the person families call when
-              they want a cruise that&apos;s actually unforgettable — not just
-              okay. I handle every detail so you can focus on making memories.
+              Need help planning a cruise, want the products I actually use, or looking to collaborate with Travelholics? You&apos;re in the right place.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-3 mb-8"
+              className="grid sm:grid-cols-3 gap-3 mb-6"
             >
               <button
                 onClick={scrollToContact}
-                className="bg-[#059669] hover:bg-[#047857] text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-emerald-900/20 transition-all hover:-translate-y-0.5 active:translate-y-0"
+                className="bg-[#059669] hover:bg-[#047857] text-white font-bold px-6 py-4 rounded-xl shadow-lg shadow-emerald-900/20 transition-all hover:-translate-y-0.5 active:translate-y-0"
               >
-                Plan My Trip ✦
+                Plan My Cruise
               </button>
               <a
-                href="https://www.tiktok.com/@rjsmom1"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 border-2 border-slate-200 hover:border-[#059669] bg-white text-[#1e3a8a] font-bold px-6 py-4 rounded-xl transition-all hover:-translate-y-0.5"
+                href="/shop"
+                className="flex items-center justify-center border-2 border-slate-200 hover:border-[#059669] bg-white text-[#1e3a8a] font-bold px-6 py-4 rounded-xl transition-all hover:-translate-y-0.5"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.87a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.3z" />
-                </svg>
-                Follow @rjsmom1
+                Shop My Picks
+              </a>
+              <a
+                href="/collaborate"
+                className="flex items-center justify-center border-2 border-slate-200 hover:border-[#1e3a8a] bg-white text-[#1e3a8a] font-bold px-6 py-4 rounded-xl transition-all hover:-translate-y-0.5"
+              >
+                Collaborate
               </a>
             </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="text-sm text-slate-400 mb-8"
+            >
+              Cruise planning. TikTok Live favorites. Brand partnerships.
+            </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
               className="flex items-center gap-3"
             >
               <div className="flex -space-x-2">
@@ -144,8 +142,7 @@ export const Hero = () => {
                 ))}
               </div>
               <p className="text-sm text-slate-400">
-                <span className="text-[#1e3a8a] font-bold">500+</span> happy
-                travelers
+                <span className="text-[#1e3a8a] font-bold">500+</span> happy travelers
               </p>
             </motion.div>
           </div>

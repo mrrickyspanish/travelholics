@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Anchor, Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "About Yolanda", href: "#about" },
-  { label: "What Travelers Say", href: "#testimonials" },
-  { label: "How It Works", href: "#process" },
+  { label: "Travel Services", href: "#contact" },
   { label: "Shop", href: "/shop" },
+  { label: "Collaborate", href: "/collaborate" },
+  { label: "About Yolanda", href: "#about" },
 ];
 
 export const StickyHeader = () => {
@@ -29,13 +29,11 @@ export const StickyHeader = () => {
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
 
-    // Route navigation (e.g. /shop)
     if (href.startsWith("/")) {
       window.location.href = href;
       return;
     }
 
-    // In-page anchor navigation (e.g. #about)
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -50,7 +48,6 @@ export const StickyHeader = () => {
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16 lg:h-[72px]">
-            {/* Logo */}
             <a
               href="#"
               onClick={(e) => {
@@ -59,10 +56,6 @@ export const StickyHeader = () => {
               }}
               className="flex items-center gap-2.5"
             >
-              {/* REPLACE with finalized logo:
-                <Image src="/images/travelholics-logo.png" alt="Travelholics"
-                  width={130} height={28} />
-              */}
               <div
                 className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                   scrolled ? "bg-[#059669]" : "bg-white/20 backdrop-blur-sm"
@@ -82,7 +75,6 @@ export const StickyHeader = () => {
               </span>
             </a>
 
-            {/* Desktop nav */}
             <nav className="hidden lg:flex items-center gap-7">
               {navLinks.map((link) => (
                 <button
@@ -101,11 +93,10 @@ export const StickyHeader = () => {
                 onClick={scrollToContact}
                 className="bg-[#059669] hover:bg-[#047857] text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all hover:-translate-y-0.5 active:translate-y-0"
               >
-                Plan My Trip
+                Plan My Cruise
               </button>
             </nav>
 
-            {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-100 transition-colors"
@@ -124,7 +115,6 @@ export const StickyHeader = () => {
         </div>
       </header>
 
-      {/* Mobile drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -148,7 +138,7 @@ export const StickyHeader = () => {
                 onClick={scrollToContact}
                 className="mt-3 w-full bg-[#059669] hover:bg-[#047857] text-white font-bold py-3.5 rounded-xl text-[15px] transition-all"
               >
-                Plan My Trip
+                Plan My Cruise
               </button>
             </div>
           </motion.div>
