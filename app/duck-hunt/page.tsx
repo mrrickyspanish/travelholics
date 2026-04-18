@@ -37,7 +37,6 @@ export default function DuckHuntPage() {
           first_name: firstName,
           email,
           city: city || null,
-          phone: phone || null,
           travel_reason: travelReason,
         },
       ]);
@@ -61,7 +60,6 @@ export default function DuckHuntPage() {
 
   return (
     <div className="bg-gray-50 text-gray-900 antialiased overflow-x-hidden min-h-screen">
-      {/* Top Nav */}
       <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm flex justify-between items-center px-6 h-16">
         <div className="text-2xl font-black text-blue-900 tracking-[0.2em] font-serif uppercase">
           DUCK HUNT
@@ -74,7 +72,6 @@ export default function DuckHuntPage() {
       </nav>
 
       <main className="w-full max-w-[390px] mx-auto bg-gray-50 overflow-hidden pt-16 pb-16">
-        {/* HERO */}
         <section className="relative min-h-[700px] flex flex-col justify-center px-8 py-16 bg-blue-900 overflow-hidden">
           <div className="absolute -top-10 -right-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl" />
           <div className="absolute bottom-20 -left-10 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl" />
@@ -93,16 +90,15 @@ export default function DuckHuntPage() {
               You found something special
             </p>
             <h1 className="text-4xl font-black text-white leading-tight mb-8 tracking-tighter">
-              You found a{" "}
-              <span className="text-emerald-400 italic">Travelholics duck!</span>
+              You found a <span className="text-emerald-400 italic">Travelholics duck!</span>
             </h1>
             <p className="text-blue-200 text-lg font-light leading-relaxed mb-14 max-w-[280px] mx-auto">
-              We're fellow cruisers who love hiding ducks — and you found ours. Fill out the form below and we'll mail you a real gift, on us.
+              We&apos;re fellow cruisers who love hiding ducks — and you found ours. Fill out the form below and we&apos;ll mail you a real gift, on us.
             </p>
             <div className="inline-flex items-center gap-3 bg-amber-900/30 backdrop-blur-sm px-5 py-4 rounded-full border border-amber-500/20 mb-6">
               <span className="text-2xl">🎁</span>
               <span className="text-amber-300 font-bold text-sm tracking-wide">
-                We're mailing you a real gift — no catch
+                We&apos;re mailing you a real gift — no catch
               </span>
             </div>
             <a
@@ -114,7 +110,6 @@ export default function DuckHuntPage() {
           </div>
         </section>
 
-        {/* LEAD CAPTURE FORM */}
         {formState !== "success" && (
           <section className="px-6 py-20 bg-gray-50" id="form">
             <div className="bg-[#0d2744] rounded-[2.5rem] p-8 border border-[#1a5f7a] shadow-2xl relative overflow-hidden">
@@ -157,7 +152,7 @@ export default function DuckHuntPage() {
                   />
                 </div>
 
-<div>
+                <div>
                   <label className="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-2 px-1">
                     Where Are You From?
                   </label>
@@ -210,7 +205,6 @@ export default function DuckHuntPage() {
           </section>
         )}
 
-        {/* SUCCESS STATE */}
         {formState === "success" && (
           <section className="px-8 py-20 bg-gray-50 flex flex-col items-center text-center">
             <div className="relative mb-12">
@@ -225,7 +219,7 @@ export default function DuckHuntPage() {
               <span className="italic text-emerald-700">one of us.</span>
             </h2>
             <p className="text-gray-500 mb-12 max-w-[280px]">
-              You're duck #{duckCount} found on this voyage! Your exclusive Travelholics gift is on its way.
+              You&apos;re duck #{duckCount} found on this voyage! Your exclusive Travelholics gift is on its way.
             </p>
             <div className="w-full space-y-4 text-left">
               <div className="bg-white p-6 rounded-3xl flex items-start gap-5 shadow-sm">
@@ -235,7 +229,7 @@ export default function DuckHuntPage() {
                 <div>
                   <h4 className="font-bold text-blue-900 mb-1">Check your inbox</h4>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    Look for an email from us — we'll ask for your mailing address there to ship your gift.
+                    Look for an email from us — we&apos;ll ask for your mailing address there to ship your gift.
                   </p>
                 </div>
               </div>
@@ -261,9 +255,6 @@ export default function DuckHuntPage() {
         )}
       </main>
 
-
-
-      {/* Global grain overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-[0.04]"
         style={{
