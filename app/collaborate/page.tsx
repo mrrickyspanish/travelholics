@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { StickyHeader } from "@/components/sticky-header";
+import { Footer } from "@/components/footer";
 import { motion } from "framer-motion";
 import {
   Handshake,
@@ -138,7 +140,9 @@ export default function CollaboratePage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#FAF9F6] text-slate-900">
+    <>
+      <StickyHeader />
+      <main className="min-h-screen bg-[#FAF9F6] text-slate-900">
 
       {/* 1. Editorial Hero */}
       <section className="relative bg-[#FAF9F6] overflow-hidden pt-20 pb-16 px-6">
@@ -541,5 +545,7 @@ export default function CollaboratePage() {
       </section>
 
     </main>
+      <Footer />
+    </>
   );
 }

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Playfair_Display } from "next/font/google";
 import { supabase } from "@/lib/supabase";
+import { StickyHeader } from "@/components/sticky-header";
+import { Footer } from "@/components/footer";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -176,6 +178,7 @@ export default function DuckHuntPage() {
 
   return (
     <>
+      <StickyHeader />
       <style>{`
         @keyframes boxBounce {
           0%,100% { transform: translateY(0) scaleX(1) scaleY(1); }
@@ -467,7 +470,6 @@ export default function DuckHuntPage() {
                     Something went wrong — please try again.
                   </p>
                 )}
-
                 <button
                   type="submit"
                   disabled={formState === "submitting"}
@@ -550,6 +552,7 @@ export default function DuckHuntPage() {
           }}
         />
       </div>
+      <Footer />
     </>
   );
 }
