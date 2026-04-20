@@ -11,11 +11,6 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-8">
           {/* Brand */}
           <div className="flex items-center gap-3">
-            {/*
-              REPLACE with finalized logo:
-              <Image src="/images/travelholics-logo.png" alt="Travelholics"
-                width={140} height={32} />
-            */}
             <div className="w-9 h-9 rounded-lg bg-[#059669] flex items-center justify-center">
               <Anchor size={18} className="text-white" />
             </div>
@@ -25,7 +20,7 @@ export const Footer = () => {
           </div>
 
           {/* Nav links */}
-          <div className="flex items-center gap-6 text-sm font-semibold">
+          <div className="flex items-center gap-6 text-sm font-semibold flex-wrap">
             <a
               href="#about"
               className="text-blue-100/40 hover:text-white transition-colors"
@@ -44,6 +39,18 @@ export const Footer = () => {
             >
               How It Works
             </a>
+            <Link
+              href="/shop"
+              className="text-blue-100/40 hover:text-white transition-colors"
+            >
+              Shop
+            </Link>
+            <Link
+              href="/collaborate"
+              className="text-blue-100/40 hover:text-white transition-colors"
+            >
+              Collaborate
+            </Link>
             <a
               href="#contact"
               className="text-blue-100/40 hover:text-white transition-colors"

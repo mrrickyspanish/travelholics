@@ -82,7 +82,8 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-lg lg:text-xl text-slate-500 leading-relaxed max-w-xl mb-8"
             >
-              Need help planning a cruise, want the products I actually use, or looking to collaborate with Travelholics? You&apos;re in the right place.
+              20 years at sea. Real advice from someone who&apos;s actually been there.
+              No booking fees — just a real person who treats your vacation like it&apos;s her own.
             </motion.p>
 
             <motion.div
