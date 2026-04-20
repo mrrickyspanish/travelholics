@@ -268,8 +268,8 @@ export default function CollaboratePage() {
                   <div className="w-12 h-12 rounded-2xl bg-[#f59e0b]/10 text-[#f59e0b] flex items-center justify-center mb-5">
                     <Icon size={22} />
                   </div>
-                  <h3 className="text-lg font-extrabold text-[#1e3a8a] mb-3">{card.title}</h3>
-                  <p className="text-slate-500 leading-relaxed text-sm">{card.body}</p>
+                  <h3 className="text-xl font-extrabold text-[#1e3a8a] mb-3">{card.title}</h3>
+                  <p className="text-slate-500 leading-relaxed text-base md:text-lg">{card.body}</p>
                 </motion.div>
               );
             })}
@@ -308,7 +308,7 @@ export default function CollaboratePage() {
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] leading-tight mb-4">
               Business-forward partnerships that still feel personal.
             </h2>
-            <p className="text-slate-500 text-lg leading-relaxed">
+            <p className="text-slate-500 text-lg md:text-xl leading-relaxed">
               Travelholics is not just posting pretty pictures. Yolanda helps people discover trips worth taking, products worth packing, and experiences worth booking.
             </p>
           </motion.div>
@@ -362,8 +362,8 @@ export default function CollaboratePage() {
                   <div className="w-10 h-10 rounded-xl bg-[#059669]/10 text-[#059669] flex items-center justify-center mb-4">
                     <Icon size={18} />
                   </div>
-                  <h3 className="font-extrabold text-[#1e3a8a] mb-1">{item.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{item.body}</p>
+                  <h3 className="text-lg font-extrabold text-[#1e3a8a] mb-2">{item.title}</h3>
+                  <p className="text-slate-500 text-base leading-relaxed">{item.body}</p>
                 </motion.div>
               );
             })}
@@ -385,7 +385,7 @@ export default function CollaboratePage() {
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] leading-tight mb-4 max-w-xl">
               The kinds of brands and businesses we want to hear from.
             </h2>
-            <p className="text-slate-500 text-lg leading-relaxed max-w-2xl">
+            <p className="text-slate-500 text-lg md:text-xl leading-relaxed max-w-2xl">
               We are especially interested in partnerships that help travelers plan better, experience more, and feel more prepared before they go.
             </p>
           </motion.div>
@@ -447,7 +447,7 @@ export default function CollaboratePage() {
                 <h3 className="text-2xl font-bold text-[#1e3a8a] mb-2">
                   Collaboration request started.
                 </h3>
-                <p className="text-slate-500 text-sm mb-6">
+                <p className="text-slate-500 text-base mb-6">
                   Your email draft should be open now. Send it through and Yolanda can review the opportunity.
                 </p>
                 <button
