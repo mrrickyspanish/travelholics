@@ -128,11 +128,7 @@ export const StickyHeader = () => {
             }`}
           >
             <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+              href="/"
               className="inline-flex items-center"
             >
               <Image
@@ -178,11 +174,7 @@ export const StickyHeader = () => {
             }`}
           >
             <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+              href="/"
               className="inline-flex items-center"
             >
               <Image
