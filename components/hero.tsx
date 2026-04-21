@@ -76,7 +76,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-start overflow-hidden bg-[#0d4a3a]">
+    <section className="relative min-h-[82vh] flex items-start overflow-hidden bg-[#0d4a3a] lg:min-h-[86vh]">
 
       {/* Full-bleed background photo */}
       <div className="absolute inset-0 z-0">
@@ -178,11 +178,11 @@ export const Hero = () => {
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="container mx-auto px-8 lg:px-12 relative z-10 pt-6 pb-14 lg:pt-8 lg:pb-16">
+      <div className="container mx-auto px-8 lg:px-12 relative z-10 pt-6 pb-8 lg:pt-8 lg:pb-10">
         <div className="flex items-start justify-between gap-8 lg:gap-16">
 
           {/* LEFT: hero copy */}
-          <div className="flex-1 max-w-[560px]">
+          <div className="w-full max-w-[560px] lg:flex-none">
 
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -322,23 +322,13 @@ export const Hero = () => {
             initial={{ opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="hidden lg:flex flex-col items-center flex-shrink-0"
-            style={{ width: "273px" }}
+            className="hidden lg:flex flex-1 flex-col items-center"
           >
-            <p
-              className="text-white/50 font-bold uppercase text-center mb-3"
-              style={{ fontSize: "11px", letterSpacing: "0.18em" }}
-            >
-              Where I&apos;ve sailed
-            </p>
-
-            <div className="w-8 h-[1.5px] bg-[#f59e0b] mb-4" />
-
             <div
               className="relative overflow-hidden"
               style={{
-                width: "260px",
-                height: "311px",
+                width: "320px",
+                height: "400px",
                 borderRadius: "3px",
                 border: "1.5px solid rgba(245,158,11,0.32)",
               }}
@@ -357,7 +347,7 @@ export const Hero = () => {
                     alt={destinations[current].alt}
                     fill
                     className="object-cover"
-                    sizes="260px"
+                    sizes="320px"
                   />
                   <div
                     className="absolute inset-0"
@@ -401,43 +391,6 @@ export const Hero = () => {
                   }}
                 />
               ))}
-            </div>
-
-            <div className="w-8 h-[1.5px] bg-[#f59e0b] mb-4" />
-
-            <div className="flex items-center gap-5">
-              {[
-                { num: "20+", label: "Years at sea" },
-                { num: "6", label: "Cruise lines" },
-                { num: "500+", label: "Travelers" },
-              ].map((s, i) => (
-                <div key={i} className="text-center">
-                  <p className="text-white font-extrabold leading-none" style={{ fontSize: "18px" }}>
-                    {s.num}
-                  </p>
-                  <p
-                    className="text-white/50 uppercase"
-                    style={{ fontSize: "11px", letterSpacing: "0.08em", marginTop: "4px" }}
-                  >
-                    {s.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div
-              className="flex items-center gap-[5px] mt-3 px-3 py-[5px] rounded-full"
-              style={{
-                background: "rgba(255,255,255,0.06)",
-                border: "0.5px solid rgba(255,255,255,0.12)",
-              }}
-            >
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="rgba(255,255,255,0.4)">
-                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.87a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.3z" />
-              </svg>
-              <span className="text-white/60 font-semibold" style={{ fontSize: "12px" }}>
-                @rjsmom1
-              </span>
             </div>
           </motion.div>
         </div>
