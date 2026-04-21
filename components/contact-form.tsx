@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import confetti from "canvas-confetti";
 import { supabase } from "@/lib/supabase";
 import { motion } from "framer-motion";
 import { Ship, CheckCircle, Anchor } from "lucide-react";
+import { RippleButton } from "@/components/ripple-button";
 
 export const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -16,11 +18,20 @@ export const ContactForm = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [website, setWebsite] = useState("");
 
+  const fireConfetti = () => {
+    const colors = ["#059669", "#f59e0b", "#1e3a8a", "#ffffff", "#34d399"];
+    confetti({ particleCount: 90, spread: 70, origin: { x: 0.35, y: 0.55 }, colors });
+    setTimeout(() => {
+      confetti({ particleCount: 90, spread: 70, origin: { x: 0.65, y: 0.55 }, colors });
+    }, 160);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     if (website.trim()) {
+      fireConfetti();
       setIsSuccess(true);
       setIsSubmitting(false);
       return;
@@ -42,6 +53,7 @@ export const ContactForm = () => {
       const mailtoLink = `mailto:yo@travelholics.com?bcc=rj@creativeeyemultimedia.com&subject=New Cruise Inquiry from ${formData.name}&body=Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0APhone: ${formData.phone}%0D%0AMessage: ${formData.message}`;
       window.location.href = mailtoLink;
 
+      fireConfetti();
       setIsSuccess(true);
       setFormData({ name: "", email: "", phone: "", message: "" });
       setWebsite("");
@@ -204,7 +216,7 @@ export const ContactForm = () => {
                     }
                   />
                 </div>
-                <button
+                <RippleButton
                   disabled={isSubmitting}
                   type="submit"
                   className="w-full bg-[#059669] hover:bg-[#047857] text-white font-bold py-4 rounded-xl shadow-lg shadow-emerald-900/20 transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed text-[15px]"
@@ -216,7 +228,7 @@ export const ContactForm = () => {
                       Let&apos;s Set Sail <Ship size={18} />
                     </>
                   )}
-                </button>
+                </RippleButton>
                 <p className="text-center text-xs text-slate-400">
                   No spam, no pressure — just a conversation about your next
                   adventure.
