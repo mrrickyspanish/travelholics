@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Mail, Anchor } from "lucide-react";
+import { Mail } from "lucide-react";
+import Image from "next/image";
 
 export const Footer = () => {
   return (
@@ -10,13 +11,14 @@ export const Footer = () => {
         {/* Main row */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-8">
           {/* Brand */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#059669] flex items-center justify-center">
-              <Anchor size={18} className="text-white" />
-            </div>
-            <span className="text-lg font-extrabold text-white">
-              Travelholics
-            </span>
+          <div className="flex items-center">
+            <Image
+              src="/images/travelholics_logo_stack.svg"
+              alt="Travelholics"
+              width={120}
+              height={64}
+              className="h-14 w-auto object-contain"
+            />
           </div>
 
           {/* Nav links */}

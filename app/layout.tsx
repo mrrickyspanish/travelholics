@@ -15,6 +15,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Travelholics",
   description: "Your premier travel companion",
+  icons: {
+    icon: "/images/travelholics_logo_circular.svg",
+    apple: "/images/travelholics_logo_circular.png",
+  },
 };
 
 export default function RootLayout({
