@@ -1,23 +1,48 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
 export const SplashScreen = () => {
   const [visible, setVisible] = useState(false);
   const [exiting, setExiting] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (!sessionStorage.getItem("th_splash")) {
       sessionStorage.setItem("th_splash", "1");
       setVisible(true);
-      const t = setTimeout(() => setExiting(true), 1800);
+      const t = setTimeout(() => setExiting(true), 1300);
       return () => clearTimeout(t);
     }
   }, []);
 
   if (!visible) return null;
+
+  // Reduced motion: instant fade instead of slide
+  if (prefersReducedMotion) {
+    return (
+      <motion.div
+        className="fixed inset-0 z-[200] flex items-center justify-center bg-[#0d4a3a]"
+        animate={exiting ? { opacity: 0 } : { opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        onAnimationComplete={() => {
+          if (exiting) setVisible(false);
+        }}
+      >
+        <Image
+          src="/images/travelholics_logo_wordmark.svg"
+          alt="Travelholics"
+          width={440}
+          height={118}
+          className="h-24 w-auto"
+          style={{ filter: "brightness(0) invert(1)" }}
+          priority
+        />
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
@@ -60,8 +85,8 @@ export const SplashScreen = () => {
 
       <motion.div
         initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: exiting ? 0 : 1, y: exiting ? -8 : 0 }}
-        transition={{ duration: 0.55, delay: exiting ? 0 : 0.25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.25 }}
       >
         <Image
           src="/images/travelholics_logo_wordmark.svg"
