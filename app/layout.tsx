@@ -16,8 +16,12 @@ export const metadata: Metadata = {
   title: "Travelholics",
   description: "Your premier travel companion",
   icons: {
-    icon: "/images/travelholics_logo_circular.svg",
-    apple: "/images/travelholics_logo_circular.png",
+    icon: [
+      { url: "/images/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/images/favicon-64.png", sizes: "64x64", type: "image/png" },
+    ],
+    shortcut: "/images/favicon-32.png",
+    apple: [{ url: "/images/apple-touch-icon-180.png", sizes: "180x180", type: "image/png" }],
   },
 };
 
