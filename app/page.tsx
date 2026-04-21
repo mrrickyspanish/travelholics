@@ -12,10 +12,12 @@ import { Footer } from "@/components/footer";
 import { StickyHeader } from "@/components/sticky-header";
 import { MobileCTA } from "@/components/mobile-cta";
 import { WaveDivider } from "@/components/wave-divider";
+import { SplashScreen } from "@/components/splash-screen";
 
 export default function Home() {
   return (
     <>
+      <SplashScreen />
       <StickyHeader />
       <MobileCTA />
 

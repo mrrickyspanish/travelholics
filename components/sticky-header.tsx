@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Facebook, Instagram, Mail, Menu, X, Youtube } from "lucide-react";
 import Image from "next/image";
+import { RippleButton } from "@/components/ripple-button";
 
 const navLinks = [
   { label: "Travel Services", href: "#contact" },
@@ -15,9 +16,15 @@ const navLinks = [
 export const StickyHeader = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 30);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(max > 0 ? y / max : 0);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -39,12 +46,20 @@ export const StickyHeader = () => {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+        className={`sticky top-0 z-50 relative transition-all duration-300 ${
           scrolled
             ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100"
             : "bg-[#FFFDF8]"
         }`}
       >
+        {/* Scroll progress wave bar */}
+        <div className="absolute top-0 left-0 right-0 h-[3px] z-10 bg-slate-100/50">
+          <div
+            className="h-full wave-progress transition-none"
+            style={{ width: `${scrollProgress * 100}%` }}
+          />
+        </div>
+
         {/* Top utility bar — social icons only */}
         <div className="w-full border-b border-slate-200/60 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -147,12 +162,12 @@ export const StickyHeader = () => {
                   {link.label}
                 </button>
               ))}
-              <button
+              <RippleButton
                 onClick={scrollToContact}
                 className="w-full bg-[#059669] hover:bg-[#047857] text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all hover:-translate-y-0.5 active:translate-y-0"
               >
                 Plan My Cruise
-              </button>
+              </RippleButton>
             </nav>
           </div>
 
@@ -216,12 +231,12 @@ export const StickyHeader = () => {
                   {link.label}
                 </button>
               ))}
-              <button
+              <RippleButton
                 onClick={scrollToContact}
                 className="mt-3 w-full bg-[#059669] hover:bg-[#047857] text-white font-bold py-3.5 rounded-xl text-[15px] transition-all"
               >
                 Plan My Cruise
-              </button>
+              </RippleButton>
             </div>
           </motion.div>
         )}

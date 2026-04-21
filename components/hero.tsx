@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Dancing_Script, Playfair_Display } from "next/font/google";
 import Image from "next/image";
+import { RippleButton } from "@/components/ripple-button";
 
 const dancing = Dancing_Script({
   subsets: ["latin"],
@@ -56,6 +57,9 @@ export const Hero = () => {
   const [current, setCurrent] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
+  const { scrollY } = useScroll();
+  const bgY = useTransform(scrollY, [0, 600], ["0%", "18%"]);
+
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -78,16 +82,21 @@ export const Hero = () => {
   return (
     <section className="relative min-h-[82vh] flex items-start overflow-hidden bg-[#0d4a3a] lg:min-h-[86vh]">
 
-      {/* Full-bleed background photo */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/Travelholics_background.png"
-          alt="Yolanda, founder of Travelholics"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
+      {/* Full-bleed background photo with parallax */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <motion.div
+          className="absolute -inset-x-0 -top-[10%] -bottom-[10%]"
+          style={{ y: bgY }}
+        >
+          <Image
+            src="/images/Travelholics_background.png"
+            alt="Yolanda, founder of Travelholics"
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+        </motion.div>
         <div className="absolute inset-0 bg-[#0d4a3a]/48" />
         <div
           className="absolute inset-0"
@@ -251,7 +260,7 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="flex flex-wrap items-center gap-3 mb-8"
             >
-              <button
+              <RippleButton
                 onClick={scrollToContact}
                 className="bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-lg transition-all hover:-translate-y-0.5 active:translate-y-0"
                 style={{
@@ -262,7 +271,7 @@ export const Hero = () => {
                 }}
               >
                 Plan My Cruise
-              </button>
+              </RippleButton>
               <a
                 href="/shop"
                 className="font-semibold text-white/75 hover:text-white rounded-lg transition-all hover:-translate-y-0.5"
