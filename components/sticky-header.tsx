@@ -42,7 +42,7 @@ export const StickyHeader = () => {
         className={`sticky top-0 z-50 transition-all duration-300 ${
           scrolled
             ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100"
-            : "bg-[#FAF9F6]/88"
+            : "bg-[#FFFDF8]"
         }`}
       >
         {/* Top utility bar — social icons only */}
@@ -103,11 +103,7 @@ export const StickyHeader = () => {
           </div>
         </div>
 
-        <div
-          className={`mx-auto max-w-7xl px-6 lg:px-10 ${
-            scrolled ? "" : "bg-[#FFFDF8]"
-          }`}
-        >
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
           {/* Wordmark — hides on scroll */}
           <div
             className={`hidden items-center justify-center overflow-hidden transition-all duration-300 lg:flex ${
