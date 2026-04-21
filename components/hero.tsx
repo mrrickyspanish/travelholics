@@ -179,10 +179,16 @@ export const Hero = () => {
 
       {/* MAIN CONTENT */}
       <div className="container mx-auto px-8 lg:px-12 relative z-10 pt-6 pb-8 lg:pt-8 lg:pb-10">
-        <div className="flex items-start justify-between gap-8 lg:gap-16">
+
+        {/*
+          FIX: Replaced justify-between (stretches to container edges on ultrawide)
+          with a controlled gap + max-w-5xl cap so the two columns stay together.
+          Right column is flex-none so the card stays 320px wide and doesn't drift.
+        */}
+        <div className="flex items-start gap-16 lg:gap-24 max-w-7xl mx-auto w-full">
 
           {/* LEFT: hero copy */}
-          <div className="w-full max-w-[560px] lg:flex-none">
+          <div className="flex-1 max-w-[620px]">
 
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -317,18 +323,18 @@ export const Hero = () => {
             </motion.div>
           </div>
 
-          {/* RIGHT: destination gallery */}
+          {/* RIGHT: destination gallery — flex-none keeps it at 320px, never stretches */}
           <motion.div
             initial={{ opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="hidden lg:flex flex-1 flex-col items-center"
+            className="hidden lg:flex flex-none flex-col items-center"
           >
             <div
               className="relative overflow-hidden"
               style={{
-                width: "320px",
-                height: "400px",
+                width: "380px",
+                height: "460px",
                 borderRadius: "3px",
                 border: "1.5px solid rgba(245,158,11,0.32)",
               }}
@@ -347,7 +353,7 @@ export const Hero = () => {
                     alt={destinations[current].alt}
                     fill
                     className="object-cover"
-                    sizes="320px"
+                    sizes="380px"
                   />
                   <div
                     className="absolute inset-0"
@@ -374,7 +380,8 @@ export const Hero = () => {
               </AnimatePresence>
             </div>
 
-            <div className="flex items-center gap-[5px] mt-3 mb-4">
+            {/* Dots sit directly under the card — no flex-1 gap pulling them away */}
+            <div className="flex items-center gap-[5px] mt-3">
               {destinations.map((_, i) => (
                 <button
                   key={i}
@@ -393,6 +400,7 @@ export const Hero = () => {
               ))}
             </div>
           </motion.div>
+
         </div>
       </div>
 

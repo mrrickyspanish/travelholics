@@ -2,7 +2,7 @@ import { Hero } from "@/components/hero";
 import { IntentRouter } from "@/components/intent-router";
 import { TrustStrip } from "@/components/trust-strip";
 import { MyStory } from "@/components/my-story";
-import { DestinationMosaic } from "@/components/destination-mosaic";
+import { DestinationMap } from "@/components/destination-map";
 import { ShipDivider } from "@/components/ship-divider";
 import { WhyTravelholics } from "@/components/why-travelholics";
 import { SocialProof } from "@/components/social-proof";
@@ -24,7 +24,7 @@ export default function Home() {
       <TrustStrip />
       <MyStory />
       <WaveDivider from="#ffffff" to="#FAF9F6" />
-      <DestinationMosaic />
+      <DestinationMap />
       <ShipDivider />
       <WhyTravelholics />
       <WaveDivider from="#ffffff" to="#FAF9F6" />

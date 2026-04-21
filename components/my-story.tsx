@@ -6,7 +6,7 @@ import Image from "next/image";
 export const MyStory = () => {
   return (
     <section id="about" className="bg-white py-24">
-      <div className="container mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -24,7 +24,8 @@ export const MyStory = () => {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        {/* max-w-5xl mx-auto keeps the two columns from drifting on ultrawide */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-5xl mx-auto">
           {/* Story text */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
@@ -60,7 +61,7 @@ export const MyStory = () => {
             </p>
           </motion.div>
 
-          {/* Photo grid — 3 real photos */}
+          {/* Photo grid */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -68,7 +69,6 @@ export const MyStory = () => {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="grid grid-cols-2 gap-3"
           >
-            {/* Tall left image — Yolanda on deck at sunset */}
             <div className="row-span-2 relative aspect-[3/5] rounded-2xl overflow-hidden">
               <Image
                 src="/images/about-on-deck.jpg"
@@ -78,8 +78,6 @@ export const MyStory = () => {
                 sizes="(max-width: 768px) 50vw, 25vw"
               />
             </div>
-
-            {/* Top right — Santorini port of call */}
             <div className="relative aspect-square rounded-2xl overflow-hidden">
               <Image
                 src="/images/about-port-of-call.jpg"
@@ -89,8 +87,6 @@ export const MyStory = () => {
                 sizes="(max-width: 768px) 50vw, 25vw"
               />
             </div>
-
-            {/* Bottom right — Group photo with travelers */}
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
               <Image
                 src="/images/about-with-travelers.jpg"
