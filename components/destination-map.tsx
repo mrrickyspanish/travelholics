@@ -449,7 +449,13 @@ export function DestinationMap() {
                     zoom={view.zoom}
                     minZoom={1}
                     maxZoom={6}
-                    onMoveEnd={({ coordinates, zoom }) => {
+                    onMoveEnd={({
+                      coordinates,
+                      zoom,
+                    }: {
+                      coordinates: [number, number];
+                      zoom: number;
+                    }) => {
                       commitView({
                         center: [coordinates[0], coordinates[1]],
                         zoom,
@@ -463,8 +469,8 @@ export function DestinationMap() {
                       strokeWidth={0.6}
                     />
                     <Geographies geography={DESTINATION_MAP_GEOGRAPHY}>
-                      {({ geographies }) =>
-                        geographies.map((geography) => (
+                      {({ geographies }: { geographies: Array<{ rsmKey: string }> }) =>
+                        geographies.map((geography: { rsmKey: string }) => (
                           <Geography
                             key={geography.rsmKey}
                             geography={geography}
