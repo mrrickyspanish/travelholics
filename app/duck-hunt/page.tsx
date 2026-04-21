@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
 import { supabase } from "@/lib/supabase";
 import { StickyHeader } from "@/components/sticky-header";
@@ -220,8 +221,15 @@ export default function DuckHuntPage() {
           >
             Travelholics
           </span>
-          <div className="w-8 h-8 rounded-full bg-[#10553C] flex items-center justify-center text-sm">
-            🦆
+          <div className="w-8 h-8 rounded-full bg-[#10553C] p-1 flex items-center justify-center overflow-hidden">
+            <Image
+              src="/images/traveholics_duck.svg"
+              alt="Travelholics duck"
+              width={24}
+              height={24}
+              className="h-full w-full object-contain"
+              priority
+            />
           </div>
         </nav>
 
@@ -319,9 +327,15 @@ export default function DuckHuntPage() {
                     opacity: d2Visible ? 1 : 0,
                     filter: "drop-shadow(0 8px 24px rgba(13,45,74,.15))",
                   }}
-                  className="text-[96px] leading-none mb-9 block"
+                  className="relative mb-9 block w-[120px] h-[120px] mx-auto"
                 >
-                  🦆
+                  <Image
+                    src="/images/traveholics_duck.svg"
+                    alt="Travelholics duck"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
                 </div>
 
                 <div
