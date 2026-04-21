@@ -327,7 +327,7 @@ export default function DuckHuntPage() {
                     opacity: d2Visible ? 1 : 0,
                     filter: "drop-shadow(0 8px 24px rgba(13,45,74,.15))",
                   }}
-                  className="relative mb-9 block w-[120px] h-[120px] mx-auto"
+                  className="relative mb-9 block w-[180px] h-[180px] mx-auto"
                 >
                   <Image
                     src="/images/traveholics_duck.svg"
