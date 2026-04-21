@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ExternalLink, ShoppingBag, BookOpen, Star, Package } from "lucide-react";
+import { StickyHeader } from "@/components/sticky-header";
+import { Footer } from "@/components/footer";
 
 const packingProducts = [
   {
@@ -173,23 +175,9 @@ function ProductCard({ product, index }: { product: typeof packingProducts[0]; i
 
 export default function ShopPage() {
   return (
-    <main className="min-h-screen bg-stone-50">
-
-      {/* Nav — matches existing site */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-stone-200">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="font-bold text-slate-900 text-lg tracking-tight">Travelholics</Link>
-          <div className="hidden md:flex items-center gap-8 text-sm text-stone-600">
-            <Link href="/#about" className="hover:text-emerald-700 transition-colors">About Yolanda</Link>
-            <Link href="/#testimonials" className="hover:text-emerald-700 transition-colors">What Travelers Say</Link>
-            <Link href="/#process" className="hover:text-emerald-700 transition-colors">How It Works</Link>
-            <Link href="/shop" className="text-emerald-700 font-semibold">Shop</Link>
-            <Link href="/#contact" className="bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
-              Plan My Trip
-            </Link>
-          </div>
-        </div>
-      </nav>
+    <>
+      <StickyHeader />
+      <main className="min-h-screen bg-stone-50">
 
       {/* Hero */}
       <section className="pt-28 pb-20 px-6 bg-gradient-to-b from-slate-900 to-slate-800 border-b border-slate-700">
@@ -309,19 +297,8 @@ export default function ShopPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-stone-200 bg-white py-8 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-stone-400">
-          <span>© 2026 Travelholics</span>
-          <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-stone-600 transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-stone-600 transition-colors">Terms</Link>
-            <Link href="https://www.tiktok.com/@rjsmom1" target="_blank" className="hover:text-stone-600 transition-colors">@rjsmom1</Link>
-          </div>
-          <span>Built with ♥ by <a href="https://creativeeyestudios.com" className="hover:text-stone-600 transition-colors">Creative Eye Studios</a></span>
-        </div>
-      </footer>
-
-    </main>
+      </main>
+      <Footer />
+    </>
   );
 }
