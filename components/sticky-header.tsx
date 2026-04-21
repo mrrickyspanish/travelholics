@@ -101,13 +101,17 @@ export const StickyHeader = () => {
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div
+          className={`mx-auto max-w-7xl px-6 lg:px-10 ${
+            scrolled ? "" : "bg-[#FFFDF8]"
+          }`}
+        >
 
           <div
             className={`hidden items-center justify-center overflow-hidden transition-all duration-300 lg:flex ${
               scrolled
                 ? "max-h-0 py-0 opacity-0 pointer-events-none"
-                : "max-h-[220px] py-3 opacity-100"
+                : "max-h-[198px] py-2.5 opacity-100"
             }`}
           >
             <a
@@ -123,7 +127,7 @@ export const StickyHeader = () => {
                 alt="Travelholics"
                 width={900}
                 height={240}
-                className="h-28 w-auto object-contain"
+                className="h-[6.3rem] w-auto object-contain"
                 priority
               />
             </a>
@@ -131,18 +135,38 @@ export const StickyHeader = () => {
 
           <div className="relative hidden lg:block">
             {!scrolled && (
-              <svg
-                viewBox="0 0 1440 22"
-                className="absolute inset-x-0 top-0 h-3.5 w-full"
-                fill="none"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0 11C80 11 80 5 160 5C240 5 240 17 320 17C400 17 400 7 480 7C560 7 560 18 640 18C720 18 720 8 800 8C880 8 880 17 960 17C1040 17 1040 7 1120 7C1200 7 1200 15 1280 15C1360 15 1360 9 1440 9"
-                  stroke="#d6cec2"
-                  strokeWidth="1.5"
-                />
-              </svg>
+              <>
+                <svg
+                  viewBox="0 0 1440 22"
+                  className="absolute inset-x-0 top-0 h-3.5 w-full"
+                  fill="none"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M0 11C80 11 80 5 160 5C240 5 240 17 320 17C400 17 400 7 480 7C560 7 560 18 640 18C720 18 720 8 800 8C880 8 880 17 960 17C1040 17 1040 7 1120 7C1200 7 1200 15 1280 15C1360 15 1360 9 1440 9"
+                    stroke="#d6cec2"
+                    strokeWidth="1.5"
+                  />
+                </svg>
+
+                <svg
+                  viewBox="0 0 120 60"
+                  className="pointer-events-none absolute right-4 top-0 h-4 w-9"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M6 46Q18 44 30 46Q42 48 54 46"
+                    stroke="#c9b79a"
+                    strokeWidth="1"
+                    opacity="0.55"
+                  />
+                  <path d="M24 40L28 47H44L48 40Z" fill="#1e3a8a" opacity="0.9" />
+                  <rect x="29" y="36" width="14" height="4" rx="0.8" fill="#059669" opacity="0.9" />
+                  <line x1="41" y1="36" x2="41" y2="29" stroke="#1e3a8a" strokeWidth="0.8" />
+                  <path d="M41 29L46 31L41 33Z" fill="#f59e0b" opacity="0.9" />
+                </svg>
+              </>
             )}
             <nav
               className={`grid grid-cols-5 items-center gap-4 transition-all duration-300 ${

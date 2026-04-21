@@ -81,26 +81,26 @@ export const Hero = () => {
       {/* Full-bleed background photo */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/why-stress-free.jpg"
+          src="/images/Travelholics_background.png"
           alt="Yolanda, founder of Travelholics"
           fill
           priority
           className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-[#0d4a3a]/65" />
+        <div className="absolute inset-0 bg-[#0d4a3a]/48" />
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to right, rgba(8,42,30,0.90) 0%, rgba(8,42,30,0.68) 42%, rgba(8,42,30,0.20) 72%, rgba(8,42,30,0.06) 100%)",
+              "linear-gradient(to right, rgba(8,42,30,0.72) 0%, rgba(8,42,30,0.50) 42%, rgba(8,42,30,0.18) 72%, rgba(8,42,30,0.05) 100%)",
           }}
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to top, rgba(8,42,30,0.65) 0%, transparent 38%)",
+              "linear-gradient(to top, rgba(8,42,30,0.42) 0%, transparent 38%)",
           }}
         />
       </div>
@@ -109,7 +109,7 @@ export const Hero = () => {
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          opacity: 0.032,
+          opacity: 0.02,
           backgroundImage:
             "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.9) 1px, transparent 0)",
           backgroundSize: "28px 28px",
