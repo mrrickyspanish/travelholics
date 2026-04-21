@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Facebook, Instagram, Mail, Menu, Search, X, Youtube } from "lucide-react";
+import { Facebook, Instagram, Mail, Menu, X, Youtube } from "lucide-react";
 import Image from "next/image";
 
 const navLinks = [
@@ -29,12 +29,10 @@ export const StickyHeader = () => {
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
-
     if (href.startsWith("/")) {
       window.location.href = href;
       return;
     }
-
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -47,10 +45,11 @@ export const StickyHeader = () => {
             : "bg-[#FAF9F6]/88"
         }`}
       >
+        {/* Top utility bar — social icons only */}
         <div className="w-full border-b border-slate-200/60 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <div className="flex h-11 items-center gap-3">
-              <div className="hidden items-center gap-2 sm:flex">
+              <div className="flex items-center gap-2">
                 <a
                   href="https://www.instagram.com"
                   target="_blank"
@@ -78,24 +77,27 @@ export const StickyHeader = () => {
                 >
                   <Youtube size={15} />
                 </a>
+                <a
+                  href="mailto:yo@travelholics.com"
+                  aria-label="Email Travelholics"
+                  className="flex h-7 w-7 items-center justify-center rounded-full text-slate-500 transition-colors hover:text-[#1e3a8a]"
+                >
+                  <Mail size={15} />
+                </a>
               </div>
 
-              <a
-                href="mailto:yo@travelholics.com"
-                aria-label="Email Travelholics"
-                className="flex h-7 w-7 items-center justify-center rounded-full text-slate-500 transition-colors hover:text-[#1e3a8a]"
-              >
-                <Mail size={15} />
-              </a>
-
-              <div className="ml-auto flex w-full max-w-[320px] items-center rounded-full border border-slate-200 bg-white px-3 py-1.5">
-                <Search size={14} className="text-slate-400" />
-                <input
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                  className="w-full bg-transparent px-2 text-sm text-slate-600 placeholder:text-slate-400 focus:outline-none"
-                />
+              <div className="ml-auto">
+                <a
+                  href="https://www.tiktok.com/@rjsmom1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-slate-500 hover:text-[#1e3a8a] transition-colors"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
+                    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.87a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.3z" />
+                  </svg>
+                  <span className="text-xs font-semibold">@rjsmom1</span>
+                </a>
               </div>
             </div>
           </div>
@@ -106,7 +108,7 @@ export const StickyHeader = () => {
             scrolled ? "" : "bg-[#FFFDF8]"
           }`}
         >
-
+          {/* Wordmark — hides on scroll */}
           <div
             className={`hidden items-center justify-center overflow-hidden transition-all duration-300 lg:flex ${
               scrolled
@@ -133,6 +135,7 @@ export const StickyHeader = () => {
             </a>
           </div>
 
+          {/* Desktop nav */}
           <div className="relative hidden lg:block">
             {!scrolled && (
               <>
@@ -148,7 +151,6 @@ export const StickyHeader = () => {
                     strokeWidth="1.5"
                   />
                 </svg>
-
                 <svg
                   viewBox="0 0 120 60"
                   className="pointer-events-none absolute right-4 top-0 h-4 w-9"
@@ -191,6 +193,7 @@ export const StickyHeader = () => {
             </nav>
           </div>
 
+          {/* Mobile header row */}
           <div
             className={`flex items-center justify-between transition-all duration-300 lg:hidden ${
               scrolled ? "h-[52px]" : "h-[58px]"
@@ -213,10 +216,9 @@ export const StickyHeader = () => {
                 priority
               />
             </a>
-
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-100 transition-colors"
+              className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-100 transition-colors"
               aria-label="Toggle menu"
             >
               {mobileOpen ? (
@@ -229,6 +231,7 @@ export const StickyHeader = () => {
         </div>
       </header>
 
+      {/* Mobile drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div

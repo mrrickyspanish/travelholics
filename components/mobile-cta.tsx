@@ -48,7 +48,7 @@ export const MobileCTA = () => {
               </a>
               <a
                 href="/collaborate"
-                className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl shadow-lg shadow-slate-900/20 flex flex-col items-center justify-center gap-1 transition-all text-[12px]"
+                className="bg-[#0f766e] hover:bg-[#0d5f58] text-white font-bold py-3 rounded-xl shadow-lg shadow-teal-900/20 flex flex-col items-center justify-center gap-1 transition-all text-[12px]"
               >
                 <Handshake size={16} />
                 Collab

@@ -16,7 +16,7 @@ const cards = [
   {
     title: "Shop Yolanda's Picks",
     description:
-      "Browse the products and cruise essentials Yolanda talks about during TikTok Lives.",
+      "The packing essentials, cruise gear, and travel favorites from Yolanda's TikTok Lives — all in one place.",
     href: "/shop",
     icon: ShoppingBag,
     accent: "from-[#059669] to-[#10b981]",
@@ -39,7 +39,6 @@ export const IntentRouter = () => {
       window.location.href = href;
       return;
     }
-
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 

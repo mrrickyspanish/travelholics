@@ -22,14 +22,14 @@ export const TrustStrip = () => {
         className="container mx-auto px-6"
       >
         <div className="flex items-center justify-center gap-6 lg:gap-10 flex-wrap">
-          <span className="text-[11px] font-semibold text-white/30 uppercase tracking-[2px]">
-            Certified &amp; Preferred Partner
+          <span className="text-[11px] font-semibold text-white/50 uppercase tracking-[2px]">
+            Experienced Across 6 Cruise Lines
           </span>
-          <div className="hidden sm:block h-4 w-px bg-white/10" />
+          <div className="hidden sm:block h-4 w-px bg-white/20" />
           {cruiseLines.map((line) => (
             <span
               key={line}
-              className="text-xs lg:text-sm font-bold text-white/20 tracking-wide whitespace-nowrap"
+              className="text-xs lg:text-sm font-bold text-white/45 tracking-wide whitespace-nowrap"
             >
               {line}
             </span>

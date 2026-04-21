@@ -9,28 +9,28 @@ const steps = [
     num: "01",
     title: "Tell Me Your Dream",
     description:
-      "Fill out the form with your destination wishlist, group size, and any special occasions. No detail is too small.",
+      "Tell me where you've always wanted to go — your group, your occasion, your must-haves. I take it from there.",
   },
   {
     icon: PhoneCall,
     num: "02",
-    title: "Let's Talk",
+    title: "We Talk It Through",
     description:
-      "I'll reach out for a quick 15-minute call to learn what matters most — budget, vibe, pace, excursions.",
+      "A quick 15-minute call to get the details right — budget, vibe, pace, the excursions worth doing and the ones to skip.",
   },
   {
     icon: CalendarCheck,
     num: "03",
-    title: "Choose Your Adventure",
+    title: "You Choose, I Build",
     description:
-      "I'll present 2–3 tailored itineraries with pricing, cabin options, and insider recommendations for each.",
+      "I put together 2–3 itineraries tailored to you — real cabin options, honest pricing, and the insider picks that make the difference.",
   },
   {
     icon: Ship,
     num: "04",
-    title: "Pack Your Bags",
+    title: "Just Show Up and Sail",
     description:
-      "Once you choose, I handle every last detail — transfers, dining, shore excursions. You just show up and sail.",
+      "I handle everything else — transfers, dining, shore excursions, group coordination. You board ready to enjoy every moment.",
   },
 ];
 
@@ -74,17 +74,14 @@ export const Timeline = () => {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="flex flex-col items-center text-center relative z-10"
             >
-              {/* Icon circle */}
               <div className="relative mb-5">
                 <div className="w-20 h-20 rounded-full bg-[#059669] text-white flex items-center justify-center shadow-xl shadow-emerald-900/20 border-4 border-white">
                   <step.icon size={28} />
                 </div>
-                {/* Number badge */}
                 <div className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-[#f59e0b] text-white text-[10px] font-extrabold flex items-center justify-center border-2 border-white">
                   {step.num}
                 </div>
               </div>
-
               <h3 className="text-lg font-bold text-[#1e3a8a] mb-2">
                 {step.title}
               </h3>
