@@ -61,28 +61,28 @@ function TikTokCard({ product, index }: { product: AffiliateProduct; index: numb
           }}
         />
         <div className="absolute inset-x-0 bottom-0 p-3">
-          <p className="text-[10px] font-bold uppercase tracking-[2px] text-white/60">{product.category}</p>
-          <p className="text-sm font-bold text-white leading-snug mt-0.5">{product.name}</p>
+          <p className="type-kicker text-white/60">{product.category}</p>
+          <p className="text-base font-bold text-white leading-snug mt-0.5">{product.name}</p>
         </div>
       </div>
 
       {/* Content */}
       <div className="p-4">
         <div className="flex items-center gap-2 mb-2">
-          <span className="inline-flex items-center gap-1.5 bg-black text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+          <span className="inline-flex items-center gap-1.5 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full">
             <TikTokIcon className="h-2.5 w-2.5" />
             {product.badge}
           </span>
           <span className="ml-auto text-sm font-bold text-[#1e3a8a]">{product.price}</span>
         </div>
-        <p className="text-[13px] italic text-slate-500 leading-relaxed line-clamp-2 mb-3">
+        <p className="type-caption italic text-slate-500 line-clamp-2 mb-3">
           &ldquo;{product.caption}&rdquo;
         </p>
         <a
           href={product.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex w-full items-center justify-center gap-1.5 bg-black hover:bg-zinc-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors"
+          className="inline-flex w-full items-center justify-center gap-1.5 bg-black hover:bg-zinc-800 text-white text-sm font-bold px-4 py-2.5 rounded-xl transition-colors"
         >
           <TikTokIcon className="h-3.5 w-3.5" />
           Shop on TikTok
@@ -109,16 +109,16 @@ function AmazonCard({ product, index }: { product: AffiliateProduct; index: numb
         className="h-36 relative"
         style={{ background: `linear-gradient(135deg, ${product.accentFrom}, ${product.accentTo})` }}
       >
-        <span className="absolute top-2.5 right-2.5 bg-white/90 text-[10px] font-bold uppercase tracking-wide text-slate-700 px-2 py-0.5 rounded-full">
+        <span className="absolute top-2.5 right-2.5 bg-white/90 text-xs font-bold uppercase tracking-wide text-slate-700 px-2 py-0.5 rounded-full">
           {product.visualLabel}
         </span>
       </div>
 
       {/* Content */}
       <div className="p-3.5">
-        <p className="text-[10px] font-bold uppercase tracking-[1.5px] text-[#059669] mb-1">{product.category}</p>
-        <h3 className="text-sm font-semibold text-slate-900 leading-snug mb-1">{product.name}</h3>
-        <p className="text-[12px] italic text-slate-400 leading-relaxed line-clamp-2 mb-3">
+        <p className="type-kicker text-[#059669] mb-1">{product.category}</p>
+        <h3 className="text-base font-semibold text-slate-900 leading-snug mb-1">{product.name}</h3>
+        <p className="type-caption italic text-slate-400 line-clamp-2 mb-3">
           &ldquo;{product.caption}&rdquo;
         </p>
         <div className="flex items-center justify-between gap-2">
@@ -127,7 +127,7 @@ function AmazonCard({ product, index }: { product: AffiliateProduct; index: numb
             href={product.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 bg-[#f59e0b] hover:bg-[#d97706] text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition-colors"
+            className="inline-flex items-center gap-1 bg-[#f59e0b] hover:bg-[#d97706] text-white text-sm font-bold px-3 py-1.5 rounded-lg transition-colors"
           >
             <AmazonIcon className="h-3 w-3" />
             Get it
@@ -177,11 +177,11 @@ function MerchCard({
             className="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center"
             style={{ background: colorMap[selection.color] ?? "#1e3a8a" }}
           />
-          <p className="text-[10px] font-bold uppercase tracking-[2px] text-slate-400 mb-1">{selection.color}</p>
+          <p className="type-kicker text-slate-400 mb-1">{selection.color}</p>
           <p className="text-base font-black tracking-[0.2em] text-[#1e3a8a]">TRAVELHOLICS</p>
-          <p className="text-[11px] text-[#059669] font-semibold mt-1">{product.mockupLabel}</p>
+          <p className="text-xs text-[#059669] font-semibold mt-1">{product.mockupLabel}</p>
         </div>
-        <span className="absolute top-3 left-3 bg-[#1e3a8a] text-white text-[10px] font-bold px-2.5 py-1 rounded-full">
+        <span className="absolute top-3 left-3 bg-[#1e3a8a] text-white text-xs font-bold px-2.5 py-1 rounded-full">
           {product.badge}
         </span>
         <span className="absolute top-3 right-3 text-base font-bold text-[#1e3a8a]">
@@ -192,7 +192,7 @@ function MerchCard({
       {/* Details */}
       <div className="p-5">
         <h3 className="font-bold text-slate-900 text-lg leading-snug mb-1">{product.name}</h3>
-        <p className="text-[13px] text-slate-500 leading-relaxed mb-4">{product.description}</p>
+        <p className="type-caption text-slate-500 mb-4">{product.description}</p>
 
         {/* Color */}
         <div className="mb-3">
@@ -270,9 +270,9 @@ function MerchCard({
 function SectionHeader({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
   return (
     <div className="mb-8">
-      <p className="text-[11px] font-bold uppercase tracking-[2.5px] text-[#059669] mb-2">{eyebrow}</p>
-      <h2 className="text-2xl font-extrabold text-[#1e3a8a] mb-2">{title}</h2>
-      <p className="text-sm text-slate-500 max-w-xl leading-relaxed">{description}</p>
+      <p className="type-kicker text-[#059669] mb-2">{eyebrow}</p>
+      <h2 className="type-section-title text-[#1e3a8a] mb-3">{title}</h2>
+      <p className="type-body text-slate-500 max-w-xl">{description}</p>
     </div>
   );
 }
@@ -328,14 +328,14 @@ export default function ShopPage() {
               transition={{ duration: 0.5 }}
               className="max-w-2xl"
             >
-              <p className="text-[11px] font-bold uppercase tracking-[3px] text-[#059669] mb-4">
+              <p className="type-kicker text-[#059669] mb-4">
                 Yolanda&apos;s Shop
               </p>
-              <h1 className="text-4xl md:text-5xl font-black text-white leading-tight mb-4">
+              <h1 className="type-page-title text-white mb-4">
                 What I use.<br />
                 <span className="text-[#f59e0b]">What I love.</span>
               </h1>
-              <p className="text-blue-100/60 text-base leading-relaxed max-w-lg">
+              <p className="type-body-lg text-blue-100/75 max-w-lg">
                 20 years of cruise experience distilled into the things I actually reach for — plus the brand we built for travelers like you.
               </p>
             </motion.div>
@@ -408,7 +408,7 @@ export default function ShopPage() {
               description="Official Travelholics gear. Built for the airport, the deck, and everywhere in between."
             />
 
-            <div className="flex items-center gap-2 mb-6 text-xs font-medium text-[#047857]">
+            <div className="flex items-center gap-2 mb-6 text-sm font-medium text-[#047857]">
               <ShieldCheck className="h-4 w-4" />
               Secure checkout via Stripe
             </div>
@@ -443,14 +443,14 @@ export default function ShopPage() {
               viewport={{ once: true }}
               className="bg-gradient-to-br from-emerald-800 to-teal-900 rounded-2xl px-8 py-10 text-center text-white"
             >
-              <p className="text-[11px] font-bold uppercase tracking-[3px] text-emerald-300 mb-3">Ready to sail?</p>
-              <h2 className="text-2xl font-bold mb-2">Want me to plan the whole trip?</h2>
-              <p className="text-emerald-100/80 text-sm mb-6 max-w-sm mx-auto">
+              <p className="type-kicker text-emerald-300 mb-3">Ready to sail?</p>
+              <h2 className="type-section-title mb-3">Want me to plan the whole trip?</h2>
+              <p className="type-body text-emerald-100/80 mb-6 max-w-sm mx-auto">
                 The gear is a start. Let&apos;s build a trip around you.
               </p>
               <Link
                 href="/#contact"
-                className="inline-flex items-center gap-2 bg-white text-emerald-800 font-bold px-7 py-3 rounded-xl hover:bg-emerald-50 transition-colors text-sm"
+                className="type-cta inline-flex items-center gap-2 bg-white text-emerald-800 px-7 py-3 rounded-xl hover:bg-emerald-50 transition-colors"
               >
                 Plan My Trip ✦
               </Link>

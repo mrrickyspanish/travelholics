@@ -25,6 +25,68 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@layer base {
+  /* Guardrail: prevent ultra-small arbitrary text sizes from slipping into new files. */
+  [class*="text-[10px]"],
+  [class*="text-[11px]"],
+  [class*="text-[12px]"],
+  [class*="text-[13px]"] {
+    font-size: 0.875rem !important;
+    line-height: 1.45 !important;
+  }
+}
+
+@layer utilities {
+  /* Shared text scale for consistent typography across pages. */
+  .type-kicker {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .type-caption {
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .type-body {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .type-body-lg {
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    line-height: 1.8;
+  }
+
+  .type-page-title {
+    font-size: clamp(2.75rem, 5vw, 4.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+  }
+
+  .type-page-subhead {
+    font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+    line-height: 1.18;
+  }
+
+  .type-section-title {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 800;
+  }
+
+  .type-cta {
+    font-size: 0.9375rem;
+    line-height: 1;
+    font-weight: 700;
+  }
+}
+
 /* Button ripple */
 @keyframes ripple {
   from { transform: scale(0); opacity: 0.4; }

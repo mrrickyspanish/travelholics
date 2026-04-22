@@ -297,7 +297,7 @@ export default function DuckHuntPage() {
                   </div>
                 </div>
 
-                <p className="text-[#10553C]/65 text-[13px] font-bold uppercase tracking-[.2em] mt-9">
+                <p className="type-kicker text-[#10553C]/65 mt-9">
                   Something&apos;s inside...
                 </p>
               </div>
@@ -312,7 +312,7 @@ export default function DuckHuntPage() {
                   }}
                   className="inline-block border border-[#10553C]/25 rounded-full px-5 py-2.5 mb-8 bg-[#10553C]/6"
                 >
-                  <span className="text-[#10553C] text-[11px] font-bold uppercase tracking-[.3em]">
+                  <span className="type-kicker text-[#10553C]">
                     Official Travelholics Duck Find
                   </span>
                 </div>
@@ -345,19 +345,19 @@ export default function DuckHuntPage() {
                   }}
                 >
                   <h1
-                    className={`${playfair.className} text-[48px] font-black text-[#0D2D4A] leading-[1.05] mb-2`}
+                    className={`${playfair.className} type-page-title text-[#0D2D4A] mb-2`}
                   >
                     You found it.
                   </h1>
 
                   <h2
-                    className={`${playfair.className} text-[40px] font-bold italic leading-none mb-7`}
+                    className={`${playfair.className} type-page-subhead font-bold italic mb-7`}
                     style={{ color: "#0E9E72" }}
                   >
                     Now claim it.
                   </h2>
 
-                  <p className="text-[#3A5244] text-[17px] leading-[1.85] max-w-[290px] mx-auto mb-9">
+                  <p className="type-body-lg text-[#3A5244] max-w-[290px] mx-auto mb-9">
                     We&apos;re fellow cruisers who hide ducks for curious
                     travelers. You found ours — and we&apos;re mailing you a
                     real gift, on us.
@@ -365,12 +365,12 @@ export default function DuckHuntPage() {
 
                   <a
                     href="#form"
-                    className="block w-full py-5 bg-[#10553C] text-[#FAF9F6] font-extrabold text-[15px] tracking-[.1em] uppercase rounded-[4px] text-center active:scale-[.98] transition-transform"
+                    className="type-cta block w-full py-5 bg-[#10553C] text-[#FAF9F6] tracking-[.1em] uppercase rounded-[4px] text-center active:scale-[.98] transition-transform"
                   >
                     Claim My Gift →
                   </a>
 
-                  <p className="text-[#9AA89F] text-[13px] mt-3.5">
+                  <p className="type-caption text-[#9AA89F] mt-3.5">
                     No purchase necessary. Just a gift from us to you.
                   </p>
                 </div>
@@ -385,19 +385,19 @@ export default function DuckHuntPage() {
                   <div className="w-[3px] h-[72px] bg-[#10553C] rounded-full shrink-0 mt-1" />
                   <div>
                     <div
-                      className={`${playfair.className} text-[32px] font-black text-[#0D2D4A] leading-none`}
+                      className={`${playfair.className} type-section-title text-[#0D2D4A] leading-none`}
                     >
                       Where should
                     </div>
                     <div
-                      className={`${playfair.className} text-[32px] font-bold italic leading-none mt-1`}
+                      className={`${playfair.className} type-section-title font-bold italic leading-none mt-1`}
                       style={{ color: "#0E9E72" }}
                     >
                       we send it?
                     </div>
                   </div>
                 </div>
-                <p className="text-[#6B8077] text-[15px] leading-relaxed ml-[15px]">
+                <p className="type-body text-[#6B8077] ml-[15px]">
                   We&apos;ll follow up by email to get your mailing address.
                 </p>
               </div>
@@ -417,7 +417,7 @@ export default function DuckHuntPage() {
                 </div>
 
                 <div>
-                  <div className="text-[9px] font-bold text-[#10553C] uppercase tracking-[.25em] mb-2">
+                  <div className="type-kicker text-[#10553C] mb-2">
                     First Name
                   </div>
                   <input
@@ -431,7 +431,7 @@ export default function DuckHuntPage() {
                 </div>
 
                 <div>
-                  <div className="text-[9px] font-bold text-[#10553C] uppercase tracking-[.25em] mb-2">
+                  <div className="type-kicker text-[#10553C] mb-2">
                     Email Address
                   </div>
                   <input
@@ -445,7 +445,7 @@ export default function DuckHuntPage() {
                 </div>
 
                 <div>
-                  <div className="text-[9px] font-bold text-[#10553C] uppercase tracking-[.25em] mb-2">
+                  <div className="type-kicker text-[#10553C] mb-2">
                     Where Are You From?
                   </div>
                   <input
@@ -458,7 +458,7 @@ export default function DuckHuntPage() {
                 </div>
 
                 <div>
-                  <div className="text-[9px] font-bold text-[#10553C] uppercase tracking-[.25em] mb-3">
+                  <div className="type-kicker text-[#10553C] mb-3">
                     What&apos;s the Occasion?
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -467,7 +467,7 @@ export default function DuckHuntPage() {
                         key={option}
                         type="button"
                         onClick={() => setTravelReason(option)}
-                        className={`px-4 py-2 text-[11px] font-bold rounded-[2px] tracking-[.05em] transition-all border ${
+                        className={`px-4 py-2 text-sm font-bold rounded-[2px] tracking-[.05em] transition-all border ${
                           travelReason === option
                             ? "bg-[#0D2D4A] text-[#FAF9F6] border-[#0D2D4A]"
                             : "bg-transparent text-[#0D2D4A] border-[#C8C4BC] hover:border-[#0D2D4A]"
@@ -480,14 +480,14 @@ export default function DuckHuntPage() {
                 </div>
 
                 {formState === "error" && (
-                  <p className="text-red-500 text-[15px] text-center">
+                  <p className="type-body text-red-500 text-center">
                     Something went wrong — please try again.
                   </p>
                 )}
                 <button
                   type="submit"
                   disabled={formState === "submitting"}
-                  className="w-full py-5 bg-[#10553C] text-[#FAF9F6] font-extrabold text-[15px] tracking-[.1em] uppercase rounded-[4px] active:scale-[.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="type-cta w-full py-5 bg-[#10553C] text-[#FAF9F6] tracking-[.1em] uppercase rounded-[4px] active:scale-[.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {formState === "submitting" ? "Sending..." : "Send My Gift"}
                 </button>
@@ -500,32 +500,32 @@ export default function DuckHuntPage() {
               <div className="text-[56px] mb-6">🎉</div>
 
               <h2
-                className={`${playfair.className} text-[36px] font-black text-[#F7F4EF] leading-tight mb-2`}
+                className={`${playfair.className} type-section-title text-[#F7F4EF] mb-2`}
               >
                 You&apos;re officially
               </h2>
               <h2
-                className={`${playfair.className} text-[36px] font-bold italic mb-6`}
+                className={`${playfair.className} type-section-title font-bold italic mb-6`}
                 style={{ color: "#0E9E72" }}
               >
                 one of us.
               </h2>
 
-              <p className="text-[#F7F4EF]/60 text-[17px] leading-[1.85] max-w-[280px] mb-12">
+              <p className="type-body-lg text-[#F7F4EF]/60 max-w-[280px] mb-12">
                 We&apos;ll send you an email to grab your mailing address —
                 then your gift ships out to you.
               </p>
 
               <div className="w-full space-y-3 text-left">
                 <div className="flex gap-4 items-start p-5 border border-[#D4A853]/15 rounded-[4px]">
-                  <div className="w-7 h-7 bg-[#D4A853] rounded-full flex items-center justify-center text-[#0D2D4A] font-black text-[11px] shrink-0">
+                  <div className="w-7 h-7 bg-[#D4A853] rounded-full flex items-center justify-center text-[#0D2D4A] font-black text-xs shrink-0">
                     1
                   </div>
                   <div>
-                    <div className="text-[#F7F4EF] font-bold text-[16px] mb-1">
+                    <div className="text-[#F7F4EF] font-bold text-base mb-1">
                       Check your inbox
                     </div>
-                    <div className="text-[#F7F4EF]/45 text-[14px] leading-relaxed">
+                    <div className="type-caption text-[#F7F4EF]/45">
                       Look for an email from us — we&apos;ll ask for your
                       mailing address there to ship your gift.
                     </div>
@@ -533,14 +533,14 @@ export default function DuckHuntPage() {
                 </div>
 
                 <div className="flex gap-4 items-start p-5 border border-[#D4A853]/15 rounded-[4px]">
-                  <div className="w-7 h-7 bg-[#D4A853] rounded-full flex items-center justify-center text-[#0D2D4A] font-black text-[11px] shrink-0">
+                  <div className="w-7 h-7 bg-[#D4A853] rounded-full flex items-center justify-center text-[#0D2D4A] font-black text-xs shrink-0">
                     2
                   </div>
                   <div>
-                    <div className="text-[#F7F4EF] font-bold text-[16px] mb-1">
+                    <div className="text-[#F7F4EF] font-bold text-base mb-1">
                       Follow us on TikTok
                     </div>
-                    <div className="text-[#F7F4EF]/45 text-[14px] leading-relaxed">
+                    <div className="type-caption text-[#F7F4EF]/45">
                       Cruise tips, deals, and trip ideas @rjsmom1 — come sail
                       with us.
                     </div>
@@ -550,7 +550,7 @@ export default function DuckHuntPage() {
 
               <Link
                 href="/"
-                className="mt-12 text-[#D4A853] font-extrabold text-[15px] tracking-[.08em] uppercase flex items-center gap-2"
+                className="type-cta mt-12 text-[#D4A853] tracking-[.08em] uppercase flex items-center gap-2"
               >
                 Explore Travelholics →
               </Link>

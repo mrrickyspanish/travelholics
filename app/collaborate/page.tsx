@@ -191,17 +191,17 @@ export default function CollaboratePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#059669]/10 text-[#059669] text-sm font-semibold mb-6"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#059669]/10 text-[#059669] mb-6"
               >
                 <Handshake size={14} />
-                <span className="uppercase tracking-wider text-xs">Travelholics × Brand</span>
+                <span className="type-kicker">Travelholics × Brand</span>
               </motion.div>
 
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-5xl lg:text-6xl font-extrabold text-[#1e3a8a] leading-[1.05] tracking-tight mb-6"
+                className="type-page-title text-[#1e3a8a] mb-6"
               >
                 Work With Yolanda
                 <br />
@@ -212,7 +212,7 @@ export default function CollaboratePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="text-lg text-slate-500 leading-relaxed max-w-xl mb-8"
+                className="type-body-lg text-slate-500 max-w-xl mb-8"
               >
                 Travelholics partners with brands, destinations, cruise lines, and hospitality businesses to create useful, story-driven travel content that feels personal and performs with real people.
               </motion.p>
@@ -225,13 +225,13 @@ export default function CollaboratePage() {
               >
                 <a
                   href="#collab-form"
-                  className="bg-[#059669] hover:bg-[#047857] text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-emerald-900/20 transition-all hover:-translate-y-0.5 active:translate-y-0 text-center"
+                  className="type-cta bg-[#059669] hover:bg-[#047857] text-white px-8 py-4 rounded-xl shadow-lg shadow-emerald-900/20 transition-all hover:-translate-y-0.5 active:translate-y-0 text-center"
                 >
                   Start a Collaboration
                 </a>
                 <Link
                   href="/shop"
-                  className="flex items-center justify-center border-2 border-slate-200 hover:border-[#059669] bg-white text-[#1e3a8a] font-bold px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5"
+                  className="type-cta flex items-center justify-center border-2 border-slate-200 hover:border-[#059669] bg-white text-[#1e3a8a] px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5"
                 >
                   See Yolanda&apos;s Picks
                 </Link>
@@ -252,8 +252,8 @@ export default function CollaboratePage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#059669] mb-3">Why it works</p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] leading-tight">
+            <p className="type-kicker text-[#059669] mb-3">Why it works</p>
+            <h2 className="type-section-title text-[#1e3a8a]">
               Built on trust. Driven by real experience.
             </h2>
           </motion.div>
@@ -272,8 +272,8 @@ export default function CollaboratePage() {
                   <div className="w-12 h-12 rounded-2xl bg-[#f59e0b]/10 text-[#f59e0b] flex items-center justify-center mb-5">
                     <Icon size={22} />
                   </div>
-                  <h3 className="text-xl font-extrabold text-[#1e3a8a] mb-3">{card.title}</h3>
-                  <p className="text-slate-500 leading-relaxed text-base md:text-lg">{card.body}</p>
+                  <h3 className="text-2xl font-extrabold text-[#1e3a8a] mb-3">{card.title}</h3>
+                  <p className="type-body text-slate-500">{card.body}</p>
                 </motion.div>
               );
             })}
@@ -283,7 +283,7 @@ export default function CollaboratePage() {
 
       {/* 3. Visual Proof Image Strip */}
       <section className="bg-[#1e3a8a] py-8">
-        <p className="text-center text-xs font-bold uppercase tracking-[0.25em] text-white/50 mb-6">Yolanda&apos;s world</p>
+        <p className="type-kicker text-center text-white/50 mb-6">Yolanda&apos;s world</p>
         <div className="flex overflow-hidden">
           {proofImages.map((img) => (
             <div key={img.src} className="relative flex-1 h-64 md:h-80 min-w-0">
@@ -308,11 +308,11 @@ export default function CollaboratePage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#059669] mb-3">Ways we work together</p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] leading-tight mb-4">
+            <p className="type-kicker text-[#059669] mb-3">Ways we work together</p>
+            <h2 className="type-section-title text-[#1e3a8a] mb-4">
               Business-forward partnerships that still feel personal.
             </h2>
-            <p className="text-slate-500 text-lg md:text-xl leading-relaxed">
+            <p className="type-body-lg text-slate-500">
               Travelholics is not just posting pretty pictures. Yolanda helps people discover trips worth taking, products worth packing, and experiences worth booking.
             </p>
           </motion.div>
@@ -326,7 +326,7 @@ export default function CollaboratePage() {
             {collaborationTypes.map((item) => (
               <div
                 key={item}
-                className="bg-white border border-slate-200 rounded-2xl px-4 py-4 font-semibold text-slate-700 flex items-center gap-2"
+                className="bg-white border border-slate-200 rounded-2xl px-4 py-4 text-base font-semibold text-slate-700 flex items-center gap-2"
               >
                 <Check size={15} className="text-[#059669] shrink-0" />
                 {item}
@@ -346,8 +346,8 @@ export default function CollaboratePage() {
             transition={{ duration: 0.6 }}
             className="mb-12"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#059669] mb-3">Partnership examples</p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] leading-tight max-w-xl">
+            <p className="type-kicker text-[#059669] mb-3">Partnership examples</p>
+            <h2 className="type-section-title text-[#1e3a8a] max-w-xl">
               Here&apos;s what we can create together.
             </h2>
           </motion.div>
@@ -366,8 +366,8 @@ export default function CollaboratePage() {
                   <div className="w-10 h-10 rounded-xl bg-[#059669]/10 text-[#059669] flex items-center justify-center mb-4">
                     <Icon size={18} />
                   </div>
-                  <h3 className="text-lg font-extrabold text-[#1e3a8a] mb-2">{item.title}</h3>
-                  <p className="text-slate-500 text-base leading-relaxed">{item.body}</p>
+                  <h3 className="text-xl font-extrabold text-[#1e3a8a] mb-2">{item.title}</h3>
+                  <p className="type-body text-slate-500">{item.body}</p>
                 </motion.div>
               );
             })}
@@ -385,11 +385,11 @@ export default function CollaboratePage() {
             transition={{ duration: 0.6 }}
             className="mb-10"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#059669] mb-3">Ideal partners</p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] leading-tight mb-4 max-w-xl">
+            <p className="type-kicker text-[#059669] mb-3">Ideal partners</p>
+            <h2 className="type-section-title text-[#1e3a8a] mb-4 max-w-xl">
               The kinds of brands and businesses we want to hear from.
             </h2>
-            <p className="text-slate-500 text-lg md:text-xl leading-relaxed max-w-2xl">
+            <p className="type-body-lg text-slate-500 max-w-2xl">
               We are especially interested in partnerships that help travelers plan better, experience more, and feel more prepared before they go.
             </p>
           </motion.div>
@@ -426,11 +426,11 @@ export default function CollaboratePage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-10"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#059669] mb-3">Get in touch</p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] leading-tight mb-4">
+            <p className="type-kicker text-[#059669] mb-3">Get in touch</p>
+            <h2 className="type-section-title text-[#1e3a8a] mb-4">
               Ready to work together?
             </h2>
-            <p className="text-slate-500 text-lg leading-relaxed">
+            <p className="type-body text-slate-500">
               Tell us what you have in mind and Yolanda will be in touch.
             </p>
           </motion.div>
@@ -451,7 +451,7 @@ export default function CollaboratePage() {
                 <h3 className="text-2xl font-bold text-[#1e3a8a] mb-2">
                   Collaboration request started.
                 </h3>
-                <p className="text-slate-500 text-base mb-6">
+                <p className="type-body text-slate-500 mb-6">
                   Your email draft should be open now. Send it through and Yolanda can review the opportunity.
                 </p>
                 <button
@@ -534,7 +534,7 @@ export default function CollaboratePage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#059669] hover:bg-[#047857] text-white font-bold py-4 rounded-xl transition-all disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5 active:translate-y-0"
+                  className="type-cta w-full bg-[#059669] hover:bg-[#047857] text-white py-4 rounded-xl transition-all disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5 active:translate-y-0"
                 >
                   {isSubmitting ? "Opening..." : "Start a Collaboration"}
                 </button>

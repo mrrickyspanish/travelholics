@@ -34,21 +34,21 @@ export const MobileCTA = () => {
             <div className="grid grid-cols-3 gap-2">
               <button
                 onClick={scrollToContact}
-                className="bg-[#059669] hover:bg-[#047857] text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-900/20 flex flex-col items-center justify-center gap-1 transition-all active:scale-[0.98] text-[12px]"
+                className="bg-[#059669] hover:bg-[#047857] text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-900/20 flex flex-col items-center justify-center gap-1 transition-all active:scale-[0.98] text-sm"
               >
                 <Ship size={16} />
                 Plan
               </button>
               <a
                 href="/shop"
-                className="bg-[#1e3a8a] hover:bg-[#1d4ed8] text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-900/20 flex flex-col items-center justify-center gap-1 transition-all text-[12px]"
+                className="bg-[#1e3a8a] hover:bg-[#1d4ed8] text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-900/20 flex flex-col items-center justify-center gap-1 transition-all text-sm"
               >
                 <ShoppingBag size={16} />
                 Shop
               </a>
               <a
                 href="/collaborate"
-                className="bg-[#0f766e] hover:bg-[#0d5f58] text-white font-bold py-3 rounded-xl shadow-lg shadow-teal-900/20 flex flex-col items-center justify-center gap-1 transition-all text-[12px]"
+                className="bg-[#0f766e] hover:bg-[#0d5f58] text-white font-bold py-3 rounded-xl shadow-lg shadow-teal-900/20 flex flex-col items-center justify-center gap-1 transition-all text-sm"
               >
                 <Handshake size={16} />
                 Collab
