@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export const Footer = () => {
   return (
-    <footer className="bg-[#162e6e] pt-12 pb-8 border-t-[3px] border-[#059669]">
+    <footer className="bg-[#145544] pt-12 pb-8 border-t-[3px] border-[#059669]">
       <div className="max-w-7xl mx-auto px-6">
         {/* Main row */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-8">
@@ -23,22 +23,22 @@ export const Footer = () => {
 
           {/* Nav links */}
           <div className="flex items-center gap-6 text-sm font-semibold flex-wrap">
-            <a href="/#about" className="text-blue-100/40 hover:text-white transition-colors">
+            <a href="/#about" className="text-emerald-100/60 hover:text-white transition-colors">
               About
             </a>
-            <a href="/#testimonials" className="text-blue-100/40 hover:text-white transition-colors">
+            <a href="/#testimonials" className="text-emerald-100/60 hover:text-white transition-colors">
               Reviews
             </a>
-            <a href="/#process" className="text-blue-100/40 hover:text-white transition-colors">
+            <a href="/#process" className="text-emerald-100/60 hover:text-white transition-colors">
               How It Works
             </a>
-            <Link href="/shop" className="text-blue-100/40 hover:text-white transition-colors">
+            <Link href="/shop" className="text-emerald-100/60 hover:text-white transition-colors">
               Shop
             </Link>
-            <Link href="/collaborate" className="text-blue-100/40 hover:text-white transition-colors">
+            <Link href="/collaborate" className="text-emerald-100/60 hover:text-white transition-colors">
               Collaborate
             </Link>
-            <a href="/#contact" className="text-blue-100/40 hover:text-white transition-colors">
+            <a href="/#contact" className="text-emerald-100/60 hover:text-white transition-colors">
               Contact
             </a>
           </div>
@@ -67,7 +67,7 @@ export const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-blue-100/25">
+        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-emerald-100/40">
           <div className="flex items-center gap-4">
             <span>&copy; {new Date().getFullYear()} Travelholics</span>
             <Link href="/privacy" className="hover:text-white/50 transition-colors">
@@ -83,7 +83,7 @@ export const Footer = () => {
               href="https://creativeeyestudios.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-100/40 hover:text-white/60 transition-colors"
+              className="text-emerald-100/60 hover:text-white/80 transition-colors"
             >
               Creative Eye Studios
             </a>

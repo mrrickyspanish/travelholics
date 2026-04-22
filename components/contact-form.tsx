@@ -68,13 +68,13 @@ export const ContactForm = () => {
   return (
     <section
       id="contact"
-      className="bg-[#1e3a8a] py-24 relative overflow-hidden"
+      className="bg-[#f3eee3] py-24 relative overflow-hidden"
     >
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.05]"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+            "radial-gradient(circle at 1px 1px, rgba(18,58,47,0.45) 1px, transparent 0)",
           backgroundSize: "32px 32px",
         }}
       />
@@ -87,24 +87,24 @@ export const ContactForm = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-5">
+            <h2 className="text-4xl lg:text-5xl font-extrabold text-[#123a2f] leading-tight mb-5">
               Ready to Start?
               <br />
-              <span className="text-[#059669]">Let&apos;s Talk.</span>
+              <span className="text-[#0f766e]">Let&apos;s Talk.</span>
             </h2>
-            <p className="text-base text-blue-100/50 leading-relaxed mb-8">
+            <p className="text-base text-[#3f5a53] leading-relaxed mb-8">
               Tell me about your dream trip and I&apos;ll respond within 24
               hours with a personalized plan. No pressure, no spam — just a real
               conversation about your next adventure.
             </p>
 
             <div className="flex items-center gap-3">
-              <div className="w-13 h-13 rounded-full bg-[#059669]/30 border-2 border-[#059669] flex items-center justify-center shrink-0">
-                <Anchor size={20} className="text-white" />
+              <div className="w-13 h-13 rounded-full bg-[#059669]/15 border-2 border-[#059669]/60 flex items-center justify-center shrink-0">
+                <Anchor size={20} className="text-[#14532d]" />
               </div>
               <div>
-                <p className="text-white font-bold text-[15px]">Yolanda</p>
-                <p className="text-[#059669] text-xs font-medium">
+                <p className="text-[#123a2f] font-bold text-[15px]">Yolanda</p>
+                <p className="text-[#0f766e] text-xs font-medium">
                   Replies within 24 hours
                 </p>
               </div>
@@ -116,7 +116,7 @@ export const ContactForm = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="bg-white rounded-3xl p-7 lg:p-8"
+            className="bg-white/95 backdrop-blur-sm border border-[#d7ddd5] rounded-3xl p-7 lg:p-8 shadow-xl shadow-[#123a2f]/8"
           >
             {isSuccess ? (
               <div className="py-10 text-center">

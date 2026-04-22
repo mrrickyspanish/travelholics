@@ -218,13 +218,13 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
   {
     id: "merch-crewneck",
     zone: "merch",
-    name: "Yotravelholic Crewneck",
+    name: "Travelholics Crewneck",
     description:
-      "Official Yotravelholic gear with a clean logo-forward front that works at the airport, on deck, or on a casual day out.",
+      "Official Travelholics gear with a clean logo-forward front that works at the airport, on deck, or on a casual day out.",
     badge: "New Drop",
     price: 5800,
     currency: "usd",
-    stripeLabel: "Yotravelholic Crewneck",
+    stripeLabel: "Travelholics Crewneck",
     checkoutMode: "api",
     colors: ["Navy", "Sand", "Forest"],
     sizes: ["S", "M", "L", "XL", "XXL"],
@@ -233,13 +233,13 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
   {
     id: "merch-hoodie",
     zone: "merch",
-    name: "Yotravelholic Hoodie",
+    name: "Travelholics Hoodie",
     description:
       "Heavyweight comfort with the brand front and center. This is the one for chilly sail-aways and airport mornings.",
     badge: "Best Seller",
     price: 7200,
     currency: "usd",
-    stripeLabel: "Yotravelholic Hoodie",
+    stripeLabel: "Travelholics Hoodie",
     checkoutMode: "api",
     colors: ["Navy", "Cream", "Forest"],
     sizes: ["S", "M", "L", "XL", "XXL"],
@@ -248,13 +248,13 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
   {
     id: "merch-polo",
     zone: "merch",
-    name: "Yotravelholic Polo",
+    name: "Travelholics Polo",
     description:
       "A sharper option with a small embroidered-style chest mark. Easy to wear when you want the brand to feel elevated.",
     badge: "Premium Pick",
     price: 6400,
     currency: "usd",
-    stripeLabel: "Yotravelholic Polo",
+    stripeLabel: "Travelholics Polo",
     checkoutMode: "api",
     colors: ["Navy", "White", "Forest"],
     sizes: ["S", "M", "L", "XL", "XXL"],

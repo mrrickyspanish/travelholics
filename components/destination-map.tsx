@@ -546,7 +546,7 @@ export function DestinationMap() {
               </div>
 
               <div className="pointer-events-none absolute left-5 top-5 rounded-full border border-white/10 bg-slate-950/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[1.8px] text-white/55 backdrop-blur">
-                Yotravelholic Explorer View
+                Travelholics Explorer View
               </div>
 
               <div className="pointer-events-none absolute bottom-5 left-5 flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/40 px-3 py-1.5 text-[11px] font-medium text-white/55 backdrop-blur">

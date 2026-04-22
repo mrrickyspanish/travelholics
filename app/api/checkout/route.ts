@@ -77,7 +77,7 @@ export async function POST(request: Request) {
       color,
       size,
       quantity: String(quantity),
-      source: "yotravelholic-shop",
+      source: "travelholics-shop",
     },
   });
 
