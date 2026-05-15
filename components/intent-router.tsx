@@ -8,10 +8,10 @@ const cards = [
     title: "Plan Your Cruise",
     description:
       "Work directly with Yolanda for cruise planning, group trips, and stress-free travel support.",
-    href: "#contact",
+    href: "/cruise-interest",
     icon: Ship,
     accent: "from-[#1e3a8a] to-[#2563eb]",
-    action: "Book travel help",
+    action: "Plan a cruise",
   },
   {
     title: "Shop Yolanda's Picks",
