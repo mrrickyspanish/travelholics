@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Dancing_Script, Playfair_Display } from "next/font/google";
 import Image from "next/image";
-import { RippleButton } from "@/components/ripple-button";
+import Link from "next/link";
 
 const dancing = Dancing_Script({
   subsets: ["latin"],
@@ -59,10 +59,6 @@ export const Hero = () => {
 
   const { scrollY } = useScroll();
   const bgY = useTransform(scrollY, [0, 600], ["0%", "18%"]);
-
-  const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -260,9 +256,9 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="flex flex-wrap items-center gap-3 mb-8"
             >
-              <RippleButton
-                onClick={scrollToContact}
-                className="bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-lg transition-all hover:-translate-y-0.5 active:translate-y-0"
+              <Link
+                href="/cruise-interest"
+                className="inline-flex items-center bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-lg transition-all hover:-translate-y-0.5 active:translate-y-0"
                 style={{
                   fontSize: "15px",
                   letterSpacing: "0.04em",
@@ -270,8 +266,8 @@ export const Hero = () => {
                   boxShadow: "0 8px 24px rgba(5,150,105,0.35)",
                 }}
               >
-                Plan My Cruise
-              </RippleButton>
+                Plan a Cruise
+              </Link>
               <a
                 href="/shop"
                 className="font-semibold text-white/75 hover:text-white rounded-lg transition-all hover:-translate-y-0.5"

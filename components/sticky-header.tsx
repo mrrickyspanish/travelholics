@@ -7,6 +7,7 @@ import Image from "next/image";
 import { RippleButton } from "@/components/ripple-button";
 
 const navLinks = [
+  { label: "Plan a Cruise", href: "/cruise-interest" },
   { label: "About Yolanda", href: "#about" },
   { label: "What Travelers Say", href: "#testimonials" },
   { label: "How It Works", href: "#process" },
@@ -28,15 +29,6 @@ export const StickyHeader = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const scrollToContact = () => {
-    setMobileOpen(false);
-    if (window.location.pathname !== "/") {
-      window.location.href = "/#contact";
-      return;
-    }
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
@@ -157,7 +149,7 @@ export const StickyHeader = () => {
 
           {/* Desktop nav */}
           <nav
-            className={`hidden lg:grid grid-cols-5 items-center gap-4 transition-all duration-300 ${
+            className={`hidden lg:grid grid-cols-6 items-center gap-4 transition-all duration-300 ${
               scrolled ? "py-2" : "pt-4 pb-2.5"
             }`}
           >
@@ -171,10 +163,10 @@ export const StickyHeader = () => {
               </button>
             ))}
             <RippleButton
-              onClick={scrollToContact}
+              onClick={() => handleNavClick("/cruise-interest")}
               className="w-full bg-[#059669] hover:bg-[#047857] text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all hover:-translate-y-0.5 active:translate-y-0"
             >
-              Plan My Cruise
+              Plan a Cruise
             </RippleButton>
           </nav>
 
@@ -231,10 +223,10 @@ export const StickyHeader = () => {
                 </button>
               ))}
               <RippleButton
-                onClick={scrollToContact}
+                onClick={() => handleNavClick("/cruise-interest")}
                 className="mt-3 w-full bg-[#059669] hover:bg-[#047857] text-white font-bold py-3.5 rounded-xl text-[15px] transition-all"
               >
-                Plan My Cruise
+                Plan a Cruise
               </RippleButton>
             </div>
           </motion.div>

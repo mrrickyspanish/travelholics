@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Ship, ShoppingBag, Handshake } from "lucide-react";
+import Link from "next/link";
 
 export const MobileCTA = () => {
   const [visible, setVisible] = useState(false);
@@ -14,10 +15,6 @@ export const MobileCTA = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <AnimatePresence>
@@ -32,13 +29,13 @@ export const MobileCTA = () => {
           <div className="h-4 bg-gradient-to-t from-white to-transparent" />
           <div className="bg-white border-t border-slate-100 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3">
             <div className="grid grid-cols-3 gap-2">
-              <button
-                onClick={scrollToContact}
+              <Link
+                href="/cruise-interest"
                 className="bg-[#059669] hover:bg-[#047857] text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-900/20 flex flex-col items-center justify-center gap-1 transition-all active:scale-[0.98] text-sm"
               >
                 <Ship size={16} />
                 Plan
-              </button>
+              </Link>
               <a
                 href="/shop"
                 className="bg-[#1e3a8a] hover:bg-[#1d4ed8] text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-900/20 flex flex-col items-center justify-center gap-1 transition-all text-sm"
