@@ -16,7 +16,7 @@ export interface MapView {
 }
 
 export const DESTINATION_MAP_GEOGRAPHY = "/data/world-110m.json";
-export const DESTINATION_CTA_HREF = "#contact";
+export const DESTINATION_CTA_HREF = "/cruise-interest";
 
 export const DEFAULT_MAP_VIEW: MapView = {
   center: [0, 20],
