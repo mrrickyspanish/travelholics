@@ -151,7 +151,7 @@ git push -u origin main
 
 3. **Configure Domain:**
    - In Vercel project settings → Domains
-   - Add `yotravelholics.com` and `www.yotravelholics.com`
+  - Add `yotravelholic.com` and `www.yotravelholic.com`
    - Copy the DNS records provided
 
 4. **Update DNS at Domain Registrar:**

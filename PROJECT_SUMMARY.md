@@ -205,7 +205,7 @@ Vercel provides basic analytics, or add Google Analytics for deeper insights.
 - ✅ Form submissions work and save to Supabase
 - ✅ Mobile experience is smooth
 - ✅ Mom receives inquiry emails
-- ✅ Domain points correctly to yotravelholics.com
+- ✅ Domain points correctly to yotravelholic.com
 
 **Ongoing Success = Success if:**
 - Form conversion rate >5% (visits → submissions)
