@@ -23,22 +23,22 @@ export const Footer = () => {
 
           {/* Nav links */}
           <div className="flex items-center gap-6 text-sm font-semibold flex-wrap">
-            <a href="/#about" className="text-emerald-100/60 hover:text-white transition-colors">
+            <a href="/#about" className="text-emerald-100/85 hover:text-white transition-colors min-h-12 inline-flex items-center">
               About
             </a>
-            <a href="/#testimonials" className="text-emerald-100/60 hover:text-white transition-colors">
+            <a href="/#testimonials" className="text-emerald-100/85 hover:text-white transition-colors min-h-12 inline-flex items-center">
               Reviews
             </a>
-            <a href="/#process" className="text-emerald-100/60 hover:text-white transition-colors">
+            <a href="/#process" className="text-emerald-100/85 hover:text-white transition-colors min-h-12 inline-flex items-center">
               How It Works
             </a>
-            <Link href="/shop" className="text-emerald-100/60 hover:text-white transition-colors">
+            <Link href="/shop" className="text-emerald-100/85 hover:text-white transition-colors min-h-12 inline-flex items-center">
               Shop
             </Link>
-            <Link href="/collaborate" className="text-emerald-100/60 hover:text-white transition-colors">
+            <Link href="/collaborate" className="text-emerald-100/85 hover:text-white transition-colors min-h-12 inline-flex items-center">
               Collaborate
             </Link>
-            <a href="/#contact" className="text-emerald-100/60 hover:text-white transition-colors">
+            <a href="/#contact" className="text-emerald-100/85 hover:text-white transition-colors min-h-12 inline-flex items-center">
               Contact
             </a>
           </div>
@@ -49,7 +49,7 @@ export const Footer = () => {
               href="https://www.tiktok.com/@rjsmom1"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#059669] transition-all"
+              className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#059669] transition-all"
               aria-label="TikTok"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-white">
@@ -58,7 +58,7 @@ export const Footer = () => {
             </a>
             <a
               href="mailto:yo@travelholics.com"
-              className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#059669] transition-all"
+              className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#059669] transition-all"
               aria-label="Email"
             >
               <Mail size={16} className="text-white" />
@@ -67,7 +67,7 @@ export const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-emerald-100/40">
+        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-emerald-100/70">
           <div className="flex items-center gap-4">
             <span>&copy; {new Date().getFullYear()} Travelholics</span>
             <Link href="/privacy" className="hover:text-white/50 transition-colors">
@@ -83,7 +83,7 @@ export const Footer = () => {
               href="https://creativeeyestudios.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-emerald-100/60 hover:text-white/80 transition-colors"
+              className="text-emerald-100/85 hover:text-white transition-colors"
             >
               Creative Eye Studios
             </a>

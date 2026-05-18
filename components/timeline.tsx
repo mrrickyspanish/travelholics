@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Mail, PhoneCall, CalendarCheck, Ship } from "lucide-react";
 
 const steps = [
@@ -35,6 +35,8 @@ const steps = [
 ];
 
 export const Timeline = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -43,10 +45,10 @@ export const Timeline = () => {
     <section id="process" className="bg-white py-24">
       <div className="container mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6 }}
           className="text-center mb-14"
         >
           <p className="text-[#059669] font-semibold text-xs uppercase tracking-[2px] mb-3">
@@ -56,7 +58,7 @@ export const Timeline = () => {
             From Inquiry to{" "}
             <span className="text-[#059669]">Open Water</span>
           </h2>
-          <p className="text-slate-400 max-w-md mx-auto">
+          <p className="text-slate-600 max-w-md mx-auto">
             Four simple steps between you and the vacation of a lifetime.
           </p>
         </motion.div>
@@ -68,10 +70,12 @@ export const Timeline = () => {
           {steps.map((step, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              transition={
+                shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: i * 0.1 }
+              }
               className="flex flex-col items-center text-center relative z-10"
             >
               <div className="relative mb-5">
@@ -85,7 +89,7 @@ export const Timeline = () => {
               <h3 className="text-lg font-bold text-[#1e3a8a] mb-2">
                 {step.title}
               </h3>
-              <p className="text-sm text-slate-400 leading-relaxed max-w-[220px]">
+              <p className="text-sm text-slate-600 leading-relaxed max-w-[220px]">
                 {step.description}
               </p>
             </motion.div>
@@ -93,10 +97,10 @@ export const Timeline = () => {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.5 }}
           className="mt-16 text-center"
         >
           <button

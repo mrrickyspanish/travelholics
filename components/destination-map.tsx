@@ -74,7 +74,11 @@ function getPopupPosition(
   const x = (relativeX / MAP_WIDTH) * containerWidth;
   const y = (relativeY / MAP_HEIGHT) * containerHeight;
 
-  const popupWidth = destination.photo ? 280 : 244;
+  const baseWidth = destination.photo ? 280 : 244;
+  const popupWidth = Math.max(
+    220,
+    Math.min(baseWidth, Math.floor(containerWidth - 24)),
+  );
   const popupHeight = destination.photo ? 246 : 124;
   const preferredLeft = x + 20;
   const fallbackLeft = x - popupWidth - 20;
@@ -86,14 +90,16 @@ function getPopupPosition(
       ? Math.max(12, fallbackLeft)
       : preferredLeft;
 
+  const maxTop = Math.max(12, containerHeight - popupHeight - 12);
   const top =
     preferredTop < 12
-      ? Math.min(containerHeight - popupHeight - 12, fallbackTop)
-      : preferredTop;
+      ? Math.min(maxTop, fallbackTop)
+      : Math.min(maxTop, preferredTop);
 
   return {
     left,
     top,
+    width: popupWidth,
     anchorX: x,
     anchorY: y,
   };
@@ -260,6 +266,9 @@ export function DestinationMap() {
         mapSize.height || MAP_HEIGHT,
       )
     : null;
+
+  const canRenderPopup =
+    !!activeDestination && (mapSize.width || MAP_WIDTH) >= 360 && (mapSize.height || MAP_HEIGHT) >= 260;
 
   return (
     <section className="relative overflow-hidden bg-[#0f1f36] py-24 lg:py-28">
@@ -555,7 +564,7 @@ export function DestinationMap() {
               </div>
 
               <AnimatePresence>
-                {activeDestination && popupPosition ? (
+                {canRenderPopup && activeDestination && popupPosition ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.92, y: 8 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -566,7 +575,7 @@ export function DestinationMap() {
                     style={{
                       left: popupPosition.left,
                       top: popupPosition.top,
-                      width: activeDestination.photo ? 280 : 244,
+                      width: popupPosition.width,
                     }}
                   >
                     <button

@@ -1,0 +1,27 @@
+{
+  "name": "Travelholics",
+  "short_name": "Travelholics",
+  "description": "Cruise planning support and destination guidance by Yolanda.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#faf9f6",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "/images/apple-touch-icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    }
+  ]
+}

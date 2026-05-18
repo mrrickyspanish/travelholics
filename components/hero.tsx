@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
 import { Dancing_Script, Playfair_Display } from "next/font/google";
 import Image from "next/image";
 import { RippleButton } from "@/components/ripple-button";
@@ -56,6 +62,7 @@ const avatars = [
 export const Hero = () => {
   const [current, setCurrent] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const { scrollY } = useScroll();
   const bgY = useTransform(scrollY, [0, 600], ["0%", "18%"]);
@@ -65,11 +72,14 @@ export const Hero = () => {
   };
 
   useEffect(() => {
+    if (shouldReduceMotion) return;
+
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % destinations.length);
     }, 3200);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [shouldReduceMotion]);
 
   const goTo = (i: number) => {
     if (i !== current && !isAnimating) {
@@ -86,7 +96,7 @@ export const Hero = () => {
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
           className="absolute -inset-x-0 -top-[10%] -bottom-[10%]"
-          style={{ y: bgY }}
+          style={{ y: shouldReduceMotion ? "0%" : bgY }}
         >
           <Image
             src="/images/Travelholics_background.png"

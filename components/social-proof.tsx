@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Star, Quote, Anchor } from "lucide-react";
 
 const testimonials = [
@@ -28,15 +28,17 @@ const testimonials = [
 ];
 
 export const SocialProof = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="testimonials" className="bg-[#FAF9F6] py-24 overflow-hidden">
       <div className="container mx-auto px-6">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6 }}
           className="text-center mb-8"
         >
           <p className="text-[#059669] font-semibold text-xs uppercase tracking-[2px] mb-3">
@@ -49,10 +51,10 @@ export const SocialProof = () => {
 
         {/* Yolanda Pull Quote */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.1 }}
           className="max-w-2xl mx-auto mb-14"
         >
           <div className="relative bg-white rounded-3xl px-8 py-8 text-center border border-slate-100 shadow-sm">
@@ -96,10 +98,14 @@ export const SocialProof = () => {
           {testimonials.map((t, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : { duration: 0.5, delay: 0.15 + i * 0.1 }
+              }
               className="bg-white p-7 rounded-3xl border border-slate-100 relative z-10 flex flex-col"
             >
               {/* Stars */}

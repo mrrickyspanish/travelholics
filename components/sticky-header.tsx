@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Facebook, Instagram, Mail, Menu, X, Youtube } from "lucide-react";
 import Image from "next/image";
@@ -17,6 +17,8 @@ export const StickyHeader = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const mobileDrawerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -28,6 +30,48 @@ export const StickyHeader = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const focusables = mobileDrawerRef.current?.querySelectorAll<HTMLElement>(
+      "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
+    );
+    focusables?.[0]?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMobileOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab" || !focusables || focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+      menuButtonRef.current?.focus();
+    };
+  }, [mobileOpen]);
 
   const scrollToContact = () => {
     setMobileOpen(false);
@@ -69,7 +113,7 @@ export const StickyHeader = () => {
         </div>
 
         {/* Social bar */}
-        <div className="w-full border-b border-slate-200/60 bg-white">
+        <div className="hidden w-full border-b border-slate-200/60 bg-white lg:block">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <div className="flex h-11 items-center gap-3">
               <div className="flex items-center gap-2">
@@ -181,7 +225,7 @@ export const StickyHeader = () => {
           {/* Mobile header row */}
           <div
             className={`flex items-center justify-between transition-all duration-300 lg:hidden ${
-              scrolled ? "h-[52px]" : "h-[58px]"
+              scrolled ? "h-[56px]" : "h-[62px]"
             }`}
           >
             <a href="/" className="inline-flex items-center">
@@ -196,8 +240,11 @@ export const StickyHeader = () => {
             </a>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-100 transition-colors"
+              className="h-12 w-12 flex items-center justify-center rounded-xl hover:bg-slate-100 transition-colors"
               aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-nav-drawer"
+              ref={menuButtonRef}
             >
               {mobileOpen ? (
                 <X size={22} className="text-[#1e3a8a]" />
@@ -218,7 +265,11 @@ export const StickyHeader = () => {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-x-0 z-40 border-b border-slate-100 bg-white shadow-xl lg:hidden"
-            style={{ top: scrolled ? "96px" : "102px" }}
+            style={{ top: scrolled ? "59px" : "65px" }}
+            id="mobile-nav-drawer"
+            role="dialog"
+            aria-modal="true"
+            ref={mobileDrawerRef}
           >
             <div className="container mx-auto px-6 py-5 flex flex-col gap-1">
               {navLinks.map((link) => (

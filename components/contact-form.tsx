@@ -16,6 +16,7 @@ export const ContactForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [website, setWebsite] = useState("");
 
   const fireConfetti = () => {
@@ -29,6 +30,7 @@ export const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(null);
 
     if (website.trim()) {
       fireConfetti();
@@ -50,20 +52,27 @@ export const ContactForm = () => {
         if (error) throw error;
       }
 
-      const mailtoLink = `mailto:yo@travelholics.com?bcc=rj@creativeeyemultimedia.com&subject=New Cruise Inquiry from ${formData.name}&body=Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0APhone: ${formData.phone}%0D%0AMessage: ${formData.message}`;
-      window.location.href = mailtoLink;
-
       fireConfetti();
       setIsSuccess(true);
       setFormData({ name: "", email: "", phone: "", message: "" });
       setWebsite("");
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Something went wrong. Please try again.");
+      setSubmitError(
+        "We could not send your inquiry right now. Please try again, or email me directly if the issue continues."
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const directMailto = `mailto:yo@travelholics.com?bcc=rj@creativeeyemultimedia.com&subject=New Cruise Inquiry from ${encodeURIComponent(
+    formData.name || "Website Visitor"
+  )}&body=Name: ${encodeURIComponent(formData.name)}%0D%0AEmail: ${encodeURIComponent(
+    formData.email
+  )}%0D%0APhone: ${encodeURIComponent(formData.phone)}%0D%0AMessage: ${encodeURIComponent(
+    formData.message
+  )}`;
 
   return (
     <section
@@ -229,6 +238,15 @@ export const ContactForm = () => {
                     </>
                   )}
                 </RippleButton>
+                {submitError && (
+                  <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                    <p className="font-semibold">Submission issue</p>
+                    <p className="mt-1">{submitError}</p>
+                    <a href={directMailto} className="mt-2 inline-flex text-amber-900 underline underline-offset-2">
+                      Email directly instead
+                    </a>
+                  </div>
+                )}
                 <p className="text-center text-xs text-slate-400">
                   No spam, no pressure — just a conversation about your next
                   adventure.

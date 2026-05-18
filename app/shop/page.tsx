@@ -40,6 +40,8 @@ function AmazonIcon({ className = "h-4 w-4" }: { className?: string }) {
 /* ─── TikTok Card ────────────────────────────────────────── */
 
 function TikTokCard({ product, index }: { product: AffiliateProduct; index: number }) {
+  const [isOpening, setIsOpening] = useState(false);
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -82,11 +84,16 @@ function TikTokCard({ product, index }: { product: AffiliateProduct; index: numb
           href={product.href}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => {
+            setIsOpening(true);
+            setTimeout(() => setIsOpening(false), 1600);
+          }}
+          aria-busy={isOpening}
           className="inline-flex w-full items-center justify-center gap-1.5 bg-black hover:bg-zinc-800 text-white text-sm font-bold px-4 py-2.5 rounded-xl transition-colors"
         >
           <TikTokIcon className="h-3.5 w-3.5" />
-          Shop on TikTok
-          <ExternalLink className="h-3 w-3 opacity-70" />
+          {isOpening ? "Opening TikTok..." : "Shop on TikTok"}
+          {!isOpening && <ExternalLink className="h-3 w-3 opacity-70" />}
         </a>
       </div>
     </motion.article>
@@ -96,6 +103,8 @@ function TikTokCard({ product, index }: { product: AffiliateProduct; index: numb
 /* ─── Amazon Card ────────────────────────────────────────── */
 
 function AmazonCard({ product, index }: { product: AffiliateProduct; index: number }) {
+  const [isOpening, setIsOpening] = useState(false);
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 16 }}
@@ -127,11 +136,16 @@ function AmazonCard({ product, index }: { product: AffiliateProduct; index: numb
             href={product.href}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              setIsOpening(true);
+              setTimeout(() => setIsOpening(false), 1600);
+            }}
+            aria-busy={isOpening}
             className="inline-flex items-center gap-1 bg-[#f59e0b] hover:bg-[#d97706] text-white text-sm font-bold px-3 py-1.5 rounded-lg transition-colors"
           >
             <AmazonIcon className="h-3 w-3" />
-            Get it
-            <ExternalLink className="h-2.5 w-2.5 opacity-70" />
+            {isOpening ? "Opening..." : "Get it"}
+            {!isOpening && <ExternalLink className="h-2.5 w-2.5 opacity-70" />}
           </a>
         </div>
       </div>
@@ -202,11 +216,12 @@ function MerchCard({
               <button
                 key={c}
                 onClick={() => onUpdate({ color: c })}
+                disabled={isPending}
                 className={`px-3 py-1 text-xs font-semibold rounded-lg border transition-colors ${
                   selection.color === c
                     ? "border-[#059669] bg-[#059669] text-white"
                     : "border-stone-200 text-slate-600 hover:border-[#059669] hover:text-[#059669]"
-                }`}
+                } disabled:cursor-not-allowed disabled:opacity-55`}
               >
                 {c}
               </button>
@@ -222,11 +237,12 @@ function MerchCard({
               <button
                 key={s}
                 onClick={() => onUpdate({ size: s })}
+                disabled={isPending}
                 className={`w-10 py-1 text-xs font-semibold rounded-lg border transition-colors text-center ${
                   selection.size === s
                     ? "border-[#1e3a8a] bg-[#1e3a8a] text-white"
                     : "border-stone-200 text-slate-600 hover:border-[#1e3a8a] hover:text-[#1e3a8a]"
-                }`}
+                } disabled:cursor-not-allowed disabled:opacity-55`}
               >
                 {s}
               </button>
@@ -239,6 +255,7 @@ function MerchCard({
           <div className="flex items-center gap-1 border border-stone-200 rounded-xl px-2 py-1">
             <button
               onClick={() => onUpdate({ quantity: Math.max(1, selection.quantity - 1) })}
+              disabled={isPending}
               className="w-7 h-7 flex items-center justify-center text-slate-500 hover:text-[#1e3a8a] transition-colors"
             >
               <Minus className="h-3 w-3" />
@@ -246,6 +263,7 @@ function MerchCard({
             <span className="w-6 text-center text-sm font-bold text-slate-900">{selection.quantity}</span>
             <button
               onClick={() => onUpdate({ quantity: Math.min(10, selection.quantity + 1) })}
+              disabled={isPending}
               className="w-7 h-7 flex items-center justify-center text-slate-500 hover:text-[#1e3a8a] transition-colors"
             >
               <Plus className="h-3 w-3" />
@@ -320,7 +338,13 @@ export default function ShopPage() {
       <main className="min-h-screen bg-[#FAF9F6]">
 
         {/* ── Hero ─────────────────────────────────────────── */}
-        <section className="bg-[#1e3a8a] pt-32 pb-12 px-6">
+        <section
+          className="pt-32 pb-12 px-6"
+          style={{
+            background:
+              "linear-gradient(135deg, #1a3a5c 0%, #1e5f8a 40%, #d4622a 75%, #E87722 100%)",
+          }}
+        >
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -416,6 +440,12 @@ export default function ShopPage() {
             {checkoutError && (
               <div className="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
                 {checkoutError}
+              </div>
+            )}
+
+            {pendingCheckoutId && (
+              <div className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800" role="status" aria-live="polite">
+                Redirecting to secure Stripe checkout...
               </div>
             )}
 
