@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Duck Hunt",
-  description: "Travelholics campaign landing page.",
+  title: "Navigator of the Seas Duck Hunt Magnet",
+  description:
+    "Claim your Travelholics cruise door magnet gift from the Navigator of the Seas Duck Hunt.",
   alternates: {
     canonical: "/duck-hunt",
   },

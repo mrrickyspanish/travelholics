@@ -42,6 +42,19 @@ const TRAVEL_OPTIONS: TravelReason[] = [
   "Other",
 ];
 
+function formatShipName(ship: string | null) {
+  if (!ship) return "your ship";
+
+  if (ship === "navigator-of-the-seas") {
+    return "Navigator of the Seas";
+  }
+
+  return ship
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 export default function DuckHuntPage() {
   const [animPhase, setAnimPhase] = useState<AnimPhase>("gift");
   const [boxBounce, setBoxBounce] = useState(false);
@@ -58,6 +71,12 @@ export default function DuckHuntPage() {
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [website, setWebsite] = useState("");
+  const [shipLabel, setShipLabel] = useState("your ship");
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    setShipLabel(formatShipName(queryParams.get("ship")));
+  }, []);
 
   async function fireConfetti() {
     if (typeof window === "undefined") return;
@@ -515,6 +534,35 @@ export default function DuckHuntPage() {
                 We&apos;ll send you an email to grab your mailing address —
                 then your gift ships out to you.
               </p>
+
+              <div className="w-full max-w-[320px] rounded-[22px] border border-[#D4A853]/20 bg-[#F7F4EF] p-4 shadow-2xl shadow-black/20 mb-8">
+                <div className="mb-3 flex justify-center">
+                  <span className="inline-flex items-center rounded-full border border-[#D4A853]/40 bg-[#0D2D4A] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4A853] shadow-sm">
+                    Gift claimed
+                  </span>
+                </div>
+                <div className="relative mx-auto aspect-square w-full max-w-[240px] overflow-hidden rounded-2xl bg-white">
+                  <Image
+                    src="/images/cruise_door_magnet_current.png"
+                    alt={`${shipLabel} cruise door magnet gift`}
+                    fill
+                    className="object-contain p-4"
+                    sizes="(max-width: 390px) 72vw, 240px"
+                    priority
+                  />
+                </div>
+                <div className="mt-4 rounded-2xl bg-[#0D2D4A] px-4 py-3 text-left">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4A853]">
+                    Your gift
+                  </p>
+                  <p className="mt-1 text-sm font-bold text-[#F7F4EF]">
+                    {shipLabel} cruise door magnet
+                  </p>
+                  <p className="mt-1 text-xs leading-relaxed text-[#F7F4EF]/65">
+                    A little keepsake from the Navigator of the Seas duck hunt.
+                  </p>
+                </div>
+              </div>
 
               <div className="w-full space-y-3 text-left">
                 <div className="flex gap-4 items-start p-5 border border-[#D4A853]/15 rounded-[4px]">
