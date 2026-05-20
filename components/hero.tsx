@@ -86,7 +86,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-[82vh] flex items-start overflow-hidden bg-[#0d4a3a] lg:min-h-[86vh]">
+    <section className="relative min-h-[82vh] flex items-center overflow-hidden bg-[#0d4a3a] lg:min-h-[86vh]">
 
       {/* Full-bleed background photo with parallax */}
       <div className="absolute inset-0 z-0 overflow-hidden">
