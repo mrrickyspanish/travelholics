@@ -70,6 +70,7 @@ export default function DuckHuntPage() {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
+  const [shipName, setShipName] = useState("");
   const [website, setWebsite] = useState("");
   const [shipLabel, setShipLabel] = useState("your ship");
 
@@ -171,6 +172,7 @@ export default function DuckHuntPage() {
     const batch = queryParams?.get("batch")?.trim() || null;
     const ship = queryParams?.get("ship")?.trim() || null;
     const source = queryParams?.get("source")?.trim() || null;
+    const insertedShip = shipName.trim() || ship || null;
 
     try {
       if (supabase) {
@@ -182,7 +184,7 @@ export default function DuckHuntPage() {
             travel_reason: travelReason,
             duck_number: duckNumber,
             batch,
-            ship,
+            ship: insertedShip,
             source,
           },
         ]);
@@ -366,31 +368,32 @@ export default function DuckHuntPage() {
                   <h1
                     className={`${playfair.className} type-page-title text-[#0D2D4A] mb-2`}
                   >
-                    You found it.
+                    You found the duck.
                   </h1>
 
                   <h2
                     className={`${playfair.className} type-page-subhead font-bold italic mb-7`}
                     style={{ color: "#0E9E72" }}
                   >
-                    Now claim it.
+                    Now claim your magnet.
                   </h2>
 
                   <p className="type-body-lg text-[#3A5244] max-w-[290px] mx-auto mb-9">
-                    We&apos;re fellow cruisers who hide ducks for curious
-                    travelers. You found ours — and we&apos;re mailing you a
-                    real gift, on us.
+                    Travelholics ducks are hidden across cruise ships for fellow
+                    travelers to discover. If you found one, we&apos;re sending
+                    you an official Travelholics Cruise Life magnet to bring the
+                    memory home and rep your next sailing in style.
                   </p>
 
                   <a
                     href="#form"
                     className="type-cta block w-full py-5 bg-[#10553C] text-[#FAF9F6] tracking-[.1em] uppercase rounded-[4px] text-center active:scale-[.98] transition-transform"
                   >
-                    Claim My Gift →
+                    Claim My Magnet →
                   </a>
 
                   <p className="type-caption text-[#9AA89F] mt-3.5">
-                    No purchase necessary. Just a gift from us to you.
+                    No purchase necessary. Welcome to Cruise Life.
                   </p>
                 </div>
               </div>
@@ -412,12 +415,12 @@ export default function DuckHuntPage() {
                       className={`${playfair.className} type-section-title font-bold italic leading-none mt-1`}
                       style={{ color: "#0E9E72" }}
                     >
-                      we send it?
+                      your magnet?
                     </div>
                   </div>
                 </div>
                 <p className="type-body text-[#6B8077] ml-[15px]">
-                  We&apos;ll follow up by email to get your mailing address.
+                  Tell us a little about your cruise so we can personalize your Travelholics Cruise Life delivery.
                 </p>
               </div>
 
@@ -477,6 +480,19 @@ export default function DuckHuntPage() {
                 </div>
 
                 <div>
+                  <div className="type-kicker text-[#10553C] mb-2">
+                    What Ship Are You Sailing On?
+                  </div>
+                  <input
+                    type="text"
+                    value={shipName}
+                    onChange={(e) => setShipName(e.target.value)}
+                    placeholder="Navigator of the Seas"
+                    className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
+                  />
+                </div>
+
+                <div>
                   <div className="type-kicker text-[#10553C] mb-3">
                     What&apos;s the Occasion?
                   </div>
@@ -508,7 +524,7 @@ export default function DuckHuntPage() {
                   disabled={formState === "submitting"}
                   className="type-cta w-full py-5 bg-[#10553C] text-[#FAF9F6] tracking-[.1em] uppercase rounded-[4px] active:scale-[.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {formState === "submitting" ? "Sending..." : "Send My Gift"}
+                  {formState === "submitting" ? "Sending..." : "Send My Magnet"}
                 </button>
               </form>
             </section>
@@ -531,8 +547,8 @@ export default function DuckHuntPage() {
               </h2>
 
               <p className="type-body-lg text-[#F7F4EF]/60 max-w-[280px] mb-12">
-                We&apos;ll send you an email to grab your mailing address —
-                then your gift ships out to you.
+                You&apos;re now part of Cruise Life. We&apos;ll reach out to
+                confirm your mailing address and get your magnet on its way.
               </p>
 
               <div className="w-full max-w-[320px] rounded-[22px] border border-[#D4A853]/20 bg-[#F7F4EF] p-4 shadow-2xl shadow-black/20 mb-8">
@@ -574,8 +590,8 @@ export default function DuckHuntPage() {
                       Check your inbox
                     </div>
                     <div className="type-caption text-[#F7F4EF]/45">
-                      Look for an email from us — we&apos;ll ask for your
-                      mailing address there to ship your gift.
+                      Look for an email from us — we&apos;ll confirm your
+                      mailing address and get your Cruise Life magnet shipped.
                     </div>
                   </div>
                 </div>
@@ -589,8 +605,8 @@ export default function DuckHuntPage() {
                       Follow us on TikTok
                     </div>
                     <div className="type-caption text-[#F7F4EF]/45">
-                      Cruise tips, deals, and trip ideas @rjsmom1 — come sail
-                      with us.
+                      Cruise tips, deals, and trip ideas @rjsmom1 — this is
+                      where the Cruise Life community lives.
                     </div>
                   </div>
                 </div>
@@ -600,7 +616,7 @@ export default function DuckHuntPage() {
                 href="/"
                 className="type-cta mt-12 text-[#D4A853] tracking-[.08em] uppercase flex items-center gap-2"
               >
-                Explore Travelholics →
+                Join Cruise Life →
               </Link>
             </section>
           )}
