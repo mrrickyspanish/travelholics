@@ -346,13 +346,13 @@ export default function DuckHuntPage() {
                     opacity: d2Visible ? 1 : 0,
                     filter: "drop-shadow(0 8px 24px rgba(13,45,74,.15))",
                   }}
-                  className="relative mb-9 block w-[180px] h-[180px] mx-auto"
+                  className="relative mb-9 block w-[220px] h-[220px] mx-auto"
                 >
                   <Image
-                    src="/images/traveholics_duck.svg"
-                    alt="Travelholics duck"
+                    src="/images/cruise_door_magnet_current.png"
+                    alt="Travelholics cruise door magnet"
                     fill
-                    className="object-contain"
+                    className="object-contain p-2"
                     priority
                   />
                 </div>
