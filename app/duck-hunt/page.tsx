@@ -402,6 +402,19 @@ export default function DuckHuntPage() {
 
           {formState !== "success" && (
             <section className="px-6 py-16 bg-[#FAF9F6]" id="form">
+              {/* UGC Magnet Ad Video above the form */}
+              <div className="w-full flex flex-col items-center mb-8">
+                <video
+                  src="/videos/alana_pacific_cruise_magnent_ad.mp4"
+                  controls
+                  poster="/images/cruise_door_magnet_current.png"
+                  className="rounded-2xl w-full max-w-[320px] aspect-video border border-[#D4A853]/20 shadow-lg mb-5 bg-black"
+                  preload="metadata"
+                  aria-label="Watch a Travelholics cruiser show off their magnet!"
+                >
+                  Sorry, your browser does not support embedded videos.
+                </video>
+              </div>
               <div className="mb-10">
                 <div className="flex items-start gap-3 mb-3">
                   <div className="w-[3px] h-[72px] bg-[#10553C] rounded-full shrink-0 mt-1" />
@@ -551,19 +564,6 @@ export default function DuckHuntPage() {
                 confirm your mailing address and get your magnet on its way.
               </p>
 
-              {/* UGC Magnet Ad Video */}
-              <div className="w-full flex flex-col items-center mb-8">
-                <video
-                  src="/videos/alana_pacific_cruise_magnent_ad.mp4"
-                  controls
-                  poster="/images/cruise_door_magnet_current.png"
-                  className="rounded-2xl w-full max-w-[320px] aspect-video border border-[#D4A853]/20 shadow-lg mb-5 bg-black"
-                  preload="metadata"
-                  aria-label="Watch a Travelholics cruiser show off their magnet!"
-                >
-                  Sorry, your browser does not support embedded videos.
-                </video>
-              </div>
               <div className="w-full max-w-[320px] rounded-[22px] border border-[#D4A853]/20 bg-[#F7F4EF] p-4 shadow-2xl shadow-black/20 mb-8">
                 <div className="mb-3 flex justify-center">
                   <span className="inline-flex items-center rounded-full border border-[#D4A853]/40 bg-[#0D2D4A] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4A853] shadow-sm">
