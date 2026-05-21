@@ -407,6 +407,10 @@ export default function DuckHuntPage() {
                 <video
                   src="/videos/traveholic_pacific_door_magnent.mp4"
                   controls
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
                   poster="/images/travelholic_ticket_magnent_pacific.png"
                   className="rounded-2xl w-full max-w-[320px] aspect-video border border-[#D4A853]/20 shadow-lg mb-5 bg-black"
                   preload="metadata"

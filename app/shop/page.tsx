@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink, Minus, Plus, ShieldCheck } from "lucide-react";
 
@@ -186,15 +187,25 @@ function MerchCard({
     >
       {/* Mockup */}
       <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-50 to-stone-100 border-b border-stone-100 flex items-center justify-center">
-        <div className="text-center px-6">
-          <div
-            className="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center"
-            style={{ background: colorMap[selection.color] ?? "#1e3a8a" }}
+        {product.imageSrc ? (
+          <Image
+            src={product.imageSrc}
+            alt={product.name}
+            fill
+            className="object-contain p-4"
+            sizes="(max-width: 768px) 100vw, 33vw"
           />
-          <p className="type-kicker text-slate-400 mb-1">{selection.color}</p>
-          <p className="text-base font-black tracking-[0.2em] text-[#1e3a8a]">TRAVELHOLICS</p>
-          <p className="text-xs text-[#059669] font-semibold mt-1">{product.mockupLabel}</p>
-        </div>
+        ) : (
+          <div className="text-center px-6">
+            <div
+              className="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center"
+              style={{ background: colorMap[selection.color] ?? "#1e3a8a" }}
+            />
+            <p className="type-kicker text-slate-400 mb-1">{selection.color}</p>
+            <p className="text-base font-black tracking-[0.2em] text-[#1e3a8a]">TRAVELHOLICS</p>
+            <p className="text-xs text-[#059669] font-semibold mt-1">{product.mockupLabel}</p>
+          </div>
+        )}
         <span className="absolute top-3 left-3 bg-[#1e3a8a] text-white text-xs font-bold px-2.5 py-1 rounded-full">
           {product.badge}
         </span>
@@ -209,46 +220,50 @@ function MerchCard({
         <p className="type-caption text-slate-500 mb-4">{product.description}</p>
 
         {/* Color */}
-        <div className="mb-3">
-          <p className="text-xs font-semibold text-slate-600 mb-1.5">Color</p>
-          <div className="flex flex-wrap gap-1.5">
-            {product.colors.map((c) => (
-              <button
-                key={c}
-                onClick={() => onUpdate({ color: c })}
-                disabled={isPending}
-                className={`px-3 py-1 text-xs font-semibold rounded-lg border transition-colors ${
-                  selection.color === c
-                    ? "border-[#059669] bg-[#059669] text-white"
-                    : "border-stone-200 text-slate-600 hover:border-[#059669] hover:text-[#059669]"
-                } disabled:cursor-not-allowed disabled:opacity-55`}
-              >
-                {c}
-              </button>
-            ))}
+        {product.colors.length > 1 && (
+          <div className="mb-3">
+            <p className="text-xs font-semibold text-slate-600 mb-1.5">Color</p>
+            <div className="flex flex-wrap gap-1.5">
+              {product.colors.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => onUpdate({ color: c })}
+                  disabled={isPending}
+                  className={`px-3 py-1 text-xs font-semibold rounded-lg border transition-colors ${
+                    selection.color === c
+                      ? "border-[#059669] bg-[#059669] text-white"
+                      : "border-stone-200 text-slate-600 hover:border-[#059669] hover:text-[#059669]"
+                  } disabled:cursor-not-allowed disabled:opacity-55`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Size */}
-        <div className="mb-4">
-          <p className="text-xs font-semibold text-slate-600 mb-1.5">Size</p>
-          <div className="flex flex-wrap gap-1.5">
-            {product.sizes.map((s) => (
-              <button
-                key={s}
-                onClick={() => onUpdate({ size: s })}
-                disabled={isPending}
-                className={`w-10 py-1 text-xs font-semibold rounded-lg border transition-colors text-center ${
-                  selection.size === s
-                    ? "border-[#1e3a8a] bg-[#1e3a8a] text-white"
-                    : "border-stone-200 text-slate-600 hover:border-[#1e3a8a] hover:text-[#1e3a8a]"
-                } disabled:cursor-not-allowed disabled:opacity-55`}
-              >
-                {s}
-              </button>
-            ))}
+        {product.sizes.length > 1 && (
+          <div className="mb-4">
+            <p className="text-xs font-semibold text-slate-600 mb-1.5">Size</p>
+            <div className="flex flex-wrap gap-1.5">
+              {product.sizes.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => onUpdate({ size: s })}
+                  disabled={isPending}
+                  className={`w-10 py-1 text-xs font-semibold rounded-lg border transition-colors text-center ${
+                    selection.size === s
+                      ? "border-[#1e3a8a] bg-[#1e3a8a] text-white"
+                      : "border-stone-200 text-slate-600 hover:border-[#1e3a8a] hover:text-[#1e3a8a]"
+                  } disabled:cursor-not-allowed disabled:opacity-55`}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Quantity + CTA */}
         <div className="flex items-center gap-3">

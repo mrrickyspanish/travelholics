@@ -1,5 +1,6 @@
 import { Hero } from "@/components/hero";
 import { IntentRouter } from "@/components/intent-router";
+import { HomeShopSection } from "@/components/home-shop-section";
 import { TrustStrip } from "@/components/trust-strip";
 import { MyStory } from "@/components/my-story";
 import { DestinationMap } from "@/components/destination-map";
@@ -23,6 +24,7 @@ export default function Home() {
 
       <Hero />
       <IntentRouter />
+      <HomeShopSection />
       <TrustStrip />
       <MyStory />
       <WaveDivider from="#ffffff" to="#FAF9F6" />

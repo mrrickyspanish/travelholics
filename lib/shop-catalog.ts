@@ -32,6 +32,7 @@ export interface MerchProduct {
   colors: string[];
   sizes: string[];
   mockupLabel: string;
+  imageSrc?: string;
 }
 
 export const SHOP_TABS = [
@@ -215,6 +216,38 @@ export const AMAZON_PRODUCTS: AffiliateProduct[] = [
 ];
 
 export const MERCH_PRODUCTS: MerchProduct[] = [
+  {
+    id: "merch-magnet-ticket-pacific",
+    zone: "merch",
+    name: "Cruise Ticket Door Magnet",
+    description:
+      "The collectible Travelholics Cruise Life ticket magnet featured in the Pacific duck hunt. Grab one for your next sailing.",
+    badge: "Cruise Life",
+    price: 1999,
+    currency: "usd",
+    stripeLabel: "Travelholics Cruise Ticket Door Magnet",
+    checkoutMode: "api",
+    colors: ["Standard"],
+    sizes: ["One Size"],
+    mockupLabel: "Ticket edition",
+    imageSrc: "/images/travelholic_ticket_magnent_pacific.png",
+  },
+  {
+    id: "merch-magnet-mexican-pacific",
+    zone: "merch",
+    name: "Pacific Mexican Door Magnet",
+    description:
+      "The original Pacific Mexican-style cruise magnet design. Built to pop on your stateroom door.",
+    badge: "Original",
+    price: 1999,
+    currency: "usd",
+    stripeLabel: "Travelholics Pacific Mexican Door Magnet",
+    checkoutMode: "api",
+    colors: ["Standard"],
+    sizes: ["One Size"],
+    mockupLabel: "Classic edition",
+    imageSrc: "/images/pacific_mexican_door_magnent.png",
+  },
   {
     id: "merch-crewneck",
     zone: "merch",
