@@ -351,7 +351,7 @@ export default function DuckHuntPage() {
                   className="relative mb-9 block w-[220px] h-[220px] mx-auto"
                 >
                   <Image
-                    src="/images/cruise_door_magnet_current.png"
+                    src="/images/travelholic_ticket_magnent_pacific.png"
                     alt="Travelholics cruise door magnet"
                     fill
                     className="object-contain p-2"
@@ -405,9 +405,9 @@ export default function DuckHuntPage() {
               {/* UGC Magnet Ad Video above the form */}
               <div className="w-full flex flex-col items-center mb-8">
                 <video
-                  src="/videos/alana_pacific_cruise_magnent_ad.mp4"
+                  src="/videos/traveholic_pacific_door_magnent.mp4"
                   controls
-                  poster="/images/cruise_door_magnet_current.png"
+                  poster="/images/travelholic_ticket_magnent_pacific.png"
                   className="rounded-2xl w-full max-w-[320px] aspect-video border border-[#D4A853]/20 shadow-lg mb-5 bg-black"
                   preload="metadata"
                   aria-label="Watch a Travelholics cruiser show off their magnet!"
@@ -572,7 +572,7 @@ export default function DuckHuntPage() {
                 </div>
                 <div className="relative mx-auto aspect-square w-full max-w-[240px] overflow-hidden rounded-2xl bg-white">
                   <Image
-                    src="/images/cruise_door_magnet_current.png"
+                    src="/images/travelholic_ticket_magnent_pacific.png"
                     alt={`${shipLabel} cruise door magnet gift`}
                     fill
                     className="object-contain p-4"
