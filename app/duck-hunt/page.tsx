@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
+import { useReducedMotion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import { StickyHeader } from "@/components/sticky-header";
 import { Footer } from "@/components/footer";
@@ -56,6 +57,7 @@ function formatShipName(ship: string | null) {
 }
 
 export default function DuckHuntPage() {
+  const prefersReducedMotion = useReducedMotion();
   const [animPhase, setAnimPhase] = useState<AnimPhase>("gift");
   const [boxBounce, setBoxBounce] = useState(false);
   const [boxShake, setBoxShake] = useState(false);
@@ -80,7 +82,7 @@ export default function DuckHuntPage() {
   }, []);
 
   async function fireConfetti() {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || prefersReducedMotion) return;
     const { default: confetti } = await import("canvas-confetti");
     confetti({
       particleCount: 300,
@@ -135,6 +137,18 @@ export default function DuckHuntPage() {
   }
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setAnimPhase("revealed");
+      setBoxBounce(false);
+      setBoxShake(false);
+      setLidGone(false);
+      setD1Visible(true);
+      setD2Visible(true);
+      setD3Visible(true);
+      setDuckFloat(false);
+      return;
+    }
+
     const t1 = setTimeout(() => setBoxBounce(true), 300);
     const t2 = setTimeout(() => {
       setBoxBounce(false);
@@ -153,7 +167,7 @@ export default function DuckHuntPage() {
     const t6 = setTimeout(() => setD3Visible(true), 3250);
     const t7 = setTimeout(() => setDuckFloat(true), 3600);
     return () => [t1, t2, t3, t4, t5, t6, t7].forEach(clearTimeout);
-  }, []);
+  }, [prefersReducedMotion]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -328,8 +342,12 @@ export default function DuckHuntPage() {
               <div className="relative z-10 text-center px-2">
                 <div
                   style={{
-                    animation: d1Visible ? "fadeUp .5s ease forwards" : "none",
-                    opacity: 0,
+                    animation: prefersReducedMotion
+                      ? "none"
+                      : d1Visible
+                        ? "fadeUp .5s ease forwards"
+                        : "none",
+                    opacity: prefersReducedMotion ? 1 : 0,
                   }}
                   className="inline-block border border-[#10553C]/25 rounded-full px-5 py-2.5 mb-8 bg-[#10553C]/6"
                 >
@@ -340,7 +358,9 @@ export default function DuckHuntPage() {
 
                 <div
                   style={{
-                    animation: !d2Visible
+                    animation: prefersReducedMotion
+                      ? "none"
+                      : !d2Visible
                       ? "none"
                       : duckFloat
                         ? "duckFloat 3s ease-in-out infinite"
@@ -361,8 +381,12 @@ export default function DuckHuntPage() {
 
                 <div
                   style={{
-                    animation: d3Visible ? "fadeUp .6s ease forwards" : "none",
-                    opacity: 0,
+                    animation: prefersReducedMotion
+                      ? "none"
+                      : d3Visible
+                        ? "fadeUp .6s ease forwards"
+                        : "none",
+                    opacity: prefersReducedMotion ? 1 : 0,
                   }}
                 >
                   <h1
@@ -387,7 +411,7 @@ export default function DuckHuntPage() {
 
                   <a
                     href="#form"
-                    className="type-cta block w-full py-5 bg-[#10553C] text-[#FAF9F6] tracking-[.1em] uppercase rounded-[4px] text-center active:scale-[.98] transition-transform"
+                    className="type-cta flex min-h-12 w-full items-center justify-center py-5 bg-[#10553C] text-[#FAF9F6] tracking-[.1em] uppercase rounded-[4px] text-center active:scale-[.98] transition-transform"
                   >
                     Claim My Magnet →
                   </a>
@@ -401,7 +425,7 @@ export default function DuckHuntPage() {
           </section>
 
           {formState !== "success" && (
-            <section className="px-6 py-16 bg-[#FAF9F6]" id="form">
+            <section className="px-6 py-16 bg-[#FAF9F6] scroll-mt-24" id="form">
               {/* UGC Magnet Ad Video above the form */}
               <div className="w-full flex flex-col items-center mb-8">
                   <div className="w-full max-w-[320px] mb-3">
@@ -450,6 +474,9 @@ export default function DuckHuntPage() {
               </div>
 
               <form className="space-y-8 relative" onSubmit={handleSubmit}>
+                <p className="sr-only" aria-live="polite" role="status">
+                  {formState === "submitting" ? "Submitting your magnet claim." : ""}
+                </p>
                 <div className="absolute -left-[10000px] top-auto w-px h-px overflow-hidden" aria-hidden="true">
                   <label htmlFor="website">Website</label>
                   <input
@@ -470,6 +497,7 @@ export default function DuckHuntPage() {
                   <input
                     required
                     type="text"
+                    autoComplete="given-name"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder="Your first name"
@@ -484,6 +512,8 @@ export default function DuckHuntPage() {
                   <input
                     required
                     type="email"
+                    autoComplete="email"
+                    inputMode="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="hello@example.com"
@@ -497,6 +527,7 @@ export default function DuckHuntPage() {
                   </div>
                   <input
                     type="text"
+                    autoComplete="address-level2"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     placeholder="City, State"
@@ -510,6 +541,7 @@ export default function DuckHuntPage() {
                   </div>
                   <input
                     type="text"
+                    autoComplete="organization"
                     value={shipName}
                     onChange={(e) => setShipName(e.target.value)}
                     placeholder="Navigator of the Seas"
@@ -527,7 +559,7 @@ export default function DuckHuntPage() {
                         key={option}
                         type="button"
                         onClick={() => setTravelReason(option)}
-                        className={`px-4 py-2 text-sm font-bold rounded-[2px] tracking-[.05em] transition-all border ${
+                        className={`min-h-12 px-4 py-2 text-sm font-bold rounded-[2px] tracking-[.05em] transition-all border ${
                           travelReason === option
                             ? "bg-[#0D2D4A] text-[#FAF9F6] border-[#0D2D4A]"
                             : "bg-transparent text-[#0D2D4A] border-[#C8C4BC] hover:border-[#0D2D4A]"
@@ -547,7 +579,7 @@ export default function DuckHuntPage() {
                 <button
                   type="submit"
                   disabled={formState === "submitting"}
-                  className="type-cta w-full py-5 bg-[#10553C] text-[#FAF9F6] tracking-[.1em] uppercase rounded-[4px] active:scale-[.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="type-cta min-h-12 w-full py-5 bg-[#10553C] text-[#FAF9F6] tracking-[.1em] uppercase rounded-[4px] active:scale-[.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {formState === "submitting" ? "Sending..." : "SEND MY MAGNET"}
                 </button>
