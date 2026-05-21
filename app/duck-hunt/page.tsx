@@ -334,7 +334,7 @@ export default function DuckHuntPage() {
                   className="inline-block border border-[#10553C]/25 rounded-full px-5 py-2.5 mb-8 bg-[#10553C]/6"
                 >
                   <span className="type-kicker text-[#10553C]">
-                    Official Travelholics Duck Find
+                    OFFICIAL TRAVELHOLICS DUCK FIND
                   </span>
                 </div>
 
@@ -404,6 +404,14 @@ export default function DuckHuntPage() {
             <section className="px-6 py-16 bg-[#FAF9F6]" id="form">
               {/* UGC Magnet Ad Video above the form */}
               <div className="w-full flex flex-col items-center mb-8">
+                  <div className="w-full max-w-[320px] mb-3">
+                    <p className="type-kicker text-[#10553C] mb-1">
+                      SEE THE MAGNET IN ACTION
+                    </p>
+                    <p className="type-caption text-[#6B8077]">
+                      A quick look at the Travelholics Cruise Life magnet and why cruisers are making it part of their cabin door tradition.
+                    </p>
+                  </div>
                 <video
                   src="/videos/traveholic_pacific_door_magnent.mp4"
                   controls
@@ -426,7 +434,7 @@ export default function DuckHuntPage() {
                     <div
                       className={`${playfair.className} type-section-title text-[#0D2D4A] leading-none`}
                     >
-                      Where should
+                      Where should we send
                     </div>
                     <div
                       className={`${playfair.className} type-section-title font-bold italic leading-none mt-1`}
@@ -498,7 +506,7 @@ export default function DuckHuntPage() {
 
                 <div>
                   <div className="type-kicker text-[#10553C] mb-2">
-                    What Ship Are You Sailing On?
+                    WHAT SHIP ARE YOU SAILING ON?
                   </div>
                   <input
                     type="text"
@@ -541,7 +549,7 @@ export default function DuckHuntPage() {
                   disabled={formState === "submitting"}
                   className="type-cta w-full py-5 bg-[#10553C] text-[#FAF9F6] tracking-[.1em] uppercase rounded-[4px] active:scale-[.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {formState === "submitting" ? "Sending..." : "Send My Magnet"}
+                  {formState === "submitting" ? "Sending..." : "SEND MY MAGNET"}
                 </button>
               </form>
             </section>
@@ -554,18 +562,17 @@ export default function DuckHuntPage() {
               <h2
                 className={`${playfair.className} type-section-title text-[#F7F4EF] mb-2`}
               >
-                You&apos;re officially
+                Your magnet request is in.
               </h2>
               <h2
                 className={`${playfair.className} type-section-title font-bold italic mb-6`}
                 style={{ color: "#0E9E72" }}
               >
-                one of us.
+                We&apos;ll review your details
               </h2>
 
               <p className="type-body-lg text-[#F7F4EF]/60 max-w-[280px] mb-12">
-                You&apos;re now part of Cruise Life. We&apos;ll reach out to
-                confirm your mailing address and get your magnet on its way.
+                and follow up with next steps.
               </p>
 
               <div className="w-full max-w-[320px] rounded-[22px] border border-[#D4A853]/20 bg-[#F7F4EF] p-4 shadow-2xl shadow-black/20 mb-8">
