@@ -203,7 +203,9 @@ export default function DuckHuntPage() {
             source,
           },
         ]);
-        if (error) throw error;
+        if (error) {
+          console.warn("Supabase insert failed, continuing with email send:", error);
+        }
       }
 
       await sendFormEmail({

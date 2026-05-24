@@ -155,7 +155,7 @@ export default function CruiseInterestPage() {
         ]);
 
         if (error) {
-          throw error;
+          console.warn("Supabase insert failed, continuing with email send:", error);
         }
       }
 
