@@ -54,7 +54,10 @@ export const ContactForm = () => {
             message: formData.message,
           },
         ]);
-        if (error) throw error;
+        // Keep email delivery working even if database logging is unavailable.
+        if (error) {
+          console.warn("Supabase insert failed, continuing with email send:", error);
+        }
       }
 
       await sendFormEmail({
@@ -71,7 +74,7 @@ export const ContactForm = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
       setSubmitError(
-        "We could not send your inquiry right now. Please try again, or email me directly if the issue continues."
+        "We could not send your inquiry email right now. Please try again, or email me directly if the issue continues."
       );
     } finally {
       setIsSubmitting(false);
