@@ -3,6 +3,7 @@
 import { useState } from "react";
 import confetti from "canvas-confetti";
 import { supabase } from "@/lib/supabase";
+import { buildFallbackMailto, sendFormEmail } from "@/lib/form-email";
 import { motion } from "framer-motion";
 import { Ship, CheckCircle, Anchor } from "lucide-react";
 import { RippleButton } from "@/components/ripple-button";
@@ -18,6 +19,10 @@ export const ContactForm = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [website, setWebsite] = useState("");
+  const directMailto = buildFallbackMailto(
+    `New Cruise Inquiry from ${formData.name || "Website Visitor"}`,
+    `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nMessage: ${formData.message}`
+  );
 
   const fireConfetti = () => {
     const colors = ["#059669", "#f59e0b", "#1e3a8a", "#ffffff", "#34d399"];
@@ -52,6 +57,13 @@ export const ContactForm = () => {
         if (error) throw error;
       }
 
+      await sendFormEmail({
+        formType: "contact",
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      });
       fireConfetti();
       setIsSuccess(true);
       setFormData({ name: "", email: "", phone: "", message: "" });
@@ -65,14 +77,6 @@ export const ContactForm = () => {
       setIsSubmitting(false);
     }
   };
-
-  const directMailto = `mailto:yo@travelholics.com?bcc=rj@creativeeyemultimedia.com&subject=New Cruise Inquiry from ${encodeURIComponent(
-    formData.name || "Website Visitor"
-  )}&body=Name: ${encodeURIComponent(formData.name)}%0D%0AEmail: ${encodeURIComponent(
-    formData.email
-  )}%0D%0APhone: ${encodeURIComponent(formData.phone)}%0D%0AMessage: ${encodeURIComponent(
-    formData.message
-  )}`;
 
   return (
     <section

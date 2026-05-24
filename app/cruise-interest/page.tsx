@@ -5,6 +5,7 @@ import { Anchor, CheckCircle2, Ship } from "lucide-react";
 import { StickyHeader } from "@/components/sticky-header";
 import { Footer } from "@/components/footer";
 import { supabase } from "@/lib/supabase";
+import { sendFormEmail } from "@/lib/form-email";
 import { RippleButton } from "@/components/ripple-button";
 
 type ContactMethod = "Email" | "Text" | "Phone Call";
@@ -157,6 +158,11 @@ export default function CruiseInterestPage() {
           throw error;
         }
       }
+
+      await sendFormEmail({
+        formType: "cruise-interest",
+        ...formData,
+      });
 
       setIsSuccess(true);
       setFormData(initialFormData);

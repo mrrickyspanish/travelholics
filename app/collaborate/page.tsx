@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { StickyHeader } from "@/components/sticky-header";
 import { Footer } from "@/components/footer";
+import { sendFormEmail } from "@/lib/form-email";
 import { motion } from "framer-motion";
 import {
   Handshake,
@@ -114,29 +115,31 @@ export default function CollaboratePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const subject = encodeURIComponent(
-      `Travelholics Collaboration Inquiry from ${formData.company || formData.name}`
-    );
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nCompany: ${formData.company}\nEmail: ${formData.email}\nWebsite / Social: ${formData.website}\nCollaboration Type: ${formData.collaborationType}\n\nProject Details:\n${formData.details}`
-    );
+    try {
+      await sendFormEmail({
+        formType: "collaborate",
+        ...formData,
+      });
 
-    window.location.href = `mailto:rjsmom1_68@yahoo.com?subject=${subject}&body=${body}`;
-
-    setIsSuccess(true);
-    setIsSubmitting(false);
-    setFormData({
-      name: "",
-      company: "",
-      email: "",
-      website: "",
-      collaborationType: "Sponsored content",
-      details: "",
-    });
+      setIsSuccess(true);
+      setFormData({
+        name: "",
+        company: "",
+        email: "",
+        website: "",
+        collaborationType: "Sponsored content",
+        details: "",
+      });
+    } catch (error) {
+      console.error("Collaboration form send error:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -452,7 +455,7 @@ export default function CollaboratePage() {
                   Collaboration request started.
                 </h3>
                 <p className="type-body text-slate-500 mb-6">
-                  Your email draft should be open now. Send it through and Yolanda can review the opportunity.
+                  Thanks! Your collaboration request was sent successfully.
                 </p>
                 <button
                   onClick={() => setIsSuccess(false)}
@@ -536,7 +539,7 @@ export default function CollaboratePage() {
                   disabled={isSubmitting}
                   className="type-cta w-full bg-[#059669] hover:bg-[#047857] text-white py-4 rounded-xl transition-all disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5 active:translate-y-0"
                 >
-                  {isSubmitting ? "Opening..." : "Start a Collaboration"}
+                  {isSubmitting ? "Sending..." : "Start a Collaboration"}
                 </button>
               </form>
             )}

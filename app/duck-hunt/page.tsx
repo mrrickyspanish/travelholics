@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
 import { useReducedMotion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import { sendFormEmail } from "@/lib/form-email";
 import { StickyHeader } from "@/components/sticky-header";
 import { Footer } from "@/components/footer";
 
@@ -204,6 +205,19 @@ export default function DuckHuntPage() {
         ]);
         if (error) throw error;
       }
+
+      await sendFormEmail({
+        formType: "duck-hunt",
+        firstName,
+        email,
+        city,
+        shipName: insertedShip,
+        travelReason,
+        duckNumber,
+        batch,
+        source,
+      });
+
       setFormState("success");
       fireConfetti();
     } catch (err) {

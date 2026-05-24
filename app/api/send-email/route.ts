@@ -1,78 +1,103 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const TO_EMAIL = "rjsmom1_68@yahoo.com";
+const BCC_EMAIL = "ricky@creativeeyestudios.com";
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 
-const TO_EMAIL = 'rjsmom1_68@yahoo.com';
-const BCC_EMAIL = 'ricky@creativeeyestudios.com';
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+type SendEmailPayload = {
+  formType?: "contact" | "collaborate" | "cruise-interest" | "duck-hunt";
+  [key: string]: unknown;
+};
 
-export async function POST(req: NextRequest) {
+export async function POST(request: Request) {
+  const resendKey = process.env.RESEND_API_KEY;
+
+  if (!resendKey) {
+    return NextResponse.json(
+      { error: "Resend is not configured yet. Add RESEND_API_KEY to enable form email delivery." },
+      { status: 500 },
+    );
+  }
+
+  const payload = (await request.json()) as SendEmailPayload;
+
+  if (!payload?.formType) {
+    return NextResponse.json({ error: "Missing formType." }, { status: 400 });
+  }
+
+  const allowedTypes = new Set(["contact", "collaborate", "cruise-interest", "duck-hunt"]);
+  if (!allowedTypes.has(payload.formType)) {
+    return NextResponse.json({ error: "Invalid formType." }, { status: 400 });
+  }
+
+  const resend = new Resend(resendKey);
+
+  let subject = "New Travelholics Inquiry";
+  let htmlContent = "";
+
+  if (payload.formType === "contact") {
+    subject = `New Contact Inquiry from ${payload.name || "Website Visitor"}`;
+    htmlContent = `
+      <h2>New Contact Inquiry</h2>
+      <p><strong>Name:</strong> ${payload.name || "N/A"}</p>
+      <p><strong>Email:</strong> ${payload.email || "N/A"}</p>
+      <p><strong>Phone:</strong> ${payload.phone || "N/A"}</p>
+      <p><strong>Message:</strong> ${payload.message || "N/A"}</p>
+    `;
+  } else if (payload.formType === "collaborate") {
+    subject = `Collaboration Inquiry from ${payload.company || payload.name || "Website Visitor"}`;
+    htmlContent = `
+      <h2>Collaboration Inquiry</h2>
+      <p><strong>Name:</strong> ${payload.name || "N/A"}</p>
+      <p><strong>Company:</strong> ${payload.company || "N/A"}</p>
+      <p><strong>Email:</strong> ${payload.email || "N/A"}</p>
+      <p><strong>Website / Social:</strong> ${payload.website || "N/A"}</p>
+      <p><strong>Collaboration Type:</strong> ${payload.collaborationType || "N/A"}</p>
+      <p><strong>Project Details:</strong> ${payload.details || "N/A"}</p>
+    `;
+  } else if (payload.formType === "cruise-interest") {
+    subject = `New Cruise Interest Form from ${payload.name || payload.fullName || "Website Visitor"}`;
+    htmlContent = `
+      <h2>Cruise Interest Submission</h2>
+      <p><strong>Name:</strong> ${payload.name || payload.fullName || "N/A"}</p>
+      <p><strong>Email:</strong> ${payload.email || "N/A"}</p>
+      <p><strong>Phone:</strong> ${payload.phone || "N/A"}</p>
+      <p><strong>Message:</strong> ${payload.message || "N/A"}</p>
+    `;
+  } else if (payload.formType === "duck-hunt") {
+    subject = `Duck Hunt Gift Entry from ${payload.firstName || "Website Visitor"}`;
+    htmlContent = `
+      <h2>Duck Hunt Gift Entry</h2>
+      <p><strong>First Name:</strong> ${payload.firstName || "N/A"}</p>
+      <p><strong>Email:</strong> ${payload.email || "N/A"}</p>
+      <p><strong>City:</strong> ${payload.city || "N/A"}</p>
+      <p><strong>Ship:</strong> ${payload.shipName || payload.ship || "N/A"}</p>
+      <p><strong>Travel Reason:</strong> ${payload.travelReason || "N/A"}</p>
+      <p><strong>Duck Number:</strong> ${payload.duckNumber || "N/A"}</p>
+      <p><strong>Batch:</strong> ${payload.batch || "N/A"}</p>
+      <p><strong>Source:</strong> ${payload.source || "N/A"}</p>
+    `;
+  }
+
   try {
-    const body = await req.json();
-    const { formType, ...formData } = body;
-
-    let subject = 'New Travelholics Inquiry';
-    let htmlContent = '';
-
-    if (formType === 'contact') {
-      subject = `New Contact Inquiry from ${formData.name || 'Website Visitor'}`;
-      htmlContent = `
-        <h2>New Contact Inquiry</h2>
-        <p><strong>Name:</strong> ${formData.name}</p>
-        <p><strong>Email:</strong> ${formData.email}</p>
-        <p><strong>Phone:</strong> ${formData.phone || 'N/A'}</p>
-        <p><strong>Message:</strong> ${formData.message}</p>
-      `;
-    } else if (formType === 'collaborate') {
-      subject = `Collaboration Inquiry from ${formData.company || formData.name}`;
-      htmlContent = `
-        <h2>Collaboration Inquiry</h2>
-        <p><strong>Name:</strong> ${formData.name}</p>
-        <p><strong>Company:</strong> ${formData.company || 'N/A'}</p>
-        <p><strong>Email:</strong> ${formData.email}</p>
-        <p><strong>Website / Social:</strong> ${formData.website || 'N/A'}</p>
-        <p><strong>Collaboration Type:</strong> ${formData.collaborationType || 'N/A'}</p>
-        <p><strong>Project Details:</strong> ${formData.details}</p>
-      `;
-    } else if (formType === 'cruise-interest') {
-      subject = `New Cruise Interest Form from ${formData.name || formData.fullName}`;
-      htmlContent = `
-        <h2>Cruise Interest Submission</h2>
-        <p><strong>Name:</strong> ${formData.name || formData.fullName}</p>
-        <p><strong>Email:</strong> ${formData.email}</p>
-        <p><strong>Phone:</strong> ${formData.phone || 'N/A'}</p>
-        <p><strong>Message:</strong> ${formData.message || 'N/A'}</p>
-      `;
-    } else if (formType === 'duck-hunt') {
-      subject = `Duck Hunt Gift Entry from ${formData.firstName}`;
-      htmlContent = `
-        <h2>Duck Hunt Gift Entry</h2>
-        <p><strong>First Name:</strong> ${formData.firstName}</p>
-        <p><strong>Email:</strong> ${formData.email}</p>
-        <p><strong>City:</strong> ${formData.city || 'N/A'}</p>
-        <p><strong>Ship:</strong> ${formData.ship || 'N/A'}</p>
-        <p><strong>Travel Reason:</strong> ${formData.travelReason || 'N/A'}</p>
-        <p><strong>Duck Number:</strong> ${formData.duckNumber || 'N/A'}</p>
-      `;
-    }
-
     const { data, error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: [TO_EMAIL],
       bcc: [BCC_EMAIL],
       subject,
       html: htmlContent,
+      replyTo: typeof payload.email === "string" && payload.email.trim() ? payload.email : undefined,
     });
 
     if (error) {
-      console.error('Resend error:', error);
-      return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+      console.error("Resend error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, id: data?.id });
-  } catch (err) {
-    console.error('Send email route error:', err);
-    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
+  } catch (error) {
+    console.error("Send email route error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

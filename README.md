@@ -113,21 +113,20 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📧 Form Submission Flow (V1)
 
-Currently using a hybrid approach:
+Currently using an automatic server-side flow:
 
-1. **User submits form** → Data saved to Supabase `cruise_inquiries` table
-2. **Triggers mailto:** link → Opens user's email client with pre-filled email to you
-3. **You receive:** Form data via email with all inquiry details
+1. **User submits form** → Data is saved to Supabase where applicable
+2. **Server route sends email** → `/app/api/submit-form/route.ts` delivers the message through Resend
+3. **You receive:** Form data at rjsmom1_68@yahoo.com with a BCC to ricky@creativeeyestudios.com
 
 ### Fast Follow: Resend API (V2)
 
-To upgrade to automated email notifications:
+To configure the automatic email notifications:
 
 1. Sign up at [resend.com](https://resend.com) (free tier: 3K emails/month)
 2. Get your API key
 3. Add to `.env.local`: `RESEND_API_KEY=your_key`
-4. Create `/app/api/submit-inquiry/route.ts` using Resend SDK
-5. Update form submission in `components/hero.tsx` to call API route
+4. Optionally add `RESEND_FROM_EMAIL=Travelholics <you@yourdomain.com>` if you have a verified sender
 
 ## 🌐 Deployment to Vercel
 
