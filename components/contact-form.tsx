@@ -10,9 +10,12 @@ import { RippleButton } from "@/components/ripple-button";
 
 export const ContactForm = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
+    destination: "",
+    timeframe: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,8 +23,8 @@ export const ContactForm = () => {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [website, setWebsite] = useState("");
   const directMailto = buildFallbackMailto(
-    `New Cruise Inquiry from ${formData.name || "Website Visitor"}`,
-    `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nMessage: ${formData.message}`
+    `New Cruise Inquiry from ${formData.firstName || "Website Visitor"} ${formData.lastName || ""}`,
+    `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nMessage: ${formData.message}`
   );
 
   const fireConfetti = () => {
@@ -48,10 +51,10 @@ export const ContactForm = () => {
       if (supabase) {
         const { error } = await supabase.from("cruise_inquiries").insert([
           {
-            name: formData.name,
+            name: `${formData.firstName} ${formData.lastName}`.trim(),
             email: formData.email,
             phone: formData.phone,
-            message: formData.message,
+            message: `Destination: ${formData.destination}\nWhen: ${formData.timeframe}\nNotes: ${formData.message}`,
           },
         ]);
         // Keep email delivery working even if database logging is unavailable.
@@ -62,14 +65,14 @@ export const ContactForm = () => {
 
       await sendFormEmail({
         formType: "contact",
-        name: formData.name,
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
         email: formData.email,
         phone: formData.phone,
-        message: formData.message,
+        message: `Destination: ${formData.destination}\nWhen: ${formData.timeframe}\nNotes: ${formData.message}`,
       });
       fireConfetti();
       setIsSuccess(true);
-      setFormData({ name: "", email: "", phone: "", message: "" });
+      setFormData({ firstName: "", lastName: "", email: "", phone: "", destination: "", timeframe: "", message: "" });
       setWebsite("");
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -104,9 +107,7 @@ export const ContactForm = () => {
             transition={{ duration: 0.7 }}
           >
             <h2 className="text-4xl lg:text-5xl font-extrabold text-[#123a2f] leading-tight mb-5">
-              Ready to Start?
-              <br />
-              <span className="text-[#0f766e]">Let&apos;s Talk.</span>
+              Plan Your Next Cruise
             </h2>
             <p className="text-base text-[#3f5a53] leading-relaxed mb-8">
               Tell me about your dream trip and I&apos;ll respond within 24
@@ -168,20 +169,15 @@ export const ContactForm = () => {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="Jane Smith"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 outline-none transition-all text-[15px]"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                  />
+                <div className="grid sm:grid-cols-2 gap-3.5">
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1">First Name</label>
+                    <input required type="text" placeholder="Jane" className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 outline-none transition-all text-[15px]" value={formData.firstName} onChange={(e)=>setFormData({ ...formData, firstName: e.target.value })} />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1">Last Name</label>
+                    <input required type="text" placeholder="Smith" className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 outline-none transition-all text-[15px]" value={formData.lastName} onChange={(e)=>setFormData({ ...formData, lastName: e.target.value })} />
+                  </div>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-3.5">
                   <div>
@@ -217,9 +213,19 @@ export const ContactForm = () => {
                     />
                   </div>
                 </div>
+                <div className="grid sm:grid-cols-2 gap-3.5">
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1">Where would you like to go?</label>
+                    <input required type="text" className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 outline-none transition-all text-[15px]" value={formData.destination} onChange={(e)=>setFormData({ ...formData, destination: e.target.value })} />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1">When are you looking to travel?</label>
+                    <input required type="text" className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 outline-none transition-all text-[15px]" value={formData.timeframe} onChange={(e)=>setFormData({ ...formData, timeframe: e.target.value })} />
+                  </div>
+                </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1">
-                    Tell me about your dream trip
+                    Tell us about your dream trip
                   </label>
                   <textarea
                     required
@@ -241,7 +247,7 @@ export const ContactForm = () => {
                     "Submitting..."
                   ) : (
                     <>
-                      Let&apos;s Set Sail <Ship size={18} />
+                      Send My Cruise Inquiry <Ship size={18} />
                     </>
                   )}
                 </RippleButton>
