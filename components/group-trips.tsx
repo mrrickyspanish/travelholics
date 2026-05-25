@@ -1,7 +1,7 @@
 // ⚠️ PLACEHOLDER CONTENT
 // Real group trip photography and data are pending from Yolanda.
 // This component renders with reused existing images as visual stand-ins.
-// To update: replace the src/alt values in the tiles array with real group trip photos.
+// Replace the src/alt values in the tiles array with real group trip photos when available.
 // CTA links to /#contact until a /group-trips page exists.
 
 "use client";
@@ -11,20 +11,23 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const VISIBLE = 3;
+// Show all 5 tiles at xl, 3-4 at smaller — narrow tile + 4:3 aspect
+const VISIBLE_XL = 5;
+const VISIBLE_MD = 3;
 
 const tiles = [
-  { caption: "Amazing Destinations",    src: "/images/dest-caribbean.jpg",       alt: "Cruise ship at a beautiful Caribbean destination" },
-  { caption: "Fun & Connection",        src: "/images/about-with-travelers.jpg", alt: "Group of travelers enjoying their cruise together" },
-  { caption: "Unforgettable Moments",   src: "/images/dest-alaska.jpg",          alt: "Stunning Alaska glacial landscape" },
-  { caption: "Epic Adventures",         src: "/images/dest-mediterranean.jpg",   alt: "Mediterranean coastal adventure" },
-  { caption: "Lifelong Memories",       src: "/images/about-port-of-call.jpg",   alt: "Travelers at a scenic port of call" },
+  { caption: "Amazing Destinations",  src: "/images/dest-caribbean.jpg",       alt: "Cruise ship at a beautiful Caribbean destination" },
+  { caption: "Fun & Connection",       src: "/images/about-with-travelers.jpg", alt: "Group of travelers enjoying their cruise together" },
+  { caption: "Unforgettable Moments",  src: "/images/dest-alaska.jpg",          alt: "Stunning Alaska glacial landscape" },
+  { caption: "Epic Adventures",        src: "/images/dest-mediterranean.jpg",   alt: "Mediterranean coastal adventure" },
+  { caption: "Lifelong Memories",      src: "/images/about-port-of-call.jpg",   alt: "Travelers at a scenic port of call" },
 ];
 
 export const GroupTrips = () => {
   const [offset, setOffset] = useState(0);
-  const maxOffset = tiles.length - VISIBLE;
-  const itemWidth = 100 / VISIBLE;
+
+  // On desktop show all 5 at once — no arrows needed at full width
+  const maxOffset = Math.max(0, tiles.length - VISIBLE_MD);
 
   return (
     <section id="group-trips" className="bg-sand py-20">
@@ -34,68 +37,80 @@ export const GroupTrips = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="text-center mb-10"
         >
           <p className="type-kicker text-coral mb-3">Group Cruise Experiences</p>
-          <h2 className="type-section-title text-emerald-deep">Travel Better Together</h2>
+          <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-ink tracking-tight">
+            Travel Better Together
+          </h2>
         </motion.div>
 
-        <div className="relative">
-          {/* Track */}
-          <div className="overflow-hidden rounded-2xl">
+        {/* Desktop: show all 5 tiles in a row */}
+        <div className="hidden xl:grid xl:grid-cols-5 gap-4">
+          {tiles.map(({ caption, src, alt }) => (
+            <div key={caption} className="flex flex-col gap-2">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl group">
+                <Image
+                  src={src} alt={alt} fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="20vw"
+                />
+              </div>
+              <p className="text-[13px] font-medium text-stone text-center">{caption}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Tablet / mobile: 3-visible carousel */}
+        <div className="xl:hidden relative">
+          <div className="overflow-hidden">
             <div
               className="flex gap-4 transition-transform duration-500 ease-out"
-              style={{ transform: `translateX(calc(-${offset * (itemWidth + (16 * offset) / tiles.length)}% - ${offset * 16 / VISIBLE}px))` }}
+              style={{ transform: `translateX(calc(-${offset * (100 / VISIBLE_MD)}% - ${offset * 16 / VISIBLE_MD}px))` }}
             >
               {tiles.map(({ caption, src, alt }) => (
                 <div
                   key={caption}
-                  className="flex-shrink-0"
-                  style={{ width: `calc(${itemWidth}% - ${16 * (VISIBLE - 1) / VISIBLE}px)` }}
+                  className="flex-shrink-0 flex flex-col gap-2"
+                  style={{ width: `calc(${100 / VISIBLE_MD}% - ${16 * (VISIBLE_MD - 1) / VISIBLE_MD}px)` }}
                 >
-                  <div className="relative aspect-square overflow-hidden rounded-2xl group">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-xl group">
                     <Image
-                      src={src}
-                      alt={alt}
-                      fill
+                      src={src} alt={alt} fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 768px) 80vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
-                    <p className="absolute bottom-4 left-0 right-0 text-center text-sm font-semibold text-white px-3">
-                      {caption}
-                    </p>
                   </div>
+                  <p className="text-[13px] font-medium text-stone text-center">{caption}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Arrows */}
           <button
             type="button"
             onClick={() => setOffset((o) => Math.max(0, o - 1))}
             disabled={offset === 0}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-ink hover:text-coral transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-            aria-label="Previous slide"
+            className="absolute left-0 top-[40%] -translate-y-1/2 -translate-x-5 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center text-ink hover:text-coral transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Previous"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={18} />
           </button>
           <button
             type="button"
             onClick={() => setOffset((o) => Math.min(maxOffset, o + 1))}
             disabled={offset === maxOffset}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-ink hover:text-coral transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-            aria-label="Next slide"
+            className="absolute right-0 top-[40%] -translate-y-1/2 translate-x-5 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center text-ink hover:text-coral transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Next"
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={18} />
           </button>
         </div>
 
         <div className="mt-10 text-center">
           <a
             href="/#contact"
-            className="inline-flex items-center gap-2 bg-coral hover:bg-coral-deep text-white font-bold px-8 py-4 rounded-full transition-colors shadow-md shadow-coral/20 text-[15px]"
+            className="inline-flex items-center gap-2 bg-coral hover:bg-coral-deep text-white font-semibold px-8 py-4 rounded-full transition-colors shadow-md shadow-coral/15 text-[15px]"
           >
             View Upcoming Group Trips →
           </a>

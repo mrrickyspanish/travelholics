@@ -2,7 +2,7 @@
 
 :root {
   --background: #F5EFE4;
-  --foreground: #2A3B36;
+  --foreground: #1A2E2A;
 }
 
 @theme inline {
@@ -13,7 +13,7 @@
 }
 
 @theme {
-  /* Brand color tokens — mirrors tailwind.config.ts for Tailwind v4 CSS-first resolution */
+  /* Brand color tokens — mirrors tailwind.config.ts */
   --color-emerald-deep:  #0d4a3a;
   --color-emerald-mid:   #10755A;
   --color-coral:         #F26A75;
@@ -21,16 +21,11 @@
   --color-blush:         #F4C4CC;
   --color-sand:          #F5EFE4;
   --color-cream:         #FCFAF5;
-  --color-ink:           #2A3B36;
+  --color-ink:           #1A2E2A;
   --color-stone:         #6B7B74;
   --color-gold:          #f59e0b;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-navy:          #1a3a52;
+  --color-hero-sky:      #FCE8DC;
 }
 
 body {
@@ -39,13 +34,15 @@ body {
   font-family: var(--font-geist-sans, Arial, Helvetica, sans-serif);
 }
 
-/* Custom font utilities for Dancing Script and Playfair Display */
+/* Font utilities */
 @layer utilities {
-  .font-dancing {
-    font-family: var(--font-dancing-script, "Dancing Script", cursive);
+  /* Serif display — headlines, stat numbers, card titles */
+  .font-serif {
+    font-family: var(--font-fraunces, "Georgia", serif);
   }
-  .font-playfair {
-    font-family: var(--font-playfair-display, "Playfair Display", Georgia, serif);
+  /* Script accent — hero tagline, Yolanda signatures only */
+  .font-script {
+    font-family: var(--font-caveat, cursive);
   }
 }
 

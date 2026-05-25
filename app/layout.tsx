@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Dancing_Script, Playfair_Display } from "next/font/google";
+import { Geist, Geist_Mono, Fraunces, Caveat } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
@@ -15,15 +15,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const dancingScript = Dancing_Script({
-  variable: "--font-dancing-script",
+// Serif display font — editorial headlines, stat numbers, card titles
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
+  axes: ["opsz"],
 });
 
-const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair-display",
+// Script accent — sparingly: hero tagline, Yolanda signatures, contact tagline
+// Caveat: casual/handwritten, truer to the "sharpie on a postcard" vibe in the mockup
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -106,7 +110,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${playfairDisplay.variable} antialiased bg-sand`}
+        className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${caveat.variable} antialiased bg-sand`}
       >
         <script
           type="application/ld+json"

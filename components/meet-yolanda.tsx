@@ -4,6 +4,12 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 
+// TODO: Replace with Yolanda seated/lobby portrait — yellow/floral dress on beige chair.
+// The mockup uses a professional indoor editorial shot, NOT the cruise-deck photo used in the hero.
+// Path when photo is available: /images/yolanda-seated-portrait.jpg
+const YOLANDA_SEATED_PHOTO = "/images/PLACEHOLDER-yolanda-seated-portrait.jpg";
+const YOLANDA_SEATED_FALLBACK = "/images/about-port-of-call.jpg";
+
 const credentials = [
   "20+ Years in Travel & Hospitality",
   "Certified Cruise Specialist",
@@ -15,7 +21,7 @@ const credentials = [
 export const MeetYolanda = () => {
   return (
     <section id="about" className="bg-sand py-20 relative overflow-hidden">
-      {/* Faint compass watermark — top right corner */}
+      {/* Faint compass watermark — top right */}
       <div
         className="pointer-events-none absolute -top-10 -right-10 w-96 h-96 opacity-[0.035] text-emerald-deep"
         aria-hidden="true"
@@ -38,7 +44,7 @@ export const MeetYolanda = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-[35%_40%_25%] gap-10 lg:gap-12 items-start">
 
-          {/* Left: Photo */}
+          {/* Left: Photo — needs the seated/lobby portrait, NOT the cruise-deck shot */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -46,13 +52,16 @@ export const MeetYolanda = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
-              {/* TODO: Confirm Yolanda full-body headshot path; about-on-deck.jpg used as placeholder */}
               <Image
-                src="/images/about-on-deck.jpg"
+                src={YOLANDA_SEATED_PHOTO}
                 alt="Yolanda Harris, Cruise Curator & Travel Partner"
                 fill
                 className="object-cover object-center"
                 sizes="(max-width: 1024px) 100vw, 35vw"
+                onError={(e) => {
+                  // Fallback until placeholder is replaced with real photo
+                  (e.target as HTMLImageElement).src = YOLANDA_SEATED_FALLBACK;
+                }}
               />
             </div>
           </motion.div>
@@ -65,10 +74,10 @@ export const MeetYolanda = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <p className="type-kicker text-coral mb-3">Meet Yolanda</p>
-            <h2 className="text-3xl lg:text-4xl font-extrabold text-emerald-deep leading-tight mb-6">
+            <h2 className="font-serif text-3xl lg:text-[2.2rem] font-semibold text-ink leading-tight tracking-tight mb-5">
               Your Trusted Cruise Curator
             </h2>
-            <div className="space-y-4 text-base text-ink/80 leading-relaxed">
+            <div className="space-y-4 text-[15px] text-ink/75 leading-relaxed">
               <p>
                 I&apos;m Yolanda Harris—cruise lover, travel expert, and your go-to person for
                 unforgettable journeys. With over 20 years in travel and hospitality, I&apos;ve
@@ -77,19 +86,14 @@ export const MeetYolanda = () => {
               </p>
               <p>
                 Whether you&apos;re cruising for the first time or the fiftieth, I treat every trip
-                like it&apos;s my own. From the best cabin with the sunset view to the shore excursion
-                that skips every tourist trap—I know the details that make the difference.
+                like it&apos;s my own. From the best cabin with the sunset view to the shore
+                excursion that skips every tourist trap—I know the details that make the difference.
               </p>
             </div>
-            <div className="mt-8 flex items-center gap-2 flex-wrap">
-              <span className="font-dancing text-[2rem] text-coral leading-none">Let&apos;s travel!</span>
-              <span className="font-dancing text-[2rem] text-coral leading-none">Yolanda</span>
-              <svg
-                viewBox="0 0 24 24"
-                className="w-5 h-5 text-coral"
-                fill="currentColor"
-                aria-hidden="true"
-              >
+            <div className="mt-7 flex items-center gap-1.5 flex-wrap">
+              <span className="font-script text-[1.9rem] text-coral leading-none">Let&apos;s travel!</span>
+              <span className="font-script text-[1.9rem] text-coral leading-none">Yolanda</span>
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-coral" fill="currentColor" aria-hidden="true">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
             </div>
@@ -102,17 +106,18 @@ export const MeetYolanda = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="bg-cream rounded-2xl p-6 shadow-sm border border-blush">
-              <ul className="space-y-4">
+            <div className="bg-cream rounded-2xl p-5 shadow-sm border border-blush">
+              <ul className="space-y-3.5">
                 {credentials.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <CheckCircle size={18} className="text-emerald-mid mt-0.5 shrink-0" />
-                    <span className="text-sm font-medium text-ink leading-snug">{item}</span>
+                  <li key={item} className="flex items-start gap-2.5">
+                    <CheckCircle size={16} className="text-emerald-mid mt-0.5 shrink-0" />
+                    <span className="text-[13px] font-medium text-ink leading-snug">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>
