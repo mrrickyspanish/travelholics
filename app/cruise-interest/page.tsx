@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Anchor, CheckCircle2, Ship } from "lucide-react";
-import { StickyHeader } from "@/components/sticky-header";
+import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { supabase } from "@/lib/supabase";
 import { sendFormEmail } from "@/lib/form-email";
@@ -177,7 +177,7 @@ export default function CruiseInterestPage() {
 
   return (
     <>
-      <StickyHeader />
+      <Header />
       <main className="bg-[#FAF9F6] min-h-screen pt-36 pb-24">
         <section className="max-w-5xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-12">

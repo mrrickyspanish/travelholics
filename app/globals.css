@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F5EFE4;
+  --foreground: #1A2E2A;
 }
 
 @theme inline {
@@ -12,17 +12,38 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  /* Brand color tokens — mirrors tailwind.config.ts */
+  --color-emerald-deep:  #0d4a3a;
+  --color-emerald-mid:   #10755A;
+  --color-coral:         #F26A75;
+  --color-coral-deep:    #D9505C;
+  --color-blush:         #F4C4CC;
+  --color-sand:          #F5EFE4;
+  --color-cream:         #FCFAF5;
+  --color-ink:           #1A2E2A;
+  --color-stone:         #6B7B74;
+  --color-gold:          #f59e0b;
+  --color-navy:          #1a3a52;
+  --color-hero-sky:      #FCE8DC;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans, Arial, Helvetica, sans-serif);
+}
+
+/* Font utilities */
+@layer utilities {
+  /* Serif display — headlines, stat numbers, card titles */
+  .font-serif {
+    font-family: var(--font-fraunces, "Georgia", serif);
+  }
+  /* Script accent — hero tagline, Yolanda signatures only */
+  .font-script {
+    font-family: var(--font-caveat, cursive);
+  }
 }
 
 @layer base {

@@ -7,7 +7,7 @@ import { Playfair_Display } from "next/font/google";
 import { useReducedMotion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import { sendFormEmail } from "@/lib/form-email";
-import { StickyHeader } from "@/components/sticky-header";
+import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
 const playfair = Playfair_Display({
@@ -230,7 +230,7 @@ export default function DuckHuntPage() {
 
   return (
     <>
-      <StickyHeader />
+      <Header />
       <style>{`
         @keyframes boxBounce {
           0%,100% { transform: translateY(0) scaleX(1) scaleY(1); }
