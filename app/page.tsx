@@ -1,40 +1,29 @@
+import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
-import { IntentRouter } from "@/components/intent-router";
-import { HomeShopSection } from "@/components/home-shop-section";
-import { TrustStrip } from "@/components/trust-strip";
-import { MyStory } from "@/components/my-story";
+import { StatsStrip } from "@/components/stats-strip";
+import { IntentCards } from "@/components/intent-cards";
+import { MeetYolanda } from "@/components/meet-yolanda";
 import { DestinationMap } from "@/components/destination-map";
-import { ShipDivider } from "@/components/ship-divider";
-import { WhyTravelholics } from "@/components/why-travelholics";
-import { SocialProof } from "@/components/social-proof";
-import { Timeline } from "@/components/timeline";
+import { GroupTrips } from "@/components/group-trips";
+import { ShopStrip } from "@/components/shop-strip";
+import { Testimonials } from "@/components/testimonials";
 import { ContactForm } from "@/components/contact-form";
 import { Footer } from "@/components/footer";
-import { StickyHeader } from "@/components/sticky-header";
 import { MobileCTA } from "@/components/mobile-cta";
-import { WaveDivider } from "@/components/wave-divider";
-import { SplashScreen } from "@/components/splash-screen";
 
 export default function Home() {
   return (
     <>
-      <SplashScreen />
-      <StickyHeader />
+      <Header />
       <MobileCTA />
-
       <Hero />
-      <IntentRouter />
-      <HomeShopSection />
-      <TrustStrip />
-      <MyStory />
-      <WaveDivider from="#ffffff" to="#FAF9F6" />
+      <StatsStrip />
+      <IntentCards />
+      <MeetYolanda />
       <DestinationMap />
-      <ShipDivider />
-      <WhyTravelholics />
-      <WaveDivider from="#ffffff" to="#FAF9F6" />
-      <SocialProof />
-      <ShipDivider />
-      <Timeline />
+      <GroupTrips />
+      <ShopStrip />
+      <Testimonials />
       <ContactForm />
       <Footer />
     </>

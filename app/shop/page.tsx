@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink, Minus, Plus, ShieldCheck } from "lucide-react";
 
 import { Footer } from "@/components/footer";
-import { StickyHeader } from "@/components/sticky-header";
+import { Header } from "@/components/header";
 import { RippleButton } from "@/components/ripple-button";
 import {
   AMAZON_PRODUCTS,
@@ -349,7 +349,7 @@ export default function ShopPage() {
 
   return (
     <>
-      <StickyHeader />
+      <Header />
       <main className="min-h-screen bg-[#FAF9F6]">
 
         {/* ── Hero ─────────────────────────────────────────── */}

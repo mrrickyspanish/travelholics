@@ -271,7 +271,7 @@ export function DestinationMap() {
     !!activeDestination && (mapSize.width || MAP_WIDTH) >= 360 && (mapSize.height || MAP_HEIGHT) >= 260;
 
   return (
-    <section className="relative overflow-hidden bg-[#0f1f36] py-24 lg:py-28">
+    <section id="map" className="relative overflow-hidden bg-sand py-24 lg:py-28">
       <style>{`
         @keyframes destinationPinPulse {
           0%, 100% { transform: scale(1); opacity: 0.95; }
@@ -299,15 +299,6 @@ export function DestinationMap() {
         }
       `}</style>
 
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.14]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0)",
-          backgroundSize: "28px 28px",
-        }}
-      />
-
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
@@ -316,20 +307,22 @@ export function DestinationMap() {
           transition={{ duration: 0.55 }}
           className="mb-12 lg:mb-14"
         >
-          <div className="mb-4 flex items-center gap-3">
-            <div className="h-[1.5px] w-6 bg-[#f59e0b]" />
-            <p className="text-xs font-bold uppercase tracking-[2px] text-[#f59e0b]">
-              The Voyages
-            </p>
-          </div>
-          <h2 className="max-w-2xl text-5xl font-extrabold leading-tight text-white lg:text-6xl">
-            Sailed It. Lived It.{" "}
-            <span className="text-[#059669]">Now I&apos;ll Book It for You.</span>
+          <p className="type-kicker text-coral mb-3">Where We&apos;ve Been</p>
+          <h2 className="max-w-2xl text-4xl lg:text-5xl font-extrabold leading-tight text-emerald-deep">
+            Where We&apos;re Going Next
           </h2>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-white/45">
-            Every destination Yolanda recommends is one she&apos;s experienced
-            firsthand — select a destination to explore the route.
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-stone">
+            From the turquoise waters of the Caribbean to the breathtaking fjords of Alaska and
+            beyond—these are some of our favorite destinations (and what&apos;s coming up next).
           </p>
+          <div className="mt-6">
+            <a
+              href="/#contact"
+              className="inline-flex items-center gap-2 border-2 border-emerald-mid text-emerald-mid hover:bg-emerald-mid hover:text-white font-bold px-6 py-3 rounded-full transition-colors text-sm"
+            >
+              Explore Destinations →
+            </a>
+          </div>
         </motion.div>
 
         <div className="hidden gap-6 lg:flex xl:gap-8">
@@ -338,10 +331,10 @@ export function DestinationMap() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="w-52 shrink-0 rounded-[26px] border border-white/10 bg-[#0a1a2e]/80 p-4 backdrop-blur"
+            className="w-52 shrink-0 rounded-[26px] border border-blush bg-cream p-4 shadow-sm"
           >
-            <div className="mb-4 flex items-center gap-2 text-white/70">
-              <Compass className="h-4 w-4 text-[#f59e0b]" />
+            <div className="mb-4 flex items-center gap-2 text-stone">
+              <Compass className="h-4 w-4 text-coral" />
               <p className="text-xs font-semibold uppercase tracking-[2px]">
                 Destinations
               </p>
@@ -355,13 +348,13 @@ export function DestinationMap() {
                 }}
                 className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all ${
                   activeId === null
-                    ? "bg-[#059669] text-white"
-                    : "text-white/60 hover:bg-white/[0.08] hover:text-white"
+                    ? "bg-emerald-mid text-white"
+                    : "text-stone hover:bg-sand hover:text-ink"
                 }`}
               >
                 <span
                   className={`h-1.5 w-1.5 rounded-full ${
-                    activeId === null ? "bg-white" : "bg-white/25"
+                    activeId === null ? "bg-white" : "bg-stone/40"
                   }`}
                 />
                 <span className="text-sm font-semibold">View All</span>
@@ -369,7 +362,7 @@ export function DestinationMap() {
 
               {groupedDestinations.map(([region, regionDestinations]) => (
                 <div key={region}>
-                  <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[1.8px] text-white/30">
+                  <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[1.8px] text-emerald-deep/50">
                     {region}
                   </p>
                   <div className="space-y-1.5">
@@ -393,20 +386,20 @@ export function DestinationMap() {
                           })}
                           className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all ${
                             isActive
-                              ? "bg-[#059669] text-white"
-                              : "text-white/60 hover:bg-white/[0.08] hover:text-white"
+                              ? "bg-emerald-mid text-white"
+                              : "text-stone hover:bg-sand hover:text-ink"
                           }`}
                         >
                           <span
                             className={`h-1.5 w-1.5 rounded-full ${
-                              isActive ? "bg-white" : "bg-white/25"
+                              isActive ? "bg-white" : "bg-stone/30"
                             }`}
                           />
                           <div>
                             <p className="text-sm font-semibold leading-tight">
                               {destination.label}
                             </p>
-                            <p className="mt-0.5 text-[11px] text-white/45">
+                            <p className={`mt-0.5 text-[11px] ${isActive ? "text-white/70" : "text-stone/70"}`}>
                               {destination.sub}
                             </p>
                           </div>
@@ -431,17 +424,8 @@ export function DestinationMap() {
               onClick={() => {
                 void handleReset();
               }}
-              className="relative aspect-[16/7] overflow-hidden rounded-[28px] border border-[rgba(245,158,11,0.15)] bg-[#0a2540] shadow-[0_30px_90px_rgba(3,7,18,0.35)]"
+              className="relative aspect-[16/7] overflow-hidden rounded-3xl border border-blush bg-cream shadow-lg"
             >
-              <div
-                className="pointer-events-none absolute inset-0 opacity-[0.12]"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0)",
-                  backgroundSize: "28px 28px",
-                }}
-              />
-
               <div className="absolute inset-0">
                 <ComposableMap
                   projection="geoMercator"
@@ -471,10 +455,11 @@ export function DestinationMap() {
                       });
                     }}
                   >
+                    {/* Ocean fill matches sand to visually embed map in section */}
                     <Sphere
                       id="voyages-sphere"
-                      fill="#0a2540"
-                      stroke="rgba(10,26,46,0.45)"
+                      fill="#F5EFE4"
+                      stroke="rgba(180,160,130,0.3)"
                       strokeWidth={0.6}
                     />
                     <Geographies geography={DESTINATION_MAP_GEOGRAPHY}>
@@ -483,20 +468,13 @@ export function DestinationMap() {
                           <Geography
                             key={geography.rsmKey}
                             geography={geography}
-                            fill="#c4954a"
-                            stroke="rgba(10,26,46,0.45)"
+                            fill="#D4B896"
+                            stroke="rgba(180,150,110,0.35)"
                             strokeWidth={0.4}
                             style={{
-                              default: {
-                                outline: "none",
-                              },
-                              hover: {
-                                outline: "none",
-                                fill: "#d4a862",
-                              },
-                              pressed: {
-                                outline: "none",
-                              },
+                              default: { outline: "none" },
+                              hover:   { outline: "none", fill: "#C9A87E" },
+                              pressed: { outline: "none" },
                             }}
                           />
                         ))
@@ -516,7 +494,6 @@ export function DestinationMap() {
                             if (current === destination.id) {
                               return null;
                             }
-
                             return current;
                           })}
                           onClick={(e: React.MouseEvent<SVGGElement>) => {
@@ -530,7 +507,7 @@ export function DestinationMap() {
                                 className="destination-pin-ring"
                                 r={12}
                                 fill="none"
-                                stroke="#f59e0b"
+                                stroke="#F26A75"
                                 strokeWidth={1.5}
                                 opacity={0.9}
                               />
@@ -538,12 +515,8 @@ export function DestinationMap() {
                             <circle
                               className={isInteractive ? "destination-pin-core" : undefined}
                               r={isInteractive ? 7 : 5}
-                              fill={
-                                isInteractive ? "#059669" : "#f59e0b"
-                              }
-                              stroke={
-                                isInteractive ? "rgba(245,158,11,0.65)" : "rgba(245,158,11,0.4)"
-                              }
+                              fill={isInteractive ? "#10755A" : "#F26A75"}
+                              stroke={isInteractive ? "rgba(242,106,117,0.5)" : "rgba(242,106,117,0.4)"}
                               strokeWidth={isInteractive ? 2 : 1}
                             />
                           </g>
@@ -554,12 +527,12 @@ export function DestinationMap() {
                 </ComposableMap>
               </div>
 
-              <div className="pointer-events-none absolute left-5 top-5 rounded-full border border-white/10 bg-slate-950/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[1.8px] text-white/55 backdrop-blur">
+              <div className="pointer-events-none absolute left-5 top-5 rounded-full border border-blush bg-cream/80 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[1.8px] text-stone backdrop-blur">
                 Travelholics Explorer View
               </div>
 
-              <div className="pointer-events-none absolute bottom-5 left-5 flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/40 px-3 py-1.5 text-[11px] font-medium text-white/55 backdrop-blur">
-                <MapPinned className="h-3.5 w-3.5 text-[#f59e0b]" />
+              <div className="pointer-events-none absolute bottom-5 left-5 flex items-center gap-2 rounded-full border border-blush bg-cream/80 px-3 py-1.5 text-[11px] font-medium text-stone backdrop-blur">
+                <MapPinned className="h-3.5 w-3.5 text-coral" />
                 Click a pin or destination to zoom in.
               </div>
 
@@ -571,7 +544,7 @@ export function DestinationMap() {
                     exit={{ opacity: 0, scale: 0.96, y: 6 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     onClick={(e) => e.stopPropagation()}
-                    className="absolute z-20 w-[280px] overflow-hidden rounded-xl border border-[rgba(5,150,105,0.4)] bg-[rgba(15,23,42,0.88)] shadow-2xl backdrop-blur-xl"
+                    className="absolute z-20 overflow-hidden rounded-xl border border-blush bg-cream shadow-2xl"
                     style={{
                       left: popupPosition.left,
                       top: popupPosition.top,
@@ -581,7 +554,7 @@ export function DestinationMap() {
                     <button
                       type="button"
                       onClick={() => setActiveId(null)}
-                      className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-slate-950/70 text-white/70 transition-colors hover:text-white"
+                      className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-sand/80 text-stone transition-colors hover:text-ink"
                       aria-label={`Close ${activeDestination.label} details`}
                     >
                       <X className="h-4 w-4" />
@@ -596,20 +569,20 @@ export function DestinationMap() {
                           className="object-cover"
                           sizes="280px"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-900/20 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-ink/50 via-ink/10 to-transparent" />
                       </div>
                     ) : null}
 
                     <div className="p-4">
-                      <p className="text-lg font-bold text-white">
+                      <p className="text-lg font-bold text-ink">
                         {activeDestination.label}
                       </p>
-                      <p className="mt-1 text-sm text-white/50">
+                      <p className="mt-1 text-sm text-stone">
                         {activeDestination.sub}
                       </p>
                       <a
                         href={DESTINATION_CTA_HREF}
-                        className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#059669] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[#047857]"
+                        className="mt-4 inline-flex items-center gap-2 rounded-full bg-coral px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-coral-deep"
                       >
                         Plan My Cruise
                         <ArrowRight className="h-4 w-4" />
@@ -633,7 +606,7 @@ export function DestinationMap() {
             <a
               key={destination.id}
               href={DESTINATION_CTA_HREF}
-              className={`group relative overflow-hidden rounded-2xl border border-white/10 ${
+              className={`group relative overflow-hidden rounded-2xl border border-blush ${
                 index === 0 ? "row-span-2" : ""
               }`}
             >
@@ -644,12 +617,12 @@ export function DestinationMap() {
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 1024px) 50vw, 33vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/15 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/15 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-4">
                 <p className="text-base font-bold text-white">
                   {destination.label}
                 </p>
-                <p className="mt-1 text-xs text-white/60">{destination.sub}</p>
+                <p className="mt-1 text-xs text-white/70">{destination.sub}</p>
               </div>
             </a>
           ))}

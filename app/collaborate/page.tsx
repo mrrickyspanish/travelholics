@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { StickyHeader } from "@/components/sticky-header";
+import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { sendFormEmail } from "@/lib/form-email";
 import { motion } from "framer-motion";
@@ -144,7 +144,7 @@ export default function CollaboratePage() {
 
   return (
     <>
-      <StickyHeader />
+      <Header />
       <main className="min-h-screen bg-[#FAF9F6] text-slate-900">
 
       {/* 1. Editorial Hero */}

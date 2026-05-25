@@ -5,27 +5,63 @@ import confetti from "canvas-confetti";
 import { supabase } from "@/lib/supabase";
 import { buildFallbackMailto, sendFormEmail } from "@/lib/form-email";
 import { motion } from "framer-motion";
-import { Ship, CheckCircle, Anchor } from "lucide-react";
+import { CheckCircle, Ship } from "lucide-react";
 import { RippleButton } from "@/components/ripple-button";
+
+// TODO: Confirm destination options with Yolanda — these are reasonable defaults
+const DESTINATION_OPTIONS = [
+  "Caribbean",
+  "Alaska",
+  "Mediterranean",
+  "Bahamas",
+  "Mexico / Mexican Riviera",
+  "Hawaii",
+  "Bermuda",
+  "Europe (River Cruise)",
+  "Not Sure Yet",
+];
+
+const TIMING_OPTIONS = [
+  "Within 3 months",
+  "3–6 months",
+  "6–12 months",
+  "1–2 years",
+  "Just exploring options",
+];
+
+const PostageStamp = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 80 100" className={className} aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="3" y="3" width="74" height="94" rx="2" stroke="#F4C4CC" strokeWidth="1.5" strokeDasharray="5 3" fill="rgba(255,255,255,0.08)" />
+    <rect x="10" y="10" width="60" height="62" rx="2" fill="rgba(255,255,255,0.1)" />
+    <text x="40" y="50" textAnchor="middle" fontSize="30" fill="rgba(255,255,255,0.3)">✈</text>
+    <text x="40" y="84" textAnchor="middle" fontSize="7" fill="rgba(255,255,255,0.3)" fontFamily="monospace" fontWeight="bold" letterSpacing="1">TRAVELHOLIC</text>
+  </svg>
+);
 
 export const ContactForm = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
+    destination: "",
+    timing: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [website, setWebsite] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
+
+  const fullName = `${formData.firstName} ${formData.lastName}`.trim();
+
   const directMailto = buildFallbackMailto(
-    `New Cruise Inquiry from ${formData.name || "Website Visitor"}`,
-    `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nMessage: ${formData.message}`
+    `New Cruise Inquiry from ${fullName || "Website Visitor"}`,
+    `Name: ${fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nDestination: ${formData.destination}\nTiming: ${formData.timing}\nMessage: ${formData.message}`
   );
 
   const fireConfetti = () => {
-    const colors = ["#059669", "#f59e0b", "#1e3a8a", "#ffffff", "#34d399"];
+    const colors = ["#F26A75", "#0d4a3a", "#10755A", "#FCFAF5", "#F4C4CC"];
     confetti({ particleCount: 90, spread: 70, origin: { x: 0.35, y: 0.55 }, colors });
     setTimeout(() => {
       confetti({ particleCount: 90, spread: 70, origin: { x: 0.65, y: 0.55 }, colors });
@@ -37,6 +73,7 @@ export const ContactForm = () => {
     setIsSubmitting(true);
     setSubmitError(null);
 
+    // Honeypot — silent discard
     if (website.trim()) {
       fireConfetti();
       setIsSuccess(true);
@@ -48,13 +85,16 @@ export const ContactForm = () => {
       if (supabase) {
         const { error } = await supabase.from("cruise_inquiries").insert([
           {
-            name: formData.name,
+            name: fullName,
+            first_name: formData.firstName,
+            last_name: formData.lastName,
             email: formData.email,
             phone: formData.phone,
+            destination: formData.destination,
+            timing: formData.timing,
             message: formData.message,
           },
         ]);
-        // Keep email delivery working even if database logging is unavailable.
         if (error) {
           console.warn("Supabase insert failed, continuing with email send:", error);
         }
@@ -62,206 +102,279 @@ export const ContactForm = () => {
 
       await sendFormEmail({
         formType: "contact",
-        name: formData.name,
+        name: fullName,
         email: formData.email,
         phone: formData.phone,
-        message: formData.message,
+        message: `Destination: ${formData.destination}\nTiming: ${formData.timing}\n\n${formData.message}`,
       });
+
       fireConfetti();
       setIsSuccess(true);
-      setFormData({ name: "", email: "", phone: "", message: "" });
+      setFormData({ firstName: "", lastName: "", email: "", phone: "", destination: "", timing: "", message: "" });
       setWebsite("");
     } catch (error) {
       console.error("Error submitting form:", error);
       setSubmitError(
-        "We could not send your inquiry email right now. Please try again, or email me directly if the issue continues."
+        "We could not send your inquiry right now. Please try again, or email me directly."
       );
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const inputClass =
+    "w-full px-4 py-3 rounded-xl border border-blush bg-white focus:border-emerald-mid focus:ring-2 focus:ring-emerald-mid/20 outline-none transition-all text-[15px] text-ink placeholder:text-stone/60";
+  const labelClass = "block text-sm font-semibold text-ink mb-1.5";
+
   return (
     <section
       id="contact"
-      className="bg-[#f3eee3] py-24 relative overflow-hidden"
+      className="bg-sand py-20 relative overflow-hidden"
     >
+      {/* Dot grid texture */}
       <div
-        className="absolute inset-0 opacity-[0.05]"
+        className="absolute inset-0 opacity-[0.04]"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 1px 1px, rgba(18,58,47,0.45) 1px, transparent 0)",
+            "radial-gradient(circle at 1px 1px, #2A3B36 1px, transparent 0)",
           backgroundSize: "32px 32px",
         }}
+        aria-hidden="true"
       />
 
-      <div className="max-w-[900px] mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <h2 className="text-4xl lg:text-5xl font-extrabold text-[#123a2f] leading-tight mb-5">
-              Ready to Start?
-              <br />
-              <span className="text-[#0f766e]">Let&apos;s Talk.</span>
-            </h2>
-            <p className="text-base text-[#3f5a53] leading-relaxed mb-8">
-              Tell me about your dream trip and I&apos;ll respond within 24
-              hours with a personalized plan. No pressure, no spam — just a real
-              conversation about your next adventure.
-            </p>
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="grid lg:grid-cols-[40%_60%] rounded-3xl overflow-hidden shadow-2xl shadow-ink/10"
+        >
+          {/* Left panel — emerald-deep with beach bg overlay */}
+          <div className="relative bg-emerald-deep p-8 lg:p-10 flex flex-col justify-between overflow-hidden">
+            {/* Low-opacity beach background */}
+            <div
+              className="absolute inset-0 opacity-[0.12]"
+              style={{
+                backgroundImage: "url('/images/dest-caribbean.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+              aria-hidden="true"
+            />
+            {/* Overlay to maintain readability */}
+            <div className="absolute inset-0 bg-emerald-deep/85" aria-hidden="true" />
 
-            <div className="flex items-center gap-3">
-              <div className="w-13 h-13 rounded-full bg-[#059669]/15 border-2 border-[#059669]/60 flex items-center justify-center shrink-0">
-                <Anchor size={20} className="text-[#14532d]" />
-              </div>
-              <div>
-                <p className="text-[#123a2f] font-bold text-[15px]">Yolanda</p>
-                <p className="text-[#0f766e] text-xs font-medium">
-                  Replies within 24 hours
-                </p>
-              </div>
+            <div className="relative z-10">
+              <p className="type-kicker text-coral mb-4">Let&apos;s Make It Happen</p>
+              <h2 className="text-3xl lg:text-4xl font-extrabold text-white leading-tight mb-3">
+                Plan Your Next Cruise
+              </h2>
+              <p className="font-dancing text-2xl text-coral leading-snug mb-8">
+                Let&apos;s make your dream vacation a reality.
+              </p>
+
+              <ul className="space-y-3.5">
+                {[
+                  "Personalized recommendations",
+                  "Exclusive perks & upgrades",
+                  "Group trips made easy",
+                  "No booking fees—ever",
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-3">
+                    <CheckCircle size={17} className="text-coral shrink-0" />
+                    <span className="text-sm font-medium text-white/90">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="bg-white/95 backdrop-blur-sm border border-[#d7ddd5] rounded-3xl p-7 lg:p-8 shadow-xl shadow-[#123a2f]/8"
-          >
+            {/* Postage stamp decoration */}
+            <PostageStamp className="relative z-10 mt-8 w-14 h-[70px] self-start opacity-60" />
+          </div>
+
+          {/* Right panel — cream form card */}
+          <div className="bg-cream p-8 lg:p-10">
             {isSuccess ? (
-              <div className="py-10 text-center">
-                <div className="w-16 h-16 bg-emerald-50 text-[#059669] rounded-full flex items-center justify-center mx-auto mb-5">
+              <div className="h-full flex flex-col items-center justify-center py-10 text-center">
+                <div className="w-16 h-16 bg-blush text-coral rounded-full flex items-center justify-center mx-auto mb-5">
                   <CheckCircle size={36} />
                 </div>
-                <h3 className="text-2xl font-bold text-[#1e3a8a] mb-2">
+                <h3 className="text-2xl font-bold text-emerald-deep mb-2">
                   You&apos;re on the List!
                 </h3>
-                <p className="text-slate-500 mb-6 text-sm">
-                  I&apos;ve received your inquiry and will be in touch soon.
-                  Start dreaming — I&apos;ll handle the rest.
+                <p className="text-stone mb-6 text-sm">
+                  I&apos;ve received your inquiry and will be in touch within 24 hours.
+                  Start dreaming—I&apos;ll handle the rest.
                 </p>
                 <button
                   onClick={() => setIsSuccess(false)}
-                  className="text-[#059669] font-semibold text-sm hover:underline"
+                  className="text-coral font-semibold text-sm hover:underline"
                 >
                   Send another inquiry
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-3.5">
-                <div className="absolute -left-[10000px] top-auto w-px h-px overflow-hidden" aria-hidden="true">
-                  <label htmlFor="website">Website</label>
-                  <input
-                    id="website"
-                    name="website"
-                    type="text"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="Jane Smith"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 outline-none transition-all text-[15px]"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="grid sm:grid-cols-2 gap-3.5">
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1">
-                      Email
-                    </label>
-                    <input
-                      required
-                      type="email"
-                      placeholder="jane@email.com"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 outline-none transition-all text-[15px]"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1">
-                      Phone{" "}
-                      <span className="text-slate-400 font-normal">
-                        (Optional)
-                      </span>
-                    </label>
-                    <input
-                      type="tel"
-                      placeholder="(555) 000-0000"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 outline-none transition-all text-[15px]"
-                      value={formData.phone}
-                      onChange={(e) =>
-                        setFormData({ ...formData, phone: e.target.value })
-                      }
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1">
-                    Tell me about your dream trip
-                  </label>
-                  <textarea
-                    required
-                    rows={4}
-                    placeholder="Where do you want to go? How many travelers? Any special occasions?"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 outline-none transition-all resize-none text-[15px]"
-                    value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                  />
-                </div>
-                <RippleButton
-                  disabled={isSubmitting}
-                  type="submit"
-                  className="w-full bg-[#059669] hover:bg-[#047857] text-white font-bold py-4 rounded-xl shadow-lg shadow-emerald-900/20 transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed text-[15px]"
-                >
-                  {isSubmitting ? (
-                    "Submitting..."
-                  ) : (
-                    <>
-                      Let&apos;s Set Sail <Ship size={18} />
-                    </>
-                  )}
-                </RippleButton>
-                {submitError && (
-                  <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-                    <p className="font-semibold">Submission issue</p>
-                    <p className="mt-1">{submitError}</p>
-                    <a href={directMailto} className="mt-2 inline-flex text-amber-900 underline underline-offset-2">
-                      Email directly instead
-                    </a>
-                  </div>
-                )}
-                <p className="text-center text-xs text-slate-400">
-                  No spam, no pressure — just a conversation about your next
-                  adventure.
+              <>
+                <p className="text-stone text-sm mb-6">
+                  Ready to set sail? Tell us a little about your trip.
                 </p>
-              </form>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Honeypot */}
+                  <div className="absolute -left-[10000px] top-auto w-px h-px overflow-hidden" aria-hidden="true">
+                    <label htmlFor="website">Website</label>
+                    <input
+                      id="website"
+                      name="website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={website}
+                      onChange={(e) => setWebsite(e.target.value)}
+                    />
+                  </div>
+
+                  {/* Row 1: First + Last name */}
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="firstName" className={labelClass}>First Name</label>
+                      <input
+                        id="firstName"
+                        required
+                        type="text"
+                        placeholder="Jane"
+                        className={inputClass}
+                        value={formData.firstName}
+                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="lastName" className={labelClass}>Last Name</label>
+                      <input
+                        id="lastName"
+                        required
+                        type="text"
+                        placeholder="Smith"
+                        className={inputClass}
+                        value={formData.lastName}
+                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Row 2: Email + Phone */}
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="email" className={labelClass}>Email Address</label>
+                      <input
+                        id="email"
+                        required
+                        type="email"
+                        placeholder="jane@email.com"
+                        className={inputClass}
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className={labelClass}>
+                        Phone Number{" "}
+                        <span className="text-stone font-normal">(Optional)</span>
+                      </label>
+                      <input
+                        id="phone"
+                        type="tel"
+                        placeholder="(555) 000-0000"
+                        className={inputClass}
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Row 3: Destination + Timing */}
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="destination" className={labelClass}>
+                        Where would you like to go?
+                      </label>
+                      <select
+                        id="destination"
+                        required
+                        className={`${inputClass} appearance-none cursor-pointer`}
+                        value={formData.destination}
+                        onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
+                      >
+                        <option value="" disabled>Select destination…</option>
+                        {DESTINATION_OPTIONS.map((d) => (
+                          <option key={d} value={d}>{d}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="timing" className={labelClass}>
+                        When are you looking to travel?
+                      </label>
+                      <select
+                        id="timing"
+                        required
+                        className={`${inputClass} appearance-none cursor-pointer`}
+                        value={formData.timing}
+                        onChange={(e) => setFormData({ ...formData, timing: e.target.value })}
+                      >
+                        <option value="" disabled>Select timeframe…</option>
+                        {TIMING_OPTIONS.map((t) => (
+                          <option key={t} value={t}>{t}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Row 4: Message */}
+                  <div>
+                    <label htmlFor="message" className={labelClass}>
+                      Tell us about your dream trip…
+                    </label>
+                    <textarea
+                      id="message"
+                      required
+                      rows={4}
+                      placeholder="Where do you want to go? How many travelers? Any special occasions?"
+                      className={`${inputClass} resize-none`}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    />
+                  </div>
+
+                  <RippleButton
+                    disabled={isSubmitting}
+                    type="submit"
+                    className="w-full bg-coral hover:bg-coral-deep text-white font-bold py-4 rounded-xl shadow-lg shadow-coral/20 transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed text-[15px]"
+                  >
+                    {isSubmitting ? (
+                      "Submitting…"
+                    ) : (
+                      <>
+                        Send My Cruise Inquiry <Ship size={18} />
+                      </>
+                    )}
+                  </RippleButton>
+
+                  {submitError && (
+                    <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                      <p className="font-semibold">Submission issue</p>
+                      <p className="mt-1">{submitError}</p>
+                      <a href={directMailto} className="mt-2 inline-flex text-amber-900 underline underline-offset-2">
+                        Email directly instead
+                      </a>
+                    </div>
+                  )}
+                </form>
+              </>
             )}
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

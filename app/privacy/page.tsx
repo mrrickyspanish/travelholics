@@ -1,10 +1,10 @@
-import { StickyHeader } from "@/components/sticky-header";
+import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
 export default function PrivacyPage() {
   return (
     <>
-      <StickyHeader />
+      <Header />
       <main className="min-h-screen bg-[#FAF9F6] pt-32 pb-20">
         <section className="mx-auto max-w-3xl px-6">
           <h1 className="text-4xl font-extrabold text-[#1e3a8a] mb-6">Privacy Policy</h1>

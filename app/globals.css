@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F5EFE4;
+  --foreground: #2A3B36;
 }
 
 @theme inline {
@@ -10,6 +10,20 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+@theme {
+  /* Brand color tokens — mirrors tailwind.config.ts for Tailwind v4 CSS-first resolution */
+  --color-emerald-deep:  #0d4a3a;
+  --color-emerald-mid:   #10755A;
+  --color-coral:         #F26A75;
+  --color-coral-deep:    #D9505C;
+  --color-blush:         #F4C4CC;
+  --color-sand:          #F5EFE4;
+  --color-cream:         #FCFAF5;
+  --color-ink:           #2A3B36;
+  --color-stone:         #6B7B74;
+  --color-gold:          #f59e0b;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,7 +36,17 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans, Arial, Helvetica, sans-serif);
+}
+
+/* Custom font utilities for Dancing Script and Playfair Display */
+@layer utilities {
+  .font-dancing {
+    font-family: var(--font-dancing-script, "Dancing Script", cursive);
+  }
+  .font-playfair {
+    font-family: var(--font-playfair-display, "Playfair Display", Georgia, serif);
+  }
 }
 
 @layer base {
