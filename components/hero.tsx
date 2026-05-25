@@ -10,7 +10,7 @@ export const Hero = () => {
       {/* Faint cruise-deck photo — barely-there texture, NOT a dark overlay */}
       <div className="absolute inset-0" aria-hidden="true">
         <Image
-          src="/images/Travelholics_background.png"
+          src="/images/hero_th_background.png"
           alt=""
           fill
           priority
