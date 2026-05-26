@@ -67,6 +67,9 @@ export const Hero = () => {
               <p className="mx-auto max-w-[36ch] text-[1.06rem] font-medium leading-[1.62] text-royal-deep [text-shadow:0_1px_2px_rgba(255,255,255,0.18)] sm:text-[1.12rem] lg:mx-0 lg:max-w-[40ch] lg:text-[1.18rem]">
                 Always planning the next getaway. Saving cruise deals at 1 a.m. Packing early. No cure, just better trips, a crew that gets it, and gear to match.
               </p>
+              <p className="mt-4 text-[12px] font-semibold uppercase tracking-[0.11em] text-ink/65 lg:hidden">
+                Plan the trip. Join the crew. Shop the gear.
+              </p>
             </div>
 
             <div className="mt-5 flex w-full max-w-[34rem] flex-col items-center gap-3 sm:flex-row sm:justify-center lg:max-w-none lg:items-start lg:justify-start">

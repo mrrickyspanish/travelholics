@@ -91,7 +91,7 @@ export const GroupTrips = () => {
             type="button"
             onClick={() => setOffset((o) => Math.max(0, o - 1))}
             disabled={offset === 0}
-            className="absolute left-0 top-[40%] -translate-y-1/2 -translate-x-5 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center text-ink hover:text-coral transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="hidden md:flex absolute left-0 top-[40%] -translate-y-1/2 -translate-x-5 w-9 h-9 rounded-full bg-white shadow-md items-center justify-center text-ink hover:text-coral transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             aria-label="Previous"
           >
             <ChevronLeft size={18} />
@@ -100,7 +100,7 @@ export const GroupTrips = () => {
             type="button"
             onClick={() => setOffset((o) => Math.min(maxOffset, o + 1))}
             disabled={offset === maxOffset}
-            className="absolute right-0 top-[40%] -translate-y-1/2 translate-x-5 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center text-ink hover:text-coral transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="hidden md:flex absolute right-0 top-[40%] -translate-y-1/2 translate-x-5 w-9 h-9 rounded-full bg-white shadow-md items-center justify-center text-ink hover:text-coral transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             aria-label="Next"
           >
             <ChevronRight size={18} />

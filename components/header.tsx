@@ -63,7 +63,12 @@ export const Header = () => {
                 height={34}
                 className="rounded-full"
               />
-              <span className="font-bold text-ink text-[17px] hidden sm:block">Travelholics</span>
+              <div className="hidden sm:flex flex-col leading-none">
+                <span className="font-bold text-ink text-[17px]">Travelholics</span>
+                <span className="mt-1 hidden lg:block text-[10px] font-semibold uppercase tracking-[0.11em] text-ink/55">
+                  Cruise planning · group trips · travel lifestyle
+                </span>
+              </div>
             </Link>
           </div>
 

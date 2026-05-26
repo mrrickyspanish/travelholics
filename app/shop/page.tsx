@@ -410,7 +410,20 @@ export default function ShopPage() {
               title="Shop the videos."
               description="Items Yolanda keeps talking about because they genuinely make the trip easier. Caught the rec in a video — grab it here."
             />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+            {/* Mobile: swipe shelf (1 card + peek) */}
+            <div className="md:hidden -mx-6 px-6">
+              <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {TIKTOK_PRODUCTS.map((p, i) => (
+                  <div key={p.id} className="w-[78vw] max-w-[320px] shrink-0 snap-start">
+                    <TikTokCard product={p} index={i} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop/Tablet */}
+            <div className="hidden md:grid md:grid-cols-4 gap-4">
               {TIKTOK_PRODUCTS.map((p, i) => (
                 <TikTokCard key={p.id} product={p} index={i} />
               ))}
@@ -428,7 +441,20 @@ export default function ShopPage() {
               title="My Amazon picks."
               description="The Pinterest-board side of the shop. Travel essentials, style on the go, and the everyday carries Yolanda actually reaches for."
             />
-            <div className="columns-2 md:columns-3 xl:columns-4 gap-4">
+
+            {/* Mobile: swipe shelf (1 card + peek) */}
+            <div className="md:hidden -mx-6 px-6">
+              <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {AMAZON_PRODUCTS.map((p, i) => (
+                  <div key={p.id} className="w-[78vw] max-w-[320px] shrink-0 snap-start">
+                    <AmazonCard product={p} index={i} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop/Tablet masonry */}
+            <div className="hidden md:columns-3 xl:columns-4 gap-4 md:block">
               {AMAZON_PRODUCTS.map((p, i) => (
                 <AmazonCard key={p.id} product={p} index={i} />
               ))}
@@ -464,7 +490,25 @@ export default function ShopPage() {
               </div>
             )}
 
-            <div className="grid md:grid-cols-3 gap-6">
+            {/* Mobile: swipe shelf (1 card + peek) */}
+            <div className="md:hidden -mx-6 px-6">
+              <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {MERCH_PRODUCTS.map((p) => (
+                  <div key={p.id} className="w-[78vw] max-w-[320px] shrink-0 snap-start">
+                    <MerchCard
+                      product={p}
+                      selection={merchSelections[p.id]}
+                      isPending={pendingCheckoutId === p.id}
+                      onUpdate={(next) => updateMerchSelection(p.id, next)}
+                      onCheckout={() => void handleCheckout(p)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop/Tablet */}
+            <div className="hidden md:grid md:grid-cols-3 gap-6">
               {MERCH_PRODUCTS.map((p) => (
                 <MerchCard
                   key={p.id}
