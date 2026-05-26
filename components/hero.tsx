@@ -30,7 +30,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="flex max-w-[29rem] flex-col items-center pt-4 sm:pt-8 lg:max-w-none lg:items-start lg:pt-0"
+            className="mx-auto flex w-full max-w-[29rem] flex-col items-center pt-4 sm:pt-8 lg:mx-0 lg:max-w-none lg:items-start lg:pt-0"
           >
             <div className="mx-auto inline-block w-full max-w-[34rem] rounded-[1.75rem] border border-white/80 bg-[rgba(252,250,245,0.82)] px-5 py-5 text-center shadow-[0_18px_45px_rgba(26,58,82,0.1)] ring-1 ring-white/55 backdrop-blur-0 sm:px-6 sm:py-6 sm:backdrop-blur-[2px] lg:mx-0 lg:max-w-2xl lg:rounded-[2rem] lg:bg-white/84 lg:px-8 lg:py-7 lg:text-left lg:shadow-2xl lg:shadow-ink/20">
               <div className="mb-5 space-y-3.5 lg:space-y-4">
