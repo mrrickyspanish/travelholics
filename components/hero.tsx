@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Anchor, Users } from "lucide-react";
 
 export const Hero = () => {
   return (
@@ -29,54 +28,56 @@ export const Hero = () => {
             transition={{ duration: 0.7 }}
           >
             <div className="inline-block lg:max-w-2xl mb-10 px-0 py-0 lg:rounded-[2rem] lg:bg-white/88 lg:backdrop-blur-sm lg:shadow-2xl lg:shadow-ink/25 lg:border lg:border-white/85 lg:ring-1 lg:ring-white/45 lg:px-8 lg:py-7">
-              <h1 className="font-serif text-5xl lg:text-6xl xl:text-[4.5rem] font-semibold leading-[1.04] tracking-[-0.02em] text-royal-deep mb-1">
-                Curated Cruises.
-              </h1>
-              <h1 className="font-serif text-5xl lg:text-6xl xl:text-[4.5rem] font-semibold leading-[1.04] tracking-[-0.02em] text-royal-deep mb-2">
-                Real Experience.
-              </h1>
-
-              {/* Script line with coral underline swoosh */}
-              <div className="relative inline-block mb-5">
-                <span className="font-script text-[2.6rem] lg:text-[3rem] xl:text-[3.4rem] text-coral font-semibold leading-tight">
-                  Stress-Free Planning.
-                </span>
-                <svg
-                  className="absolute -bottom-1 left-0 w-full text-emerald-mid"
-                  viewBox="0 0 340 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M3 7 C58 3, 116 8.5, 170 5.5 C224 2.5, 280 7.5, 337 4"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
+              <div className="mb-4">
+                <div className="flex flex-wrap items-end gap-x-3 gap-y-1 mb-1">
+                  <h1 className="font-serif text-[3.2rem] lg:text-[4.5rem] xl:text-[4.9rem] font-semibold leading-[0.98] tracking-[-0.02em] text-[#0E125C]">
+                    Travelholic.
+                  </h1>
+                  <span className="text-[#0E125C] italic text-[1.35rem] lg:text-[1.9rem] leading-none mb-2">(noun)</span>
+                </div>
+                <p className="text-stone/80 text-[12px] lg:text-[13px] tracking-wide mb-2">/ˈtra-vəl-hä-lik/</p>
+                <p className="text-[#0E125C] text-[1.55rem] lg:text-[2rem] xl:text-[2.2rem] font-medium leading-tight">
+                  Someone who travels{" "}
+                  <span className="relative inline-block font-script text-coral text-[1.7rem] lg:text-[2.1rem] xl:text-[2.3rem] font-semibold leading-none align-baseline">
+                    between trips
+                    <svg
+                      className="absolute -bottom-1 left-0 w-full text-coral"
+                      viewBox="0 0 210 10"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                      preserveAspectRatio="none"
+                    >
+                      <path
+                        d="M3 7 C44 3, 84 8.3, 126 5.4 C159 3.3, 186 6.8, 207 4.8"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </span>
+                  .
+                </p>
               </div>
 
-              <p className="text-base lg:text-lg text-ink/90 leading-relaxed lg:max-w-xl">
-                Personalized cruise planning, unforgettable group trips, and hand-picked travel picks so you can travel more and worry less.
+              <p className="text-base lg:text-lg text-royal-deep/80 leading-relaxed lg:max-w-xl">
+                Symptoms include: planning the next trip before you&apos;ve unpacked the last one, screenshotting cruise deals at 1 a.m., and packing a carry-on that&apos;s secretly checked-bag-sized. No cure. Just better trips, a group that gets it, and the gear to prove it.
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="/#contact"
-                className="inline-flex items-center gap-2 bg-coral hover:bg-coral-deep text-white font-semibold px-7 py-4 rounded-full transition-colors shadow-lg shadow-coral/20 text-[15px]"
-              >
-                <Anchor size={16} />
-                Plan My Cruise
-              </a>
+            <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href="/#group-trips"
-                className="inline-flex items-center gap-2 bg-white border-2 border-emerald-mid text-emerald-mid hover:bg-emerald-mid hover:text-white font-semibold px-7 py-4 rounded-full transition-colors shadow-sm text-[15px]"
+                className="inline-flex items-center justify-center gap-1.5 bg-coral hover:bg-coral-deep text-white font-semibold px-7 py-4 rounded-full transition-colors shadow-lg shadow-coral/20 text-[15px] group"
               >
-                <Users size={16} />
-                Explore Group Trips
+                <span>Reserve a Cabin · Caribbean 2027</span>
+                <span className="inline-block text-[12px] translate-x-0 group-hover:translate-x-[2px] transition-transform duration-200" aria-hidden="true">↗</span>
+              </a>
+              <a
+                href="/#contact"
+                className="inline-flex items-center justify-center bg-white border-2 border-navy text-navy hover:bg-navy hover:text-white font-semibold px-7 py-4 rounded-full transition-colors shadow-sm text-[15px]"
+              >
+                Join the Crew
               </a>
             </div>
           </motion.div>
@@ -114,14 +115,12 @@ export const Hero = () => {
               className="bg-white/97 backdrop-blur rounded-2xl shadow-xl p-6 w-[320px] xl:w-[340px] border border-blush/80"
               style={{ marginTop: "-2.4rem", marginRight: "1rem" }}
             >
-              <p className="font-script font-bold text-[2.8rem] text-coral leading-none mb-1.5">Hi, I&apos;m Yolanda!</p>
-              <p className="text-[20px] font-semibold text-ink leading-snug mb-3">
-                Your Cruise Curator &amp; <span className="whitespace-nowrap">Travel Partner</span>
+              <p className="font-script text-[2.2rem] text-coral leading-none mb-2">Hi, I&apos;m Yolanda</p>
+              <p className="text-[24px] font-semibold text-royal-deep leading-snug mb-3">Travelholic in Chief</p>
+              <p className="text-[18px] font-medium text-royal-deep/90 leading-relaxed">
+                20+ years addicted to ports, decks, and packing lists.
               </p>
-              <p className="text-[18px] font-semibold text-emerald-deep leading-snug mb-3">20+ Years in Travel &amp; Hospitality</p>
-              <p className="text-[19px] text-stone leading-relaxed">
-                Helping travelers create memories that last a lifetime.
-              </p>
+              <p className="font-script text-[1.55rem] text-coral leading-none text-right mt-4">No regrets.</p>
             </motion.div>
           </motion.div>
 

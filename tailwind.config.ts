@@ -14,7 +14,7 @@ export default {
         // Brand tokens — use these everywhere; do NOT inline hex values in components
         "emerald-deep":  "#0d4a3a", // dark sections, headlines
         "emerald-mid":   "#10755A", // secondary CTA, hover states
-        coral:           "#F26A75", // PRIMARY CTA — use sparingly, accent only
+        coral:           "#E85D5D", // PRIMARY CTA — use sparingly, accent only
         "coral-deep":    "#D9505C", // coral hover
         blush:           "#F4C4CC", // soft pink dividers, tags
         sand:            "#F5EFE4", // PAGE BACKGROUND

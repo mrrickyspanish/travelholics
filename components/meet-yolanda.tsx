@@ -4,10 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 
-// TODO: Replace with Yolanda seated/lobby portrait — yellow/floral dress on beige chair.
-// The mockup uses a professional indoor editorial shot, NOT the cruise-deck photo used in the hero.
-// Path when photo is available: /images/yolanda-seated-portrait.jpg
-const YOLANDA_SEATED_PHOTO = "/images/PLACEHOLDER-yolanda-seated-portrait.jpg";
+const YOLANDA_SEATED_PHOTO = "/images/dest-mediterranean.jpg";
 const YOLANDA_SEATED_FALLBACK = "/images/about-port-of-call.jpg";
 
 const credentials = [
@@ -20,7 +17,7 @@ const credentials = [
 
 export const MeetYolanda = () => {
   return (
-    <section id="about" className="bg-sand py-20 relative overflow-hidden">
+    <section id="about" className="bg-sand pt-20 pb-14 lg:pb-16 relative overflow-hidden">
       {/* Faint compass watermark — top right */}
       <div
         className="pointer-events-none absolute -top-10 -right-10 w-96 h-96 opacity-[0.035] text-emerald-deep"
@@ -42,7 +39,7 @@ export const MeetYolanda = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-[35%_40%_25%] gap-10 lg:gap-12 items-start">
+        <div className="grid lg:grid-cols-[35%_65%] gap-10 lg:gap-12 items-start">
 
           {/* Left: Photo — needs the seated/lobby portrait, NOT the cruise-deck shot */}
           <motion.div
@@ -74,10 +71,10 @@ export const MeetYolanda = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <p className="type-kicker text-coral mb-3">Meet Yolanda</p>
-            <h2 className="font-serif text-3xl lg:text-[2.2rem] font-semibold text-ink leading-tight tracking-tight mb-5">
+            <h2 className="font-serif text-3xl lg:text-[2.45rem] font-semibold text-ink leading-tight tracking-tight mb-5">
               Your Trusted Cruise Curator
             </h2>
-            <div className="space-y-4 text-[15px] text-ink/75 leading-relaxed">
+            <div className="space-y-4 text-[16px] lg:text-[17px] font-medium text-ink/80 leading-relaxed">
               <p>
                 I&apos;m Yolanda Harris—cruise lover, travel expert, and your go-to person for
                 unforgettable journeys. With over 20 years in travel and hospitality, I&apos;ve
@@ -97,21 +94,13 @@ export const MeetYolanda = () => {
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
             </div>
-          </motion.div>
 
-          {/* Right: Credentials card */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="bg-cream rounded-2xl p-5 shadow-sm border border-blush">
+            <div className="mt-6 bg-cream rounded-2xl p-5 shadow-sm border border-blush w-full">
               <ul className="space-y-3.5">
                 {credentials.map((item) => (
                   <li key={item} className="flex items-start gap-2.5">
-                    <CheckCircle size={16} className="text-emerald-mid mt-0.5 shrink-0" />
-                    <span className="text-[13px] font-medium text-ink leading-snug">{item}</span>
+                    <CheckCircle size={20} className="text-emerald-mid mt-0.5 shrink-0" />
+                    <span className="text-[17px] font-bold text-ink leading-snug">{item}</span>
                   </li>
                 ))}
               </ul>

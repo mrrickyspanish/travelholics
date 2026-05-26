@@ -1,47 +1,24 @@
-import { Ship, Users, Anchor, Tag } from "lucide-react";
-
-// Sepia/aged postage-stamp decoration
-const PostageStamp = ({ className }: { className?: string }) => (
-  <svg
-    viewBox="0 0 80 100"
-    className={className}
-    aria-hidden="true"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect x="3" y="3" width="74" height="94" rx="2" stroke="#6B7B74" strokeWidth="1.5" strokeDasharray="5 3" fill="#FCFAF5" />
-    <rect x="10" y="10" width="60" height="62" rx="2" fill="#F4C4CC" opacity="0.6" />
-    <text x="40" y="50" textAnchor="middle" fontSize="28" fill="#0d4a3a" opacity="0.5">✈</text>
-    <text x="40" y="82" textAnchor="middle" fontSize="7" fill="#6B7B74" fontFamily="monospace" fontWeight="bold" letterSpacing="1">TRAVELHOLIC</text>
-    {/* Cancellation lines */}
-    <line x1="12" y1="20" x2="68" y2="20" stroke="#6B7B74" strokeWidth="0.8" opacity="0.3" />
-    <line x1="12" y1="24" x2="68" y2="24" stroke="#6B7B74" strokeWidth="0.8" opacity="0.3" />
-  </svg>
-);
+import { Ship, Users, Globe, MapPin } from "lucide-react";
 
 const stats = [
-  { icon: Ship,   value: "20",   label: "Years at Sea"    },
-  { icon: Users,  value: "500+", label: "Happy Travelers" },
-  { icon: Anchor, value: "6",    label: "Cruise Lines"    },
-  { icon: Tag,    value: "No",   label: "Booking Fees"    },
+  { icon: Ship, value: "6+", line1: "cruise lines", line2: "yolanda's sailed" },
+  { icon: Globe, value: "15+", line1: "countries", line2: "and counting" },
+  { icon: Users, value: "17.2k+", line1: "travelholics", line2: "in the crew" },
+  { icon: MapPin, value: "4+", line1: "group trips", line2: "on the books" },
 ];
 
 export const StatsStrip = () => {
   return (
-    <section className="bg-[url('/images/traveholic_divider_image_mobile.png')] lg:bg-[url('/images/traveholic_divider_image.png')] bg-cover bg-center bg-no-repeat py-10 relative overflow-hidden">
-      <div className="absolute inset-0 bg-cream/48" aria-hidden="true" />
-      <PostageStamp className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-[70px] opacity-55 z-10" />
-      <PostageStamp className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-[70px] opacity-55 scale-x-[-1] z-10" />
-
-      <div className="relative z-10 max-w-[92rem] w-full mx-auto px-8 lg:px-14 xl:px-20">
+    <section className="bg-cream py-10 relative overflow-hidden">
+      <div className="max-w-[92rem] w-full mx-auto px-8 lg:px-14 xl:px-20">
         <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-stone/20">
-          {stats.map(({ icon: Icon, value, label }) => (
-            <div key={label} className="flex items-center justify-center gap-3 px-6 py-3">
-              <Icon className="text-emerald-mid shrink-0" size={40} strokeWidth={1.9} />
-              <div className="flex flex-col items-start gap-0.5">
-                {/* Serif number for editorial weight */}
-                <span className="font-serif text-[2rem] font-semibold text-navy leading-none">{value}</span>
-                <span className="text-xs font-semibold text-stone leading-none">{label}</span>
+          {stats.map(({ icon: Icon, value, line1, line2 }) => (
+            <div key={`${value}-${line1}`} className="flex items-center justify-center gap-4 px-6 py-3">
+              <Icon className="text-coral shrink-0" size={56} strokeWidth={1.9} />
+              <div className="flex flex-col items-start gap-1">
+                <span className="font-serif text-[2rem] font-medium text-navy leading-none">{value}</span>
+                <span className="text-[11px] font-medium tracking-[0.11em] text-stone/90 leading-none lowercase">{line1}</span>
+                <span className="text-[11px] font-medium tracking-[0.11em] text-stone/90 leading-none lowercase">{line2}</span>
               </div>
             </div>
           ))}
