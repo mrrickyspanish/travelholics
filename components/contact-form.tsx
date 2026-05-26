@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import confetti from "canvas-confetti";
-import Image from "next/image";
 import { supabase } from "@/lib/supabase";
 import { buildFallbackMailto, sendFormEmail } from "@/lib/form-email";
 import { motion } from "framer-motion";
@@ -50,6 +49,21 @@ export const ContactForm = () => {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [website, setWebsite] = useState(""); // honeypot
 
+  const getMissingRequiredFields = () => {
+    const checks: Array<[string, string]> = [
+      ["First Name", formData.firstName],
+      ["Last Name", formData.lastName],
+      ["Email Address", formData.email],
+      ["Destination", formData.destination],
+      ["Travel Timeframe", formData.timing],
+      ["Dream Trip Details", formData.message],
+    ];
+
+    return checks
+      .filter(([, value]) => !value.trim())
+      .map(([label]) => label);
+  };
+
   const fullName = `${formData.firstName} ${formData.lastName}`.trim();
 
   const directMailto = buildFallbackMailto(
@@ -74,6 +88,19 @@ export const ContactForm = () => {
     if (website.trim()) {
       fireConfetti();
       setIsSuccess(true);
+      setIsSubmitting(false);
+      return;
+    }
+
+    const missingFields = getMissingRequiredFields();
+    if (missingFields.length) {
+      setSubmitError(`Please complete: ${missingFields.join(", ")}.`);
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!/^\S+@\S+\.\S+$/.test(formData.email.trim())) {
+      setSubmitError("Please enter a valid email address.");
       setIsSubmitting(false);
       return;
     }
@@ -114,7 +141,7 @@ export const ContactForm = () => {
   };
 
   const inputClass =
-    "w-full px-4 py-3 rounded-xl border border-blush bg-white focus:border-emerald-mid focus:ring-2 focus:ring-emerald-mid/20 outline-none transition-all text-[14px] text-ink placeholder:text-stone/55";
+    "w-full min-h-11 px-4 py-3 rounded-xl border border-blush bg-white focus:border-emerald-mid focus:ring-2 focus:ring-emerald-mid/20 outline-none transition-all text-[15px] text-ink placeholder:text-stone/55";
   const labelClass = "block text-[13px] font-semibold text-ink mb-1.5";
 
   return (
@@ -132,26 +159,10 @@ export const ContactForm = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="grid lg:grid-cols-[22%_28%_50%] rounded-3xl overflow-hidden shadow-2xl shadow-ink/10"
+          className="grid lg:grid-cols-[40%_60%] rounded-3xl overflow-hidden shadow-2xl shadow-ink/10"
         >
-
-          {/* ── Col 1: Tropical beach photo ── */}
-          <div className="relative hidden lg:block min-h-[420px]">
-            {/* TODO: Replace with a real tropical island/beach photo when available */}
-            {/* Using dest-caribbean.jpg as placeholder — needs a proper beach/island shot */}
-            <Image
-              src="/images/dest-caribbean.jpg"
-              alt="Tropical cruise destination"
-              fill
-              className="object-cover object-center"
-              sizes="22vw"
-            />
-            {/* Very light emerald tint to tie it to the panel next to it */}
-            <div className="absolute inset-0 bg-emerald-deep/10" />
-          </div>
-
-          {/* ── Col 2: Emerald-deep headline + bullets panel ── */}
-          <div className="relative bg-emerald-deep px-7 py-10 flex flex-col justify-between overflow-hidden">
+          {/* ── Left: Emerald-deep headline + bullets panel ── */}
+          <div className="relative bg-emerald-deep px-6 py-7 sm:px-7 sm:py-8 lg:px-8 lg:py-10 flex flex-col gap-6 overflow-hidden">
             <div className="relative z-10">
               <p className="type-kicker text-coral mb-3">Let&apos;s Make It Happen</p>
               <h2 className="font-serif text-2xl lg:text-[1.65rem] font-semibold text-white leading-tight mb-3 tracking-tight">
@@ -160,25 +171,25 @@ export const ContactForm = () => {
               <p className="font-script text-[1.5rem] text-coral leading-tight mb-7">
                 Let&apos;s make your dream vacation a reality.
               </p>
-              <ul className="space-y-3">
+              <ul className="space-y-2.5">
                 {[
                   "Personalized recommendations",
                   "Exclusive perks & upgrades",
                   "Group trips made easy",
-                  "No booking fees—ever",
+                  "No booking fees, ever",
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2.5">
                     <CheckCircle size={15} className="text-coral shrink-0" />
-                    <span className="text-[13px] font-medium text-white/90">{item}</span>
+                    <span className="text-[14px] font-medium text-white/90">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <PostageStamp className="relative z-10 mt-8 w-12 h-[60px] self-start opacity-50" />
+            <PostageStamp className="hidden lg:block absolute right-5 bottom-5 w-12 h-[60px] opacity-25" />
           </div>
 
-          {/* ── Col 3: Form ── */}
-          <div className="bg-cream px-8 py-8">
+          {/* ── Right: Form ── */}
+          <div className="bg-cream px-6 py-7 sm:px-8 sm:py-8">
             {isSuccess ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-8">
                 <div className="w-14 h-14 bg-blush text-coral rounded-full flex items-center justify-center mb-4">
@@ -194,9 +205,10 @@ export const ContactForm = () => {
               </div>
             ) : (
               <>
-                <p className="mb-5 max-w-[38ch] text-[17px] font-medium leading-[1.65] text-ink/82">Ready to set sail? Tell us a little about your trip.</p>
+                <p className="mb-4 max-w-[38ch] text-[17px] font-medium leading-[1.65] text-ink/82">Ready to set sail? Tell us a little about your trip.</p>
+                <p className="mb-5 text-[12px] font-semibold tracking-[0.08em] text-stone/70 uppercase">* Required fields</p>
 
-                <form onSubmit={handleSubmit} className="space-y-3.5">
+                <form onSubmit={handleSubmit} noValidate className="space-y-3.5">
                   {/* Honeypot */}
                   <div className="absolute -left-[10000px] top-auto w-px h-px overflow-hidden" aria-hidden="true">
                     <label htmlFor="website">Website</label>
@@ -206,12 +218,12 @@ export const ContactForm = () => {
                   {/* Row 1: First + Last */}
                   <div className="grid sm:grid-cols-2 gap-3.5">
                     <div>
-                      <label htmlFor="firstName" className={labelClass}>First Name</label>
+                      <label htmlFor="firstName" className={labelClass}>First Name *</label>
                       <input id="firstName" required type="text" placeholder="Jane" className={inputClass}
                         value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} />
                     </div>
                     <div>
-                      <label htmlFor="lastName" className={labelClass}>Last Name</label>
+                      <label htmlFor="lastName" className={labelClass}>Last Name *</label>
                       <input id="lastName" required type="text" placeholder="Smith" className={inputClass}
                         value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} />
                     </div>
@@ -220,7 +232,7 @@ export const ContactForm = () => {
                   {/* Row 2: Email + Phone */}
                   <div className="grid sm:grid-cols-2 gap-3.5">
                     <div>
-                      <label htmlFor="email" className={labelClass}>Email Address</label>
+                      <label htmlFor="email" className={labelClass}>Email Address *</label>
                       <input id="email" required type="email" placeholder="jane@email.com" className={inputClass}
                         value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
                     </div>
@@ -236,7 +248,7 @@ export const ContactForm = () => {
                   {/* Row 3: Destination + Timing */}
                   <div className="grid sm:grid-cols-2 gap-3.5">
                     <div>
-                      <label htmlFor="destination" className={labelClass}>Where would you like to go?</label>
+                      <label htmlFor="destination" className={labelClass}>Destination *</label>
                       <select id="destination" required className={`${inputClass} appearance-none cursor-pointer`}
                         value={formData.destination} onChange={(e) => setFormData({ ...formData, destination: e.target.value })}>
                         <option value="" disabled>Select destination…</option>
@@ -244,7 +256,7 @@ export const ContactForm = () => {
                       </select>
                     </div>
                     <div>
-                      <label htmlFor="timing" className={labelClass}>When are you looking to travel?</label>
+                      <label htmlFor="timing" className={labelClass}>Travel Timeframe *</label>
                       <select id="timing" required className={`${inputClass} appearance-none cursor-pointer`}
                         value={formData.timing} onChange={(e) => setFormData({ ...formData, timing: e.target.value })}>
                         <option value="" disabled>Select timeframe…</option>
@@ -255,7 +267,7 @@ export const ContactForm = () => {
 
                   {/* Row 4: Message */}
                   <div>
-                    <label htmlFor="message" className={labelClass}>Tell us about your dream trip…</label>
+                    <label htmlFor="message" className={labelClass}>Tell us about your dream trip *</label>
                     <textarea id="message" required rows={4} placeholder="Where do you want to go? How many travelers? Any special occasions?"
                       className={`${inputClass} resize-none`}
                       value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
@@ -266,7 +278,7 @@ export const ContactForm = () => {
                     type="submit"
                     className="w-full bg-coral hover:bg-coral-deep text-white font-semibold py-3.5 rounded-xl shadow-md shadow-coral/15 transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed text-[14px]"
                   >
-                    {isSubmitting ? "Submitting…" : (<>Send My Cruise Inquiry <Ship size={16} /></>)}
+                    {isSubmitting ? "Submitting…" : (<>Start Planning My Trip <Ship size={16} /></>)}
                   </RippleButton>
 
                   {submitError && (

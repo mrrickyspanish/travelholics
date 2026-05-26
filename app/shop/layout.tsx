@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Shop",
+  title: "Cruise Travel Shop",
   description:
     "Browse Yolanda's travel picks, affiliate finds, and official Travelholics merchandise.",
   alternates: {

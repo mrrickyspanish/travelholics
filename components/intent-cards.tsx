@@ -52,6 +52,9 @@ export const IntentCards = () => {
           <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-ink tracking-tight">
             Pick your altitude.
           </h2>
+          <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.11em] text-ink/65">
+            Plan the trip. Join the crew. Shop the gear.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-5">

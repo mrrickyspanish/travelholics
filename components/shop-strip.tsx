@@ -15,21 +15,21 @@ const VISIBLE = 3;
 
 const products = [
   {
-    name: "Pacific Mexican Cruise Door Magnent",
+    name: "Pacific Mexico Cruise Door Magnet",
     price: "$18.99",
     image: "/images/pacific_mexican_door_magnent.png",
     href: "/shop",
     imageAlt: "Pacific Mexican Cruise door magnet with cruise ship and coastal artwork",
   },
   {
-    name: "Cruise Life Ticket Door Magnent",
+    name: "Cruise Life Ticket Door Magnet",
     price: "$16.99",
     image: "/images/travelholic_ticket_magnent_pacific.png",
     href: "/shop",
     imageAlt: "Cruise Life ticket-style door magnet",
   },
   {
-    name: "Travelholicss Bucket Hat",
+    name: "Travelholics Bucket Hat",
     price: "$25.00",
     image: "/images/Travelholics_merch_bucket_hat.png",
     href: "/shop",
@@ -52,7 +52,7 @@ export const ShopStrip = () => {
               Shop Our Favorite Finds
             </h2>
             <p className="mb-5 mx-auto max-w-[38ch] text-[17px] font-medium leading-[1.65] text-ink/82">
-              Travel-tested, creator-approved, and perfect for your next adventure.
+              Cruise-tested essentials and merch picks you will actually use.
             </p>
             <Link
               href="/shop"
@@ -109,7 +109,7 @@ export const ShopStrip = () => {
               Shop Our Favorite Finds
             </h2>
             <p className="mb-6 max-w-[38ch] text-[17px] font-medium leading-[1.65] text-ink/82">
-              Travel-tested, creator-approved, and perfect for your next adventure.
+              Cruise-tested essentials and merch picks you will actually use.
             </p>
             <Link
               href="/shop"

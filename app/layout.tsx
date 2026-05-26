@@ -32,6 +32,7 @@ const caveat = Caveat({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  applicationName: "Travelholics",
   title: {
     default: "Travelholics | Cruise Planning by Yolanda",
     template: "%s | Travelholics",
@@ -55,6 +56,22 @@ export const metadata: Metadata = {
     title: "Travelholics | Cruise Planning by Yolanda",
     description:
       "Certified cruise expertise and personalized travel planning for your next getaway.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+      "max-snippet": -1,
+    },
+  },
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
   },
   manifest: "/manifest.webmanifest",
   icons: {
