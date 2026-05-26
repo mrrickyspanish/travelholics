@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-16 bg-gradient-to-b from-hero-sky via-cream to-sand">
-      {/* Full hero background image with no overlay */}
+    <section className="relative flex items-start overflow-hidden bg-gradient-to-b from-hero-sky via-cream to-sand pt-16 lg:min-h-[90vh] lg:items-center">
+      {/* Full hero background image */}
       <div className="absolute inset-0" aria-hidden="true">
         <Image
           src="/images/hero_th_background.png"
@@ -17,8 +17,12 @@ export const Hero = () => {
           sizes="100vw"
         />
       </div>
+      <div
+        className="absolute inset-0 bg-[radial-gradient(circle_at_14%_34%,rgba(252,250,245,0.96)_0%,rgba(252,250,245,0.9)_24%,rgba(252,250,245,0.68)_42%,rgba(252,250,245,0.22)_62%,rgba(252,250,245,0)_78%),linear-gradient(110deg,rgba(252,250,245,0.92)_0%,rgba(252,250,245,0.76)_26%,rgba(252,250,245,0.3)_48%,rgba(252,250,245,0)_68%)] lg:bg-[radial-gradient(circle_at_18%_34%,rgba(252,250,245,0.84)_0%,rgba(252,250,245,0.74)_24%,rgba(252,250,245,0.38)_44%,rgba(252,250,245,0.1)_60%,rgba(252,250,245,0)_76%),linear-gradient(110deg,rgba(252,250,245,0.82)_0%,rgba(252,250,245,0.62)_24%,rgba(252,250,245,0.18)_46%,rgba(252,250,245,0)_66%)]"
+        aria-hidden="true"
+      />
 
-      <div className="relative z-10 max-w-[88rem] mx-auto px-6 py-16 w-full">
+      <div className="relative z-10 mx-auto w-full max-w-[88rem] px-5 py-8 sm:px-6 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-[56%_44%] gap-12 lg:gap-8 items-center">
 
           {/* Left column */}
@@ -26,20 +30,21 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
+            className="flex max-w-[29rem] flex-col items-center pt-4 sm:pt-8 lg:max-w-none lg:items-start lg:pt-0"
           >
-            <div className="inline-block lg:max-w-2xl mb-10 px-0 py-0 lg:rounded-[2rem] lg:bg-white/88 lg:backdrop-blur-sm lg:shadow-2xl lg:shadow-ink/25 lg:border lg:border-white/85 lg:ring-1 lg:ring-white/45 lg:px-8 lg:py-7">
-              <div className="mb-4">
-                <div className="flex flex-wrap items-end gap-x-3 gap-y-1 mb-1">
-                  <h1 className="font-serif text-[3.2rem] lg:text-[4.5rem] xl:text-[4.9rem] font-semibold leading-[0.98] tracking-[-0.02em] text-[#0E125C]">
+            <div className="mx-auto inline-block w-full max-w-[34rem] rounded-[1.75rem] border border-white/80 bg-[rgba(252,250,245,0.82)] px-5 py-5 text-center shadow-[0_18px_45px_rgba(26,58,82,0.1)] ring-1 ring-white/55 backdrop-blur-0 sm:px-6 sm:py-6 sm:backdrop-blur-[2px] lg:mx-0 lg:max-w-2xl lg:rounded-[2rem] lg:bg-white/84 lg:px-8 lg:py-7 lg:text-left lg:shadow-2xl lg:shadow-ink/20">
+              <div className="mb-5 space-y-3.5 lg:space-y-4">
+                <div className="flex flex-wrap items-end justify-center gap-x-3 gap-y-1 lg:justify-start">
+                  <h1 className="font-serif text-[clamp(2.95rem,10vw,3.35rem)] font-semibold leading-[0.96] tracking-[-0.02em] text-[#0E125C] lg:text-[4.5rem] xl:text-[4.9rem]">
                     Travelholic.
                   </h1>
-                  <span className="text-[#0E125C] italic text-[1.35rem] lg:text-[1.9rem] leading-none mb-2">(noun)</span>
+                  <span className="mb-2 text-[1.35rem] italic leading-none text-[#0E125C] lg:text-[1.9rem]">(noun)</span>
                 </div>
-                <p className="text-stone/80 text-[12px] lg:text-[13px] tracking-wide mb-2">/ˈtra-vəl-hä-lik/</p>
-                <p className="text-[#0E125C] text-[1.55rem] lg:text-[2rem] xl:text-[2.2rem] font-medium leading-tight">
+                <p className="text-[12px] tracking-[0.18em] text-stone/85 lg:text-[13px]">/ˈtra-vəl-hä-lik/</p>
+                <p className="mx-auto max-w-[24ch] text-[clamp(1.85rem,5.5vw,2.08rem)] font-medium leading-[1.12] text-[#0E125C] lg:mx-0 lg:max-w-none lg:text-[2rem] xl:text-[2.2rem]">
                   Someone who travels{" "}
-                  <span className="relative inline-block font-script text-coral text-[1.7rem] lg:text-[2.1rem] xl:text-[2.3rem] font-semibold leading-none align-baseline">
-                    between trips
+                  <span className="relative inline-block rounded-full bg-cream/92 px-2 pb-1 pt-0.5 font-script text-[1.72rem] font-semibold leading-none text-[#D84E59] shadow-[0_4px_12px_rgba(252,250,245,0.45)] align-baseline lg:bg-cream/80 lg:text-[2.1rem] xl:text-[2.3rem]">
+                    between trips.
                     <svg
                       className="absolute -bottom-1 left-0 w-full text-coral"
                       viewBox="0 0 210 10"
@@ -56,26 +61,25 @@ export const Hero = () => {
                       />
                     </svg>
                   </span>
-                  .
                 </p>
               </div>
 
-              <p className="text-base lg:text-lg text-royal-deep/80 leading-relaxed lg:max-w-xl">
-                Symptoms include: planning the next trip before you&apos;ve unpacked the last one, screenshotting cruise deals at 1 a.m., and packing a carry-on that&apos;s secretly checked-bag-sized. No cure. Just better trips, a group that gets it, and the gear to prove it.
+              <p className="mx-auto max-w-[36ch] text-[1.06rem] font-medium leading-[1.62] text-royal-deep [text-shadow:0_1px_2px_rgba(255,255,255,0.18)] sm:text-[1.12rem] lg:mx-0 lg:max-w-[40ch] lg:text-[1.18rem]">
+                Always planning the next getaway. Saving cruise deals at 1 a.m. Packing early. No cure, just better trips, a crew that gets it, and gear to match.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="mt-5 flex w-full max-w-[34rem] flex-col items-center gap-3 sm:flex-row sm:justify-center lg:max-w-none lg:items-start lg:justify-start">
               <a
                 href="/#group-trips"
-                className="inline-flex items-center justify-center gap-1.5 bg-coral hover:bg-coral-deep text-white font-semibold px-7 py-4 rounded-full transition-colors shadow-lg shadow-coral/20 text-[15px] group"
+                className="group inline-flex min-h-12 w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-coral px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-coral/20 transition-colors hover:bg-coral-deep sm:w-auto sm:px-7 sm:py-4"
               >
                 <span>Reserve a Cabin · Caribbean 2027</span>
                 <span className="inline-block text-[12px] translate-x-0 group-hover:translate-x-[2px] transition-transform duration-200" aria-hidden="true">↗</span>
               </a>
               <a
                 href="/#contact"
-                className="inline-flex items-center justify-center bg-white border-2 border-navy text-navy hover:bg-navy hover:text-white font-semibold px-7 py-4 rounded-full transition-colors shadow-sm text-[15px]"
+                className="inline-flex min-h-12 w-full items-center justify-center whitespace-nowrap rounded-full border-2 border-navy bg-white px-6 py-3.5 text-[15px] font-semibold text-navy shadow-sm transition-colors hover:border-emerald-mid hover:bg-emerald-mid hover:text-white sm:w-auto sm:px-7 sm:py-4"
               >
                 Join the Crew
               </a>

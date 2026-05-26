@@ -26,6 +26,37 @@ const MAP_WIDTH = 980;
 const MAP_HEIGHT = 430;
 const PROJECTION_SCALE = 140;
 const PROJECTION_CENTER: [number, number] = [0, 20];
+const DESTINATION_LABEL_ZOOM_THRESHOLD = 1.75;
+
+type RegionLabelLayout = {
+  coordinates: [number, number];
+  textAnchor: "start" | "middle" | "end";
+  dx?: number;
+  dy?: number;
+};
+
+const REGION_LABEL_LAYOUT: Record<string, RegionLabelLayout> = {
+  Caribbean: {
+    coordinates: [-71, 13.5],
+    textAnchor: "start",
+  },
+  Alaska: {
+    coordinates: [-150, 66.5],
+    textAnchor: "start",
+  },
+  Mediterranean: {
+    coordinates: [24, 45],
+    textAnchor: "middle",
+  },
+  "East Coast": {
+    coordinates: [-84, 35.5],
+    textAnchor: "start",
+  },
+  "West Coast": {
+    coordinates: [-127, 39],
+    textAnchor: "end",
+  },
+};
 
 function clampLatitude(latitude: number) {
   return Math.max(Math.min(latitude, 85), -85);
@@ -135,6 +166,23 @@ export function DestinationMap() {
 
     return Array.from(groups.entries());
   }, [destinations]);
+  const regionLabels = useMemo(
+    () => groupedDestinations
+      .map(([region, regionDestinations]) => {
+        const layout = REGION_LABEL_LAYOUT[region];
+
+        if (!layout || regionDestinations.length === 0) {
+          return null;
+        }
+
+        return {
+          region,
+          ...layout,
+        };
+      })
+      .filter((label): label is { region: string } & RegionLabelLayout => Boolean(label)),
+    [groupedDestinations],
+  );
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -269,6 +317,7 @@ export function DestinationMap() {
 
   const canRenderPopup =
     !!activeDestination && (mapSize.width || MAP_WIDTH) >= 360 && (mapSize.height || MAP_HEIGHT) >= 260;
+  const showDestinationLabels = view.zoom >= DESTINATION_LABEL_ZOOM_THRESHOLD;
 
   return (
     <section id="map" className="relative overflow-hidden bg-sand py-20 lg:py-24">
@@ -304,19 +353,18 @@ export function DestinationMap() {
             transition={{ duration: 0.55 }}
             className="pt-6"
           >
-            <p className="type-kicker text-coral mb-3">Where We&apos;ve Been</p>
+            <p className="type-kicker text-coral mb-3">THE TRAVELHOLICS ATLAS</p>
             <h2 className="font-serif text-3xl lg:text-[2.4rem] font-semibold text-ink leading-tight tracking-tight mb-4">
-              Where We&apos;re Going Next
+              Where we&apos;ve sailed. Where we&apos;re sailing next.
             </h2>
             <p className="text-[15px] leading-relaxed text-stone mb-7">
-              From the turquoise waters of the Caribbean to the breathtaking fjords of Alaska—these
-              are some of our favorite destinations and what&apos;s coming up next.
+              Every pin is a port Yolanda has actually been to, or a trip the Crew is already eyeing. Click around. Some of these become journal entries. Some become group sailings. All of them get a real opinion when you book.
             </p>
             <a
-              href="/#contact"
+              href="/collaborate"
               className="inline-flex items-center gap-2 border-2 border-emerald-mid text-emerald-mid hover:bg-emerald-mid hover:text-white font-semibold px-6 py-3 rounded-full transition-colors text-sm"
             >
-              Explore Destinations →
+              See the full atlas →
             </a>
           </motion.div>
 
@@ -373,13 +421,41 @@ export function DestinationMap() {
                       }
                     </Geographies>
 
-                    {/* Teardrop pins with persistent labels */}
+                    {!showDestinationLabels && regionLabels.map((regionLabel) => (
+                      <Marker
+                        key={regionLabel.region}
+                        coordinates={regionLabel.coordinates}
+                      >
+                        <g style={{ pointerEvents: "none", userSelect: "none" }}>
+                          <text
+                            x={regionLabel.dx ?? 0}
+                            y={regionLabel.dy ?? 0}
+                            textAnchor={regionLabel.textAnchor}
+                            fontSize="10"
+                            fontWeight="700"
+                            letterSpacing="0.18em"
+                            fill="#1A2E2A"
+                            opacity={0.8}
+                            style={{ textTransform: "uppercase" }}
+                            stroke="rgba(252,250,245,0.95)"
+                            strokeWidth="2.5"
+                            paintOrder="stroke"
+                          >
+                            {regionLabel.region}
+                          </text>
+                        </g>
+                      </Marker>
+                    ))}
+
+                    {/* Teardrop pins with zoom-aware labels */}
                     {destinations.map((destination) => {
                       const isActive  = activeId === destination.id;
                       const isHovered = hoveredId === destination.id;
                       const isInteractive = isActive || isHovered;
-                      const pinFill   = isActive ? "#10755A" : "#F26A75";
-                      const ringFill  = isActive ? "#10755A" : "#F26A75";
+                      const isSailed = !!destination.photo;
+                      const pinFill   = isSailed ? "#10755A" : "#E85D5D";
+                      const ringFill  = isSailed ? "#10755A" : "#E85D5D";
+                      const shouldShowLabel = showDestinationLabels || isInteractive;
 
                       return (
                         <Marker
@@ -418,16 +494,21 @@ export function DestinationMap() {
                             />
                             {/* Highlight circle inside pin head */}
                             <circle cx="0" cy="-17" r="3" fill="rgba(255,255,255,0.35)" />
-                            {/* Persistent label */}
-                            <text
-                              x="12" y="-13"
-                              fontSize="8"
-                              fontWeight="600"
-                              fill="#1A2E2A"
-                              style={{ userSelect: "none", pointerEvents: "none" }}
-                            >
-                              {destination.label}
-                            </text>
+                            {shouldShowLabel && (
+                              <text
+                                x="12"
+                                y="-13"
+                                fontSize={isInteractive ? "8.5" : "8"}
+                                fontWeight={isInteractive ? "700" : "600"}
+                                fill="#1A2E2A"
+                                stroke="rgba(252,250,245,0.95)"
+                                strokeWidth="2"
+                                paintOrder="stroke"
+                                style={{ userSelect: "none", pointerEvents: "none" }}
+                              >
+                                {destination.label}
+                              </text>
+                            )}
                           </g>
                         </Marker>
                       );
@@ -436,26 +517,26 @@ export function DestinationMap() {
                 </ComposableMap>
               </div>
 
-              {/* "Traveled / On Our List" legend — bottom-left */}
+              {/* "Sailed / On the list" legend — bottom-left */}
               <div className="pointer-events-none absolute bottom-4 left-4 bg-cream/85 backdrop-blur rounded-xl px-3 py-2 flex flex-col gap-1.5">
-                <div className="flex items-center gap-2">
-                  <svg width="10" height="14" viewBox="0 0 14 20" fill="none" className="shrink-0">
-                    <path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#F26A75" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" />
-                  </svg>
-                  <span className="text-[10px] font-semibold text-stone">Traveled</span>
-                </div>
                 <div className="flex items-center gap-2">
                   <svg width="10" height="14" viewBox="0 0 14 20" fill="none" className="shrink-0">
                     <path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#10755A" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" />
                   </svg>
-                  <span className="text-[10px] font-semibold text-stone">On Our List</span>
+                  <span className="text-[10px] font-semibold text-stone">Sailed</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg width="10" height="14" viewBox="0 0 14 20" fill="none" className="shrink-0">
+                    <path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#E85D5D" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" />
+                  </svg>
+                  <span className="text-[10px] font-semibold text-stone">On the list</span>
                 </div>
               </div>
 
               {/* Subtle hint */}
               <div className="pointer-events-none absolute bottom-4 right-4 flex items-center gap-1.5 bg-cream/80 backdrop-blur rounded-full px-3 py-1.5">
                 <MapPinned className="h-3 w-3 text-stone/60" />
-                <span className="text-[10px] text-stone/70 font-medium">Click a pin to explore</span>
+                <span className="text-[10px] text-stone/70 font-medium">Click a pin to see Yolanda&apos;s notes →</span>
               </div>
 
               {/* Destination popup */}
@@ -516,15 +597,15 @@ export function DestinationMap() {
           className="lg:hidden"
         >
           <div className="mb-8">
-            <p className="type-kicker text-coral mb-2">Where We&apos;ve Been</p>
+            <p className="type-kicker text-coral mb-2">THE TRAVELHOLICS ATLAS</p>
             <h2 className="font-serif text-3xl font-semibold text-ink leading-tight tracking-tight mb-3">
-              Where We&apos;re Going Next
+              Where we&apos;ve sailed. Where we&apos;re sailing next.
             </h2>
             <p className="text-[15px] text-stone leading-relaxed mb-5">
-              Some of our favorite destinations—and what&apos;s coming up next.
+              Every pin is a port Yolanda has actually been to, or a trip the Crew is already eyeing. Click around. Some of these become journal entries. Some become group sailings. All of them get a real opinion when you book.
             </p>
-            <a href="/#contact" className="inline-flex items-center gap-2 border-2 border-emerald-mid text-emerald-mid font-semibold px-5 py-2.5 rounded-full text-sm">
-              Explore Destinations →
+            <a href="/collaborate" className="inline-flex items-center gap-2 border-2 border-emerald-mid text-emerald-mid font-semibold px-5 py-2.5 rounded-full text-sm">
+              See the full atlas →
             </a>
           </div>
           <div className="grid grid-cols-2 auto-rows-[160px] gap-3">
