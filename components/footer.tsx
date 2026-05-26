@@ -48,11 +48,11 @@ export const Footer = () => {
           <div>
             <Link href="/" className="inline-block mb-4 focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none rounded">
               <Image
-                src="/images/travelholics_logo_stack.svg"
+                src="/images/travelholics_logo_stack.png"
                 alt="Travelholics"
-                width={100}
-                height={54}
-                className="h-12 w-auto brightness-0 invert"
+                width={220}
+                height={120}
+                className="h-auto w-[180px] sm:w-[210px]"
               />
             </Link>
             <p className="text-xs text-white/60 leading-relaxed mb-5">

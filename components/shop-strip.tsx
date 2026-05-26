@@ -14,11 +14,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const VISIBLE = 3;
 
 const products = [
-  { name: "Travelholic Tumbler",    price: "$29.99", image: "/images/cruise_door_magnet_current.png",  href: "/shop" },
-  { name: "Travelholic Duffel Bag", price: "$49.99", image: "/images/cruise_door_magnet_current.png",  href: "/shop" },
-  { name: "RFID Passport Wallet",   price: "$19.99", image: "/images/cruise_door_magnet_current.png",  href: "/shop" },
-  { name: "Cruise Essentials Kit",  price: "$39.99", image: "/images/cruise_door_magnet_current.png",  href: "/shop" },
-  { name: "Travelholic Tee",        price: "$24.99", image: "/images/cruise_door_magnet_current.png",  href: "/shop" },
+  { name: "Pacific Mexican Cruise Door Magnent", price: "$18.99", image: "/images/pacific_mexican_door_magnent.png", href: "/shop", imageClassName: "scale-[1.8]" },
+  { name: "Cruise Life Ticket Door Magnent",     price: "$16.99", image: "/images/travelholic_ticket_magnent_pacific.png", href: "/shop" },
+  { name: "Travelholicss Bucket Hat", price: "$25.00", image: "/images/Travelholics_merch_bucket_hat.png", href: "/shop", imageClassName: "is-full-bleed" },
 ];
 
 export const ShopStrip = () => {
@@ -36,7 +34,7 @@ export const ShopStrip = () => {
             <h2 className="font-serif text-3xl font-semibold text-ink leading-tight tracking-tight mb-3">
               Shop Our Favorite Finds
             </h2>
-            <p className="text-[14px] text-stone leading-relaxed mb-6">
+            <p className="mb-6 max-w-[38ch] text-[17px] font-medium leading-[1.65] text-ink/82">
               Travel-tested, creator-approved, and perfect for your next adventure.
             </p>
             <Link
@@ -56,27 +54,35 @@ export const ShopStrip = () => {
                   transform: `translateX(calc(-${offset * (100 / VISIBLE)}% - ${offset * 24 / VISIBLE}px))`,
                 }}
               >
-                {products.map(({ name, price, image, href }) => (
-                  <Link
-                    key={name}
-                    href={href}
-                    className="flex-shrink-0 flex flex-col gap-2 group"
-                    style={{ width: `calc(${100 / VISIBLE}% - ${24 * (VISIBLE - 1) / VISIBLE}px)` }}
-                  >
+                {products.map(({ name, price, image, href, imageClassName }) => {
+                  const isFullBleed = imageClassName === "is-full-bleed";
+
+                  return (
+                    <Link
+                      key={name}
+                      href={href}
+                      className="flex-shrink-0 flex flex-col gap-2 group"
+                      style={{ width: `calc(${100 / VISIBLE}% - ${24 * (VISIBLE - 1) / VISIBLE}px)` }}
+                    >
                     {/* Just a photo, name, price — no card border */}
                     <div className="relative aspect-square overflow-hidden rounded-xl bg-sand">
                       <Image
                         src={image}
                         alt={name}
                         fill
-                        className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+                        className={
+                          isFullBleed
+                            ? "object-cover p-0 scale-[1.16] transition-transform duration-300 group-hover:scale-[1.2]"
+                            : `object-contain p-4 transition-transform duration-300 group-hover:scale-105 ${imageClassName ?? ""}`
+                        }
                         sizes="(max-width: 768px) 50vw, 20vw"
                       />
                     </div>
                     <p className="text-[13px] font-semibold text-ink leading-snug">{name}</p>
                     <p className="text-[13px] font-semibold text-coral">{price}</p>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
 

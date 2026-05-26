@@ -86,7 +86,7 @@ export const IntentCards = () => {
               {/* Card body — tighter padding */}
               <div className="relative z-10 pt-7 pb-5 px-5 text-center">
                 <h3 className="font-serif text-[1.15rem] font-semibold text-ink mb-1.5 tracking-wide">{title}</h3>
-                <p className="text-[13px] text-stone leading-relaxed mb-4">{description}</p>
+                <p className="mb-4 text-[17px] font-medium leading-[1.65] text-ink/82">{description}</p>
                 <a
                   href={href}
                   className="group inline-flex items-center gap-1 text-coral font-semibold text-[13px] lowercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded"

@@ -27,6 +27,7 @@ const MAP_HEIGHT = 430;
 const PROJECTION_SCALE = 140;
 const PROJECTION_CENTER: [number, number] = [0, 20];
 const DESTINATION_LABEL_ZOOM_THRESHOLD = 1.75;
+const MOBILE_FEATURED_FALLBACK_IMAGE = "/images/dest-caribbean.jpg";
 
 type RegionLabelLayout = {
   coordinates: [number, number];
@@ -183,6 +184,7 @@ export function DestinationMap() {
       .filter((label): label is { region: string } & RegionLabelLayout => Boolean(label)),
     [groupedDestinations],
   );
+  const [featuredMobileDestination, ...secondaryMobileDestinations] = mobileDestinations;
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -357,7 +359,7 @@ export function DestinationMap() {
             <h2 className="font-serif text-3xl lg:text-[2.4rem] font-semibold text-ink leading-tight tracking-tight mb-4">
               Where we&apos;ve sailed. Where we&apos;re sailing next.
             </h2>
-            <p className="text-[15px] leading-relaxed text-stone mb-7">
+            <p className="mb-7 max-w-[46ch] text-[17px] font-medium leading-[1.65] text-ink/82">
               Every pin is a port Yolanda has actually been to, or a trip the Crew is already eyeing. Click around. Some of these become journal entries. Some become group sailings. All of them get a real opinion when you book.
             </p>
             <a
@@ -596,40 +598,104 @@ export function DestinationMap() {
           transition={{ duration: 0.55 }}
           className="lg:hidden"
         >
-          <div className="mb-8">
-            <p className="type-kicker text-coral mb-2">THE TRAVELHOLICS ATLAS</p>
-            <h2 className="font-serif text-3xl font-semibold text-ink leading-tight tracking-tight mb-3">
+          <div className="mx-auto max-w-[38rem] text-center">
+            <p className="type-kicker mb-2 text-coral">THE TRAVELHOLICS ATLAS</p>
+            <h2 className="mb-3 font-serif text-[2.1rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-[2.35rem]">
               Where we&apos;ve sailed. Where we&apos;re sailing next.
             </h2>
-            <p className="text-[15px] text-stone leading-relaxed mb-5">
+            <p className="mx-auto mb-5 max-w-[46ch] text-[17px] font-medium leading-[1.65] text-ink/82 sm:max-w-[48ch] sm:text-[17.5px]">
               Every pin is a port Yolanda has actually been to, or a trip the Crew is already eyeing. Click around. Some of these become journal entries. Some become group sailings. All of them get a real opinion when you book.
             </p>
-            <a href="/collaborate" className="inline-flex items-center gap-2 border-2 border-emerald-mid text-emerald-mid font-semibold px-5 py-2.5 rounded-full text-sm">
+            <a
+              href="/collaborate"
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border-2 border-emerald-mid px-5 py-3 text-sm font-semibold text-emerald-mid transition-colors hover:bg-emerald-mid hover:text-white sm:w-auto"
+            >
               See the full atlas →
             </a>
           </div>
-          <div className="grid grid-cols-2 auto-rows-[160px] gap-3">
-            {mobileDestinations.map((destination, index) => (
+
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-semibold tracking-[0.08em] text-stone shadow-sm">
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-mid" />
+              Sailed
+            </span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-semibold tracking-[0.08em] text-stone shadow-sm">
+              <span className="h-2.5 w-2.5 rounded-full bg-coral" />
+              On the list
+            </span>
+          </div>
+
+          {featuredMobileDestination ? (
+            <div className="mt-6">
               <a
-                key={destination.id}
                 href={DESTINATION_CTA_HREF}
-                className={`group relative overflow-hidden rounded-2xl border border-blush ${index === 0 ? "row-span-2" : ""}`}
+                className="group relative block overflow-hidden rounded-[1.75rem] border border-blush/70 shadow-[0_18px_30px_rgba(26,58,82,0.08)]"
               >
-                <Image
-                  src={destination.photo ?? ""}
-                  alt={destination.photoAlt ?? destination.label}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 1024px) 50vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-4">
-                  <p className="text-base font-semibold text-white">{destination.label}</p>
-                  <p className="mt-0.5 text-xs text-white/70">{destination.sub}</p>
+                <div className="relative aspect-[5/4] w-full">
+                  <Image
+                    src={featuredMobileDestination.photo ?? MOBILE_FEATURED_FALLBACK_IMAGE}
+                    alt={featuredMobileDestination.photoAlt ?? featuredMobileDestination.label}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="100vw"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = MOBILE_FEATURED_FALLBACK_IMAGE;
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/82 via-ink/18 to-transparent" />
+                  <div className="absolute left-4 top-4 rounded-full bg-cream/92 px-3 py-1 text-[10px] font-semibold tracking-[0.14em] text-emerald-mid shadow-sm">
+                    FEATURED STOP
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                    <p className="font-serif text-[1.75rem] font-semibold leading-none">{featuredMobileDestination.label}</p>
+                    <p className="mt-2 max-w-[28ch] text-[13px] font-medium leading-relaxed text-white/80">
+                      {featuredMobileDestination.sub}
+                    </p>
+                    <span className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[13px] font-semibold text-ink shadow-sm">
+                      Plan My Cruise
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
                 </div>
               </a>
-            ))}
-          </div>
+            </div>
+          ) : null}
+
+          {secondaryMobileDestinations.length > 0 ? (
+            <div className="mt-5">
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-stone/70">More ports</p>
+                <p className="text-[11px] font-medium text-stone/60">Swipe through</p>
+              </div>
+              <div className="-mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-1 sm:-mx-6 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {secondaryMobileDestinations.map((destination) => (
+                  <a
+                    key={destination.id}
+                    href={DESTINATION_CTA_HREF}
+                    className="group relative block min-w-[74vw] snap-start overflow-hidden rounded-2xl border border-blush/70 bg-white shadow-sm sm:min-w-[300px]"
+                  >
+                    <div className="relative aspect-[6/5] w-full overflow-hidden">
+                      <Image
+                        src={destination.photo ?? MOBILE_FEATURED_FALLBACK_IMAGE}
+                        alt={destination.photoAlt ?? destination.label}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 640px) 74vw, 300px"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = MOBILE_FEATURED_FALLBACK_IMAGE;
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+                    </div>
+                    <div className="p-4">
+                      <p className="font-serif text-[1.15rem] font-semibold text-ink">{destination.label}</p>
+                      <p className="mt-1 text-[13px] leading-relaxed text-stone">{destination.sub}</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </motion.div>
 
       </div>

@@ -185,7 +185,7 @@ export const ContactForm = () => {
                   <CheckCircle size={30} />
                 </div>
                 <h3 className="font-serif text-xl font-semibold text-ink mb-2">You&apos;re on the List!</h3>
-                <p className="text-stone text-sm mb-5">
+                <p className="mb-5 max-w-[38ch] text-[17px] font-medium leading-[1.65] text-ink/82">
                   I&apos;ve received your inquiry and will be in touch within 24 hours. Start dreaming—I&apos;ll handle the rest.
                 </p>
                 <button onClick={() => setIsSuccess(false)} className="text-coral font-semibold text-sm hover:underline">
@@ -194,7 +194,7 @@ export const ContactForm = () => {
               </div>
             ) : (
               <>
-                <p className="text-stone text-[13px] mb-5">Ready to set sail? Tell us a little about your trip.</p>
+                <p className="mb-5 max-w-[38ch] text-[17px] font-medium leading-[1.65] text-ink/82">Ready to set sail? Tell us a little about your trip.</p>
 
                 <form onSubmit={handleSubmit} className="space-y-3.5">
                   {/* Honeypot */}
