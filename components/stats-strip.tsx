@@ -28,19 +28,21 @@ const stats = [
 
 export const StatsStrip = () => {
   return (
-    <section className="bg-sand py-10 relative overflow-hidden">
-      <PostageStamp className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-[70px] opacity-55" />
-      <PostageStamp className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-[70px] opacity-55 scale-x-[-1]" />
+    <section className="bg-[url('/images/traveholic_divider_image_mobile.png')] lg:bg-[url('/images/traveholic_divider_image.png')] bg-cover bg-center bg-no-repeat py-10 relative overflow-hidden">
+      <div className="absolute inset-0 bg-cream/48" aria-hidden="true" />
+      <PostageStamp className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-[70px] opacity-55 z-10" />
+      <PostageStamp className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-[70px] opacity-55 scale-x-[-1] z-10" />
 
-      <div className="max-w-4xl mx-auto px-16">
+      <div className="relative z-10 max-w-[92rem] w-full mx-auto px-8 lg:px-14 xl:px-20">
         <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-stone/20">
           {stats.map(({ icon: Icon, value, label }) => (
-            <div key={label} className="flex flex-col items-center gap-1 px-6 py-3">
-              {/* Navy-teal icon, restrained size */}
-              <Icon className="text-emerald-deep/70" size={20} strokeWidth={1.8} />
-              {/* Serif number for editorial weight */}
-              <span className="font-serif text-[2rem] font-semibold text-ink leading-none mt-0.5">{value}</span>
-              <span className="text-xs text-stone text-center mt-0.5">{label}</span>
+            <div key={label} className="flex items-center justify-center gap-3 px-6 py-3">
+              <Icon className="text-emerald-mid shrink-0" size={40} strokeWidth={1.9} />
+              <div className="flex flex-col items-start gap-0.5">
+                {/* Serif number for editorial weight */}
+                <span className="font-serif text-[2rem] font-semibold text-navy leading-none">{value}</span>
+                <span className="text-xs font-semibold text-stone leading-none">{label}</span>
+              </div>
             </div>
           ))}
         </div>
