@@ -7,14 +7,14 @@ import { Anchor, Users } from "lucide-react";
 export const Hero = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-16 bg-gradient-to-b from-hero-sky via-cream to-sand">
-      {/* Faint cruise-deck photo — barely-there texture, NOT a dark overlay */}
+      {/* Full hero background image with no overlay */}
       <div className="absolute inset-0" aria-hidden="true">
         <Image
           src="/images/hero_th_background.png"
           alt=""
           fill
           priority
-          className="object-cover object-center opacity-[0.13]"
+          className="object-cover object-center"
           sizes="100vw"
         />
       </div>
@@ -28,38 +28,40 @@ export const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <h1 className="font-serif text-5xl lg:text-6xl xl:text-[4.5rem] font-semibold leading-[1.04] tracking-[-0.02em] text-ink mb-1">
-              Curated Cruises.
-            </h1>
-            <h1 className="font-serif text-5xl lg:text-6xl xl:text-[4.5rem] font-semibold leading-[1.04] tracking-[-0.02em] text-ink mb-2">
-              Real Experience.
-            </h1>
+            <div className="inline-block max-w-xl mb-10 px-0 py-0 lg:rounded-[2rem] lg:bg-white/80 lg:backdrop-blur-lg lg:shadow-2xl lg:shadow-ink/25 lg:border lg:border-white/85 lg:ring-1 lg:ring-white/45 lg:px-7 lg:py-6">
+              <h1 className="font-serif text-5xl lg:text-6xl xl:text-[4.5rem] font-semibold leading-[1.04] tracking-[-0.02em] text-ink mb-1">
+                Curated Cruises.
+              </h1>
+              <h1 className="font-serif text-5xl lg:text-6xl xl:text-[4.5rem] font-semibold leading-[1.04] tracking-[-0.02em] text-ink mb-2">
+                Real Experience.
+              </h1>
 
-            {/* Script line with coral underline swoosh */}
-            <div className="relative inline-block mb-7">
-              <span className="font-script text-[2.6rem] lg:text-[3rem] xl:text-[3.4rem] text-coral font-semibold leading-tight">
-                Stress-Free Planning.
-              </span>
-              <svg
-                className="absolute -bottom-1 left-0 w-full"
-                viewBox="0 0 340 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M3 7 C58 3, 116 8.5, 170 5.5 C224 2.5, 280 7.5, 337 4"
-                  stroke="#F26A75"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                />
-              </svg>
+              {/* Script line with coral underline swoosh */}
+              <div className="relative inline-block mb-5">
+                <span className="font-script text-[2.6rem] lg:text-[3rem] xl:text-[3.4rem] text-coral font-semibold leading-tight">
+                  Stress-Free Planning.
+                </span>
+                <svg
+                  className="absolute -bottom-1 left-0 w-full"
+                  viewBox="0 0 340 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M3 7 C58 3, 116 8.5, 170 5.5 C224 2.5, 280 7.5, 337 4"
+                    stroke="#F26A75"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+
+              <p className="text-base lg:text-[17px] text-ink/90 leading-relaxed max-w-lg">
+                Personalized cruise planning, unforgettable group trips, and hand-picked travel picks so you can travel more and worry less.
+              </p>
             </div>
-
-            <p className="text-base lg:text-[17px] text-ink/65 leading-relaxed max-w-lg mb-10">
-              Personalized cruise planning, unforgettable group trips, and hand-picked travel picks—so you can travel more and worry less.
-            </p>
 
             <div className="flex flex-wrap gap-4">
               <a
