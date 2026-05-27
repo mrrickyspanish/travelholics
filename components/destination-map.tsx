@@ -621,7 +621,7 @@ export function DestinationMap() {
                 <ZoomableGroup center={[-60, 20]} zoom={1} minZoom={1} maxZoom={6}>
                   <Sphere id="map-ocean" fill="#F5EFE4" stroke="rgba(180,155,120,0.2)" strokeWidth={0.5} />
                   <Geographies geography={DESTINATION_MAP_GEOGRAPHY}>
-                    {({ geographies }) =>
+                    {({ geographies }: { geographies: any[] }) =>
                       geographies.map((geo) => (
                         <Geography
                           key={geo.rsmKey}
