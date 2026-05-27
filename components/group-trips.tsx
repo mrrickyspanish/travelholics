@@ -98,7 +98,7 @@ export const GroupTrips = () => {
         {/* Mobile layout */}
         <div className="lg:hidden">
           <article className="group relative overflow-hidden rounded-2xl shadow-[0_10px_24px_rgba(14,34,56,0.13)] mb-4">
-            <div className="relative aspect-[5/4] min-h-[220px] max-h-[320px]">
+            <div className="relative w-full aspect-[4/3]">
               <Image
                 src={featuredTile.src}
                 alt={featuredTile.alt}
@@ -112,13 +112,13 @@ export const GroupTrips = () => {
             </div>
           </article>
 
-          <div className="-mr-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pr-4 pb-1">
+          <div className="-mr-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pr-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden touch-pan-x">
             {supportingTiles.map(({ caption, src, alt }) => (
               <article
                 key={caption}
                 className="group relative w-[82vw] max-w-xs flex-none snap-start overflow-hidden rounded-2xl shadow-[0_8px_20px_rgba(14,34,56,0.10)]"
               >
-                <div className="relative aspect-[4/3] min-h-[120px] max-h-[180px]">
+                <div className="relative aspect-[4/3] w-full">
                   <Image
                     src={src}
                     alt={alt}
