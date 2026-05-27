@@ -142,7 +142,7 @@ export const ContactForm = () => {
 
   const inputClass =
     "w-full min-h-11 px-4 py-3 rounded-xl border border-blush bg-white focus:border-emerald-mid focus:ring-2 focus:ring-emerald-mid/20 outline-none transition-all text-[15px] text-ink placeholder:text-stone/55";
-  const labelClass = "block text-[13px] font-semibold text-ink mb-1.5";
+  const labelClass = "text-form-label text-ink mb-1.5 block";
 
   return (
     <section id="contact" className="bg-sand py-20 relative overflow-hidden">
@@ -164,7 +164,7 @@ export const ContactForm = () => {
           {/* ── Left: Emerald-deep headline + bullets panel ── */}
           <div className="relative bg-emerald-deep px-6 py-7 sm:px-7 sm:py-8 lg:px-8 lg:py-10 flex flex-col gap-6 overflow-hidden">
             <div className="relative z-10">
-              <p className="type-kicker text-coral mb-3">Let&apos;s Make It Happen</p>
+              <p className="text-eyebrow text-coral mb-3">Let&apos;s Make It Happen</p>
               <h2 className="font-serif text-2xl lg:text-[1.65rem] font-semibold text-white leading-tight mb-3 tracking-tight">
                 Plan Your Next Cruise
               </h2>
@@ -180,7 +180,7 @@ export const ContactForm = () => {
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2.5">
                     <CheckCircle size={15} className="text-coral shrink-0" />
-                    <span className="text-[14px] font-medium text-white/90">{item}</span>
+                    <span className="text-card-body font-medium text-white/90">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -196,17 +196,17 @@ export const ContactForm = () => {
                   <CheckCircle size={30} />
                 </div>
                 <h3 className="font-serif text-xl font-semibold text-ink mb-2">You&apos;re on the List!</h3>
-                <p className="mb-5 max-w-[38ch] text-[17px] font-medium leading-[1.65] text-ink/82">
+                <p className="mb-5 max-w-[38ch] text-card-body text-ink/82">
                   I&apos;ve received your inquiry and will be in touch within 24 hours. Start dreaming—I&apos;ll handle the rest.
                 </p>
-                <button onClick={() => setIsSuccess(false)} className="text-coral font-semibold text-sm hover:underline">
+                <button onClick={() => setIsSuccess(false)} className="text-coral font-semibold text-footer-body hover:underline">
                   Send another inquiry
                 </button>
               </div>
             ) : (
               <>
-                <p className="mb-4 max-w-[38ch] text-[17px] font-medium leading-[1.65] text-ink/82">Ready to set sail? Tell us a little about your trip.</p>
-                <p className="mb-5 text-[12px] font-semibold tracking-[0.08em] text-stone/70 uppercase">* Required fields</p>
+                <p className="mb-4 max-w-[38ch] text-card-body text-ink/82">Ready to set sail? Tell us a little about your trip.</p>
+                <p className="mb-5 text-eyebrow text-stone/70">* Required fields</p>
 
                 <form onSubmit={handleSubmit} noValidate className="space-y-3.5">
                   {/* Honeypot */}

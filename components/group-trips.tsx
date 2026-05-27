@@ -44,11 +44,11 @@ export const GroupTrips = () => {
           transition={{ duration: 0.5 }}
           className="mx-auto mb-6 max-w-xl text-center"
         >
-          <p className="type-kicker mb-2 text-coral">GROUP CRUISE EXPERIENCES</p>
+          <p className="text-eyebrow mb-2 text-coral">GROUP CRUISE EXPERIENCES</p>
           <h2 className="font-serif text-3xl font-semibold tracking-tight text-ink lg:text-5xl">
             Travel Better Together
           </h2>
-          <p className="mx-auto mt-4 max-w-[560px] text-base leading-relaxed text-stone md:text-lg">
+          <p className="mx-auto mt-4 max-w-[38ch] text-card-body text-stone">
             Join curated group sailings built around good people, shared moments, and stress-free planning from start to finish.
           </p>
         </motion.div>
@@ -66,8 +66,8 @@ export const GroupTrips = () => {
                 style={{objectPosition:'center'}}
               />
             </div>
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent p-5">
-              <p className="text-sm font-semibold tracking-wide text-white/95">{featuredTile.caption}</p>
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent p-5">
+                  <p className="text-card-body font-semibold tracking-wide text-white/95">{featuredTile.caption}</p>
             </div>
           </article>
 
@@ -88,7 +88,7 @@ export const GroupTrips = () => {
                   />
                 </div>
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/25 to-transparent p-3">
-                  <p className="text-sm font-medium text-white/95">{caption}</p>
+                  <p className="text-card-body font-medium text-white/95">{caption}</p>
                 </div>
               </article>
             ))}

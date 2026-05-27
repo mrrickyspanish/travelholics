@@ -41,8 +41,8 @@ export const Hero = () => {
                   </h1>
                   <span className="mb-2 text-[1.35rem] italic leading-none text-[#0E125C] lg:text-[1.9rem]">(noun)</span>
                 </div>
-                <p className="text-[12px] tracking-[0.18em] text-stone/85 lg:text-[13px]">/ˈtra-vəl-hä-lik/</p>
-                <p className="mx-auto max-w-[24ch] text-[clamp(1.85rem,5.5vw,2.08rem)] font-medium leading-[1.12] text-[#0E125C] lg:mx-0 lg:max-w-none lg:text-[2rem] xl:text-[2.2rem]">
+                <p className="text-eyebrow text-stone/85 lg:text-[13px]">/ˈtra-vəl-hä-lik/</p>
+                <p className="mx-auto max-w-[24ch] text-section-intro font-medium leading-[1.12] text-[#0E125C] lg:mx-0 lg:max-w-none lg:text-[2rem] xl:text-[2.2rem]">
                   Someone who travels{" "}
                   <span className="relative inline-block rounded-full bg-cream/92 px-2 pb-1 pt-0.5 font-script text-[1.72rem] font-semibold leading-none text-[#D84E59] shadow-[0_4px_12px_rgba(252,250,245,0.45)] align-baseline lg:bg-cream/80 lg:text-[2.1rem] xl:text-[2.3rem]">
                     between trips.
@@ -65,7 +65,7 @@ export const Hero = () => {
                 </p>
               </div>
 
-              <p className="mx-auto max-w-[36ch] text-[1.06rem] font-medium leading-[1.62] text-royal-deep [text-shadow:0_1px_2px_rgba(255,255,255,0.18)] sm:text-[1.12rem] lg:mx-0 lg:max-w-[40ch] lg:text-[1.18rem]">
+              <p className="mx-auto text-body-mobile font-medium text-royal-deep [text-shadow:0_1px_2px_rgba(255,255,255,0.18)] lg:mx-0 lg:max-w-[40ch]">
                 Always planning the next getaway. Saving cruise deals at 1 a.m. Packing early. No cure, just better trips, a crew that gets it, and gear to match.
               </p>
             </div>

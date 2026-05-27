@@ -52,11 +52,11 @@ export const MeetYolanda = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="order-1 text-center xl:order-2 xl:text-left"
           >
-            <p className="type-kicker text-coral mb-3">THE TRAVELHOLIC IN CHIEF</p>
+            <p className="text-eyebrow text-coral mb-3">THE TRAVELHOLIC IN CHIEF</p>
             <h2 className="mx-auto mb-4 max-w-[20ch] font-serif text-[2rem] font-semibold leading-tight tracking-tight text-ink sm:text-[2.15rem] xl:mx-0 xl:mb-5 xl:max-w-none xl:text-[2.45rem]">
               Yolanda Harris, founder and chronic packer.
             </h2>
-            <div className="mx-auto max-w-[46ch] space-y-3.5 text-[17px] font-medium leading-[1.65] text-ink/82 sm:max-w-[48ch] sm:text-[17.5px] xl:mx-0 xl:max-w-none xl:space-y-4 xl:text-[17px] xl:leading-relaxed">
+            <div className="mx-auto max-w-[46ch] space-y-3.5 text-card-body text-ink/82 sm:max-w-[48ch] xl:mx-0 xl:max-w-none xl:space-y-4 xl:text-[17px] xl:leading-relaxed">
               <p>
                 Twenty years in, I&apos;ve sailed every major line, scouted the all-inclusives worth the flight, and figured out which "deals" are actually deals. I treat every trip I book like I&apos;m going on it myself - because half the time I have. Best cabins, the excursions that aren&apos;t tourist traps, the ports where you skip the cruise terminal and find where locals actually eat.
               </p>
@@ -79,7 +79,7 @@ export const MeetYolanda = () => {
             className="order-3 mx-auto flex h-full w-full max-w-[35rem] flex-col gap-3 xl:mx-0 xl:max-w-none xl:gap-4 xl:pt-8"
           >
             <div className="rounded-2xl border border-coral/30 bg-white p-5 shadow-sm" style={{ borderWidth: "0.5px" }}>
-              <p className="mb-3 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-coral/90 xl:text-left">
+              <p className="text-eyebrow text-center text-coral/90 mb-3 xl:text-left">
                 Why Book With Yolanda
               </p>
               <ul className="space-y-3">
@@ -91,7 +91,7 @@ export const MeetYolanda = () => {
                     <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-coral/10">
                       <CheckCircle size={13} className="text-coral/85" />
                     </span>
-                    <span className="text-[14px] font-semibold leading-snug text-ink">{item}</span>
+                    <span className="text-footer-body font-semibold leading-snug text-ink">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -99,7 +99,7 @@ export const MeetYolanda = () => {
 
             <div className="flex min-h-[205px] flex-col justify-between rounded-2xl bg-emerald-mid p-5 text-[#FAF9F6] sm:min-h-[220px] xl:flex-1 xl:min-h-[232px] xl:p-6">
               <div>
-                <p className="type-kicker mb-2 text-center text-[#FAF9F6]/78 xl:text-left">BETWEEN TRIPS</p>
+                <p className="text-eyebrow mb-2 text-center text-[#FAF9F6]/78 xl:text-left">BETWEEN TRIPS</p>
                 <h3 className="mb-3 mx-auto w-full text-center font-serif text-[clamp(1.22rem,3.4vw,1.56rem)] font-semibold leading-[1.18] xl:mx-0 xl:text-left">
                   Follow Yolanda where the lifestyle lives.
                 </h3>

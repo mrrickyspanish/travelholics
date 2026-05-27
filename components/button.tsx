@@ -11,7 +11,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  "inline-flex items-center justify-center rounded-full font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 min-h-12 px-6 py-3 text-sm shadow-md disabled:opacity-60 disabled:cursor-not-allowed";
+  "inline-flex items-center justify-center rounded-full font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 min-h-[44px] px-6 py-3 text-[16px] shadow-md disabled:opacity-60 disabled:cursor-not-allowed";
 
 const variantStyles: Record<ButtonVariant, string> = {
   coral:

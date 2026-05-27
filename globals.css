@@ -21,9 +21,50 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+/* Travelholics Mobile-First Typography Rules */
+@layer utilities {
+  .text-section-intro {
+    font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+    line-height: 1.65;
+    max-width: 42ch;
+  }
+  .text-card-body {
+    font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+    line-height: 1.58;
+  }
+  .text-footer-body,
+  .footer a {
+    font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+    line-height: 1.5;
+  }
+  .text-form-label {
+    font-size: clamp(0.875rem, 0.84rem + 0.15vw, 0.95rem);
+    line-height: 1.35;
+    font-weight: 700;
+  }
+  .text-eyebrow {
+    font-size: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+  .text-body-mobile {
+    font-size: clamp(1.0625rem, 1.01rem + 0.18vw, 1.125rem);
+    line-height: 1.65;
+    max-width: 38ch;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+  }
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+    min-height: 44px;
   }
 }

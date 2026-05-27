@@ -55,7 +55,7 @@ export const Footer = () => {
                 className="h-auto w-[180px] sm:w-[210px]"
               />
             </Link>
-            <p className="text-xs text-white/60 leading-relaxed mb-5">
+            <p className="text-footer-body text-white/60 leading-relaxed mb-5">
               Curated cruises. Real experience.<br />
               Stress-free planning.<br />
               Memories that last a lifetime.
@@ -109,11 +109,11 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-[2px] text-white/40 mb-4">Quick Links</h3>
+            <h3 className="text-eyebrow font-bold text-white/40 mb-4">Quick Links</h3>
             <ul className="space-y-2.5">
               {quickLinks.map(({ label, href }) => (
                 <li key={label}>
-                  <a href={href} className="text-sm text-white/70 hover:text-white transition-colors">
+                  <a href={href} className="text-footer-body text-white/70 hover:text-white transition-colors">
                     {label}
                   </a>
                 </li>
@@ -123,11 +123,11 @@ export const Footer = () => {
 
           {/* Travel */}
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-[2px] text-white/40 mb-4">Travel</h3>
+            <h3 className="text-eyebrow font-bold text-white/40 mb-4">Travel</h3>
             <ul className="space-y-2.5">
               {travelLinks.map(({ label, href }) => (
                 <li key={label}>
-                  <a href={href} className="text-sm text-white/70 hover:text-white transition-colors">
+                  <a href={href} className="text-footer-body text-white/70 hover:text-white transition-colors">
                     {label}
                   </a>
                 </li>
@@ -137,26 +137,26 @@ export const Footer = () => {
 
           {/* Shop + Connect */}
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-[2px] text-white/40 mb-4">Shop</h3>
+            <h3 className="text-eyebrow font-bold text-white/40 mb-4">Shop</h3>
             <ul className="space-y-2.5 mb-7">
               {shopLinks.map(({ label, href }) => (
                 <li key={label}>
-                  <Link href={href} className="text-sm text-white/70 hover:text-white transition-colors">
+                  <Link href={href} className="text-footer-body text-white/70 hover:text-white transition-colors">
                     {label}
                   </Link>
                 </li>
               ))}
             </ul>
-            <h3 className="text-xs font-bold uppercase tracking-[2px] text-white/40 mb-3">Let&apos;s Connect</h3>
+            <h3 className="text-eyebrow font-bold text-white/40 mb-3">Let&apos;s Connect</h3>
             <a
               href="mailto:hello@yotravelholic.com"
-              className="text-sm text-white/70 hover:text-white transition-colors block mb-1.5"
+              className="text-footer-body text-white/70 hover:text-white transition-colors block mb-1.5"
             >
               hello@yotravelholic.com
             </a>
             <a
               href="tel:+19855551234"
-              className="text-sm text-white/70 hover:text-white transition-colors block"
+              className="text-footer-body text-white/70 hover:text-white transition-colors block"
             >
               (985) 555-1234
             </a>
@@ -164,7 +164,7 @@ export const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
+        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-footer-body text-white/40">
           <span>
             &copy; {new Date().getFullYear()} Yolanda Harris | Travelholics. All rights reserved.
           </span>

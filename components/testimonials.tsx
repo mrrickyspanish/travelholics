@@ -60,7 +60,7 @@ export const Testimonials = () => {
           transition={{ duration: 0.5 }}
           className="mb-7 text-center md:mb-8"
         >
-          <p className="type-kicker text-coral mb-3">What Travelers Are Saying</p>
+          <p className="text-eyebrow text-coral mb-3">What Travelers Are Saying</p>
           <h2 className="font-serif text-[1.9rem] font-semibold tracking-tight text-ink lg:text-4xl">
             Real People. Real Memories.
           </h2>
@@ -71,9 +71,9 @@ export const Testimonials = () => {
           {TESTIMONIALS.map(({ quote, name, trip }) => (
             <div key={name} className="rounded-2xl border border-blush/60 bg-cream p-5 shadow-sm">
               <Stars />
-              <p className="mb-3 text-[14px] italic leading-relaxed text-ink/75">&ldquo;{quote}&rdquo;</p>
-              <p className="text-[13px] font-semibold text-ink">— {name}</p>
-              <p className="text-[12px] text-coral mt-0.5">{trip}</p>
+              <p className="mb-3 text-card-body italic text-ink/75">&ldquo;{quote}&rdquo;</p>
+              <p className="text-footer-body font-semibold text-ink">— {name}</p>
+              <p className="text-eyebrow text-coral mt-0.5">{trip}</p>
             </div>
           ))}
         </div>
@@ -88,15 +88,15 @@ export const Testimonials = () => {
               {TESTIMONIALS.map(({ quote, name, trip }) => (
                 <div key={name} className="w-full flex-shrink-0 rounded-2xl border border-blush/60 bg-cream p-4.5 shadow-sm">
                   <Stars />
-                  <p className="mb-3 text-[14px] italic leading-relaxed text-ink/75">&ldquo;{quote}&rdquo;</p>
-                  <p className="text-[13px] font-semibold text-ink">— {name}</p>
-                  <p className="text-[12px] text-coral mt-0.5">{trip}</p>
+                  <p className="mb-3 text-card-body italic text-ink/75">&ldquo;{quote}&rdquo;</p>
+                  <p className="text-footer-body font-semibold text-ink">— {name}</p>
+                  <p className="text-eyebrow text-coral mt-0.5">{trip}</p>
                 </div>
               ))}
             </div>
           </div>
           <div className="mt-4 flex items-center justify-center">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-stone/65">Swipe to explore</p>
+            <p className="text-eyebrow text-stone/65">Swipe to explore</p>
           </div>
         </div>
       </div>

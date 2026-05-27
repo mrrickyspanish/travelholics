@@ -47,11 +47,11 @@ export const ShopStrip = () => {
         {/* Mobile-only layout */}
         <div className="md:hidden">
           <div className="mx-auto w-full max-w-[38rem] text-center">
-            <p className="type-kicker text-coral mb-3">Travel Picks + Merch</p>
+            <p className="text-eyebrow text-coral mb-3">Travel Picks + Merch</p>
             <h2 className="mx-auto max-w-[20ch] font-serif text-3xl font-semibold text-ink leading-tight tracking-tight mb-3">
               Shop Our Favorite Finds
             </h2>
-            <p className="mb-5 mx-auto max-w-[38ch] text-[17px] font-medium leading-[1.65] text-ink/82">
+            <p className="mb-5 mx-auto max-w-[38ch] text-card-body text-ink/82">
               Cruise-tested essentials and merch picks you will actually use.
             </p>
             <Link
@@ -84,8 +84,8 @@ export const ShopStrip = () => {
                     sizes="(max-width: 768px) 78vw, 320px"
                   />
                 </div>
-                <p className="text-[13px] font-semibold text-ink leading-snug">{name}</p>
-                <p className="text-[13px] font-semibold text-coral">{price}</p>
+                <p className="text-card-body font-semibold text-ink leading-snug">{name}</p>
+                <p className="text-card-body font-semibold text-coral">{price}</p>
               </Link>
             ))}
           </div>

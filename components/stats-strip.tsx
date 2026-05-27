@@ -19,9 +19,9 @@ export const StatsStrip = () => {
             >
               <Icon className="shrink-0 text-coral" size={32} strokeWidth={2} />
               <div className="flex flex-col items-start gap-1">
-                <span className="font-serif text-[1.95rem] font-medium leading-none text-navy sm:text-[2rem]">{value}</span>
-                <span className="text-[11px] font-semibold leading-[1.1] tracking-[0.06em] text-stone/90">{line1}</span>
-                <span className="text-[11px] font-semibold leading-[1.1] tracking-[0.06em] text-stone/90">{line2}</span>
+                <span className="font-serif text-footer-body font-medium leading-none text-navy sm:text-[2rem]">{value}</span>
+                <span className="text-eyebrow text-stone/90">{line1}</span>
+                <span className="text-eyebrow text-stone/90">{line2}</span>
               </div>
             </div>
           ))}

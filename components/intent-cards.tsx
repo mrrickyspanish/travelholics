@@ -48,11 +48,11 @@ export const IntentCards = () => {
     <section className="bg-sand py-20">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
-          <p className="type-kicker text-coral mb-3">THREE WAYS TO BE A TRAVELHOLIC</p>
+          <p className="text-eyebrow text-coral mb-3">THREE WAYS TO BE A TRAVELHOLIC</p>
           <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-ink tracking-tight">
             Pick your altitude.
           </h2>
-          <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.11em] text-ink/65">
+          <p className="text-eyebrow text-ink/65 mt-3">
             Plan the trip. Join the crew. Shop the gear.
           </p>
         </div>
@@ -88,11 +88,11 @@ export const IntentCards = () => {
 
               {/* Card body — tighter padding */}
               <div className="relative z-10 pt-7 pb-5 px-5 text-center">
-                <h3 className="font-serif text-[1.15rem] font-semibold text-ink mb-1.5 tracking-wide">{title}</h3>
-                <p className="mb-4 text-[17px] font-medium leading-[1.65] text-ink/82">{description}</p>
+                <h3 className="font-serif text-card-body font-semibold text-ink mb-1.5 tracking-wide">{title}</h3>
+                <p className="mb-4 text-card-body text-ink/82">{description}</p>
                 <a
                   href={href}
-                  className="group inline-flex items-center gap-1 text-coral font-semibold text-[13px] lowercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded"
+                  className="group inline-flex items-center gap-1 text-coral font-semibold text-footer-body lowercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded"
                 >
                   <span>{cta}</span>
                   <span className="inline-block translate-x-0 group-hover:translate-x-[2px] transition-transform duration-200" aria-hidden="true">
