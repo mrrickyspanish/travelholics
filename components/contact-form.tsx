@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { buildFallbackMailto, sendFormEmail } from "@/lib/form-email";
 import { motion } from "framer-motion";
 import { CheckCircle, Ship } from "lucide-react";
-import { RippleButton } from "@/components/ripple-button";
+import { Button } from "@/components/button";
 
 // TODO: Confirm destination options with Yolanda — these are reasonable defaults
 const DESTINATION_OPTIONS = [
@@ -273,13 +273,14 @@ export const ContactForm = () => {
                       value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
                   </div>
 
-                  <RippleButton
+                  <Button
                     disabled={isSubmitting}
                     type="submit"
-                    className="w-full bg-coral hover:bg-coral-deep text-white font-semibold py-3.5 rounded-xl shadow-md shadow-coral/15 transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed text-[14px]"
+                    variant="coral"
+                    className="w-full flex items-center justify-center gap-2 text-[14px]"
                   >
-                    {isSubmitting ? "Submitting…" : (<>Start Planning My Trip <Ship size={16} /></>)}
-                  </RippleButton>
+                    {isSubmitting ? "Submitting…" : (<><span>Start Planning My Trip</span> <Ship size={16} /></>)}
+                  </Button>
 
                   {submitError && (
                     <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">

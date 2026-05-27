@@ -35,48 +35,50 @@ const supportingTiles = [
 
 export const GroupTrips = () => {
   return (
-    <section id="group-trips" className="bg-sand py-16 md:py-20">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="group-trips" className="bg-sand py-10 md:py-12">
+      <div className="mx-auto max-w-[980px] px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mx-auto mb-10 max-w-3xl text-center md:mb-12"
+          className="mx-auto mb-6 max-w-xl text-center"
         >
-          <p className="type-kicker mb-3 text-coral">GROUP CRUISE EXPERIENCES</p>
+          <p className="type-kicker mb-2 text-coral">GROUP CRUISE EXPERIENCES</p>
           <h2 className="font-serif text-3xl font-semibold tracking-tight text-ink lg:text-5xl">
             Travel Better Together
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-stone md:text-lg">
-            Join curated group sailings built around good people, shared moments, and stress-free
-            planning from start to finish.
+          <p className="mx-auto mt-4 max-w-[560px] text-base leading-relaxed text-stone md:text-lg">
+            Join curated group sailings built around good people, shared moments, and stress-free planning from start to finish.
           </p>
         </motion.div>
 
-        <div className="hidden gap-5 lg:grid lg:grid-cols-2 lg:items-stretch">
-          <article className="group relative overflow-hidden rounded-2xl shadow-[0_16px_40px_rgba(14,34,56,0.16)]">
-            <div className="relative aspect-[4/5] xl:aspect-[5/6]">
+        {/* Desktop grid */}
+        <div className="hidden lg:grid grid-cols-[44%_1fr] gap-8 mx-auto max-w-[980px] items-stretch" style={{maxHeight:'420px'}}>
+          <article className="group relative overflow-hidden rounded-2xl shadow-[0_12px_32px_rgba(14,34,56,0.13)]" style={{height:'100%'}}>
+            <div className="relative w-full h-full min-h-[380px] max-h-[420px] aspect-[4/5]">
               <Image
                 src={featuredTile.src}
                 alt={featuredTile.alt}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 1279px) 45vw, 36vw"
+                sizes="(max-width: 1279px) 44vw, 44vw"
+                style={{objectPosition:'center'}}
               />
             </div>
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent p-6">
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent p-5">
               <p className="text-sm font-semibold tracking-wide text-white/95">{featuredTile.caption}</p>
             </div>
           </article>
 
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-2 grid-rows-2 gap-5 h-full">
             {supportingTiles.map(({ caption, src, alt }) => (
               <article
                 key={caption}
-                className="group relative overflow-hidden rounded-2xl shadow-[0_10px_26px_rgba(14,34,56,0.12)]"
+                className="group relative overflow-hidden rounded-2xl shadow-[0_8px_20px_rgba(14,34,56,0.10)] flex flex-col justify-end"
+                style={{height:'100%'}}
               >
-                <div className="relative aspect-[4/3]">
+                <div className="relative w-full h-full min-h-[180px] max-h-[200px] aspect-[4/3]">
                   <Image
                     src={src}
                     alt={alt}
@@ -85,7 +87,7 @@ export const GroupTrips = () => {
                     sizes="(max-width: 1279px) 22vw, 18vw"
                   />
                 </div>
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/25 to-transparent p-4">
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/25 to-transparent p-3">
                   <p className="text-sm font-medium text-white/95">{caption}</p>
                 </div>
               </article>
@@ -93,9 +95,10 @@ export const GroupTrips = () => {
           </div>
         </div>
 
-        <div className="space-y-4 lg:hidden">
-          <article className="group relative overflow-hidden rounded-2xl shadow-[0_16px_36px_rgba(14,34,56,0.14)]">
-            <div className="relative aspect-[5/4]">
+        {/* Mobile layout */}
+        <div className="lg:hidden">
+          <article className="group relative overflow-hidden rounded-2xl shadow-[0_10px_24px_rgba(14,34,56,0.13)] mb-4">
+            <div className="relative aspect-[5/4] min-h-[220px] max-h-[320px]">
               <Image
                 src={featuredTile.src}
                 alt={featuredTile.alt}
@@ -104,27 +107,27 @@ export const GroupTrips = () => {
                 sizes="100vw"
               />
             </div>
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent p-5">
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent p-4">
               <p className="text-sm font-semibold tracking-wide text-white/95">{featuredTile.caption}</p>
             </div>
           </article>
 
-          <div className="-mr-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pr-6 pb-1">
+          <div className="-mr-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pr-4 pb-1">
             {supportingTiles.map(({ caption, src, alt }) => (
               <article
                 key={caption}
-                className="group relative w-[84%] max-w-sm flex-none snap-start overflow-hidden rounded-2xl shadow-[0_10px_26px_rgba(14,34,56,0.12)]"
+                className="group relative w-[82vw] max-w-xs flex-none snap-start overflow-hidden rounded-2xl shadow-[0_8px_20px_rgba(14,34,56,0.10)]"
               >
-                <div className="relative aspect-[4/3]">
+                <div className="relative aspect-[4/3] min-h-[120px] max-h-[180px]">
                   <Image
                     src={src}
                     alt={alt}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="84vw"
+                    sizes="82vw"
                   />
                 </div>
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/25 to-transparent p-4">
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/25 to-transparent p-3">
                   <p className="text-sm font-medium text-white/95">{caption}</p>
                 </div>
               </article>
@@ -132,10 +135,11 @@ export const GroupTrips = () => {
           </div>
         </div>
 
-        <div className="mt-9 text-center md:mt-10">
+        <div className="mt-7 text-center">
           <Link
             href="/#contact"
             className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-coral px-8 py-4 text-base font-semibold text-white shadow-md shadow-coral/15 transition-colors hover:bg-coral-deep sm:w-auto"
+            style={{marginTop:'28px'}}
           >
             View Upcoming Group Trips →
           </Link>

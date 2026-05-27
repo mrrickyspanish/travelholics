@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Button } from "@/components/button";
 
 export const Hero = () => {
   return (
@@ -70,19 +71,23 @@ export const Hero = () => {
             </div>
 
             <div className="mt-5 flex w-full max-w-[34rem] flex-col items-center gap-3 sm:flex-row sm:justify-center lg:max-w-none lg:items-start lg:justify-start">
-              <a
-                href="/#group-trips"
-                className="group inline-flex min-h-12 w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-coral px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-coral/20 transition-colors hover:bg-coral-deep sm:w-auto sm:px-7 sm:py-4"
+              <Button
+                asChild
+                variant="coral"
+                className="w-full sm:w-auto"
               >
-                <span>Reserve a Cabin · Caribbean 2027</span>
-                <span className="inline-block text-[12px] translate-x-0 group-hover:translate-x-[2px] transition-transform duration-200" aria-hidden="true">↗</span>
-              </a>
-              <a
-                href="/#contact"
-                className="inline-flex min-h-12 w-full items-center justify-center whitespace-nowrap rounded-full border-2 border-navy bg-white px-6 py-3.5 text-[15px] font-semibold text-navy shadow-sm transition-colors hover:border-emerald-mid hover:bg-emerald-mid hover:text-white sm:w-auto sm:px-7 sm:py-4"
+                <a href="/#group-trips">
+                  <span>Reserve a Cabin · Caribbean 2027</span>
+                  <span className="inline-block text-[12px] translate-x-0 group-hover:translate-x-[2px] transition-transform duration-200" aria-hidden="true">↗</span>
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="white"
+                className="w-full sm:w-auto"
               >
-                Join the Crew
-              </a>
+                <a href="/#contact">Join the Crew</a>
+              </Button>
             </div>
           </motion.div>
 
