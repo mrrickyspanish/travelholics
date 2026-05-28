@@ -45,58 +45,46 @@ function TikTokCard({ product, index }: { product: AffiliateProduct; index: numb
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.06 }}
-      className="group bg-white rounded-2xl border border-stone-200 overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+      transition={{ duration: 0.35, delay: index * 0.05 }}
+      className="flex flex-col bg-white rounded-2xl border border-stone-100 overflow-hidden"
     >
-      {/* Product visual — placeholder until real images are added */}
-      <div
-        className="h-44 relative overflow-hidden"
-        style={{ background: `linear-gradient(145deg, ${product.accentFrom}, ${product.accentTo})` }}
-      >
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.4) 1px, transparent 0)",
-            backgroundSize: "18px 18px",
-          }}
-        />
-        <div className="absolute inset-x-0 bottom-0 p-3">
-          <p className="type-kicker text-white/60">{product.category}</p>
-          <p className="text-base font-bold text-white leading-snug mt-0.5">{product.name}</p>
+      {/* Image area */}
+      <div className="relative aspect-[4/5] bg-stone-50 overflow-hidden">
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-5 text-center">
+          <p className="type-kicker text-stone-300">{product.category}</p>
+          <p className="text-base font-semibold text-stone-200 leading-snug">{product.name}</p>
         </div>
+        <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full">
+          <TikTokIcon className="h-2.5 w-2.5" />
+          {product.badge}
+        </span>
+        <span className="absolute top-3 right-3 text-sm font-bold text-stone-400">{product.price}</span>
       </div>
 
       {/* Content */}
-      <div className="p-4">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="inline-flex items-center gap-1.5 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full">
-            <TikTokIcon className="h-2.5 w-2.5" />
-            {product.badge}
-          </span>
-          <span className="ml-auto text-sm font-bold text-[#1e3a8a]">{product.price}</span>
-        </div>
-        <p className="type-caption italic text-slate-500 line-clamp-2 mb-3">
+      <div className="flex flex-col flex-1 p-4 gap-2">
+        <p className="font-semibold text-ink leading-snug">{product.name}</p>
+        <p className="type-caption text-stone-400 italic line-clamp-2 flex-1">
           &ldquo;{product.caption}&rdquo;
         </p>
-        <a
-          href={product.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => {
-            setIsOpening(true);
-            setTimeout(() => setIsOpening(false), 1600);
-          }}
-          aria-busy={isOpening}
-          className="inline-flex w-full items-center justify-center gap-1.5 bg-black hover:bg-zinc-800 text-white text-sm font-bold px-4 py-2.5 rounded-xl transition-colors"
-        >
-          <TikTokIcon className="h-3.5 w-3.5" />
-          {isOpening ? "Opening TikTok..." : "Shop on TikTok"}
-          {!isOpening && <ExternalLink className="h-3 w-3 opacity-70" />}
-        </a>
       </div>
+
+      {/* Full-width CTA pinned to bottom */}
+      <a
+        href={product.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => { setIsOpening(true); setTimeout(() => setIsOpening(false), 1600); }}
+        aria-busy={isOpening}
+        className="mx-4 mb-4 flex items-center justify-center gap-1.5 bg-black hover:bg-zinc-800 text-white text-sm font-bold px-4 py-3 rounded-xl transition-colors"
+      >
+        <TikTokIcon className="h-3.5 w-3.5" />
+        {isOpening ? "Opening TikTok…" : "Shop on TikTok"}
+        {!isOpening && <ExternalLink className="h-3 w-3 opacity-60" />}
+      </a>
     </motion.article>
   );
 }
@@ -111,50 +99,55 @@ function AmazonCard({ product, index }: { product: AffiliateProduct; index: numb
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="group mb-4 break-inside-avoid bg-white rounded-xl border border-stone-200 overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+      transition={{ duration: 0.35, delay: index * 0.04 }}
+      className="flex flex-col bg-white rounded-2xl border border-stone-100 overflow-hidden"
     >
-      {/* Visual */}
-      <div
-        className="h-36 relative"
-        style={{ background: `linear-gradient(135deg, ${product.accentFrom}, ${product.accentTo})` }}
-      >
-        <span className="absolute top-2.5 right-2.5 bg-white/90 text-xs font-bold uppercase tracking-wide text-slate-700 px-2 py-0.5 rounded-full">
+      {/* Image area */}
+      <div className="relative aspect-square bg-stone-50 overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center px-5 text-center">
+          <p className="text-sm font-semibold text-stone-200 leading-snug">{product.name}</p>
+        </div>
+        <span className="absolute top-3 right-3 bg-white/90 text-xs font-bold uppercase tracking-wide text-stone-500 px-2 py-0.5 rounded-full">
           {product.visualLabel}
         </span>
       </div>
 
       {/* Content */}
-      <div className="p-3.5">
-        <p className="type-kicker text-[#059669] mb-1">{product.category}</p>
-        <h3 className="text-base font-semibold text-slate-900 leading-snug mb-1">{product.name}</h3>
-        <p className="type-caption italic text-slate-400 line-clamp-2 mb-3">
+      <div className="flex flex-col flex-1 p-4 gap-1.5">
+        <p className="type-kicker text-[#059669]">{product.category}</p>
+        <p className="font-semibold text-ink leading-snug">{product.name}</p>
+        <p className="type-caption text-stone-400 italic line-clamp-2 flex-1">
           &ldquo;{product.caption}&rdquo;
         </p>
-        <div className="flex items-center justify-between gap-2">
-          <span className="text-sm font-bold text-[#1e3a8a]">{product.price}</span>
-          <a
-            href={product.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => {
-              setIsOpening(true);
-              setTimeout(() => setIsOpening(false), 1600);
-            }}
-            aria-busy={isOpening}
-            className="inline-flex items-center gap-1 bg-[#f59e0b] hover:bg-[#d97706] text-white text-sm font-bold px-3 py-1.5 rounded-lg transition-colors"
-          >
-            <AmazonIcon className="h-3 w-3" />
-            {isOpening ? "Opening..." : "Get it"}
-            {!isOpening && <ExternalLink className="h-2.5 w-2.5 opacity-70" />}
-          </a>
-        </div>
+        <p className="text-sm font-bold text-[#1e3a8a] mt-1">{product.price}</p>
       </div>
+
+      {/* Full-width CTA pinned to bottom */}
+      <a
+        href={product.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => { setIsOpening(true); setTimeout(() => setIsOpening(false), 1600); }}
+        aria-busy={isOpening}
+        className="mx-4 mb-4 flex items-center justify-center gap-1.5 bg-[#f59e0b] hover:bg-[#d97706] text-white text-sm font-bold px-4 py-3 rounded-xl transition-colors"
+      >
+        <AmazonIcon className="h-3.5 w-3.5" />
+        {isOpening ? "Opening…" : "Get it on Amazon"}
+        {!isOpening && <ExternalLink className="h-3 w-3 opacity-60" />}
+      </a>
     </motion.article>
   );
 }
 
 /* ─── Merch Card ─────────────────────────────────────────── */
+
+const COLOR_HEX: Record<string, string> = {
+  Navy:   "#1e3a8a",
+  Sand:   "#c9a96e",
+  Cream:  "#f5f0e8",
+  Forest: "#166534",
+  White:  "#f8fafc",
+};
 
 function MerchCard({
   product,
@@ -169,41 +162,32 @@ function MerchCard({
   onUpdate: (next: Partial<MerchSelectionState[string]>) => void;
   onCheckout: () => void;
 }) {
-  const colorMap: Record<string, string> = {
-    Navy: "#1e3a8a",
-    Sand: "#c9a96e",
-    Cream: "#f5f0e8",
-    Forest: "#166534",
-    White: "#f8fafc",
-  };
-
   return (
     <motion.article
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-      className="bg-white rounded-2xl border border-stone-200 overflow-hidden"
+      transition={{ duration: 0.35 }}
+      className="flex flex-col bg-white rounded-2xl border border-stone-100 overflow-hidden"
     >
-      {/* Mockup */}
-      <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-50 to-stone-100 border-b border-stone-100 flex items-center justify-center">
+      {/* Image area */}
+      <div className="relative aspect-square bg-stone-50 flex items-center justify-center overflow-hidden">
         {product.imageSrc ? (
           <Image
             src={product.imageSrc}
             alt={product.name}
             fill
-            className="object-contain p-4"
+            className="object-contain p-6"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         ) : (
-          <div className="text-center px-6">
+          <div className="flex flex-col items-center gap-3 px-6 text-center">
             <div
-              className="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center"
-              style={{ background: colorMap[selection.color] ?? "#1e3a8a" }}
+              className="w-12 h-12 rounded-full border-2 border-stone-200"
+              style={{ background: COLOR_HEX[selection.color] ?? "#1e3a8a" }}
             />
-            <p className="type-kicker text-slate-400 mb-1">{selection.color}</p>
-            <p className="text-base font-black tracking-[0.2em] text-[#1e3a8a]">TRAVELHOLICS</p>
-            <p className="text-xs text-[#059669] font-semibold mt-1">{product.mockupLabel}</p>
+            <p className="text-xs font-bold tracking-[0.18em] text-stone-300 uppercase">Travelholics</p>
+            <p className="type-kicker text-stone-300">{product.mockupLabel}</p>
           </div>
         )}
         <span className="absolute top-3 left-3 bg-[#1e3a8a] text-white text-xs font-bold px-2.5 py-1 rounded-full">
@@ -214,49 +198,49 @@ function MerchCard({
         </span>
       </div>
 
-      {/* Details */}
-      <div className="p-5">
-        <h3 className="font-bold text-slate-900 text-lg leading-snug mb-1">{product.name}</h3>
-        <p className="type-caption text-slate-500 mb-4">{product.description}</p>
+      {/* Content */}
+      <div className="flex flex-col flex-1 p-5 gap-4">
+        <div>
+          <h3 className="font-bold text-ink text-base leading-snug">{product.name}</h3>
+          <p className="type-caption text-stone-400 mt-1">{product.description}</p>
+        </div>
 
-        {/* Color */}
+        {/* Color swatches */}
         {product.colors.length > 1 && (
-          <div className="mb-3">
-            <p className="text-xs font-semibold text-slate-600 mb-1.5">Color</p>
-            <div className="flex flex-wrap gap-1.5">
+          <div>
+            <p className="text-xs font-semibold text-stone-500 mb-2">Color — <span className="text-ink">{selection.color}</span></p>
+            <div className="flex gap-2">
               {product.colors.map((c) => (
                 <button
                   key={c}
                   onClick={() => onUpdate({ color: c })}
                   disabled={isPending}
-                  className={`px-3 py-1 text-xs font-semibold rounded-lg border transition-colors ${
-                    selection.color === c
-                      ? "border-[#059669] bg-[#059669] text-white"
-                      : "border-stone-200 text-slate-600 hover:border-[#059669] hover:text-[#059669]"
-                  } disabled:cursor-not-allowed disabled:opacity-55`}
-                >
-                  {c}
-                </button>
+                  title={c}
+                  className={`w-6 h-6 rounded-full border-2 transition-all ${
+                    selection.color === c ? "border-[#059669] scale-110" : "border-stone-200 hover:border-stone-400"
+                  } disabled:cursor-not-allowed`}
+                  style={{ background: COLOR_HEX[c] ?? "#1e3a8a" }}
+                />
               ))}
             </div>
           </div>
         )}
 
-        {/* Size */}
+        {/* Size pills */}
         {product.sizes.length > 1 && (
-          <div className="mb-4">
-            <p className="text-xs font-semibold text-slate-600 mb-1.5">Size</p>
+          <div>
+            <p className="text-xs font-semibold text-stone-500 mb-2">Size</p>
             <div className="flex flex-wrap gap-1.5">
               {product.sizes.map((s) => (
                 <button
                   key={s}
                   onClick={() => onUpdate({ size: s })}
                   disabled={isPending}
-                  className={`w-10 py-1 text-xs font-semibold rounded-lg border transition-colors text-center ${
+                  className={`w-10 py-1.5 text-xs font-semibold rounded-lg border transition-colors text-center ${
                     selection.size === s
                       ? "border-[#1e3a8a] bg-[#1e3a8a] text-white"
-                      : "border-stone-200 text-slate-600 hover:border-[#1e3a8a] hover:text-[#1e3a8a]"
-                  } disabled:cursor-not-allowed disabled:opacity-55`}
+                      : "border-stone-200 text-stone-500 hover:border-[#1e3a8a] hover:text-[#1e3a8a]"
+                  } disabled:cursor-not-allowed disabled:opacity-50`}
                 >
                   {s}
                 </button>
@@ -265,47 +249,61 @@ function MerchCard({
           </div>
         )}
 
-        {/* Quantity + CTA */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1 border border-stone-200 rounded-xl px-2 py-1">
-            <button
-              onClick={() => onUpdate({ quantity: Math.max(1, selection.quantity - 1) })}
-              disabled={isPending}
-              className="w-7 h-7 flex items-center justify-center text-slate-500 hover:text-[#1e3a8a] transition-colors"
-            >
-              <Minus className="h-3 w-3" />
-            </button>
-            <span className="w-6 text-center text-sm font-bold text-slate-900">{selection.quantity}</span>
-            <button
-              onClick={() => onUpdate({ quantity: Math.min(10, selection.quantity + 1) })}
-              disabled={isPending}
-              className="w-7 h-7 flex items-center justify-center text-slate-500 hover:text-[#1e3a8a] transition-colors"
-            >
-              <Plus className="h-3 w-3" />
-            </button>
-          </div>
-          <RippleButton
-            onClick={onCheckout}
+        {/* Quantity stepper */}
+        <div className="flex items-center gap-2 border border-stone-200 rounded-xl px-3 py-1.5 w-fit">
+          <button
+            onClick={() => onUpdate({ quantity: Math.max(1, selection.quantity - 1) })}
             disabled={isPending}
-            className="flex-1 bg-[#059669] hover:bg-[#047857] text-white text-sm font-bold py-2.5 rounded-xl transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-6 h-6 flex items-center justify-center text-stone-400 hover:text-ink transition-colors"
           >
-            {isPending ? "Opening..." : "Buy Now"}
-            {!isPending && <ArrowRight className="h-3.5 w-3.5" />}
-          </RippleButton>
+            <Minus className="h-3 w-3" />
+          </button>
+          <span className="w-5 text-center text-sm font-bold text-ink">{selection.quantity}</span>
+          <button
+            onClick={() => onUpdate({ quantity: Math.min(10, selection.quantity + 1) })}
+            disabled={isPending}
+            className="w-6 h-6 flex items-center justify-center text-stone-400 hover:text-ink transition-colors"
+          >
+            <Plus className="h-3 w-3" />
+          </button>
         </div>
       </div>
+
+      {/* Full-width CTA pinned to bottom */}
+      <RippleButton
+        onClick={onCheckout}
+        disabled={isPending}
+        className="mx-4 mb-4 flex items-center justify-center gap-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-bold py-3 rounded-xl transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {isPending ? "Opening…" : "Buy Now"}
+        {!isPending && <ArrowRight className="h-3.5 w-3.5" />}
+      </RippleButton>
     </motion.article>
   );
 }
 
-/* ─── Section Header ─────────────────────────────────────── */
+/* ─── Section Header (centered, serif italic accent) ─────── */
 
-function SectionHeader({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
+function SectionHeader({ title, accent, description }: { title: string; accent: string; description?: string }) {
   return (
-    <div className="mb-8">
-      <p className="type-kicker text-[#059669] mb-2">{eyebrow}</p>
-      <h2 className="type-section-title text-[#1e3a8a] mb-3">{title}</h2>
-      <p className="type-body text-slate-500 max-w-xl">{description}</p>
+    <div className="text-center mb-10">
+      <h2 className="type-section-title text-ink">
+        {title}{" "}
+        <em className="font-serif not-italic italic font-normal text-[#1e3a8a]">{accent}</em>
+      </h2>
+      {description && (
+        <p className="type-body text-stone-400 max-w-md mx-auto mt-3">{description}</p>
+      )}
+    </div>
+  );
+}
+
+/* ─── Horizontal carousel shell ─────────────────────────── */
+
+function CardRow({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0">
+      {children}
     </div>
   );
 }
@@ -354,11 +352,8 @@ export default function ShopPage() {
 
         {/* ── Hero ─────────────────────────────────────────── */}
         <section
-          className="pt-32 pb-12 px-6"
-          style={{
-            background:
-              "linear-gradient(135deg, #1a3a5c 0%, #1e5f8a 40%, #d4622a 75%, #E87722 100%)",
-          }}
+          className="pt-32 pb-16 px-6"
+          style={{ background: "linear-gradient(135deg, #1a3a5c 0%, #1e5f8a 40%, #d4622a 75%, #E87722 100%)" }}
         >
           <div className="max-w-6xl mx-auto">
             <motion.div
@@ -367,12 +362,9 @@ export default function ShopPage() {
               transition={{ duration: 0.5 }}
               className="max-w-2xl"
             >
-              <p className="type-kicker text-[#059669] mb-4">
-                Yolanda&apos;s Shop
-              </p>
               <h1 className="type-page-title text-white mb-4">
                 What I use.<br />
-                <span className="text-[#f59e0b]">What I love.</span>
+                <span className="font-serif italic font-light text-[#f59e0b]">What I love.</span>
               </h1>
               <p className="type-body-lg text-blue-100/75 max-w-lg">
                 20 years of cruise experience distilled into the things I actually reach for — plus the brand we built for travelers like you.
@@ -381,10 +373,24 @@ export default function ShopPage() {
           </div>
         </section>
 
+        {/* ── Trust bar ────────────────────────────────────── */}
+        <div className="bg-white border-b border-stone-100">
+          <div className="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+            {[
+              "20 Years Cruise Experience",
+              "Certified Cruise Specialist",
+              "TikTok Creator Community",
+              "Secure Stripe Checkout",
+            ].map((item) => (
+              <span key={item} className="type-kicker text-stone-400">{item}</span>
+            ))}
+          </div>
+        </div>
+
         {/* ── Sticky tab bar ───────────────────────────────── */}
-        <div className="sticky top-[44px] lg:top-[44px] z-30 bg-white border-b border-stone-200 shadow-sm">
+        <div className="sticky top-[44px] z-30 bg-white border-b border-stone-200 shadow-sm">
           <div className="max-w-6xl mx-auto px-6">
-            <div className="flex gap-1 overflow-x-auto py-3 scrollbar-hide">
+            <div className="flex gap-1 overflow-x-auto py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {[
                 { id: "tiktok-shop", label: "TikTok Shop" },
                 { id: "amazon-finds", label: "Amazon Finds" },
@@ -393,7 +399,7 @@ export default function ShopPage() {
                 <a
                   key={tab.id}
                   href={`#${tab.id}`}
-                  className="whitespace-nowrap text-sm font-semibold px-4 py-1.5 rounded-full text-slate-500 hover:text-[#1e3a8a] hover:bg-slate-100 transition-colors"
+                  className="whitespace-nowrap text-sm font-semibold px-4 py-1.5 rounded-full text-stone-400 hover:text-ink hover:bg-stone-100 transition-colors"
                 >
                   {tab.label}
                 </a>
@@ -403,98 +409,80 @@ export default function ShopPage() {
         </div>
 
         {/* ── TikTok Shop ──────────────────────────────────── */}
-        <section id="tiktok-shop" className="py-14 px-6">
+        <section id="tiktok-shop" className="py-16 px-6">
           <div className="max-w-6xl mx-auto">
             <SectionHeader
-              eyebrow="Zone 1 · TikTok Shop"
-              title="Shop the videos."
-              description="Items Yolanda keeps talking about because they genuinely make the trip easier. Caught the rec in a video — grab it here."
+              title="Cruise-tested"
+              accent="picks."
+              description="Items Yolanda keeps talking about because they genuinely make the trip easier."
             />
-
-            {/* Mobile: swipe shelf (1 card + peek) */}
-            <div className="md:hidden -mx-6 px-6">
-              <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {TIKTOK_PRODUCTS.map((p, i) => (
-                  <div key={p.id} className="w-[78vw] max-w-[320px] shrink-0 snap-start">
-                    <TikTokCard product={p} index={i} />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Desktop/Tablet */}
-            <div className="hidden md:grid md:grid-cols-4 gap-4">
+            <CardRow>
               {TIKTOK_PRODUCTS.map((p, i) => (
-                <TikTokCard key={p.id} product={p} index={i} />
+                <div key={p.id} className="w-[78vw] max-w-[280px] shrink-0 snap-start md:w-[280px]">
+                  <TikTokCard product={p} index={i} />
+                </div>
               ))}
-            </div>
+            </CardRow>
           </div>
         </section>
 
         <div className="max-w-6xl mx-auto px-6"><div className="border-t border-stone-200" /></div>
 
         {/* ── Amazon Finds ─────────────────────────────────── */}
-        <section id="amazon-finds" className="py-14 px-6 bg-white">
+        <section id="amazon-finds" className="py-16 px-6 bg-white">
           <div className="max-w-6xl mx-auto">
             <SectionHeader
-              eyebrow="Zone 2 · Amazon Finds"
-              title="My Amazon picks."
-              description="The Pinterest-board side of the shop. Travel essentials, style on the go, and the everyday carries Yolanda actually reaches for."
+              title="Curated Amazon"
+              accent="finds."
+              description="Travel essentials, style on the go, and the everyday carries Yolanda actually reaches for."
             />
-
-            {/* Mobile: swipe shelf (1 card + peek) */}
-            <div className="md:hidden -mx-6 px-6">
-              <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {AMAZON_PRODUCTS.map((p, i) => (
-                  <div key={p.id} className="w-[78vw] max-w-[320px] shrink-0 snap-start">
-                    <AmazonCard product={p} index={i} />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Desktop/Tablet masonry */}
-            <div className="hidden md:columns-3 xl:columns-4 gap-4 md:block">
+            <CardRow>
               {AMAZON_PRODUCTS.map((p, i) => (
-                <AmazonCard key={p.id} product={p} index={i} />
+                <div key={p.id} className="w-[72vw] max-w-[260px] shrink-0 snap-start md:w-[260px]">
+                  <AmazonCard product={p} index={i} />
+                </div>
               ))}
-            </div>
+            </CardRow>
           </div>
         </section>
 
-        <div className="max-w-6xl mx-auto px-6"><div className="border-t border-stone-200" /></div>
+        {/* ── Interstitial ─────────────────────────────────── */}
+        <div
+          className="h-48 md:h-64 w-full"
+          style={{ background: "linear-gradient(135deg, #1a3a5c 0%, #1e5f8a 50%, #d4622a 100%)" }}
+          aria-hidden="true"
+        />
 
         {/* ── Official Merch ───────────────────────────────── */}
-        <section id="official-merch" className="py-14 px-6">
+        <section id="official-merch" className="py-16 px-6">
           <div className="max-w-6xl mx-auto">
             <SectionHeader
-              eyebrow="Zone 3 · Official Merch"
-              title="Wear the brand."
+              title="Wear the"
+              accent="brand."
               description="Official Travelholics gear. Built for the airport, the deck, and everywhere in between."
             />
 
-            <div className="flex items-center gap-2 mb-6 text-sm font-medium text-[#047857]">
+            <div className="flex items-center justify-center gap-2 mb-8 text-sm font-medium text-[#047857]">
               <ShieldCheck className="h-4 w-4" />
               Secure checkout via Stripe
             </div>
 
             {checkoutError && (
-              <div className="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+              <div className="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 max-w-xl mx-auto">
                 {checkoutError}
               </div>
             )}
-
             {pendingCheckoutId && (
-              <div className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800" role="status" aria-live="polite">
-                Redirecting to secure Stripe checkout...
+              <div className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 max-w-xl mx-auto" role="status" aria-live="polite">
+                Redirecting to secure Stripe checkout…
               </div>
             )}
 
-            {/* Mobile: swipe shelf (1 card + peek) */}
+            {/* Mobile: swipe shelf */}
             <div className="md:hidden -mx-6 px-6">
-              <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {MERCH_PRODUCTS.map((p) => (
-                  <div key={p.id} className="w-[78vw] max-w-[320px] shrink-0 snap-start">
+                  <div key={p.id} className="w-[82vw] max-w-[320px] shrink-0 snap-start">
                     <MerchCard
                       product={p}
                       selection={merchSelections[p.id]}
@@ -507,7 +495,7 @@ export default function ShopPage() {
               </div>
             </div>
 
-            {/* Desktop/Tablet */}
+            {/* Desktop: grid */}
             <div className="hidden md:grid md:grid-cols-3 gap-6">
               {MERCH_PRODUCTS.map((p) => (
                 <MerchCard
@@ -530,18 +518,22 @@ export default function ShopPage() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-emerald-800 to-teal-900 rounded-2xl px-8 py-10 text-center text-white"
+              className="rounded-2xl px-8 py-12 text-center text-white overflow-hidden"
+              style={{ background: "linear-gradient(135deg, #1a3a5c 0%, #1e5f8a 50%, #d4622a 100%)" }}
             >
-              <p className="type-kicker text-emerald-300 mb-3">Ready to sail?</p>
-              <h2 className="type-section-title mb-3">Want me to plan the whole trip?</h2>
-              <p className="type-body text-emerald-100/80 mb-6 max-w-sm mx-auto">
+              <p className="type-kicker text-white/50 mb-4">Ready to sail?</p>
+              <h2 className="type-section-title text-white mb-2">
+                Let&apos;s plan the{" "}
+                <em className="font-serif italic font-light text-[#f59e0b]">whole trip.</em>
+              </h2>
+              <p className="type-body text-white/60 mb-8 max-w-sm mx-auto">
                 The gear is a start. Let&apos;s build a trip around you.
               </p>
               <Link
                 href="/#contact"
-                className="type-cta inline-flex items-center gap-2 bg-white text-emerald-800 px-7 py-3 rounded-xl hover:bg-emerald-50 transition-colors"
+                className="type-cta inline-flex items-center gap-2 bg-white text-[#1a3a5c] px-8 py-3.5 rounded-xl hover:bg-orange-50 transition-colors"
               >
-                Plan My Trip ✦
+                Plan My Trip <ArrowRight className="h-4 w-4" />
               </Link>
             </motion.div>
           </div>
