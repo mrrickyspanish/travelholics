@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, ExternalLink, Minus, Plus, ShieldCheck } from "lucide-react";
+import { ArrowRight, ExternalLink, Info, Minus, PackageCheck, Plus, ShieldCheck } from "lucide-react";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
@@ -298,6 +298,70 @@ function MerchCard({
   );
 }
 
+/* ─── Trust + Compliance Helpers ─────────────────────────── */
+
+function DisclosureBanner() {
+  return (
+    <section className="-mt-8 px-6 relative z-10">
+      <div className="max-w-6xl mx-auto rounded-2xl border border-amber-200 bg-white shadow-sm overflow-hidden">
+        <div className="grid gap-4 p-5 md:grid-cols-[auto_1fr] md:p-6">
+          <div className="h-10 w-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center">
+            <Info className="h-5 w-5" />
+          </div>
+          <div>
+            <p className="type-kicker text-amber-700 mb-2">Shop transparency</p>
+            <h2 className="text-xl font-black text-slate-900 mb-2">A clear split between recommended finds and official Travelholics merch.</h2>
+            <p className="type-body text-slate-600 max-w-3xl">
+              Some links on this page may be affiliate links, which means Travelholics may earn a commission if you purchase through them. Affiliate purchases are handled by the outside retailer. Official Travelholics merch is sold through this site using secure Stripe checkout.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SectionDisclosure({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mb-6 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm leading-relaxed text-slate-600">
+      {children}
+    </div>
+  );
+}
+
+function PolicyTrustPanel() {
+  const items = [
+    {
+      title: "Affiliate recommendations",
+      body: "TikTok and Amazon finds may open an outside retailer. Their prices, availability, shipping, and return policies may change and are controlled by that retailer.",
+    },
+    {
+      title: "Official merch checkout",
+      body: "Travelholics merch uses secure Stripe checkout. Final shipping timelines, taxes, and fulfillment details are confirmed during checkout or in follow-up order communication.",
+    },
+    {
+      title: "Need help with an order?",
+      body: "For official Travelholics merch questions, use the site contact form. For affiliate purchases, contact the retailer where the item was purchased.",
+    },
+  ];
+
+  return (
+    <section className="px-6 pb-4">
+      <div className="max-w-6xl mx-auto grid gap-4 md:grid-cols-3">
+        {items.map((item) => (
+          <div key={item.title} className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+            <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">
+              <PackageCheck className="h-4 w-4" />
+            </div>
+            <h3 className="font-bold text-slate-900 mb-1">{item.title}</h3>
+            <p className="type-caption text-slate-500">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 /* ─── Section Header ─────────────────────────────────────── */
 
 function SectionHeader({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
@@ -375,20 +439,23 @@ export default function ShopPage() {
                 <span className="text-[#f59e0b]">What I love.</span>
               </h1>
               <p className="type-body-lg text-blue-100/75 max-w-lg">
-                20 years of cruise experience distilled into the things I actually reach for — plus the brand we built for travelers like you.
+                20 years of cruise experience distilled into cruise-tested picks, travel-day essentials, and official Travelholics gear built for travelers like you.
               </p>
             </motion.div>
           </div>
         </section>
+
+        <DisclosureBanner />
+        <PolicyTrustPanel />
 
         {/* ── Sticky tab bar ───────────────────────────────── */}
         <div className="sticky top-[44px] lg:top-[44px] z-30 bg-white border-b border-stone-200 shadow-sm">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex gap-1 overflow-x-auto py-3 scrollbar-hide">
               {[
-                { id: "tiktok-shop", label: "TikTok Shop" },
+                { id: "tiktok-shop", label: "TikTok Picks" },
                 { id: "amazon-finds", label: "Amazon Finds" },
-                { id: "official-merch", label: "Merch" },
+                { id: "official-merch", label: "Official Merch" },
               ].map((tab) => (
                 <a
                   key={tab.id}
@@ -406,10 +473,13 @@ export default function ShopPage() {
         <section id="tiktok-shop" className="py-14 px-6">
           <div className="max-w-6xl mx-auto">
             <SectionHeader
-              eyebrow="Zone 1 · TikTok Shop"
-              title="Shop the videos."
-              description="Items Yolanda keeps talking about because they genuinely make the trip easier. Caught the rec in a video — grab it here."
+              eyebrow="Zone 1 · Affiliate recommendations"
+              title="Cruise-tested picks from the videos."
+              description="Items Yolanda keeps talking about because they genuinely make the trip easier, now organized around the moment you need them: cabin setup, packing, and port-day prep."
             />
+            <SectionDisclosure>
+              TikTok links may open Yolanda&apos;s TikTok presence or a TikTok Shop destination. If a link becomes affiliate-enabled, Travelholics may earn a commission from qualifying purchases at no extra cost to you.
+            </SectionDisclosure>
 
             {/* Mobile: swipe shelf (1 card + peek) */}
             <div className="md:hidden -mx-6 px-6">
@@ -437,10 +507,13 @@ export default function ShopPage() {
         <section id="amazon-finds" className="py-14 px-6 bg-white">
           <div className="max-w-6xl mx-auto">
             <SectionHeader
-              eyebrow="Zone 2 · Amazon Finds"
-              title="My Amazon picks."
-              description="The Pinterest-board side of the shop. Travel essentials, style on the go, and the everyday carries Yolanda actually reaches for."
+              eyebrow="Zone 2 · Affiliate recommendations"
+              title="Curated Amazon travel finds."
+              description="A clearer collection of beach-day gear, travel-day helpers, cruise style, sun care, and packing systems Yolanda would actually point travelers toward."
             />
+            <SectionDisclosure>
+              Amazon links may be affiliate links. Product prices, availability, shipping, and return options are controlled by Amazon or the listed seller and may change after you leave Travelholics.
+            </SectionDisclosure>
 
             {/* Mobile: swipe shelf (1 card + peek) */}
             <div className="md:hidden -mx-6 px-6">
@@ -468,14 +541,19 @@ export default function ShopPage() {
         <section id="official-merch" className="py-14 px-6">
           <div className="max-w-6xl mx-auto">
             <SectionHeader
-              eyebrow="Zone 3 · Official Merch"
+              eyebrow="Zone 3 · Official Travelholics products"
               title="Wear the brand."
-              description="Official Travelholics gear. Built for the airport, the deck, and everywhere in between."
+              description="Official Travelholics gear, now including the sand bucket hat alongside cruise magnets and apparel built for the airport, the deck, and everywhere in between."
             />
 
-            <div className="flex items-center gap-2 mb-6 text-sm font-medium text-[#047857]">
-              <ShieldCheck className="h-4 w-4" />
-              Secure checkout via Stripe
+            <div className="mb-6 grid gap-3 md:grid-cols-2">
+              <div className="flex items-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-[#047857]">
+                <ShieldCheck className="h-4 w-4" />
+                Secure checkout via Stripe for official merch
+              </div>
+              <div className="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-slate-600">
+                Official merch is sold by Travelholics. The bucket hat, magnets, and apparel use the same secure checkout path; final shipping, returns, and fulfillment details should be confirmed before large-scale promotion.
+              </div>
             </div>
 
             {checkoutError && (
@@ -536,6 +614,9 @@ export default function ShopPage() {
               <h2 className="type-section-title mb-3">Want me to plan the whole trip?</h2>
               <p className="type-body text-emerald-100/80 mb-6 max-w-sm mx-auto">
                 The gear is a start. Let&apos;s build a trip around you.
+              </p>
+              <p className="type-caption text-emerald-100/70 mb-6 max-w-lg mx-auto">
+                Travelholics product recommendations and official merch are here to support the trip, but the real win is having the right cruise plan from the beginning.
               </p>
               <Link
                 href="/#contact"
