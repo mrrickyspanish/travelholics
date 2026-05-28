@@ -439,7 +439,7 @@ export default function ShopPage() {
                 <span className="text-[#f59e0b]">What I love.</span>
               </h1>
               <p className="type-body-lg text-blue-100/75 max-w-lg">
-                20 years of cruise experience distilled into the things I actually reach for — plus the brand we built for travelers like you.
+                20 years of cruise experience distilled into cruise-tested picks, travel-day essentials, and official Travelholics gear built for travelers like you.
               </p>
             </motion.div>
           </div>
@@ -453,9 +453,9 @@ export default function ShopPage() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex gap-1 overflow-x-auto py-3 scrollbar-hide">
               {[
-                { id: "tiktok-shop", label: "TikTok Shop" },
+                { id: "tiktok-shop", label: "TikTok Picks" },
                 { id: "amazon-finds", label: "Amazon Finds" },
-                { id: "official-merch", label: "Merch" },
+                { id: "official-merch", label: "Official Merch" },
               ].map((tab) => (
                 <a
                   key={tab.id}
@@ -474,8 +474,8 @@ export default function ShopPage() {
           <div className="max-w-6xl mx-auto">
             <SectionHeader
               eyebrow="Zone 1 · Affiliate recommendations"
-              title="Shop the videos."
-              description="Items Yolanda keeps talking about because they genuinely make the trip easier. Caught the rec in a video — grab it here."
+              title="Cruise-tested picks from the videos."
+              description="Items Yolanda keeps talking about because they genuinely make the trip easier, now organized around the moment you need them: cabin setup, packing, and port-day prep."
             />
             <SectionDisclosure>
               TikTok links may open Yolanda&apos;s TikTok presence or a TikTok Shop destination. If a link becomes affiliate-enabled, Travelholics may earn a commission from qualifying purchases at no extra cost to you.
@@ -508,8 +508,8 @@ export default function ShopPage() {
           <div className="max-w-6xl mx-auto">
             <SectionHeader
               eyebrow="Zone 2 · Affiliate recommendations"
-              title="My Amazon picks."
-              description="The Pinterest-board side of the shop. Travel essentials, style on the go, and the everyday carries Yolanda actually reaches for."
+              title="Curated Amazon travel finds."
+              description="A clearer collection of beach-day gear, travel-day helpers, cruise style, sun care, and packing systems Yolanda would actually point travelers toward."
             />
             <SectionDisclosure>
               Amazon links may be affiliate links. Product prices, availability, shipping, and return options are controlled by Amazon or the listed seller and may change after you leave Travelholics.
@@ -543,7 +543,7 @@ export default function ShopPage() {
             <SectionHeader
               eyebrow="Zone 3 · Official Travelholics products"
               title="Wear the brand."
-              description="Official Travelholics gear. Built for the airport, the deck, and everywhere in between."
+              description="Official Travelholics gear, now including the sand bucket hat alongside cruise magnets and apparel built for the airport, the deck, and everywhere in between."
             />
 
             <div className="mb-6 grid gap-3 md:grid-cols-2">
@@ -552,7 +552,7 @@ export default function ShopPage() {
                 Secure checkout via Stripe for official merch
               </div>
               <div className="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-slate-600">
-                Official merch is sold by Travelholics. Shipping, returns, and fulfillment details should be confirmed before large-scale promotion.
+                Official merch is sold by Travelholics. The bucket hat, magnets, and apparel use the same secure checkout path; final shipping, returns, and fulfillment details should be confirmed before large-scale promotion.
               </div>
             </div>
 
