@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, ExternalLink, Minus, Plus, ShieldCheck } from "lucide-react";
+import { ArrowRight, ExternalLink, HelpCircle, Minus, Plus, ShieldCheck, Tag } from "lucide-react";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
@@ -373,17 +373,45 @@ export default function ShopPage() {
           </div>
         </section>
 
-        {/* ── Trust bar ────────────────────────────────────── */}
-        <div className="bg-white border-b border-stone-100">
-          <div className="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
-            {[
-              "20 Years Cruise Experience",
-              "Certified Cruise Specialist",
-              "TikTok Creator Community",
-              "Secure Stripe Checkout",
-            ].map((item) => (
-              <span key={item} className="type-kicker text-stone-400">{item}</span>
-            ))}
+        {/* ── Shop Transparency Disclosure ─────────────────── */}
+        <div className="bg-white border-b border-stone-200">
+          <div className="max-w-6xl mx-auto px-6 py-6">
+            {/* Header */}
+            <div className="flex items-start gap-3 mb-4">
+              <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-[#E87722] flex items-center justify-center">
+                <Tag className="h-2.5 w-2.5 text-white" />
+              </span>
+              <div>
+                <p className="type-kicker text-[#E87722] mb-1">Shop Transparency</p>
+                <p className="type-caption text-stone-600 max-w-2xl">
+                  A clear split between recommended finds and official Travelholics merch. Some links on this page may be affiliate links, which means Travelholics may earn a commission if you purchase through them. Affiliate purchases are handled by the outside retailer. Official Travelholics merch is sold through this site using secure Stripe checkout.
+                </p>
+              </div>
+            </div>
+            {/* Three-column breakdown */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+              <div className="flex gap-3">
+                <Tag className="h-4 w-4 text-[#059669] flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-1">Affiliate recommendations</p>
+                  <p className="type-caption text-stone-500">For any Amazon or TikTok product, you&apos;ll be sent to an outside retailer. Their prices, availability, shipping, and return policies are controlled by that retailer.</p>
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <ShieldCheck className="h-4 w-4 text-[#059669] flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-1">Official merch checkout</p>
+                  <p className="type-caption text-stone-500">Travelholics products are sold through Stripe checkout. Final shipping, timelines, taxes, and fulfillment status are confirmed during checkout or in follow-up order communication.</p>
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <HelpCircle className="h-4 w-4 text-[#059669] flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-1">Need help with an order?</p>
+                  <p className="type-caption text-stone-500">For official merch questions, use the site contact form. For affiliate purchases, contact the retailer where the item was purchased.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -416,6 +444,9 @@ export default function ShopPage() {
               accent="picks."
               description="Items Yolanda keeps talking about because they genuinely make the trip easier."
             />
+            <p className="type-caption italic text-stone-400 mb-6 text-center">
+              Affiliate links may earn Travelholics a small commission at no extra cost to you. You&apos;ll be sent to TikTok Shop to complete your purchase.
+            </p>
             <CardRow>
               {TIKTOK_PRODUCTS.map((p, i) => (
                 <div key={p.id} className="w-[78vw] max-w-[280px] shrink-0 snap-start md:w-[280px]">
@@ -436,6 +467,9 @@ export default function ShopPage() {
               accent="finds."
               description="Travel essentials, style on the go, and the everyday carries Yolanda actually reaches for."
             />
+            <p className="type-caption italic text-stone-400 mb-6 text-center">
+              Amazon links may be affiliate links. Product prices, availability, shipping, and return options are controlled by Amazon or the listed seller and may change after you leave Travelholics.
+            </p>
             <CardRow>
               {AMAZON_PRODUCTS.map((p, i) => (
                 <div key={p.id} className="w-[72vw] max-w-[260px] shrink-0 snap-start md:w-[260px]">
@@ -461,6 +495,9 @@ export default function ShopPage() {
               accent="brand."
               description="Official Travelholics gear. Built for the airport, the deck, and everywhere in between."
             />
+            <p className="type-caption italic text-stone-400 mb-6 text-center">
+              Official merch is sold by Travelholics. The bucket hat, magnets, and apparel use the same secure checkout path. Final shipping, returns, and fulfillment details should be confirmed within your Stripe order communication.
+            </p>
 
             <div className="flex items-center justify-center gap-2 mb-8 text-sm font-medium text-[#047857]">
               <ShieldCheck className="h-4 w-4" />
