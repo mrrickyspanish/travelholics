@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
@@ -24,6 +25,7 @@ export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   // Scroll/solid background logic
   useEffect(() => {
@@ -64,12 +66,14 @@ export const Header = () => {
   }, [menuOpen]);
 
   // Color swap for logo and nav
-  const navSolid = isScrolled || menuOpen;
+  // Solid white background only on /shop-full
+  const isShopFull = pathname === "/shop-full";
+  const navSolid = isShopFull || isScrolled || menuOpen;
 
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${navSolid ? "bg-cream/98 shadow-sm" : "bg-transparent"}`}
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${navSolid ? (isShopFull ? "bg-white shadow-sm" : "bg-cream/98 shadow-sm") : "bg-transparent"}`}
         style={{ color: navSolid ? "#0E125C" : "#0E125C" }}
       >
         <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between gap-6 transition-all duration-300 ${navSolid ? 'h-14 py-1' : 'h-20 py-0'}`}>
