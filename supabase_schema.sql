@@ -81,7 +81,34 @@ CREATE POLICY "Allow authenticated duck hunt updates"
 
 
 -- ------------------------------------------------------------
+-- TABLE 3: shop_waitlist
+-- Populated by the /shop coming soon notify form
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.shop_waitlist (
+    id          UUID                     PRIMARY KEY DEFAULT gen_random_uuid(),
+    created_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT timezone('utc', now()),
+    first_name  TEXT                     NOT NULL,
+    email       TEXT                     NOT NULL UNIQUE,
+    source      TEXT                     NOT NULL DEFAULT 'shop-coming-soon'
+);
+
+ALTER TABLE public.shop_waitlist ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow public waitlist signups"     ON public.shop_waitlist;
+DROP POLICY IF EXISTS "Allow authenticated waitlist view" ON public.shop_waitlist;
+
+CREATE POLICY "Allow public waitlist signups"
+    ON public.shop_waitlist FOR INSERT TO anon
+    WITH CHECK (true);
+
+CREATE POLICY "Allow authenticated waitlist view"
+    ON public.shop_waitlist FOR SELECT TO authenticated
+    USING (true);
+
+
+-- ------------------------------------------------------------
 -- Quick verification — run after the above to confirm setup:
 --   SELECT COUNT(*) FROM public.cruise_inquiries;
 --   SELECT COUNT(*) FROM public.duck_hunt_leads;
+--   SELECT COUNT(*) FROM public.shop_waitlist;
 -- ------------------------------------------------------------

@@ -1,31 +1,27 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cruise Travel Shop",
+  title: "Shop — Travelholics",
   description:
-    "Browse Yolanda's travel picks, affiliate finds, and official Travelholics merchandise.",
-  alternates: {
-    canonical: "/shop",
-  },
+    "Drop 01 — The Vacation Edit. Official Travelholics merch and curated travel picks. Coming soon.",
+  alternates: { canonical: "/shop" },
   openGraph: {
-    title: "Travelholics Shop | Yolanda's Picks",
-    description:
-      "Explore travel essentials, creator recommendations, and Travelholics merchandise curated by Yolanda.",
+    title: "Shop — Travelholics",
+    description: "Drop 01 is almost here. Get first access.",
     url: "/shop",
     type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Travelholics Shop | Yolanda's Picks",
-    description:
-      "Shop trusted travel essentials and official Travelholics merchandise.",
-  },
 };
 
-export default function ShopLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return children;
+export default function ShopLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <>
+      {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+      <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Jost:wght@200;300;400&display=swap"
+        rel="stylesheet"
+      />
+      {children}
+    </>
+  );
 }

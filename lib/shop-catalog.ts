@@ -33,6 +33,7 @@ export interface MerchProduct {
   sizes: string[];
   mockupLabel: string;
   imageSrc?: string;
+  comingSoon?: boolean;
 }
 
 export const SHOP_TABS = [
@@ -292,6 +293,23 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     colors: ["Navy", "White", "Forest"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     mockupLabel: "Chest mark",
+  },
+  {
+    id: "merch-bucket-hat",
+    zone: "merch",
+    name: "Travelholics Bucket Hat",
+    description:
+      "The signature Travelholics bucket hat. Built for deck days, port stops, and every adventure in between.",
+    badge: "Coming Soon",
+    price: 3800,
+    currency: "usd",
+    stripeLabel: "Travelholics Bucket Hat",
+    checkoutMode: "api",
+    colors: ["Navy", "Sand", "Cream"],
+    sizes: ["One Size"],
+    mockupLabel: "Bucket hat",
+    imageSrc: "/images/Travelholics_merch_bucket_hat.png",
+    comingSoon: true,
   },
 ];
 
