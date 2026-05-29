@@ -341,7 +341,7 @@ export default function ShopComingSoon() {
           {/* Row 1: wide + portrait */}
           <div className="lb-row-1">
             <div className="lb-card">
-              <Image src="/images/about-port-of-call.jpg" alt="Santorini golden hour" width={1200} height={560} style={{ height: 560, objectFit: "cover" }} />
+              <Image src="/images/travelholics_lifestyle_linen-shirt-cruise-deck.png" alt="Linen shirt on cruise deck" width={1200} height={560} style={{ height: 560, objectFit: "cover" }} />
               <div className="lb-overlay">
                 <div className="lb-overlay-tag">Lifestyle</div>
                 <div className="lb-overlay-title">Open Waters,<br />Golden Hour</div>
@@ -349,7 +349,7 @@ export default function ShopComingSoon() {
               <div className="lb-num">01</div>
             </div>
             <div className="lb-card">
-              <Image src="/images/hero-yolanda.jpg" alt="Ship interior editorial" width={600} height={560} style={{ height: 560, objectFit: "cover" }} />
+              <Image src="/images/travelholics_lifestyle_compass-tee-backview.png" alt="Compass tee editorial" width={600} height={560} style={{ height: 560, objectFit: "cover" }} />
               <div className="lb-overlay">
                 <div className="lb-overlay-tag">Editorial</div>
                 <div className="lb-overlay-title">The Balcony<br />Moment</div>
@@ -360,14 +360,14 @@ export default function ShopComingSoon() {
           {/* Row 2: three columns */}
           <div className="lb-row-2">
             <div className="lb-card">
-              <Image src="/images/dest-caribbean.jpg" alt="Caribbean sunset" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
+              <Image src="/images/travelholics_lifestyle_canvas-tote-portside.png" alt="Canvas tote portside" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
               <div className="lb-overlay">
-                <div className="lb-overlay-tag">Colorway</div>
-                <div className="lb-overlay-title">Terracotta<br />Sundown</div>
+                <div className="lb-overlay-tag">Accessory</div>
+                <div className="lb-overlay-title">Portside<br />Ready</div>
               </div>
             </div>
             <div className="lb-card">
-              <Image src="/images/why-custom-planning.jpg" alt="Elegant couple on deck" width={800} height={380} style={{ height: 380, objectFit: "cover" }} />
+              <Image src="/images/travelholics_lifestyle_couple-beach-tees.png" alt="Couple in beach tees" width={800} height={380} style={{ height: 380, objectFit: "cover" }} />
               <div className="lb-overlay">
                 <div className="lb-overlay-tag">Inspo</div>
                 <div className="lb-overlay-title">Deck Life,<br />Always</div>
@@ -375,10 +375,10 @@ export default function ShopComingSoon() {
               <div className="lb-num">02</div>
             </div>
             <div className="lb-card">
-              <Image src="/images/dest-mediterranean.jpg" alt="Mediterranean, Parthenon" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
+              <Image src="/images/travelholics_product_passport-holder-travel-planner.png" alt="Passport holder travel planner" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
               <div className="lb-overlay">
-                <div className="lb-overlay-tag">Colorway</div>
-                <div className="lb-overlay-title">Deep<br />Ocean</div>
+                <div className="lb-overlay-tag">Detail</div>
+                <div className="lb-overlay-title">The<br />Essentials</div>
               </div>
             </div>
           </div>
@@ -386,10 +386,10 @@ export default function ShopComingSoon() {
           {/* Row 3: editorial + text card + photo */}
           <div className="lb-row-3">
             <div className="lb-card">
-              <Image src="/images/why-insider-secrets.jpg" alt="Formal couple, chandelier" width={600} height={400} style={{ height: 400, objectFit: "cover" }} />
+              <Image src="/images/travelholics_product_mint-longsleeve-world-map.png" alt="Mint longsleeve world map" width={600} height={400} style={{ height: 400, objectFit: "cover" }} />
               <div className="lb-overlay">
-                <div className="lb-overlay-tag">Detail</div>
-                <div className="lb-overlay-title">The<br />Warmth</div>
+                <div className="lb-overlay-tag">Drop 01</div>
+                <div className="lb-overlay-title">World Map<br />Longsleeve</div>
               </div>
             </div>
             <div className="lb-card lb-text-card" style={{ height: 400 }}>
@@ -398,19 +398,19 @@ export default function ShopComingSoon() {
               <div className="lb-text-body">Limited run. Built for the traveler who already knows where they&apos;re going next.</div>
             </div>
             <div className="lb-card">
-              <Image src="/images/about-on-deck.jpg" alt="Sunset deck selfie" width={600} height={400} style={{ height: 400, objectFit: "cover" }} />
+              <Image src="/images/travelholics_product_navy-longsleeve-wander-more.png" alt="Navy longsleeve wander more" width={600} height={400} style={{ height: 400, objectFit: "cover" }} />
               <div className="lb-overlay">
-                <div className="lb-overlay-tag">Lifestyle</div>
-                <div className="lb-overlay-title">Port Day<br />Essentials</div>
+                <div className="lb-overlay-tag">Drop 01</div>
+                <div className="lb-overlay-title">Wander More<br />Longsleeve</div>
               </div>
               <div className="lb-num">03</div>
             </div>
           </div>
 
-          {/* Row 4: full-width bucket hat tease */}
+          {/* Row 4: full-width cinematic closer */}
           <div className="lb-row-4">
             <div className="lb-card">
-              <Image src="/images/dest-alaska-glaciers.jpg" alt="Alaska glaciers" width={1800} height={500} style={{ height: 500, objectFit: "cover" }} />
+              <Image src="/images/travelholics_shop_divider.png" alt="Travelholics shop" width={1800} height={500} style={{ height: 500, objectFit: "cover" }} />
               <div className="lb-overlay" style={{ opacity: 1, background: "linear-gradient(to top, rgba(17,16,16,.65) 0%, transparent 60%)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
                   <div>
@@ -441,7 +441,7 @@ export default function ShopComingSoon() {
             {/* Magnet 1 */}
             <div className="cs-magnet-card">
               <div className="cs-magnet-img">
-                <Image src="/images/travelholic_ticket_magnent_pacific.png" alt="Cruise Ticket Door Magnet" fill className="object-contain p-6" />
+                <Image src="/images/travelholics_product_cruise-life-magnet-on-journal.png" alt="Cruise Ticket Door Magnet" fill className="object-cover" />
               </div>
               <div className="cs-magnet-body">
                 <span className="cs-magnet-badge">Cruise Life</span>
@@ -454,7 +454,7 @@ export default function ShopComingSoon() {
             {/* Magnet 2 */}
             <div className="cs-magnet-card">
               <div className="cs-magnet-img">
-                <Image src="/images/pacific_mexican_door_magnent.png" alt="Pacific Mexican Door Magnet" fill className="object-contain p-6" />
+                <Image src="/images/travelholics_mockup_pacific-mexican-door-magnet.png" alt="Pacific Mexican Door Magnet" fill className="object-cover" />
               </div>
               <div className="cs-magnet-body">
                 <span className="cs-magnet-badge">Original</span>
