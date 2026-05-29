@@ -349,7 +349,7 @@ export default function ShopComingSoon() {
               <div className="lb-num">01</div>
             </div>
             <div className="lb-card">
-              <Image src="/images/travelholics_lifestyle_compass-tee-backview.png" alt="Compass tee editorial" width={600} height={560} style={{ height: 560, objectFit: "cover" }} />
+              <Image src="/images/lookbook/travelholics_opt_lookbook_cliffside.png" alt="Cliffside couple, compass tee" width={600} height={560} style={{ height: 560, objectFit: "cover", objectPosition: "center" }} />
               <div className="lb-overlay">
                 <div className="lb-overlay-tag">Editorial</div>
                 <div className="lb-overlay-title">The Balcony<br />Moment</div>
@@ -360,7 +360,7 @@ export default function ShopComingSoon() {
           {/* Row 2: three columns */}
           <div className="lb-row-2">
             <div className="lb-card">
-              <Image src="/images/travelholics_lifestyle_canvas-tote-portside.png" alt="Canvas tote portside" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
+              <Image src="/images/lookbook/travelholics_opt_lookbook_tote.png" alt="Canvas tote portside" width={600} height={380} style={{ height: 380, objectFit: "cover", objectPosition: "center" }} />
               <div className="lb-overlay">
                 <div className="lb-overlay-tag">Accessory</div>
                 <div className="lb-overlay-title">Portside<br />Ready</div>
@@ -386,7 +386,7 @@ export default function ShopComingSoon() {
           {/* Row 3: editorial + text card + photo */}
           <div className="lb-row-3">
             <div className="lb-card">
-              <Image src="/images/travelholics_product_mint-longsleeve-world-map.png" alt="Mint longsleeve world map" width={600} height={400} style={{ height: 400, objectFit: "cover" }} />
+              <Image src="/images/lookbook/travelholics_opt_lookbook_wandermore.png" alt="Wander More notebook cover" width={600} height={400} style={{ height: 400, objectFit: "cover", objectPosition: "center" }} />
               <div className="lb-overlay">
                 <div className="lb-overlay-tag">Drop 01</div>
                 <div className="lb-overlay-title">World Map<br />Longsleeve</div>
@@ -398,7 +398,7 @@ export default function ShopComingSoon() {
               <div className="lb-text-body">Limited run. Built for the traveler who already knows where they&apos;re going next.</div>
             </div>
             <div className="lb-card">
-              <Image src="/images/travelholics_product_navy-longsleeve-wander-more.png" alt="Navy longsleeve wander more" width={600} height={400} style={{ height: 400, objectFit: "cover" }} />
+              <Image src="/images/lookbook/travelholics_opt_lookbook_sunsetboat.png" alt="Navy sunset sailboat tee graphic" width={600} height={400} style={{ height: 400, objectFit: "cover", objectPosition: "center" }} />
               <div className="lb-overlay">
                 <div className="lb-overlay-tag">Drop 01</div>
                 <div className="lb-overlay-title">Wander More<br />Longsleeve</div>
@@ -441,7 +441,7 @@ export default function ShopComingSoon() {
             {/* Magnet 1 */}
             <div className="cs-magnet-card">
               <div className="cs-magnet-img">
-                <Image src="/images/travelholics_product_cruise-life-magnet-on-journal.png" alt="Cruise Ticket Door Magnet" fill className="object-cover" />
+                <Image src="/images/lookbook/travelholics_opt_pdp_boardingpass.png" alt="Cruise Life Boarding Pass Magnet" fill className="object-cover" />
               </div>
               <div className="cs-magnet-body">
                 <span className="cs-magnet-badge">Cruise Life</span>
@@ -454,7 +454,7 @@ export default function ShopComingSoon() {
             {/* Magnet 2 */}
             <div className="cs-magnet-card">
               <div className="cs-magnet-img">
-                <Image src="/images/travelholics_mockup_pacific-mexican-door-magnet.png" alt="Pacific Mexican Door Magnet" fill className="object-cover" />
+                <Image src="/images/lookbook/travelholics_opt_pdp_mexico_v2.png" alt="Pacific Mexican Coast Cruise Magnet" fill className="object-cover" />
               </div>
               <div className="cs-magnet-body">
                 <span className="cs-magnet-badge">Original</span>
