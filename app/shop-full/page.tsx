@@ -462,7 +462,7 @@ export default function ShopPage() {
           </div>
         </section>
 
-        <div className="max-w-6xl mx-auto px-6"><div className="border-t border-stone-200" /></div>
+        <div className="w-full h-16 md:h-24 bg-repeat-x" style={{ backgroundImage: "url('/images/travelholics_pattern_nautical-background.png')" }} />
 
         {/* ── Amazon Finds ─────────────────────────────────── */}
         <section id="amazon-finds" className="py-16 px-6 bg-white">
@@ -485,12 +485,8 @@ export default function ShopPage() {
           </div>
         </section>
 
-        {/* ── Interstitial ─────────────────────────────────── */}
-        <div
-          className="h-48 md:h-64 w-full"
-          style={{ background: "linear-gradient(135deg, #1a3a5c 0%, #1e5f8a 50%, #d4622a 100%)" }}
-          aria-hidden="true"
-        />
+        {/* ── Interstitial Divider ─────────────────────────── */}
+        <div className="w-full h-16 md:h-24 bg-repeat-x" style={{ backgroundImage: "url('/images/travelholics_pattern_nautical-background.png')" }} />
 
         {/* ── Official Merch ───────────────────────────────── */}
         <section id="official-merch" className="py-16 px-6">
@@ -560,23 +556,26 @@ export default function ShopPage() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="rounded-2xl px-8 py-12 text-center text-white overflow-hidden"
-              style={{ background: "linear-gradient(135deg, #1a3a5c 0%, #1e5f8a 50%, #d4622a 100%)" }}
+              className="relative rounded-2xl px-8 py-12 text-center text-white overflow-hidden bg-cover"
+              style={{ backgroundImage: "url('/images/travelholics_brand-hero_cruise-ship.png')", backgroundPosition: 'center 90%' }}
             >
-              <p className="type-kicker text-white/50 mb-4">Ready to sail?</p>
-              <h2 className="type-section-title text-white mb-2">
-                Let&apos;s plan the{" "}
-                <em className="font-serif italic font-light text-[#f59e0b]">whole trip.</em>
-              </h2>
-              <p className="type-body text-white/60 mb-8 max-w-sm mx-auto">
-                The gear is a start. Let&apos;s build a trip around you.
-              </p>
-              <Link
-                href="/#contact"
-                className="type-cta inline-flex items-center gap-2 bg-white text-[#1a3a5c] px-8 py-3.5 rounded-xl hover:bg-orange-50 transition-colors"
-              >
-                Plan My Trip <ArrowRight className="h-4 w-4" />
-              </Link>
+              <div className="absolute inset-0 rounded-2xl" style={{background: 'linear-gradient(90deg,rgba(30,58,92,0.18) 0%,rgba(255,255,255,0.10) 100%)'}} aria-hidden="true"></div>
+              <div className="relative z-10">
+                <p className="type-kicker text-white/50 mb-4">Ready to sail?</p>
+                <h2 className="type-section-title text-white mb-2">
+                  Let&apos;s plan the{" "}
+                  <em className="font-serif italic font-light text-[#f59e0b]">whole trip.</em>
+                </h2>
+                <p className="type-body text-white/60 mb-8 max-w-sm mx-auto">
+                  The gear is a start. Let&apos;s build a trip around you.
+                </p>
+                <Link
+                  href="/#contact"
+                  className="type-cta inline-flex items-center gap-2 bg-white text-[#1a3a5c] px-8 py-3.5 rounded-xl hover:bg-orange-50 transition-colors"
+                >
+                  Plan My Trip <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </motion.div>
           </div>
         </section>
