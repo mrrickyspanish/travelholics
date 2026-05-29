@@ -4,140 +4,18 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, ExternalLink, HelpCircle, Minus, Plus, ShieldCheck, Tag } from "lucide-react";
+import { ArrowRight, HelpCircle, Minus, Plus, ShieldCheck, Sparkles, Tag } from "lucide-react";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { RippleButton } from "@/components/ripple-button";
 import {
-  AMAZON_PRODUCTS,
   MERCH_PRODUCTS,
-  TIKTOK_PRODUCTS,
   formatMerchPrice,
-  type AffiliateProduct,
   type MerchProduct,
 } from "@/lib/shop-catalog";
 
 type MerchSelectionState = Record<string, { size: string; color: string; quantity: number }>;
-
-/* ─── Icons ─────────────────────────────────────────────── */
-
-function TikTokIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.87a8.16 8.16 0 0 0 4.76 1.52v-3.4a4.85 4.85 0 0 1-1-.3Z" />
-    </svg>
-  );
-}
-
-function AmazonIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M13.23 10.56v-.38c-.96.1-1.94.1-2.91.1-.75 0-1.5-.04-2.18-.25-1.81-.54-2.93-1.95-2.93-3.93C5.21 3.66 7.2 2 9.87 2c1.45 0 2.67.41 3.57 1.22.89.8 1.35 1.95 1.35 3.38v.14c0 .26-.01.51-.04.75h-1.53v-.14c0-.96-.28-1.74-.82-2.3-.54-.56-1.31-.85-2.27-.85-1.87 0-3.05 1.07-3.05 2.67 0 1.22.7 2.06 1.89 2.41.46.14.96.2 1.57.2.62 0 1.29-.06 2.08-.15v-.77h1.61zM20.9 17.3c-2.3 1.63-5.63 2.5-8.49 2.5-4.01 0-7.63-1.5-10.36-3.98-.21-.19-.02-.46.24-.31 2.95 1.72 6.6 2.76 10.37 2.76 2.54 0 5.34-.53 7.92-1.63.39-.17.71.25.32.66zm.92-1.05c-.3-.38-1.97-.18-2.72-.09-.23.03-.26-.17-.06-.32 1.33-.94 3.52-.67 3.77-.35.25.32-.07 2.56-1.32 3.63-.19.16-.38.08-.29-.14.28-.72.91-2.35.62-2.73z" />
-    </svg>
-  );
-}
-
-/* ─── TikTok Card ────────────────────────────────────────── */
-
-function TikTokCard({ product, index }: { product: AffiliateProduct; index: number }) {
-  const [isOpening, setIsOpening] = useState(false);
-
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.35, delay: index * 0.05 }}
-      className="flex flex-col bg-white rounded-2xl border border-stone-100 overflow-hidden"
-    >
-      {/* Image area */}
-      <div className="relative aspect-[4/5] bg-stone-50 overflow-hidden">
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-5 text-center">
-          <p className="type-kicker text-stone-300">{product.category}</p>
-          <p className="text-base font-semibold text-stone-200 leading-snug">{product.name}</p>
-        </div>
-        <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full">
-          <TikTokIcon className="h-2.5 w-2.5" />
-          {product.badge}
-        </span>
-        <span className="absolute top-3 right-3 text-sm font-bold text-stone-400">{product.price}</span>
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-col flex-1 p-4 gap-2">
-        <p className="font-semibold text-ink leading-snug">{product.name}</p>
-        <p className="type-caption text-stone-400 italic line-clamp-2 flex-1">
-          &ldquo;{product.caption}&rdquo;
-        </p>
-      </div>
-
-      {/* Full-width CTA pinned to bottom */}
-      <a
-        href={product.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => { setIsOpening(true); setTimeout(() => setIsOpening(false), 1600); }}
-        aria-busy={isOpening}
-        className="mx-4 mb-4 flex items-center justify-center gap-1.5 bg-black hover:bg-zinc-800 text-white text-sm font-bold px-4 py-3 rounded-xl transition-colors"
-      >
-        <TikTokIcon className="h-3.5 w-3.5" />
-        {isOpening ? "Opening TikTok…" : "Shop on TikTok"}
-        {!isOpening && <ExternalLink className="h-3 w-3 opacity-60" />}
-      </a>
-    </motion.article>
-  );
-}
-
-/* ─── Amazon Card ────────────────────────────────────────── */
-
-function AmazonCard({ product, index }: { product: AffiliateProduct; index: number }) {
-  const [isOpening, setIsOpening] = useState(false);
-
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.35, delay: index * 0.04 }}
-      className="flex flex-col bg-white rounded-2xl border border-stone-100 overflow-hidden"
-    >
-      {/* Image area */}
-      <div className="relative aspect-square bg-stone-50 overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center px-5 text-center">
-          <p className="text-sm font-semibold text-stone-200 leading-snug">{product.name}</p>
-        </div>
-        <span className="absolute top-3 right-3 bg-white/90 text-xs font-bold uppercase tracking-wide text-stone-500 px-2 py-0.5 rounded-full">
-          {product.visualLabel}
-        </span>
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-col flex-1 p-4 gap-1.5">
-        <p className="type-kicker text-[#059669]">{product.category}</p>
-        <p className="font-semibold text-ink leading-snug">{product.name}</p>
-        <p className="type-caption text-stone-400 italic line-clamp-2 flex-1">
-          &ldquo;{product.caption}&rdquo;
-        </p>
-        <p className="text-sm font-bold text-[#1e3a8a] mt-1">{product.price}</p>
-      </div>
-
-      {/* Full-width CTA pinned to bottom */}
-      <a
-        href={product.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => { setIsOpening(true); setTimeout(() => setIsOpening(false), 1600); }}
-        aria-busy={isOpening}
-        className="mx-4 mb-4 flex items-center justify-center gap-1.5 bg-[#f59e0b] hover:bg-[#d97706] text-white text-sm font-bold px-4 py-3 rounded-xl transition-colors"
-      >
-        <AmazonIcon className="h-3.5 w-3.5" />
-        {isOpening ? "Opening…" : "Get it on Amazon"}
-        {!isOpening && <ExternalLink className="h-3 w-3 opacity-60" />}
-      </a>
-    </motion.article>
-  );
-}
 
 /* ─── Merch Card ─────────────────────────────────────────── */
 
@@ -298,13 +176,64 @@ function SectionHeader({ title, accent, description }: { title: string; accent: 
   );
 }
 
-/* ─── Horizontal carousel shell ─────────────────────────── */
+/* ─── Coming Soon Panel ──────────────────────────────────── */
 
-function CardRow({ children }: { children: React.ReactNode }) {
+function ComingSoonPanel() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    setSubmitted(true);
+  };
+
   return (
-    <div className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0">
-      {children}
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="rounded-2xl overflow-hidden"
+      style={{ background: "linear-gradient(135deg, #1a3a5c 0%, #1e5f8a 50%, #d4622a 100%)" }}
+    >
+      <div className="px-8 py-16 md:py-20 text-center max-w-lg mx-auto">
+        <span className="inline-flex items-center gap-1.5 bg-white/10 text-white/80 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-6">
+          <Sparkles className="h-3 w-3" />
+          More drops incoming
+        </span>
+        <h2 className="type-section-title text-white mb-3">
+          Curated finds.{" "}
+          <em className="font-serif italic font-light text-[#f59e0b]">Coming soon.</em>
+        </h2>
+        <p className="type-body text-blue-100/70 mb-8">
+          Yolanda&apos;s hand-picked TikTok and Amazon travel essentials are on their way. Be the first to know when they drop.
+        </p>
+        {submitted ? (
+          <div className="flex items-center justify-center gap-2 bg-white/10 text-white font-semibold px-6 py-3 rounded-xl">
+            <ShieldCheck className="h-4 w-4 text-[#f59e0b]" />
+            You&apos;re on the list — we&apos;ll be in touch!
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="your@email.com"
+              className="flex-1 bg-white/10 border border-white/20 text-white placeholder:text-white/40 px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-white/50 transition-colors"
+            />
+            <button
+              type="submit"
+              className="flex items-center justify-center gap-2 bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors whitespace-nowrap"
+            >
+              Notify Me <ArrowRight className="h-3.5 w-3.5" />
+            </button>
+          </form>
+        )}
+      </div>
+    </motion.div>
   );
 }
 
@@ -384,19 +313,12 @@ export default function ShopPage() {
               <div>
                 <p className="type-kicker text-[#E87722] mb-1">Shop Transparency</p>
                 <p className="type-caption text-stone-600 max-w-2xl">
-                  A clear split between recommended finds and official Travelholics merch. Some links on this page may be affiliate links, which means Travelholics may earn a commission if you purchase through them. Affiliate purchases are handled by the outside retailer. Official Travelholics merch is sold through this site using secure Stripe checkout.
+                  Official Travelholics merch is sold through this site using secure Stripe checkout. Curated affiliate finds — TikTok Shop and Amazon — are coming soon.
                 </p>
               </div>
             </div>
-            {/* Three-column breakdown */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-              <div className="flex gap-3">
-                <Tag className="h-4 w-4 text-[#059669] flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Affiliate recommendations</p>
-                  <p className="type-caption text-stone-500">For any Amazon or TikTok product, you&apos;ll be sent to an outside retailer. Their prices, availability, shipping, and return policies are controlled by that retailer.</p>
-                </div>
-              </div>
+            {/* Two-column breakdown */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
               <div className="flex gap-3">
                 <ShieldCheck className="h-4 w-4 text-[#059669] flex-shrink-0 mt-0.5" />
                 <div>
@@ -408,7 +330,7 @@ export default function ShopPage() {
                 <HelpCircle className="h-4 w-4 text-[#059669] flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-semibold text-ink mb-1">Need help with an order?</p>
-                  <p className="type-caption text-stone-500">For official merch questions, use the site contact form. For affiliate purchases, contact the retailer where the item was purchased.</p>
+                  <p className="type-caption text-stone-500">For merch questions, use the site contact form.</p>
                 </div>
               </div>
             </div>
@@ -420,9 +342,8 @@ export default function ShopPage() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex gap-1 overflow-x-auto py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {[
-                { id: "tiktok-shop", label: "TikTok Shop" },
-                { id: "amazon-finds", label: "Amazon Finds" },
                 { id: "official-merch", label: "Merch" },
+                { id: "more-drops", label: "More Drops" },
               ].map((tab) => (
                 <a
                   key={tab.id}
@@ -435,57 +356,6 @@ export default function ShopPage() {
             </div>
           </div>
         </div>
-
-        {/* ── TikTok Shop ──────────────────────────────────── */}
-        <section id="tiktok-shop" className="py-16 px-6">
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              title="Cruise-tested"
-              accent="picks."
-              description="Items Yolanda keeps talking about because they genuinely make the trip easier."
-            />
-            <p className="type-caption italic text-stone-400 mb-6 text-center">
-              Affiliate links may earn Travelholics a small commission at no extra cost to you. You&apos;ll be sent to TikTok Shop to complete your purchase.
-            </p>
-            <CardRow>
-              {TIKTOK_PRODUCTS.map((p, i) => (
-                <div key={p.id} className="w-[78vw] max-w-[280px] shrink-0 snap-start md:w-[280px]">
-                  <TikTokCard product={p} index={i} />
-                </div>
-              ))}
-            </CardRow>
-          </div>
-        </section>
-
-        <div className="max-w-6xl mx-auto px-6"><div className="border-t border-stone-200" /></div>
-
-        {/* ── Amazon Finds ─────────────────────────────────── */}
-        <section id="amazon-finds" className="py-16 px-6 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              title="Curated Amazon"
-              accent="finds."
-              description="Travel essentials, style on the go, and the everyday carries Yolanda actually reaches for."
-            />
-            <p className="type-caption italic text-stone-400 mb-6 text-center">
-              Amazon links may be affiliate links. Product prices, availability, shipping, and return options are controlled by Amazon or the listed seller and may change after you leave Travelholics.
-            </p>
-            <CardRow>
-              {AMAZON_PRODUCTS.map((p, i) => (
-                <div key={p.id} className="w-[72vw] max-w-[260px] shrink-0 snap-start md:w-[260px]">
-                  <AmazonCard product={p} index={i} />
-                </div>
-              ))}
-            </CardRow>
-          </div>
-        </section>
-
-        {/* ── Interstitial ─────────────────────────────────── */}
-        <div
-          className="h-48 md:h-64 w-full"
-          style={{ background: "linear-gradient(135deg, #1a3a5c 0%, #1e5f8a 50%, #d4622a 100%)" }}
-          aria-hidden="true"
-        />
 
         {/* ── Official Merch ───────────────────────────────── */}
         <section id="official-merch" className="py-16 px-6">
@@ -545,6 +415,13 @@ export default function ShopPage() {
                 />
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ── Coming Soon ──────────────────────────────────── */}
+        <section id="more-drops" className="py-16 px-6">
+          <div className="max-w-6xl mx-auto">
+            <ComingSoonPanel />
           </div>
         </section>
 
