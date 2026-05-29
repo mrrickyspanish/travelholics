@@ -352,26 +352,31 @@ export default function ShopPage() {
 
         {/* ── Hero ─────────────────────────────────────────── */}
         <section
-          className="pt-32 pb-16 px-6"
-          style={{ background: "linear-gradient(135deg, #1a3a5c 0%, #1e5f8a 40%, #d4622a 75%, #E87722 100%)" }}
+          className="pt-32 pb-16 px-6 bg-cover bg-center min-h-[470px] md:min-h-[610px] lg:min-h-[750px] flex items-end mt-14"
+          style={{ backgroundImage: "url('/images/travelholic_shop_hero.png')" }}
         >
           <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="max-w-2xl"
-            >
-              <h1 className="type-page-title text-white mb-4">
-                What I use.<br />
-                <span className="font-serif italic font-light text-[#f59e0b]">What I love.</span>
-              </h1>
-              <p className="type-body-lg text-blue-100/75 max-w-lg">
-                20 years of cruise experience distilled into the things I actually reach for — plus the brand we built for travelers like you.
-              </p>
-            </motion.div>
+            {/* Hero image only, headline moved below */}
           </div>
         </section>
+
+        {/* Headline and description below hero image */}
+        <div className="max-w-6xl mx-auto px-6 mt-10 mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-2xl"
+          >
+            <h1 className="type-page-title text-ink mb-4">
+              What I use.<br />
+              <span className="font-serif italic font-light text-[#f59e0b]">What I love.</span>
+            </h1>
+            <p className="type-body-lg text-stone-700 max-w-lg">
+              20 years of cruise experience distilled into the things I actually reach for — plus the brand we built for travelers like you.
+            </p>
+          </motion.div>
+        </div>
 
         {/* ── Shop Transparency Disclosure ─────────────────── */}
         <div className="bg-white border-b border-stone-200">
