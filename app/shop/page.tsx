@@ -261,6 +261,8 @@ export default function ShopComingSoon() {
           .lb-row-1 .lb-card,.lb-row-2 .lb-card,.lb-row-3 .lb-card{height:280px}
           .lb-row-1 .lb-card img,.lb-row-2 .lb-card img,.lb-row-3 .lb-card img{height:280px}
           .lb-shop-card{height:auto}
+          .lb-couple-tees img{object-position:center 20%}
+          .lb-cruise-magnet img{object-position:center 10%}
           .cs-available{padding:60px 24px}
           .cs-magnet-grid{grid-template-columns:1fr}
           .cs-notify{grid-template-columns:1fr;gap:48px;padding:72px 24px}
@@ -323,10 +325,14 @@ export default function ShopComingSoon() {
                   <div className="cs-scroll-line" />
                   <span className="cs-scroll-label">Scroll</span>
                 </div>
-                <a href="#lookbook" className="coming-soon-cta" style={{ marginTop: 20, display: "inline-flex" }}>
+                <button
+                  className="coming-soon-cta"
+                  style={{ marginTop: 20, display: "inline-flex" }}
+                  onClick={() => document.getElementById("lookbook")?.scrollIntoView({ behavior: "smooth" })}
+                >
                   <span>Explore the Look Book</span>
                   <span className="cta-arrow" aria-hidden />
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -360,8 +366,8 @@ export default function ShopComingSoon() {
               </div>
               <div className="lb-num">01</div>
             </div>
-            <div className="lb-card">
-              <Image src="/images/travelholics_lifestyle_couple-beach-tees.png" alt="Couple Beach Tees" width={600} height={560} style={{ height: 560, objectFit: "cover" }} />
+            <div className="lb-card lb-couple-tees">
+              <Image src="/images/travelholics_lifestyle_couple-beach-tees.png" alt="Couple Beach Tees" width={600} height={560} style={{ height: 560, objectFit: "cover", objectPosition: "center 30%" }} />
               <div className="lb-overlay">
                 <div className="lb-overlay-tag">Lifestyle</div>
                 <div className="lb-overlay-title">Couple Beach<br />Tees</div>
@@ -386,7 +392,7 @@ export default function ShopComingSoon() {
               </div>
               <div className="lb-num">02</div>
             </div>
-            <div className="lb-card lb-shop-card">
+            <div className="lb-card lb-shop-card lb-cruise-magnet">
               <Image src="/images/travelholics_product_cruise-life-magnet-on-journal.png" alt="Cruise Life Door Magnet" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
               <div className="lb-shop-overlay">
                 <span className="lb-shop-available-badge">Available Now</span>
@@ -414,10 +420,10 @@ export default function ShopComingSoon() {
               <div className="lb-text-body">Limited run. Built for the traveler who already knows where they&apos;re going next.</div>
             </div>
             <div className="lb-card">
-              <Image src="/images/about-on-deck.jpg" alt="Sunset deck selfie" width={600} height={400} style={{ height: 400, objectFit: "cover" }} />
+              <Image src="/images/travelholics_product_navy-duffel-bag.png" alt="Navy Duffel Bag" width={600} height={400} style={{ height: 400, objectFit: "cover", objectPosition: "center top" }} />
               <div className="lb-overlay">
-                <div className="lb-overlay-tag">Lifestyle</div>
-                <div className="lb-overlay-title">Port Day<br />Essentials</div>
+                <div className="lb-overlay-tag">Drop 01</div>
+                <div className="lb-overlay-title">Navy<br />Duffel Bag</div>
               </div>
               <div className="lb-num">03</div>
             </div>
