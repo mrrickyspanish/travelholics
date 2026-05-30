@@ -278,8 +278,7 @@ export default function ShopComingSoon() {
             </div>
             <div className="cs-hero-bottom">
               <p className="cs-hero-sub">
-                Curated gear for the traveler who lives in the experience.<br />
-                No filler. Just the essentials.
+                Curated gear for the traveler who lives in the experience. No filler. Just the essentials.
               </p>
               <div style={{ textAlign: "right" }}>
                 <div className="cs-scroll-hint">
@@ -375,7 +374,7 @@ export default function ShopComingSoon() {
             </div>
             <div className="lb-card lb-text-card" style={{ height: 400 }}>
               <div className="lb-text-eyebrow">Travelholics · Drop 01</div>
-              <div className="lb-text-title">&ldquo;Pack like you&apos;ve<br />been here<br />before.&rdquo;</div>
+              <div className="lb-text-title">&ldquo;Pack like you&apos;ve<br />been here before.&rdquo;</div>
               <div className="lb-text-body">Designed for travelers who skip the tourist traps and know exactly where they&apos;re going.</div>
             </div>
             <div className="lb-card">
