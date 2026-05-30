@@ -341,18 +341,18 @@ export default function ShopComingSoon() {
           {/* Row 1: wide + portrait */}
           <div className="lb-row-1">
             <div className="lb-card">
-              <Image src="/images/about-port-of-call.jpg" alt="Santorini golden hour" width={1200} height={560} style={{ height: 560, objectFit: "cover" }} />
+              <Image src="/images/travelholics_lifestyle_canvas-tote-portside.png" alt="Canvas Tote Portside" width={1200} height={560} style={{ height: 560, objectFit: "cover" }} />
               <div className="lb-overlay">
                 <div className="lb-overlay-tag">Lifestyle</div>
-                <div className="lb-overlay-title">Open Waters,<br />Golden Hour</div>
+                <div className="lb-overlay-title">Canvas Tote<br />Portside</div>
               </div>
               <div className="lb-num">01</div>
             </div>
             <div className="lb-card">
-              <Image src="/images/hero-yolanda.jpg" alt="Ship interior editorial" width={600} height={560} style={{ height: 560, objectFit: "cover" }} />
+              <Image src="/images/travelholics_lifestyle_couple-beach-tees.png" alt="Couple Beach Tees" width={600} height={560} style={{ height: 560, objectFit: "cover" }} />
               <div className="lb-overlay">
-                <div className="lb-overlay-tag">Editorial</div>
-                <div className="lb-overlay-title">The Balcony<br />Moment</div>
+                <div className="lb-overlay-tag">Lifestyle</div>
+                <div className="lb-overlay-title">Couple Beach<br />Tees</div>
               </div>
             </div>
           </div>
@@ -360,25 +360,25 @@ export default function ShopComingSoon() {
           {/* Row 2: three columns */}
           <div className="lb-row-2">
             <div className="lb-card">
-              <Image src="/images/dest-caribbean.jpg" alt="Caribbean sunset" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
+              <Image src="/images/travelholics_lifestyle_linen-shirt-cruise-deck.png" alt="Linen Shirt Cruise Deck" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
               <div className="lb-overlay">
-                <div className="lb-overlay-tag">Colorway</div>
-                <div className="lb-overlay-title">Terracotta<br />Sundown</div>
+                <div className="lb-overlay-tag">Lifestyle</div>
+                <div className="lb-overlay-title">Linen Shirt<br />Cruise Deck</div>
               </div>
             </div>
             <div className="lb-card">
-              <Image src="/images/why-custom-planning.jpg" alt="Elegant couple on deck" width={800} height={380} style={{ height: 380, objectFit: "cover" }} />
+              <Image src="/images/travelholics_lifestyle_compass-tee-backview.png" alt="Compass Tee Backview" width={800} height={380} style={{ height: 380, objectFit: "cover" }} />
               <div className="lb-overlay">
-                <div className="lb-overlay-tag">Inspo</div>
-                <div className="lb-overlay-title">Deck Life,<br />Always</div>
+                <div className="lb-overlay-tag">Lifestyle</div>
+                <div className="lb-overlay-title">Compass Tee<br />Backview</div>
               </div>
               <div className="lb-num">02</div>
             </div>
             <div className="lb-card">
-              <Image src="/images/dest-mediterranean.jpg" alt="Mediterranean, Parthenon" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
+              <Image src="/images/travelholics_lifestyle_tote.png" alt="Lifestyle Tote" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
               <div className="lb-overlay">
-                <div className="lb-overlay-tag">Colorway</div>
-                <div className="lb-overlay-title">Deep<br />Ocean</div>
+                <div className="lb-overlay-tag">Lifestyle</div>
+                <div className="lb-overlay-title">Lifestyle<br />Tote</div>
               </div>
             </div>
           </div>

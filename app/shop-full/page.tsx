@@ -9,6 +9,7 @@ import { ArrowRight, ExternalLink, HelpCircle, Minus, Plus, ShieldCheck, Tag } f
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { RippleButton } from "@/components/ripple-button";
+import { ShopHeroHeadline } from "@/components/ShopHeroHeadline";
 import {
   AMAZON_PRODUCTS,
   MERCH_PRODUCTS,
@@ -362,63 +363,9 @@ export default function ShopPage() {
 
         {/* Headline and description below hero image */}
         <div className="max-w-6xl mx-auto px-6 mt-10 mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-2xl"
-          >
-            <h1 className="type-page-title text-ink mb-4">
-              What I use.<br />
-              <span className="font-serif italic font-light text-[#f59e0b]">What I love.</span>
-            </h1>
-            <p className="type-body-lg text-stone-700 max-w-lg">
-              20 years of cruise experience distilled into the things I actually reach for — plus the brand we built for travelers like you.
-            </p>
-          </motion.div>
+          <ShopHeroHeadline />
         </div>
 
-        {/* ── Shop Transparency Disclosure ─────────────────── */}
-        <div className="bg-white border-b border-stone-200">
-          <div className="max-w-6xl mx-auto px-6 py-6">
-            {/* Header */}
-            <div className="flex items-start gap-3 mb-4">
-              <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-[#E87722] flex items-center justify-center">
-                <Tag className="h-2.5 w-2.5 text-white" />
-              </span>
-              <div>
-                <p className="type-kicker text-[#E87722] mb-1">Shop Transparency</p>
-                <p className="type-caption text-stone-600 max-w-2xl">
-                  A clear split between recommended finds and official Travelholics merch. Some links on this page may be affiliate links, which means Travelholics may earn a commission if you purchase through them. Affiliate purchases are handled by the outside retailer. Official Travelholics merch is sold through this site using secure Stripe checkout.
-                </p>
-              </div>
-            </div>
-            {/* Three-column breakdown */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-              <div className="flex gap-3">
-                <Tag className="h-4 w-4 text-[#059669] flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Affiliate recommendations</p>
-                  <p className="type-caption text-stone-500">For any Amazon or TikTok product, you&apos;ll be sent to an outside retailer. Their prices, availability, shipping, and return policies are controlled by that retailer.</p>
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <ShieldCheck className="h-4 w-4 text-[#059669] flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Official merch checkout</p>
-                  <p className="type-caption text-stone-500">Travelholics products are sold through Stripe checkout. Final shipping, timelines, taxes, and fulfillment status are confirmed during checkout or in follow-up order communication.</p>
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <HelpCircle className="h-4 w-4 text-[#059669] flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Need help with an order?</p>
-                  <p className="type-caption text-stone-500">For official merch questions, use the site contact form. For affiliate purchases, contact the retailer where the item was purchased.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* ── Sticky tab bar ───────────────────────────────── */}
         <div className="sticky top-[44px] z-30 bg-white border-b border-stone-200 shadow-sm">
