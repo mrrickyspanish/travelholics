@@ -129,7 +129,7 @@ export default function ShopComingSoon() {
     <>
       {/* ── Scoped styles ──────────────────────────────────── */}
       <style>{`
-        .cs-page { background: #111010; color: #F4EFE8; font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
+        .cs-page { background: #111010; color: #F4EFE8; font-family: 'Jost', sans-serif; font-weight: 400; overflow-x: hidden; cursor: none; }
         .cs-cursor { width:10px;height:10px;border-radius:50%;background:#C05C2E;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:width .3s,height .3s,background .3s;transform:translate(-50%,-50%); }
         .cs-ring { width:36px;height:36px;border-radius:50%;border:1px solid rgba(244,239,232,.4);position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s; }
         .cs-page a:hover ~ .cs-cursor, .cs-page button:hover ~ .cs-cursor { width:18px;height:18px;background:#A8865A; }
@@ -149,7 +149,7 @@ export default function ShopComingSoon() {
         .cs-title { font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,14vw,15rem);line-height:.88;letter-spacing:.01em;color:#F4EFE8;margin-bottom:0;opacity:0;animation:csUp 1s .5s forwards; }
         .cs-outlined { -webkit-text-stroke:1.5px #F4EFE8;color:transparent;font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,14vw,15rem);line-height:.88; }
         .cs-hero-bottom { display:flex;align-items:flex-end;justify-content:space-between;margin-top:40px;opacity:0;animation:csUp 1s .9s forwards; }
-        .cs-hero-sub { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,1.4vw,1.3rem);font-weight:300;color:rgba(244,239,232,.75);max-width:320px;line-height:1.6; }
+        .cs-hero-sub { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.05rem,1.4vw,1.3rem);font-weight:400;color:rgba(244,239,232,.85);max-width:320px;line-height:1.65; }
 
         .coming-soon-cta { display:inline-flex;align-items:center;gap:14px;font-family:'Jost',sans-serif;font-size:.65rem;font-weight:400;letter-spacing:.25em;text-transform:uppercase;color:#F4EFE8;background:none;border:1px solid rgba(244,239,232,.35);padding:16px 28px;cursor:none;text-decoration:none;transition:border-color .4s,background .4s;position:relative;overflow:hidden; }
         .coming-soon-cta::before { content:'';position:absolute;inset:0;background:#C05C2E;transform:scaleX(0);transform-origin:left;transition:transform .4s ease;z-index:0; }
@@ -165,14 +165,14 @@ export default function ShopComingSoon() {
         .cs-scroll-label { font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(244,239,232,.4); }
 
         .cs-strip { background:#F4EFE8;padding:28px 52px;display:flex;align-items:center;justify-content:space-between; }
-        .cs-strip-text { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:#111010;opacity:.5; }
+        .cs-strip-text { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:#111010;opacity:.7; }
         .cs-strip-label { font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:#C05C2E; }
 
         .cs-lookbook { background:#F4EFE8;padding:80px 0 0; }
         .cs-lb-head { padding:0 52px 64px;display:flex;align-items:flex-end;justify-content:space-between; }
         .cs-lb-head h2 { font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,7rem);line-height:.9;color:#111010; }
         .cs-lb-head h2 em { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.55em;display:block;color:#C05C2E;font-weight:300;letter-spacing:.05em;margin-bottom:8px; }
-        .cs-lb-copy { max-width:280px;font-size:.75rem;line-height:1.9;color:rgba(17,16,16,.5);letter-spacing:.03em; }
+        .cs-lb-copy { max-width:280px;font-size:.875rem;line-height:1.85;color:rgba(17,16,16,.65);letter-spacing:.02em; }
 
         .lb-row-1 { display:grid;grid-template-columns:2fr 1fr;gap:4px;margin-bottom:4px; }
         .lb-row-2 { display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:4px;margin-bottom:4px; }
@@ -190,12 +190,14 @@ export default function ShopComingSoon() {
         .lb-text-card { background:#1C3A4A;display:flex;flex-direction:column;justify-content:flex-end;padding:36px; }
         .lb-text-eyebrow { font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:#A8865A;margin-bottom:16px; }
         .lb-text-title { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;font-weight:300;color:#F4EFE8;line-height:1.3;margin-bottom:20px; }
-        .lb-text-body { font-size:.7rem;line-height:1.8;color:rgba(244,239,232,.55);letter-spacing:.03em; }
+        .lb-text-body { font-size:.875rem;line-height:1.8;color:rgba(244,239,232,.7);letter-spacing:.02em; }
 
         /* Lookbook shop card */
-        .lb-shop-overlay { position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:28px 32px;background:linear-gradient(to top,rgba(17,16,16,.72) 0%,rgba(17,16,16,.1) 55%,transparent 100%);opacity:1; }
-        .lb-shop-overlay-price { font-family:'Jost',sans-serif;font-size:.6rem;font-weight:300;letter-spacing:.12em;color:#A8865A;margin:4px 0 10px; }
-        .lb-shop-card .coming-soon-cta { font-size:.5rem;padding:8px 14px;border-color:rgba(244,239,232,.35);color:#F4EFE8;gap:8px; }
+        .lb-shop-overlay { position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 28px;background:linear-gradient(to top,rgba(17,16,16,.88) 0%,rgba(17,16,16,.3) 50%,transparent 100%);opacity:1; }
+        .lb-shop-available-badge { display:inline-block;background:#C05C2E;color:#F4EFE8;font-family:'Jost',sans-serif;font-size:.5rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;padding:4px 10px;border-radius:2px;margin-bottom:8px;align-self:flex-start; }
+        .lb-shop-overlay .lb-overlay-title { font-size:1.2rem; }
+        .lb-shop-overlay-price { font-family:'Jost',sans-serif;font-size:.75rem;font-weight:400;letter-spacing:.1em;color:#A8865A;margin:4px 0 12px; }
+        .lb-shop-card .coming-soon-cta { font-size:.55rem;padding:10px 16px;border-color:rgba(244,239,232,.6);color:#F4EFE8;gap:8px; }
         .lb-shop-card .coming-soon-cta::before { background:#C05C2E; }
         .lb-shop-card .coming-soon-cta:hover { border-color:#C05C2E; }
         .lb-shop-card .cta-arrow { background:currentColor; }
@@ -224,9 +226,9 @@ export default function ShopComingSoon() {
         /* Notify */
         .cs-notify { background:#111010;padding:100px 52px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-top:1px solid rgba(244,239,232,.08); }
         .cs-notify-left h3 { font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,5.5rem);line-height:.9;color:#F4EFE8;margin-bottom:24px; }
-        .cs-notify-left p { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(244,239,232,.4);line-height:1.7;max-width:340px; }
-        .cs-notify-input { background:none;border:none;border-bottom:1px solid rgba(244,239,232,.18);padding:18px 0;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:300;letter-spacing:.05em;color:#F4EFE8;outline:none;transition:border-color .3s;width:100%; }
-        .cs-notify-input::placeholder { color:rgba(244,239,232,.25); }
+        .cs-notify-left p { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:rgba(244,239,232,.62);line-height:1.75;max-width:340px; }
+        .cs-notify-input { background:none;border:none;border-bottom:1px solid rgba(244,239,232,.25);padding:18px 0;font-family:'Jost',sans-serif;font-size:.9rem;font-weight:400;letter-spacing:.04em;color:#F4EFE8;outline:none;transition:border-color .3s;width:100%; }
+        .cs-notify-input::placeholder { color:rgba(244,239,232,.35); }
         .cs-notify-input:focus { border-color:#C05C2E; }
         .cs-notify-input.err { border-color:#C05C2E; }
         .cs-notify-btn { margin-top:32px;display:inline-flex;align-items:center;gap:16px;background:#F4EFE8;color:#111010;border:none;padding:18px 32px;font-family:'Jost',sans-serif;font-size:.6rem;font-weight:400;letter-spacing:.25em;text-transform:uppercase;cursor:none;align-self:flex-start;transition:background .3s;position:relative;overflow:hidden; }
@@ -234,7 +236,7 @@ export default function ShopComingSoon() {
         .cs-notify-btn:hover::before { transform:scaleX(1); }
         .cs-notify-btn:hover { color:#F4EFE8; }
         .cs-notify-btn span { position:relative;z-index:1; }
-        .cs-notify-note { margin-top:16px;font-size:.58rem;letter-spacing:.08em;color:rgba(244,239,232,.22); }
+        .cs-notify-note { margin-top:16px;font-size:.65rem;letter-spacing:.06em;color:rgba(244,239,232,.38); }
         .cs-notify-success { margin-top:16px;font-size:.65rem;letter-spacing:.1em;color:#C05C2E; }
         .cs-notify-error { margin-top:16px;font-size:.65rem;letter-spacing:.08em;color:#C05C2E; }
 
@@ -387,7 +389,7 @@ export default function ShopComingSoon() {
             <div className="lb-card lb-shop-card">
               <Image src="/images/travelholics_product_cruise-life-magnet-on-journal.png" alt="Cruise Life Door Magnet" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
               <div className="lb-shop-overlay">
-                <div className="lb-overlay-tag">Available Now</div>
+                <span className="lb-shop-available-badge">Available Now</span>
                 <div className="lb-overlay-title">Cruise Life<br /><em style={{ fontStyle: "italic", fontWeight: 300 }}>Door Magnet</em></div>
                 <div className="lb-shop-overlay-price">$19.99</div>
                 <MagnetBuyButton productId="merch-magnet-ticket-pacific" label="Buy Now" />
@@ -400,7 +402,7 @@ export default function ShopComingSoon() {
             <div className="lb-card lb-shop-card">
               <Image src="/images/travelholics_mockup_pacific-mexican-door-magnet.png" alt="Pacific Mexican Door Magnet" width={600} height={400} style={{ height: 400, objectFit: "cover" }} />
               <div className="lb-shop-overlay">
-                <div className="lb-overlay-tag">Available Now</div>
+                <span className="lb-shop-available-badge">Available Now</span>
                 <div className="lb-overlay-title">Pacific Mexican<br /><em style={{ fontStyle: "italic", fontWeight: 300 }}>Door Magnet</em></div>
                 <div className="lb-shop-overlay-price">$19.99</div>
                 <MagnetBuyButton productId="merch-magnet-mexican-pacific" label="Buy Now" />
