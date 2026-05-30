@@ -420,7 +420,7 @@ export default function ShopComingSoon() {
               <div className="lb-text-body">Limited run. Built for the traveler who already knows where they&apos;re going next.</div>
             </div>
             <div className="lb-card">
-              <Image src="/images/travelholics_product_navy-duffel-bag.png" alt="Navy Duffel Bag" width={600} height={400} style={{ height: 400, objectFit: "cover", objectPosition: "center top" }} />
+              <Image src="/images/travelholics_product_navy-duffel-bag.png" alt="Navy Duffel Bag" width={600} height={400} style={{ height: 400, objectFit: "cover", objectPosition: "center bottom" }} />
               <div className="lb-overlay">
                 <div className="lb-overlay-tag">Drop 01</div>
                 <div className="lb-overlay-title">Navy<br />Duffel Bag</div>
