@@ -192,6 +192,21 @@ export default function ShopComingSoon() {
         .lb-text-title { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;font-weight:300;color:#F4EFE8;line-height:1.3;margin-bottom:20px; }
         .lb-text-body { font-size:.7rem;line-height:1.8;color:rgba(244,239,232,.55);letter-spacing:.03em; }
 
+        /* Lookbook shop card */
+        .lb-shop-card { background:#F4EFE8;display:flex;flex-direction:column;padding:28px 24px 24px;height:380px;overflow:hidden; }
+        .lb-shop-eyebrow { font-size:.5rem;letter-spacing:.35em;text-transform:uppercase;color:#C05C2E;margin-bottom:16px; }
+        .lb-shop-items { display:flex;flex-direction:column;flex:1;gap:0; }
+        .lb-shop-item { display:flex;flex-direction:column;flex:1;align-items:flex-start;gap:4px; }
+        .lb-shop-img-wrap { position:relative;width:100%;height:80px;flex-shrink:0; }
+        .lb-shop-name { font-family:'Cormorant Garamond',serif;font-size:.85rem;font-weight:400;line-height:1.25;color:#111010;margin:0; }
+        .lb-shop-name em { font-style:italic;font-weight:300;color:rgba(17,16,16,.55); }
+        .lb-shop-price { font-family:'Jost',sans-serif;font-size:.6rem;font-weight:300;letter-spacing:.12em;color:#A8865A;margin:0; }
+        .lb-shop-divider { height:1px;background:rgba(17,16,16,.1);margin:10px 0; }
+        .lb-shop-card .coming-soon-cta { font-size:.5rem;padding:8px 14px;border-color:rgba(17,16,16,.25);color:#111010;gap:8px;margin-top:4px; }
+        .lb-shop-card .coming-soon-cta::before { background:#C05C2E; }
+        .lb-shop-card .coming-soon-cta:hover { color:#F4EFE8;border-color:#C05C2E; }
+        .lb-shop-card .cta-arrow { background:currentColor; }
+
         /* Available Now */
         .cs-available { background:#111010;padding:80px 52px;border-top:1px solid rgba(244,239,232,.08); }
         .cs-available-head { text-align:center;margin-bottom:56px; }
@@ -250,6 +265,7 @@ export default function ShopComingSoon() {
           .lb-row-1,.lb-row-2,.lb-row-3{grid-template-columns:1fr}
           .lb-row-1 .lb-card,.lb-row-2 .lb-card,.lb-row-3 .lb-card{height:280px}
           .lb-row-1 .lb-card img,.lb-row-2 .lb-card img,.lb-row-3 .lb-card img{height:280px}
+          .lb-shop-card{height:auto}
           .cs-available{padding:60px 24px}
           .cs-magnet-grid{grid-template-columns:1fr}
           .cs-notify{grid-template-columns:1fr;gap:48px;padding:72px 24px}
@@ -375,11 +391,26 @@ export default function ShopComingSoon() {
               </div>
               <div className="lb-num">02</div>
             </div>
-            <div className="lb-card">
-              <Image src="/images/travelholics_lifestyle_tote.png" alt="Lifestyle Tote" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
-              <div className="lb-overlay">
-                <div className="lb-overlay-tag">Lifestyle</div>
-                <div className="lb-overlay-title">Lifestyle<br />Tote</div>
+            <div className="lb-shop-card">
+              <div className="lb-shop-eyebrow">Available Now</div>
+              <div className="lb-shop-items">
+                <div className="lb-shop-item">
+                  <div className="lb-shop-img-wrap">
+                    <Image src="/images/travelholic_ticket_magnent_pacific.png" alt="Cruise Ticket Door Magnet" fill className="object-contain" />
+                  </div>
+                  <p className="lb-shop-name">Cruise Ticket<br /><em>Door Magnet</em></p>
+                  <p className="lb-shop-price">$19.99</p>
+                  <MagnetBuyButton productId="merch-magnet-ticket-pacific" label="Buy Now" />
+                </div>
+                <div className="lb-shop-divider" />
+                <div className="lb-shop-item">
+                  <div className="lb-shop-img-wrap">
+                    <Image src="/images/pacific_mexican_door_magnent.png" alt="Pacific Mexican Door Magnet" fill className="object-contain" />
+                  </div>
+                  <p className="lb-shop-name">Pacific Mexican<br /><em>Door Magnet</em></p>
+                  <p className="lb-shop-price">$19.99</p>
+                  <MagnetBuyButton productId="merch-magnet-mexican-pacific" label="Buy Now" />
+                </div>
               </div>
             </div>
           </div>
@@ -427,46 +458,6 @@ export default function ShopComingSoon() {
           </div>
         </section>
 
-        {/* ── Available Now (the 2 magnets) ──────────────────── */}
-        <section className="cs-available cs-reveal">
-          <div className="cs-available-head">
-            <p className="cs-available-kicker">Available Now</p>
-            <h2 className="cs-available-title">
-              Shop the <em>originals.</em>
-            </h2>
-            <p className="cs-available-sub">
-              Two designs. Ready to ship. Your stateroom door is waiting.
-            </p>
-          </div>
-          <div className="cs-magnet-grid">
-            {/* Magnet 1 */}
-            <div className="cs-magnet-card">
-              <div className="cs-magnet-img">
-                <Image src="/images/travelholic_ticket_magnent_pacific.png" alt="Cruise Ticket Door Magnet" fill className="object-contain p-6" />
-              </div>
-              <div className="cs-magnet-body">
-                <span className="cs-magnet-badge">Cruise Life</span>
-                <p className="cs-magnet-name">Cruise Ticket<br />Door Magnet</p>
-                <p className="cs-magnet-desc">The collectible Travelholics Cruise Life ticket magnet featured in the Pacific duck hunt. Grab one for your next sailing.</p>
-                <p className="cs-magnet-price">$19.99</p>
-              </div>
-              <MagnetBuyButton productId="merch-magnet-ticket-pacific" label="Buy Now" />
-            </div>
-            {/* Magnet 2 */}
-            <div className="cs-magnet-card">
-              <div className="cs-magnet-img">
-                <Image src="/images/pacific_mexican_door_magnent.png" alt="Pacific Mexican Door Magnet" fill className="object-contain p-6" />
-              </div>
-              <div className="cs-magnet-body">
-                <span className="cs-magnet-badge">Original</span>
-                <p className="cs-magnet-name">Pacific Mexican<br />Door Magnet</p>
-                <p className="cs-magnet-desc">The original Pacific Mexican-style cruise magnet design. Built to pop on your stateroom door.</p>
-                <p className="cs-magnet-price">$19.99</p>
-              </div>
-              <MagnetBuyButton productId="merch-magnet-mexican-pacific" label="Buy Now" />
-            </div>
-          </div>
-        </section>
 
         {/* ── Notify ─────────────────────────────────────────── */}
         <section className="cs-notify" id="notify">
