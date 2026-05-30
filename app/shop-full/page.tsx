@@ -349,11 +349,11 @@ export default function ShopPage() {
   return (
     <>
       <ShopHeader />
-      <main className="min-h-screen bg-[#FAF9F6]">
+      <main className="min-h-screen bg-[#FAF9F6] mt-28 md:mt-[152px]">
 
         {/* ── Hero ─────────────────────────────────────────── */}
         <section
-          className="pt-32 pb-16 px-6 bg-cover bg-center min-h-[470px] md:min-h-[610px] lg:min-h-[750px] flex items-end mt-14"
+          className="pt-32 pb-16 px-6 bg-cover bg-center min-h-[470px] md:min-h-[610px] lg:min-h-[750px] flex items-end"
           style={{ backgroundImage: "url('/images/travelholic_shop_hero.png')" }}
         >
           <div className="max-w-6xl mx-auto">
@@ -367,26 +367,6 @@ export default function ShopPage() {
         </div>
 
 
-        {/* ── Sticky tab bar ───────────────────────────────── */}
-        <div className="sticky top-[44px] z-30 bg-white border-b border-stone-200 shadow-sm">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="flex gap-1 overflow-x-auto py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {[
-                { id: "tiktok-shop", label: "TikTok Shop" },
-                { id: "amazon-finds", label: "Amazon Finds" },
-                { id: "official-merch", label: "Merch" },
-              ].map((tab) => (
-                <a
-                  key={tab.id}
-                  href={`#${tab.id}`}
-                  className="whitespace-nowrap text-sm font-semibold px-4 py-1.5 rounded-full text-stone-400 hover:text-ink hover:bg-stone-100 transition-colors"
-                >
-                  {tab.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
 
         {/* ── TikTok Shop ──────────────────────────────────── */}
         <section id="tiktok-shop" className="py-16 px-6">

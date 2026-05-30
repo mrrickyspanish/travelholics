@@ -124,7 +124,7 @@ export const Header = () => {
             </Link>
             <a
               href="/#contact"
-              className="font-serif text-[1.1rem] tracking-wide font-bold text-emerald-mid hover:underline hover:text-coral transition-colors duration-200 hidden sm:inline-block"
+              className="font-serif text-[1.1rem] tracking-wide font-bold text-royal-deep hover:underline hover:text-coral transition-colors duration-200 hidden sm:inline-block"
             >
               Join the Crew
             </a>
@@ -170,7 +170,7 @@ export const Header = () => {
                 />
               </Link>
               {/* CTA - emerald */}
-              <a href="/#contact" className="px-6 py-3 text-base font-semibold text-emerald-mid hover:text-emerald-dark focus-visible:underline focus-visible:outline-none transition-colors">
+              <a href="/#contact" className="px-6 py-3 text-base font-semibold text-royal-deep hover:text-emerald-dark focus-visible:underline focus-visible:outline-none transition-colors">
                 Join the Crew
               </a>
             </div>
