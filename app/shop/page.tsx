@@ -193,12 +193,12 @@ export default function ShopComingSoon() {
         .lb-text-body { font-size:.7rem;line-height:1.8;color:rgba(244,239,232,.55);letter-spacing:.03em; }
 
         /* Available Now */
-        .cs-available { background:#F4EFE8;padding:80px 52px; }
+        .cs-available { background:#111010;padding:80px 52px;border-top:1px solid rgba(244,239,232,.08); }
         .cs-available-head { text-align:center;margin-bottom:56px; }
         .cs-available-kicker { font-size:.55rem;letter-spacing:.4em;text-transform:uppercase;color:#C05C2E;margin-bottom:16px; }
-        .cs-available-title { font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,5rem);line-height:.9;color:#111010; }
-        .cs-available-title em { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.6em;color:#1C3A4A;font-weight:300; }
-        .cs-available-sub { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(17,16,16,.45);margin-top:16px; }
+        .cs-available-title { font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,5rem);line-height:.9;color:#F4EFE8; }
+        .cs-available-title em { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.6em;color:#A8865A;font-weight:300; }
+        .cs-available-sub { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(244,239,232,.35);margin-top:16px; }
         .cs-magnet-grid { display:grid;grid-template-columns:1fr 1fr;gap:4px;max-width:800px;margin:0 auto; }
         .cs-magnet-card { background:#111010;overflow:hidden;display:flex;flex-direction:column; }
         .cs-magnet-img { position:relative;aspect-ratio:1;background:#1a1a1a; }
@@ -214,18 +214,19 @@ export default function ShopComingSoon() {
         .cs-magnet-cta span { position:relative;z-index:1; }
 
         /* Notify */
-        .cs-notify { background:#F4EFE8;padding:100px 52px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center; }
-        .cs-notify-left h3 { font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,5.5rem);line-height:.9;color:#111010;margin-bottom:24px; }
-        .cs-notify-left p { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(17,16,16,.45);line-height:1.7;max-width:340px; }
-        .cs-notify-input { background:none;border:none;border-bottom:1px solid rgba(17,16,16,.2);padding:18px 0;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:300;letter-spacing:.05em;color:#111010;outline:none;transition:border-color .3s;width:100%; }
-        .cs-notify-input::placeholder { color:rgba(17,16,16,.3); }
+        .cs-notify { background:#111010;padding:100px 52px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-top:1px solid rgba(244,239,232,.08); }
+        .cs-notify-left h3 { font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,5.5rem);line-height:.9;color:#F4EFE8;margin-bottom:24px; }
+        .cs-notify-left p { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(244,239,232,.4);line-height:1.7;max-width:340px; }
+        .cs-notify-input { background:none;border:none;border-bottom:1px solid rgba(244,239,232,.18);padding:18px 0;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:300;letter-spacing:.05em;color:#F4EFE8;outline:none;transition:border-color .3s;width:100%; }
+        .cs-notify-input::placeholder { color:rgba(244,239,232,.25); }
         .cs-notify-input:focus { border-color:#C05C2E; }
         .cs-notify-input.err { border-color:#C05C2E; }
-        .cs-notify-btn { margin-top:32px;display:inline-flex;align-items:center;gap:16px;background:#111010;color:#F4EFE8;border:none;padding:18px 32px;font-family:'Jost',sans-serif;font-size:.6rem;font-weight:400;letter-spacing:.25em;text-transform:uppercase;cursor:none;align-self:flex-start;transition:background .3s;position:relative;overflow:hidden; }
+        .cs-notify-btn { margin-top:32px;display:inline-flex;align-items:center;gap:16px;background:#F4EFE8;color:#111010;border:none;padding:18px 32px;font-family:'Jost',sans-serif;font-size:.6rem;font-weight:400;letter-spacing:.25em;text-transform:uppercase;cursor:none;align-self:flex-start;transition:background .3s;position:relative;overflow:hidden; }
         .cs-notify-btn::before { content:'';position:absolute;inset:0;background:#C05C2E;transform:scaleX(0);transform-origin:left;transition:transform .4s ease; }
         .cs-notify-btn:hover::before { transform:scaleX(1); }
+        .cs-notify-btn:hover { color:#F4EFE8; }
         .cs-notify-btn span { position:relative;z-index:1; }
-        .cs-notify-note { margin-top:16px;font-size:.58rem;letter-spacing:.08em;color:rgba(17,16,16,.3); }
+        .cs-notify-note { margin-top:16px;font-size:.58rem;letter-spacing:.08em;color:rgba(244,239,232,.22); }
         .cs-notify-success { margin-top:16px;font-size:.65rem;letter-spacing:.1em;color:#C05C2E; }
         .cs-notify-error { margin-top:16px;font-size:.65rem;letter-spacing:.08em;color:#C05C2E; }
 
