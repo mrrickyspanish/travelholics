@@ -5,41 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 /* ─── Types ─────────────────────────────────────────────── */
-type CheckoutState = "idle" | "pending" | "error";
-
-/* ─── Magnet Buy Button ──────────────────────────────────── */
-function MagnetBuyButton({ productId, label }: { productId: string; label: string }) {
-  const [state, setState] = useState<CheckoutState>("idle");
-
-  const handleClick = async () => {
-    setState("pending");
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId, color: "Standard", size: "One Size", quantity: 1 }),
-      });
-      const data = (await res.json()) as { url?: string; error?: string };
-      if (!res.ok || !data.url) throw new Error(data.error ?? "Unable to start checkout.");
-      window.location.href = data.url;
-    } catch {
-      setState("error");
-      setTimeout(() => setState("idle"), 3000);
-    }
-  };
-
-  return (
-    <button
-      onClick={handleClick}
-      disabled={state === "pending"}
-      className="coming-soon-cta"
-      style={{ cursor: state === "pending" ? "wait" : "none" }}
-    >
-      <span>{state === "pending" ? "Opening…" : state === "error" ? "Try Again" : label}</span>
-      <span className="cta-arrow" aria-hidden />
-    </button>
-  );
-}
 
 /* ─── Page ───────────────────────────────────────────────── */
 export default function ShopComingSoon() {
@@ -194,13 +159,9 @@ export default function ShopComingSoon() {
 
         /* Lookbook shop card */
         .lb-shop-overlay { position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 28px;background:linear-gradient(to top,rgba(17,16,16,.88) 0%,rgba(17,16,16,.3) 50%,transparent 100%);opacity:1; }
-        .lb-shop-available-badge { display:inline-block;background:#C05C2E;color:#F4EFE8;font-family:'Jost',sans-serif;font-size:.5rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;padding:4px 10px;border-radius:2px;margin-bottom:8px;align-self:flex-start; }
+        .lb-shop-preview-badge { display:inline-block;background:rgba(244,239,232,.15);border:1px solid rgba(244,239,232,.35);color:#F4EFE8;font-family:'Jost',sans-serif;font-size:.48rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;padding:4px 10px;border-radius:2px;margin-bottom:8px;align-self:flex-start;backdrop-filter:blur(4px); }
         .lb-shop-overlay .lb-overlay-title { font-size:1.2rem; }
-        .lb-shop-overlay-price { font-family:'Jost',sans-serif;font-size:.75rem;font-weight:400;letter-spacing:.1em;color:#A8865A;margin:4px 0 12px; }
-        .lb-shop-card .coming-soon-cta { font-size:.55rem;padding:10px 16px;border-color:rgba(244,239,232,.6);color:#F4EFE8;gap:8px; }
-        .lb-shop-card .coming-soon-cta::before { background:#C05C2E; }
-        .lb-shop-card .coming-soon-cta:hover { border-color:#C05C2E; }
-        .lb-shop-card .cta-arrow { background:currentColor; }
+        .lb-shop-overlay-releasing { font-family:'Jost',sans-serif;font-size:.55rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:#A8865A;margin-top:6px; }
 
         /* Available Now */
         .cs-available { background:#111010;padding:80px 52px;border-top:1px solid rgba(244,239,232,.08); }
@@ -306,19 +267,19 @@ export default function ShopComingSoon() {
           <div className="cs-hero-horizon" />
 
           <div className="cs-hero-content">
-            <p className="cs-eyebrow">The First Drop &nbsp;·&nbsp; Shop Coming Soon</p>
+            <p className="cs-eyebrow">Drop 01 &nbsp;·&nbsp; Coming Soon</p>
             <div className="cs-title">
-              SHOP<br />
+              THE<br />
               <span style={{ display: "flex", alignItems: "flex-end", gap: "0.06em" }}>
-                <span>IS&nbsp;</span>
-                <span className="cs-outlined">COM</span>
-                <span>ING</span>
+                <span>FIRST&nbsp;</span>
+                <span className="cs-outlined">DR</span>
+                <span>OP</span>
               </span>
             </div>
             <div className="cs-hero-bottom">
               <p className="cs-hero-sub">
-                Curated pieces for the traveler<br />
-                who lives in the experience.
+                Curated gear for the traveler who lives in the experience.<br />
+                No filler. Just the essentials.
               </p>
               <div style={{ textAlign: "right" }}>
                 <div className="cs-scroll-hint">
@@ -328,9 +289,9 @@ export default function ShopComingSoon() {
                 <button
                   className="coming-soon-cta"
                   style={{ marginTop: 20, display: "inline-flex" }}
-                  onClick={() => document.getElementById("lookbook")?.scrollIntoView({ behavior: "smooth" })}
+                  onClick={() => document.getElementById("notify")?.scrollIntoView({ behavior: "smooth" })}
                 >
-                  <span>Explore the Look Book</span>
+                  <span>Get On The List</span>
                   <span className="cta-arrow" aria-hidden />
                 </button>
               </div>
@@ -352,7 +313,7 @@ export default function ShopComingSoon() {
               THE<br />LOOK<br />BOOK
             </h2>
             <p className="cs-lb-copy">
-              Every piece starts with a feeling. The warmth of a deck at golden hour. Salt air at a new port. The ease of being exactly where you&apos;re supposed to be. This is what that looks like, worn.
+              Every flawless trip is in the details. The warmth of a well-organized bag. The right canvas tote. The ease of knowing you have exactly what you need. This is the loadout you bring when you&apos;re ready to board.
             </p>
           </div>
 
@@ -395,10 +356,9 @@ export default function ShopComingSoon() {
             <div className="lb-card lb-shop-card lb-cruise-magnet">
               <Image src="/images/travelholics_product_cruise-life-magnet-on-journal.png" alt="Cruise Life Door Magnet" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
               <div className="lb-shop-overlay">
-                <span className="lb-shop-available-badge">Available Now</span>
+                <span className="lb-shop-preview-badge">Preview</span>
                 <div className="lb-overlay-title">Cruise Life<br /><em style={{ fontStyle: "italic", fontWeight: 300 }}>Door Magnet</em></div>
-                <div className="lb-shop-overlay-price">$19.99</div>
-                <MagnetBuyButton productId="merch-magnet-ticket-pacific" label="Buy Now" />
+                <div className="lb-shop-overlay-releasing">Releasing Soon</div>
               </div>
             </div>
           </div>
@@ -408,16 +368,15 @@ export default function ShopComingSoon() {
             <div className="lb-card lb-shop-card">
               <Image src="/images/travelholics_mockup_pacific-mexican-door-magnet.png" alt="Pacific Mexican Door Magnet" width={600} height={400} style={{ height: 400, objectFit: "cover" }} />
               <div className="lb-shop-overlay">
-                <span className="lb-shop-available-badge">Available Now</span>
+                <span className="lb-shop-preview-badge">Preview</span>
                 <div className="lb-overlay-title">Pacific Mexican<br /><em style={{ fontStyle: "italic", fontWeight: 300 }}>Door Magnet</em></div>
-                <div className="lb-shop-overlay-price">$19.99</div>
-                <MagnetBuyButton productId="merch-magnet-mexican-pacific" label="Buy Now" />
+                <div className="lb-shop-overlay-releasing">Releasing Soon</div>
               </div>
             </div>
             <div className="lb-card lb-text-card" style={{ height: 400 }}>
               <div className="lb-text-eyebrow">Travelholics · Drop 01</div>
-              <div className="lb-text-title">&ldquo;The pieces<br />find you<br />at the dock.&rdquo;</div>
-              <div className="lb-text-body">Limited run. Built for the traveler who already knows where they&apos;re going next.</div>
+              <div className="lb-text-title">&ldquo;Pack like you&apos;ve<br />been here<br />before.&rdquo;</div>
+              <div className="lb-text-body">Designed for travelers who skip the tourist traps and know exactly where they&apos;re going.</div>
             </div>
             <div className="lb-card">
               <Image src="/images/travelholics_product_navy-duffel-bag.png" alt="Navy Duffel Bag" width={600} height={400} style={{ height: 400, objectFit: "cover", objectPosition: "center bottom" }} />
@@ -436,8 +395,8 @@ export default function ShopComingSoon() {
               <div className="lb-overlay" style={{ opacity: 1, background: "linear-gradient(to top, rgba(17,16,16,.65) 0%, transparent 60%)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
                   <div>
-                    <div className="lb-overlay-tag">The Full Edit</div>
-                    <div className="lb-overlay-title" style={{ fontSize: "2rem" }}>Drop 01 — Coming Soon</div>
+                    <div className="lb-overlay-tag">Next Up</div>
+                    <div className="lb-overlay-title" style={{ fontSize: "2rem" }}>Drop 02: The Caribbean Capsule</div>
                   </div>
                   <a href="#notify" style={{ fontSize: ".55rem", letterSpacing: ".3em", textTransform: "uppercase", color: "rgba(255,255,255,.6)", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,.25)", paddingBottom: 4, cursor: "none" }}>
                     Get Notified ↓
@@ -452,8 +411,8 @@ export default function ShopComingSoon() {
         {/* ── Notify ─────────────────────────────────────────── */}
         <section className="cs-notify" id="notify">
           <div className="cs-notify-left cs-reveal">
-            <h3>FIRST<br />ACCESS.</h3>
-            <p>Drop 01 is limited. Subscribers get in before everyone else — no spam, just the launch call.</p>
+            <h3>PRIORITY<br />BOARDING.</h3>
+            <p>Drop 01 is strictly limited. Subscribers get the link before the public. Drop your email to get on the manifest.</p>
           </div>
           <div className="cs-reveal">
             {notifyState === "success" ? (
@@ -478,12 +437,12 @@ export default function ShopComingSoon() {
                   style={{ marginTop: 0 }}
                 />
                 <button type="submit" className="cs-notify-btn" disabled={notifyState === "pending"}>
-                  <span>{notifyState === "pending" ? "Saving…" : "Notify Me at Launch →"}</span>
+                  <span>{notifyState === "pending" ? "Saving…" : "Request Access →"}</span>
                 </button>
                 {notifyState === "error" && (
                   <p className="cs-notify-error">Something went wrong — please try again.</p>
                 )}
-                <p className="cs-notify-note">No spam. First access when the shop goes live.</p>
+                <p className="cs-notify-note">No spam. You get the link before anyone else.</p>
               </form>
             )}
           </div>
