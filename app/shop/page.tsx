@@ -396,7 +396,7 @@ export default function ShopComingSoon() {
               <div className="lb-shop-items">
                 <div className="lb-shop-item">
                   <div className="lb-shop-img-wrap">
-                    <Image src="/images/travelholic_ticket_magnent_pacific.png" alt="Cruise Ticket Door Magnet" fill className="object-contain" />
+                    <Image src="/images/travelholics_product_cruise-life-magnet-on-journal.png" alt="Cruise Life Door Magnet" fill className="object-contain" />
                   </div>
                   <p className="lb-shop-name">Cruise Ticket<br /><em>Door Magnet</em></p>
                   <p className="lb-shop-price">$19.99</p>
@@ -405,7 +405,7 @@ export default function ShopComingSoon() {
                 <div className="lb-shop-divider" />
                 <div className="lb-shop-item">
                   <div className="lb-shop-img-wrap">
-                    <Image src="/images/pacific_mexican_door_magnent.png" alt="Pacific Mexican Door Magnet" fill className="object-contain" />
+                    <Image src="/images/travelholics_mockup_pacific-mexican-door-magnet.png" alt="Pacific Mexican Door Magnet" fill className="object-contain" />
                   </div>
                   <p className="lb-shop-name">Pacific Mexican<br /><em>Door Magnet</em></p>
                   <p className="lb-shop-price">$19.99</p>
