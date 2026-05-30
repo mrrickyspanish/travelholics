@@ -193,15 +193,11 @@ export default function ShopComingSoon() {
         .lb-text-body { font-size:.7rem;line-height:1.8;color:rgba(244,239,232,.55);letter-spacing:.03em; }
 
         /* Lookbook shop card */
-        .lb-shop-card { background:#F4EFE8;display:flex;flex-direction:column;padding:24px 24px 20px;height:380px;overflow:hidden; }
-        .lb-shop-eyebrow { font-size:.5rem;letter-spacing:.35em;text-transform:uppercase;color:#C05C2E;margin-bottom:12px;flex-shrink:0; }
-        .lb-shop-img-wrap-full { position:relative;flex:1;width:100%;min-height:0; }
-        .lb-shop-name { font-family:'Cormorant Garamond',serif;font-size:.9rem;font-weight:400;line-height:1.25;color:#111010;margin:10px 0 0;flex-shrink:0; }
-        .lb-shop-name em { font-style:italic;font-weight:300;color:rgba(17,16,16,.55); }
-        .lb-shop-price { font-family:'Jost',sans-serif;font-size:.6rem;font-weight:300;letter-spacing:.12em;color:#A8865A;margin:4px 0 0;flex-shrink:0; }
-        .lb-shop-card .coming-soon-cta { font-size:.5rem;padding:8px 14px;border-color:rgba(17,16,16,.25);color:#111010;gap:8px;margin-top:8px;flex-shrink:0; }
+        .lb-shop-overlay { position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:28px 32px;background:linear-gradient(to top,rgba(17,16,16,.72) 0%,rgba(17,16,16,.1) 55%,transparent 100%);opacity:1; }
+        .lb-shop-overlay-price { font-family:'Jost',sans-serif;font-size:.6rem;font-weight:300;letter-spacing:.12em;color:#A8865A;margin:4px 0 10px; }
+        .lb-shop-card .coming-soon-cta { font-size:.5rem;padding:8px 14px;border-color:rgba(244,239,232,.35);color:#F4EFE8;gap:8px; }
         .lb-shop-card .coming-soon-cta::before { background:#C05C2E; }
-        .lb-shop-card .coming-soon-cta:hover { color:#F4EFE8;border-color:#C05C2E; }
+        .lb-shop-card .coming-soon-cta:hover { border-color:#C05C2E; }
         .lb-shop-card .cta-arrow { background:currentColor; }
 
         /* Available Now */
@@ -388,27 +384,27 @@ export default function ShopComingSoon() {
               </div>
               <div className="lb-num">02</div>
             </div>
-            <div className="lb-shop-card">
-              <div className="lb-shop-eyebrow">Available Now</div>
-              <div className="lb-shop-img-wrap-full">
-                <Image src="/images/travelholics_product_cruise-life-magnet-on-journal.png" alt="Cruise Life Door Magnet" fill className="object-contain" />
+            <div className="lb-card lb-shop-card">
+              <Image src="/images/travelholics_product_cruise-life-magnet-on-journal.png" alt="Cruise Life Door Magnet" width={600} height={380} style={{ height: 380, objectFit: "cover" }} />
+              <div className="lb-shop-overlay">
+                <div className="lb-overlay-tag">Available Now</div>
+                <div className="lb-overlay-title">Cruise Life<br /><em style={{ fontStyle: "italic", fontWeight: 300 }}>Door Magnet</em></div>
+                <div className="lb-shop-overlay-price">$19.99</div>
+                <MagnetBuyButton productId="merch-magnet-ticket-pacific" label="Buy Now" />
               </div>
-              <p className="lb-shop-name">Cruise Life<br /><em>Door Magnet</em></p>
-              <p className="lb-shop-price">$19.99</p>
-              <MagnetBuyButton productId="merch-magnet-ticket-pacific" label="Buy Now" />
             </div>
           </div>
 
           {/* Row 3: editorial + text card + photo */}
           <div className="lb-row-3">
-            <div className="lb-shop-card" style={{ height: 400 }}>
-              <div className="lb-shop-eyebrow">Available Now</div>
-              <div className="lb-shop-img-wrap-full">
-                <Image src="/images/travelholics_mockup_pacific-mexican-door-magnet.png" alt="Pacific Mexican Door Magnet" fill className="object-contain" />
+            <div className="lb-card lb-shop-card">
+              <Image src="/images/travelholics_mockup_pacific-mexican-door-magnet.png" alt="Pacific Mexican Door Magnet" width={600} height={400} style={{ height: 400, objectFit: "cover" }} />
+              <div className="lb-shop-overlay">
+                <div className="lb-overlay-tag">Available Now</div>
+                <div className="lb-overlay-title">Pacific Mexican<br /><em style={{ fontStyle: "italic", fontWeight: 300 }}>Door Magnet</em></div>
+                <div className="lb-shop-overlay-price">$19.99</div>
+                <MagnetBuyButton productId="merch-magnet-mexican-pacific" label="Buy Now" />
               </div>
-              <p className="lb-shop-name">Pacific Mexican<br /><em>Door Magnet</em></p>
-              <p className="lb-shop-price">$19.99</p>
-              <MagnetBuyButton productId="merch-magnet-mexican-pacific" label="Buy Now" />
             </div>
             <div className="lb-card lb-text-card" style={{ height: 400 }}>
               <div className="lb-text-eyebrow">Travelholics · Drop 01</div>
