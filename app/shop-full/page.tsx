@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink, HelpCircle, Minus, Plus, ShieldCheck, Tag } from "lucide-react";
 
 import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { ShopHeader } from "@/components/shop-header";
 import { RippleButton } from "@/components/ripple-button";
 import { ShopHeroHeadline } from "@/components/ShopHeroHeadline";
 import {
@@ -348,7 +348,7 @@ export default function ShopPage() {
 
   return (
     <>
-      <Header />
+      <ShopHeader />
       <main className="min-h-screen bg-[#FAF9F6]">
 
         {/* ── Hero ─────────────────────────────────────────── */}
