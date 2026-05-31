@@ -354,7 +354,7 @@ export default function ShopPage() {
         {/* ── Hero ─────────────────────────────────────────── */}
         <section
           className="pt-32 pb-16 px-6 bg-cover bg-center min-h-[470px] md:min-h-[610px] lg:min-h-[750px] flex items-end"
-          style={{ backgroundImage: "url('/images/travelholic_shop_hero.png')" }}
+          style={{ backgroundImage: "url('/images/ChatGPT Image May 30, 2026, 07_13_30 PM.png')" }}
         >
           <div className="max-w-6xl mx-auto">
             {/* Hero image only, headline moved below */}
