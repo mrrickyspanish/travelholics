@@ -40,7 +40,7 @@ export const MobileCTA = () => {
                 Plan
               </button>
               <a
-                href="/shop"
+                href="/shop-full"
                 className="min-h-12 bg-[#1e3a8a] hover:bg-[#1d4ed8] text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-900/20 flex flex-col items-center justify-center gap-1 transition-all text-sm"
               >
                 <ShoppingBag size={16} />

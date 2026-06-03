@@ -233,7 +233,7 @@ export default function CollaboratePage() {
                   Start a Collaboration
                 </a>
                 <Link
-                  href="/shop"
+                  href="/shop-full"
                   className="type-cta flex items-center justify-center border-2 border-slate-200 hover:border-[#059669] bg-white text-[#1e3a8a] px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5"
                 >
                   See Yolanda&apos;s Picks

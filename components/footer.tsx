@@ -8,7 +8,7 @@ import { NewsletterSignup } from "@/components/newsletter-signup";
 const quickLinks = [
   { label: "About",        href: "/#about"        },
   { label: "Group Trips",  href: "/#group-trips"  },
-  { label: "Travel Picks", href: "/shop"           },
+  { label: "Travel Picks", href: "/shop-full"           },
   { label: "Testimonials", href: "/#testimonials"  },
   { label: "Contact",      href: "/#contact"       },
 ];
@@ -22,9 +22,9 @@ const travelLinks = [
 ];
 
 const shopLinks = [
-  { label: "Travel Picks", href: "/shop" },
-  { label: "Gift Cards",   href: "/shop" },
-  { label: "New Arrivals", href: "/shop" },
+  { label: "Travel Picks", href: "/shop-full" },
+  { label: "Gift Cards",   href: "/shop-full" },
+  { label: "New Arrivals", href: "/shop-full" },
 ];
 
 const TikTokIcon = () => (

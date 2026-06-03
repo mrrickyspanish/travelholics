@@ -33,7 +33,7 @@ const cards = [
     description:
       "Hats, totes, the Travelholic crewneck. The merch that says it without saying it - for people who pack their outfits a week early.",
     cta: "shop the lifestyle",
-    href: "/shop",
+    href: "/shop-full",
     icon: ShoppingBag,
     iconBg: "bg-emerald-mid",
     image: "/images/travelholics_merch_card_2.png",

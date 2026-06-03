@@ -10,7 +10,7 @@ import { Button } from "@/components/button";
 
 const NAV_LINKS = [
   { label: "Join the Crew", href: "/#contact" },
-  { label: "Shop", href: "/shop" },
+  { label: "Shop", href: "/shop-full" },
   { label: "Journal", href: "/collaborate" },
   { label: "Our Story", href: "/#about" },
   { label: "Contact", href: "/#contact" },
