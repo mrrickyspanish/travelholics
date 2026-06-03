@@ -472,19 +472,19 @@ export default function ShopComingSoon() {
           <div className="cs-lanyard-wrap cs-reveal">
             <div className="cs-lanyard-media">
               <div className="cs-lanyard-img">
-                <Image src="/images/travelholics_lanyard_hero.png" alt="Travelholics Cruise Card Lanyard Atlantis Edition hero placeholder" fill sizes="(max-width: 900px) 100vw, 40vw" />
+                <Image src="/images/travelholics_lanyard_hero.png" alt="Travelholics Cruise Card Lanyard Atlantis Edition hero product photo" fill sizes="(max-width: 900px) 100vw, 40vw" />
               </div>
               <div className="cs-lanyard-img">
-                <Image src="/images/travelholics_lanyard_specs.png" alt="Travelholics Cruise Card Lanyard approved design spec placeholder" fill sizes="(max-width: 900px) 50vw, 18vw" />
+                <Image src="/images/travelholics_lanyard_specs.png" alt="Travelholics Cruise Card Lanyard approved front and back design spec" fill sizes="(max-width: 900px) 50vw, 18vw" />
               </div>
               <div className="cs-lanyard-img">
-                <Image src="/images/travelholics_lanyard_logo_repeat.png" alt="Travelholics Cruise Card Lanyard logo repeat placeholder" fill sizes="(max-width: 900px) 50vw, 18vw" />
+                <Image src="/images/travelholics_lanyard_logo_repeat.png" alt="Travelholics Cruise Card Lanyard front and back logo repeat view" fill sizes="(max-width: 900px) 50vw, 18vw" />
               </div>
               <div className="cs-lanyard-img">
-                <Image src="/images/travelholics_lanyard_clip_detail.png" alt="Travelholics Cruise Card Lanyard silver lobster claw clip placeholder" fill sizes="(max-width: 900px) 50vw, 18vw" />
+                <Image src="/images/travelholics_lanyard_clip_detail.png" alt="Travelholics Cruise Card Lanyard silver lobster claw clip close-up" fill sizes="(max-width: 900px) 50vw, 18vw" />
               </div>
               <div className="cs-lanyard-img">
-                <Image src="/images/travelholics_lanyard_lifestyle.png" alt="Travelholics Cruise Card Lanyard lifestyle use placeholder" fill sizes="(max-width: 900px) 50vw, 18vw" />
+                <Image src="/images/travelholics_lanyard_lifestyle.png" alt="Travelholics Cruise Card Lanyard styled with travel essentials" fill sizes="(max-width: 900px) 50vw, 18vw" />
               </div>
             </div>
             <div>

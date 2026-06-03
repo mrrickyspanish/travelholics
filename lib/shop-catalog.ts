@@ -263,27 +263,27 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
       {
         label: "Hero product image",
         imageSrc: "/images/travelholics_lanyard_hero.png",
-        alt: "Travelholics Cruise Card Lanyard Atlantis Edition hero product image placeholder",
+        alt: "Travelholics Cruise Card Lanyard Atlantis Edition hero product photo",
       },
       {
         label: "Approved design/spec image",
         imageSrc: "/images/travelholics_lanyard_specs.png",
-        alt: "Travelholics Cruise Card Lanyard approved design and specification image placeholder",
+        alt: "Travelholics Cruise Card Lanyard approved front and back design specification image",
       },
       {
         label: "Logo repeat close-up",
         imageSrc: "/images/travelholics_lanyard_logo_repeat.png",
-        alt: "Travelholics Cruise Card Lanyard logo repeat and Atlantis gradient detail placeholder",
+        alt: "Travelholics Cruise Card Lanyard front and back logo repeat in Atlantis gradient",
       },
       {
         label: "Clip/detail image",
         imageSrc: "/images/travelholics_lanyard_clip_detail.png",
-        alt: "Travelholics Cruise Card Lanyard silver lobster claw clip detail placeholder",
+        alt: "Travelholics Cruise Card Lanyard silver lobster claw clip close-up",
       },
       {
         label: "Lifestyle/use image",
         imageSrc: "/images/travelholics_lanyard_lifestyle.png",
-        alt: "Travelholics Cruise Card Lanyard lifestyle image with cruise card placeholder",
+        alt: "Travelholics Cruise Card Lanyard styled with passport and travel essentials",
       },
     ],
   },
