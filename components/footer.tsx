@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Instagram, Youtube } from "lucide-react";
+import { NewsletterSignup } from "@/components/newsletter-signup";
 
 const quickLinks = [
   { label: "About",        href: "/#about"        },
@@ -42,7 +43,7 @@ export const Footer = () => {
   return (
     <footer className="bg-navy">
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
 
           {/* Brand column */}
           <div>
@@ -160,6 +161,11 @@ export const Footer = () => {
             >
               (985) 555-1234
             </a>
+          </div>
+
+          {/* Newsletter */}
+          <div className="md:col-span-2 lg:col-span-1">
+            <NewsletterSignup compact />
           </div>
         </div>
 

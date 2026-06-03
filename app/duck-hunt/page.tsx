@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
 import { useReducedMotion } from "framer-motion";
-import { supabase } from "@/lib/supabase";
 import { sendFormEmail } from "@/lib/form-email";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
@@ -44,6 +43,9 @@ const TRAVEL_OPTIONS: TravelReason[] = [
   "Other",
 ];
 
+const DUCK_HUNT_CONSENT_TEXT =
+  "Yes, sign me up for the Travelholics Cruise Life list so I can receive cruise deals, shop drops, travel tips, and updates connected to my Duck Hunt reward. I understand I can unsubscribe anytime.";
+
 function formatShipName(ship: string | null) {
   if (!ship) return "your ship";
 
@@ -74,6 +76,7 @@ export default function DuckHuntPage() {
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [shipName, setShipName] = useState("");
+  const [newsletterOptIn, setNewsletterOptIn] = useState(false);
   const [website, setWebsite] = useState("");
   const [shipLabel, setShipLabel] = useState("your ship");
 
@@ -189,23 +192,33 @@ export default function DuckHuntPage() {
     const source = queryParams?.get("source")?.trim() || null;
     const insertedShip = shipName.trim() || ship || null;
 
+    if (!newsletterOptIn) {
+      setFormState("error");
+      return;
+    }
+
     try {
-      if (supabase) {
-        const { error } = await supabase.from("duck_hunt_leads").insert([
-          {
-            first_name: firstName,
-            email,
-            city: city || null,
-            travel_reason: travelReason,
-            duck_number: duckNumber,
-            batch,
-            ship: insertedShip,
-            source,
-          },
-        ]);
-        if (error) {
-          console.warn("Supabase insert failed, continuing with email send:", error);
-        }
+      const claimResponse = await fetch("/api/duck-hunt/claim", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName,
+          email,
+          city,
+          shipName: insertedShip,
+          travelReason,
+          duckNumber,
+          batch,
+          ship,
+          source,
+          newsletterOptIn,
+          consentText: DUCK_HUNT_CONSENT_TEXT,
+        }),
+      });
+
+      if (!claimResponse.ok) {
+        const responseBody = await claimResponse.json().catch(() => null);
+        throw new Error(responseBody?.error || "Unable to submit Duck Hunt claim.");
       }
 
       await sendFormEmail({
@@ -218,6 +231,8 @@ export default function DuckHuntPage() {
         duckNumber,
         batch,
         source,
+        newsletterOptIn,
+        consentText: DUCK_HUNT_CONSENT_TEXT,
       });
 
       setFormState("success");
@@ -587,9 +602,22 @@ export default function DuckHuntPage() {
                   </div>
                 </div>
 
+                <label className="flex items-start gap-3 rounded-xl border border-[#10553C]/20 bg-[#10553C]/5 p-4 text-left">
+                  <input
+                    required
+                    type="checkbox"
+                    checked={newsletterOptIn}
+                    onChange={(e) => setNewsletterOptIn(e.target.checked)}
+                    className="mt-1 h-5 w-5 shrink-0 accent-[#10553C]"
+                  />
+                  <span className="type-caption leading-relaxed text-[#3A5244]">
+                    {DUCK_HUNT_CONSENT_TEXT}
+                  </span>
+                </label>
+
                 {formState === "error" && (
                   <p className="type-body text-red-500 text-center">
-                    Something went wrong — please try again.
+                    Please complete the required newsletter opt-in so we can submit your reward claim.
                   </p>
                 )}
                 <button
