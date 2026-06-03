@@ -77,6 +77,8 @@ export async function POST(request: Request) {
       <p><strong>Duck Number:</strong> ${payload.duckNumber || "N/A"}</p>
       <p><strong>Batch:</strong> ${payload.batch || "N/A"}</p>
       <p><strong>Source:</strong> ${payload.source || "N/A"}</p>
+      <p><strong>Newsletter Opt-In:</strong> ${payload.newsletterOptIn ? "Yes" : "No"}</p>
+      <p><strong>Consent Text:</strong> ${payload.consentText || "N/A"}</p>
     `;
   }
 

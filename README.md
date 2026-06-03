@@ -61,9 +61,14 @@ Create a `.env.local` file in the root directory:
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_server_only_service_role_key
 
 # Contact Email (for mailto: form V1)
 NEXT_PUBLIC_CONTACT_EMAIL=your_email@example.com
+
+# Server Email Notifications
+RESEND_API_KEY=your_resend_api_key
+RESEND_FROM_EMAIL=Travelholics <hello@yourdomain.com>
 ```
 
 ### 3. Set Up Supabase
@@ -112,6 +117,22 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📧 Form Submission Flow (V1)
+
+### Newsletter and Duck Hunt production setup
+
+The Duck Hunt prize opt-in and footer newsletter signup require the Supabase newsletter schema to exist before production submissions will work. Run `supabase/migrations/20260602_add_newsletter_subscribers.sql` in the Supabase SQL Editor, or run the full `supabase_schema.sql` for a fresh Supabase project.
+
+For production on Vercel, confirm these environment variables are set:
+
+| Variable | Required For |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Connecting the site and API routes to Supabase |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public Supabase inserts and browser-safe access |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server-side upserts, duplicate subscriber handling, and Duck Hunt lead-to-subscriber linking |
+| `RESEND_API_KEY` | Email notifications for forms and newsletter signups |
+| `RESEND_FROM_EMAIL` | Branded sender address once the sending domain is verified in Resend |
+
+Newsletter signup notifications are sent to `rjsmom1_68@yahoo.com` with a BCC to `ricky@creativeeyestudios.com`. If `RESEND_API_KEY` is missing, newsletter records can still be saved, but the notification email is skipped.
 
 Currently using an automatic server-side flow:
 
