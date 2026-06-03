@@ -7,8 +7,8 @@ export function ShopHeroHeadline() {
   return (
     <div className="max-w-2xl mx-auto text-center">
       <h1 className="type-page-title text-ink mb-4">
-        What I use.<br />
-        <span className="font-serif italic font-light text-[#f59e0b]">What I love.</span>
+        The Travelholics<br />
+        <span className="font-serif italic font-light text-[#f59e0b]">Shop.</span>
       </h1>
       <p className="type-body-lg text-stone-700 max-w-lg mx-auto mb-2">
         20+ years of cruising experience distilled into the things I actually pack, use, and recommend.
