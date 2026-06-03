@@ -20,7 +20,26 @@ import {
 } from "@/lib/shop-catalog";
 
 type MerchSelectionState = Record<string, { size: string; color: string; quantity: number }>;
-type FindFilter = "all" | "tiktok" | "amazon";
+type FindFilter = "all" | "tiktok" | "amazon" | "cruise" | "packing" | "beach" | "family";
+
+const FIND_FILTERS: { id: FindFilter; label: string }[] = [
+  { id: "all", label: "All Finds" },
+  { id: "cruise", label: "Cruise Essentials" },
+  { id: "packing", label: "Packing" },
+  { id: "beach", label: "Beach & Resort" },
+  { id: "family", label: "Family Travel" },
+  { id: "amazon", label: "Amazon Finds" },
+  { id: "tiktok", label: "TikTok Finds" },
+];
+
+function getProductFilters(p: AffiliateProduct): FindFilter[] {
+  const tags: FindFilter[] = [p.zone as "tiktok" | "amazon"];
+  const id = p.id;
+  if (["tiktok-luggage-tags", "tiktok-magnetic-hooks", "amazon-neck-pillow", "amazon-compression-cubes"].includes(id)) tags.push("cruise");
+  if (["tiktok-toiletry-organizer", "tiktok-packing-cubes", "amazon-carry-on-organizer", "amazon-wrinkle-free-set", "amazon-compression-cubes", "amazon-neck-pillow"].includes(id)) tags.push("packing");
+  if (["amazon-dry-bag", "amazon-water-shoes", "amazon-packable-flats", "amazon-reef-safe-sunscreen"].includes(id)) tags.push("beach");
+  return tags;
+}
 
 /* ─── Icons ─────────────────────────────────────────────── */
 
@@ -145,7 +164,7 @@ function TravelholicsFindCard({ product, index }: { product: AffiliateProduct; i
   const [isOpening, setIsOpening] = useState(false);
   const isTikTok = product.zone === "tiktok";
   const platformLabel = isTikTok ? "TikTok Shop" : "Amazon";
-  const ctaLabel = isTikTok ? "Shop on TikTok" : "Get it on Amazon";
+  const ctaLabel = "View Item";
   const Icon = isTikTok ? TikTokIcon : AmazonIcon;
 
   return (
@@ -426,13 +445,10 @@ export default function ShopPage() {
   const originalProducts = MERCH_PRODUCTS.filter((product) =>
     ["merch-cruise-card-lanyard-atlantis", "merch-magnet-ticket-pacific", "merch-magnet-mexican-pacific"].includes(product.id)
   );
-  const allFinds = [...TIKTOK_PRODUCTS, ...AMAZON_PRODUCTS];
-  const visibleFinds = findFilter === "all" ? allFinds : allFinds.filter((product) => product.zone === findFilter);
-  const findFilters: { id: FindFilter; label: string }[] = [
-    { id: "all", label: "All Finds" },
-    { id: "tiktok", label: "TikTok" },
-    { id: "amazon", label: "Amazon" },
-  ];
+  const allFinds = [...AMAZON_PRODUCTS, ...TIKTOK_PRODUCTS];
+  const visibleFinds = findFilter === "all"
+    ? allFinds
+    : allFinds.filter((p) => getProductFilters(p).includes(findFilter));
 
   const updateMerchSelection = (productId: string, next: Partial<MerchSelectionState[string]>) => {
     setMerchSelections((cur) => ({ ...cur, [productId]: { ...cur[productId], ...next } }));
@@ -491,7 +507,7 @@ export default function ShopPage() {
             <SectionHeader
               title="Travelholics"
               accent="Originals."
-              description="Owned Travelholics products first: the pieces made for the cruise door, the room key, and the travelers already moving like family."
+              description="Made for cruise doors, travel bags, group trips, and the memories that come home with you."
             />
             <p className="type-caption italic text-stone-400 mb-6 text-center">
               Official Travelholics originals are sold directly by Travelholics through secure Stripe checkout. Final shipping, returns, and fulfillment details should be confirmed within your Stripe order communication.
@@ -552,14 +568,14 @@ export default function ShopPage() {
             <SectionHeader
               title="Travelholics"
               accent="Finds."
-              description="A single shelf for the travel picks Yolanda recommends across Amazon, TikTok, and future affiliate partners. Use the filters when you want one platform; browse all when you just want the good stuff."
+              description="Smart travel picks, cruise essentials, packing helpers, and vacation favorites curated by Travelholics."
             />
             <p className="type-caption italic text-stone-400 mb-6 text-center">
               Affiliate links may earn Travelholics a small commission at no extra cost to you. Prices, availability, shipping, and return options are controlled by each platform or listed seller and may change after you leave Travelholics.
             </p>
 
             <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
-              {findFilters.map((filter) => (
+              {FIND_FILTERS.map((filter) => (
                 <button
                   key={filter.id}
                   type="button"
@@ -597,13 +613,13 @@ export default function ShopPage() {
             >
               <div className="absolute inset-0 rounded-2xl" style={{background: 'linear-gradient(90deg,rgba(30,58,92,0.18) 0%,rgba(255,255,255,0.10) 100%)'}} aria-hidden="true"></div>
               <div className="relative z-10">
-                <p className="type-kicker text-white/50 mb-4">Ready to sail?</p>
+                <p className="type-kicker text-white/50 mb-4">Plan the whole trip</p>
                 <h2 className="type-section-title text-white mb-2">
-                  Let&apos;s plan the{" "}
-                  <em className="font-serif italic font-light text-[#f59e0b]">whole trip.</em>
+                  Need help planning{" "}
+                  <em className="font-serif italic font-light text-[#f59e0b]">the trip too?</em>
                 </h2>
                 <p className="type-body text-white/60 mb-8 max-w-sm mx-auto">
-                  The gear is a start. Let&apos;s build a trip around you.
+                  Shop the gear, then let Travelholics help plan the experience.
                 </p>
                 <Link
                   href="/#contact"

@@ -6,9 +6,10 @@ export function ShopHeroHeadline() {
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <div className="max-w-2xl mx-auto text-center">
+      <p className="text-xs font-bold tracking-[0.18em] uppercase text-stone-400 mb-3">The Travelholics Shop</p>
       <h1 className="type-page-title text-ink mb-4">
-        The Travelholics<br />
-        <span className="font-serif italic font-light text-[#f59e0b]">Shop.</span>
+        What I use. What I love.<br />
+        <span className="font-serif italic font-light text-[#1e3a8a]">What I recommend.</span>
       </h1>
       <p className="type-body-lg text-stone-700 max-w-lg mx-auto mb-2">
         20+ years of cruising experience distilled into the things I actually pack, use, and recommend.
