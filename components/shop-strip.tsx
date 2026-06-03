@@ -2,7 +2,7 @@
 // Product prices and TikTok Shop affiliate URLs below are PLACEHOLDERS pending final data.
 // Rendering approved by Ricky — do NOT launch real checkout from these links until confirmed.
 // When real product images and URLs arrive, update each entry in the products array.
-// Product images currently reuse existing assets as visual stand-ins.
+// Lanyard image slots use stable placeholder filenames so final photos can be dropped into public/images without code changes.
 
 "use client";
 
@@ -14,6 +14,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const VISIBLE = 3;
 
 const products = [
+  {
+    name: "Cruise Card Lanyard",
+    price: "$10.00 launch · 2 for $18",
+    image: "/images/travelholics_lanyard_hero.png",
+    href: "/shop#lanyard",
+    imageAlt: "Travelholics Cruise Card Lanyard Atlantis Edition placeholder",
+  },
   {
     name: "Pacific Mexico Cruise Door Magnet",
     price: "$18.99",
@@ -64,7 +71,7 @@ export const ShopStrip = () => {
 
           <div className="mt-6 mb-3 flex items-center justify-between gap-3">
             <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-stone/65">Swipe to explore</p>
-            <p className="text-[11px] font-medium text-stone/60">3 picks</p>
+            <p className="text-[11px] font-medium text-stone/60">4 picks</p>
           </div>
 
           <div className="flex gap-4 overflow-x-auto pb-1 pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory">

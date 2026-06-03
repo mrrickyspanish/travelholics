@@ -223,6 +223,26 @@ export default function ShopComingSoon() {
         .cs-magnet-cta:hover { border-color:#C05C2E; }
         .cs-magnet-cta span { position:relative;z-index:1; }
 
+        /* Lanyard Launch */
+        .cs-lanyard { background:#F4EFE8;padding:96px 52px;border-top:1px solid rgba(17,16,16,.08); }
+        .cs-lanyard-wrap { max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center; }
+        .cs-lanyard-media { display:grid;grid-template-columns:1.2fr .8fr;gap:10px; }
+        .cs-lanyard-img { position:relative;aspect-ratio:1;background:#fff;border:1px solid rgba(17,16,16,.08);overflow:hidden; }
+        .cs-lanyard-img:first-child { grid-row:span 2; }
+        .cs-lanyard-img img { object-fit:cover; }
+        .cs-lanyard-kicker { font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:#C05C2E;margin-bottom:14px; }
+        .cs-lanyard-title { font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,6rem);line-height:.9;color:#111010;margin-bottom:10px; }
+        .cs-lanyard-sub { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.45rem;color:#1C3A4A;margin-bottom:18px; }
+        .cs-lanyard-copy { font-size:.9rem;line-height:1.85;color:rgba(17,16,16,.65);max-width:500px; }
+        .cs-lanyard-price { display:flex;align-items:baseline;gap:14px;margin:24px 0 10px;font-family:'Jost',sans-serif; }
+        .cs-lanyard-price strong { font-size:1.4rem;color:#111010; }
+        .cs-lanyard-price del { color:rgba(17,16,16,.35); }
+        .cs-lanyard-bundle { font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#C05C2E;margin-bottom:22px; }
+        .cs-lanyard-details { display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin:24px 0 30px;padding:0;list-style:none; }
+        .cs-lanyard-details li { font-size:.72rem;line-height:1.5;color:rgba(17,16,16,.62); }
+        .cs-lanyard-details li::before { content:'•';color:#C05C2E;margin-right:8px; }
+        .cs-lanyard-actions { display:flex;gap:12px;flex-wrap:wrap; }
+
         /* Notify */
         .cs-notify { background:#111010;padding:100px 52px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-top:1px solid rgba(244,239,232,.08); }
         .cs-notify-left h3 { font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,5.5rem);line-height:.9;color:#F4EFE8;margin-bottom:24px; }
@@ -263,6 +283,11 @@ export default function ShopComingSoon() {
           .lb-shop-card{height:auto}
           .cs-available{padding:60px 24px}
           .cs-magnet-grid{grid-template-columns:1fr}
+          .cs-lanyard{padding:72px 24px}
+          .cs-lanyard-wrap{grid-template-columns:1fr;gap:36px}
+          .cs-lanyard-media{grid-template-columns:1fr 1fr}
+          .cs-lanyard-img:first-child{grid-column:1 / -1;grid-row:auto}
+          .cs-lanyard-details{grid-template-columns:1fr}
           .cs-notify{grid-template-columns:1fr;gap:48px;padding:72px 24px}
           .cs-footer{flex-direction:column;gap:16px;padding:32px 24px}
         }
@@ -442,6 +467,56 @@ export default function ShopComingSoon() {
           </div>
         </section>
 
+        {/* ── Lanyard Launch ─────────────────────────────────── */}
+        <section className="cs-lanyard" id="lanyard">
+          <div className="cs-lanyard-wrap cs-reveal">
+            <div className="cs-lanyard-media">
+              <div className="cs-lanyard-img">
+                <Image src="/images/travelholics_lanyard_hero.png" alt="Travelholics Cruise Card Lanyard Atlantis Edition hero placeholder" fill sizes="(max-width: 900px) 100vw, 40vw" />
+              </div>
+              <div className="cs-lanyard-img">
+                <Image src="/images/travelholics_lanyard_specs.png" alt="Travelholics Cruise Card Lanyard approved design spec placeholder" fill sizes="(max-width: 900px) 50vw, 18vw" />
+              </div>
+              <div className="cs-lanyard-img">
+                <Image src="/images/travelholics_lanyard_logo_repeat.png" alt="Travelholics Cruise Card Lanyard logo repeat placeholder" fill sizes="(max-width: 900px) 50vw, 18vw" />
+              </div>
+              <div className="cs-lanyard-img">
+                <Image src="/images/travelholics_lanyard_clip_detail.png" alt="Travelholics Cruise Card Lanyard silver lobster claw clip placeholder" fill sizes="(max-width: 900px) 50vw, 18vw" />
+              </div>
+              <div className="cs-lanyard-img">
+                <Image src="/images/travelholics_lanyard_lifestyle.png" alt="Travelholics Cruise Card Lanyard lifestyle use placeholder" fill sizes="(max-width: 900px) 50vw, 18vw" />
+              </div>
+            </div>
+            <div>
+              <p className="cs-lanyard-kicker">Travel Essentials · New Product</p>
+              <h2 className="cs-lanyard-title">CRUISE CARD<br />LANYARD</h2>
+              <p className="cs-lanyard-sub">Atlantis Travelholics Edition</p>
+              <p className="cs-lanyard-copy">
+                The Travelholics Cruise Card Lanyard keeps your cruise card, room key, or travel pass close without sacrificing style. Designed in the signature Atlantis colorway with Travelholics branding, cruise-inspired icons, and a silver lobster claw clip.
+              </p>
+              <div className="cs-lanyard-price">
+                <strong>$10.00 launch</strong>
+                <del>$12.00</del>
+              </div>
+              <p className="cs-lanyard-bundle">Bundle: 2 for $18</p>
+              <ul className="cs-lanyard-details">
+                <li>1&quot; wide, 36&quot; standard length</li>
+                <li>Full-color dye sublimation</li>
+                <li>Printed on both sides</li>
+                <li>YOTRAVELHOLIC.COM on back</li>
+                <li>Silver lobster claw attachment</li>
+                <li>Smooth polyester feel</li>
+              </ul>
+              <div className="cs-lanyard-actions">
+                <MagnetBuyButton productId="merch-cruise-card-lanyard-atlantis" label="Buy Now" />
+                <Link href="/shop-full#official-merch" className="coming-soon-cta">
+                  <span>View Full Shop</span>
+                  <span className="cta-arrow" aria-hidden />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* ── Notify ─────────────────────────────────────────── */}
         <section className="cs-notify" id="notify">

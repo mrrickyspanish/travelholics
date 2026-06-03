@@ -26,6 +26,9 @@ export interface MerchProduct {
   description: string;
   badge: string;
   price: number;
+  compareAtPrice?: number;
+  bundlePrice?: number;
+  bundleQuantity?: number;
   currency: "usd";
   stripeLabel: string;
   checkoutMode: "api";
@@ -33,6 +36,14 @@ export interface MerchProduct {
   sizes: string[];
   mockupLabel: string;
   imageSrc?: string;
+  category?: string;
+  subtitle?: string;
+  details?: string[];
+  gallery?: {
+    label: string;
+    imageSrc: string;
+    alt: string;
+  }[];
   comingSoon?: boolean;
 }
 
@@ -217,6 +228,65 @@ export const AMAZON_PRODUCTS: AffiliateProduct[] = [
 ];
 
 export const MERCH_PRODUCTS: MerchProduct[] = [
+  {
+    id: "merch-cruise-card-lanyard-atlantis",
+    zone: "merch",
+    name: "Cruise Card Lanyard",
+    subtitle: "Atlantis Travelholics Edition",
+    description:
+      "The Travelholics Cruise Card Lanyard keeps your cruise card, room key, or travel pass close without sacrificing style. Designed in the signature Atlantis colorway with Travelholics branding, cruise-inspired icons, and a silver lobster claw clip.",
+    badge: "Travel Essentials",
+    price: 1000,
+    compareAtPrice: 1200,
+    bundlePrice: 1800,
+    bundleQuantity: 2,
+    currency: "usd",
+    stripeLabel: "Travelholics Cruise Card Lanyard — Atlantis Edition",
+    checkoutMode: "api",
+    colors: ["Atlantis Gradient"],
+    sizes: ["One Size"],
+    mockupLabel: "Atlantis Edition",
+    imageSrc: "/images/travelholics_lanyard_hero.png",
+    category: "Travel Essentials",
+    details: [
+      '1" wide lanyard',
+      '36" standard length',
+      "Full-color dye sublimation",
+      "Printed on both sides",
+      "Travelholics logo pattern on front",
+      "YOTRAVELHOLIC.COM on back",
+      "Silver lobster claw attachment",
+      "Smooth polyester feel",
+      "Great for cruise cards, ID badges, room keys, and travel passes",
+    ],
+    gallery: [
+      {
+        label: "Hero product image",
+        imageSrc: "/images/travelholics_lanyard_hero.png",
+        alt: "Travelholics Cruise Card Lanyard Atlantis Edition hero product image placeholder",
+      },
+      {
+        label: "Approved design/spec image",
+        imageSrc: "/images/travelholics_lanyard_specs.png",
+        alt: "Travelholics Cruise Card Lanyard approved design and specification image placeholder",
+      },
+      {
+        label: "Logo repeat close-up",
+        imageSrc: "/images/travelholics_lanyard_logo_repeat.png",
+        alt: "Travelholics Cruise Card Lanyard logo repeat and Atlantis gradient detail placeholder",
+      },
+      {
+        label: "Clip/detail image",
+        imageSrc: "/images/travelholics_lanyard_clip_detail.png",
+        alt: "Travelholics Cruise Card Lanyard silver lobster claw clip detail placeholder",
+      },
+      {
+        label: "Lifestyle/use image",
+        imageSrc: "/images/travelholics_lanyard_lifestyle.png",
+        alt: "Travelholics Cruise Card Lanyard lifestyle image with cruise card placeholder",
+      },
+    ],
+  },
   {
     id: "merch-magnet-ticket-pacific",
     zone: "merch",

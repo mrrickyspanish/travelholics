@@ -143,11 +143,13 @@ function AmazonCard({ product, index }: { product: AffiliateProduct; index: numb
 /* ─── Merch Card ─────────────────────────────────────────── */
 
 const COLOR_HEX: Record<string, string> = {
-  Navy:   "#1e3a8a",
-  Sand:   "#c9a96e",
-  Cream:  "#f5f0e8",
+  Navy: "#1e3a8a",
+  Sand: "#c9a96e",
+  Cream: "#f5f0e8",
   Forest: "#166534",
-  White:  "#f8fafc",
+  White: "#f8fafc",
+  Standard: "#1e3a8a",
+  "Atlantis Gradient": "#0f766e",
 };
 
 function MerchCard({
@@ -194,7 +196,12 @@ function MerchCard({
         <span className="absolute top-3 left-3 bg-[#1e3a8a] text-white text-xs font-bold px-2.5 py-1 rounded-full">
           {product.badge}
         </span>
-        <span className="absolute top-3 right-3 text-base font-bold text-[#1e3a8a]">
+        <span className="absolute top-3 right-3 text-right text-base font-bold text-[#1e3a8a]">
+          {product.compareAtPrice && (
+            <span className="block text-xs font-semibold text-stone-400 line-through">
+              {formatMerchPrice(product.compareAtPrice)}
+            </span>
+          )}
           {formatMerchPrice(product.price)}
         </span>
       </div>
@@ -202,8 +209,19 @@ function MerchCard({
       {/* Content */}
       <div className="flex flex-col flex-1 p-5 gap-4">
         <div>
+          {product.category && (
+            <p className="type-kicker text-[#c05c2e] mb-1">{product.category}</p>
+          )}
           <h3 className="font-bold text-ink text-base leading-snug">{product.name}</h3>
+          {product.subtitle && (
+            <p className="text-sm font-semibold text-[#1e3a8a] mt-0.5">{product.subtitle}</p>
+          )}
           <p className="type-caption text-stone-400 mt-1">{product.description}</p>
+          {product.bundlePrice && product.bundleQuantity && (
+            <p className="mt-2 inline-flex rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">
+              Launch: {formatMerchPrice(product.price)} · {product.bundleQuantity} for {formatMerchPrice(product.bundlePrice)}
+            </p>
+          )}
         </div>
 
         {/* Color swatches */}
@@ -248,6 +266,30 @@ function MerchCard({
               ))}
             </div>
           </div>
+        )}
+
+        {product.gallery && product.gallery.length > 1 && (
+          <div>
+            <p className="text-xs font-semibold text-stone-500 mb-2">Image slots ready</p>
+            <div className="grid grid-cols-5 gap-1.5">
+              {product.gallery.map((image) => (
+                <div key={image.imageSrc} className="relative aspect-square overflow-hidden rounded-lg border border-stone-100 bg-stone-50" title={image.label}>
+                  <Image src={image.imageSrc} alt={image.alt} fill className="object-cover" sizes="72px" />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {product.details && product.details.length > 0 && (
+          <ul className="grid gap-1.5 text-xs leading-relaxed text-stone-500">
+            {product.details.slice(0, 4).map((detail) => (
+              <li key={detail} className="flex gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[#059669] shrink-0" aria-hidden />
+                <span>{detail}</span>
+              </li>
+            ))}
+          </ul>
         )}
 
         {/* Quantity stepper */}

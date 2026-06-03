@@ -41,6 +41,11 @@ export async function POST(request: Request) {
     );
   }
 
+  const unitAmount =
+    product.bundlePrice && product.bundleQuantity && quantity >= product.bundleQuantity
+      ? Math.round(product.bundlePrice / product.bundleQuantity)
+      : product.price;
+
   const stripe = new Stripe(stripeKey, {
     apiVersion: "2026-03-25.dahlia",
   });
@@ -58,7 +63,7 @@ export async function POST(request: Request) {
         quantity,
         price_data: {
           currency: product.currency,
-          unit_amount: product.price,
+          unit_amount: unitAmount,
           product_data: {
             name: product.stripeLabel,
             description: `${color} · ${size}`,
@@ -77,6 +82,7 @@ export async function POST(request: Request) {
       color,
       size,
       quantity: String(quantity),
+      unit_amount: String(unitAmount),
       source: "travelholics-shop",
     },
   });
