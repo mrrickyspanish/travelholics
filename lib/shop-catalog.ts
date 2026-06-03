@@ -48,9 +48,8 @@ export interface MerchProduct {
 }
 
 export const SHOP_TABS = [
-  { id: "tiktok-shop", label: "TikTok Shop" },
-  { id: "amazon-finds", label: "Amazon Finds" },
-  { id: "official-merch", label: "Merch" },
+  { id: "travelholics-originals", label: "Originals" },
+  { id: "travelholics-finds", label: "Finds" },
 ] as const;
 
 export const TIKTOK_PRODUCTS: AffiliateProduct[] = [

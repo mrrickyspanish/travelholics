@@ -509,7 +509,7 @@ export default function ShopComingSoon() {
               </ul>
               <div className="cs-lanyard-actions">
                 <MagnetBuyButton productId="merch-cruise-card-lanyard-atlantis" label="Buy Now" />
-                <Link href="/shop-full#official-merch" className="coming-soon-cta">
+                <Link href="/shop-full#travelholics-originals" className="coming-soon-cta">
                   <span>View Full Shop</span>
                   <span className="cta-arrow" aria-hidden />
                 </Link>

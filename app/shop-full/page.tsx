@@ -20,6 +20,7 @@ import {
 } from "@/lib/shop-catalog";
 
 type MerchSelectionState = Record<string, { size: string; color: string; quantity: number }>;
+type FindFilter = "all" | "tiktok" | "amazon";
 
 /* ─── Icons ─────────────────────────────────────────────── */
 
@@ -135,6 +136,64 @@ function AmazonCard({ product, index }: { product: AffiliateProduct; index: numb
         <AmazonIcon className="h-3.5 w-3.5" />
         {isOpening ? "Opening…" : "Get it on Amazon"}
         {!isOpening && <ExternalLink className="h-3 w-3 opacity-60" />}
+      </a>
+    </motion.article>
+  );
+}
+
+function TravelholicsFindCard({ product, index }: { product: AffiliateProduct; index: number }) {
+  const [isOpening, setIsOpening] = useState(false);
+  const isTikTok = product.zone === "tiktok";
+  const platformLabel = isTikTok ? "TikTok Shop" : "Amazon";
+  const ctaLabel = isTikTok ? "Shop on TikTok" : "Get it on Amazon";
+  const Icon = isTikTok ? TikTokIcon : AmazonIcon;
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.35, delay: index * 0.04 }}
+      className="flex h-full flex-col overflow-hidden rounded-2xl border border-stone-100 bg-white shadow-sm"
+    >
+      <div
+        className="relative aspect-square overflow-hidden"
+        style={{ background: `linear-gradient(135deg, ${product.accentFrom}, ${product.accentTo})` }}
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_25%,rgba(255,255,255,0.28),transparent_36%),linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.34))]" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center text-white">
+          <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-white/70">{product.visualLabel}</p>
+          <p className="text-lg font-bold leading-tight drop-shadow-sm">{product.name}</p>
+        </div>
+        <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wide text-[#1e3a8a] shadow-sm">
+          <Icon className="h-3 w-3" />
+          {platformLabel}
+        </span>
+        <span className="absolute right-3 top-3 rounded-full bg-black/55 px-2.5 py-1 text-xs font-bold text-white backdrop-blur">
+          {product.badge}
+        </span>
+      </div>
+
+      <div className="flex flex-1 flex-col gap-2 p-4">
+        <div className="flex items-center justify-between gap-3">
+          <p className="type-kicker text-[#059669]">{product.category}</p>
+          <p className="text-sm font-bold text-[#1e3a8a]">{product.price}</p>
+        </div>
+        <h3 className="font-bold leading-snug text-ink">{product.name}</h3>
+        <p className="type-caption flex-1 text-stone-500 italic line-clamp-3">&ldquo;{product.caption}&rdquo;</p>
+      </div>
+
+      <a
+        href={product.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => { setIsOpening(true); setTimeout(() => setIsOpening(false), 1600); }}
+        aria-busy={isOpening}
+        className={`mx-4 mb-4 flex items-center justify-center gap-1.5 rounded-xl px-4 py-3 text-sm font-bold text-white transition-colors ${isTikTok ? "bg-black hover:bg-zinc-800" : "bg-[#f59e0b] hover:bg-[#d97706]"}`}
+      >
+        <Icon className="h-3.5 w-3.5" />
+        {isOpening ? "Opening…" : ctaLabel}
+        {!isOpening && <ExternalLink className="h-3 w-3 opacity-70" />}
       </a>
     </motion.article>
   );
@@ -362,6 +421,18 @@ export default function ShopPage() {
   );
   const [pendingCheckoutId, setPendingCheckoutId] = useState<string | null>(null);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [findFilter, setFindFilter] = useState<FindFilter>("all");
+
+  const originalProducts = MERCH_PRODUCTS.filter((product) =>
+    ["merch-cruise-card-lanyard-atlantis", "merch-magnet-ticket-pacific", "merch-magnet-mexican-pacific"].includes(product.id)
+  );
+  const allFinds = [...TIKTOK_PRODUCTS, ...AMAZON_PRODUCTS];
+  const visibleFinds = findFilter === "all" ? allFinds : allFinds.filter((product) => product.zone === findFilter);
+  const findFilters: { id: FindFilter; label: string }[] = [
+    { id: "all", label: "All Finds" },
+    { id: "tiktok", label: "TikTok" },
+    { id: "amazon", label: "Amazon" },
+  ];
 
   const updateMerchSelection = (productId: string, next: Partial<MerchSelectionState[string]>) => {
     setMerchSelections((cur) => ({ ...cur, [productId]: { ...cur[productId], ...next } }));
@@ -391,15 +462,19 @@ export default function ShopPage() {
   return (
     <>
       <ShopHeader />
-      <main className="min-h-screen bg-[#FAF9F6] mt-28 md:mt-[152px]">
+      <main className="min-h-screen bg-[#FAF9F6] mt-[152px] md:mt-[140px]">
 
         {/* ── Hero ─────────────────────────────────────────── */}
-        <section
-          className="pt-32 pb-16 px-6 bg-cover bg-center min-h-[470px] md:min-h-[610px] lg:min-h-[750px] flex items-end"
-          style={{ backgroundImage: "url('/images/travelholic_shop_hero.png')" }}
-        >
-          <div className="max-w-6xl mx-auto">
-            {/* Hero image only, headline moved below */}
+        <section className="relative bg-[#f0e2cf]">
+          <div className="relative mx-auto aspect-[2752/1536] w-full max-w-[1600px] overflow-hidden">
+            <Image
+              src="/images/travelholic_shop_hero.png"
+              alt="The Travelholics Shop Wander More beach hero"
+              fill
+              priority
+              sizes="100vw"
+              className="object-contain object-top"
+            />
           </div>
         </section>
 
@@ -410,63 +485,16 @@ export default function ShopPage() {
 
 
 
-        {/* ── TikTok Shop ──────────────────────────────────── */}
-        <section id="tiktok-shop" className="py-16 px-6">
+        {/* ── Travelholics Originals ─────────────────────── */}
+        <section id="travelholics-originals" className="py-16 px-6">
           <div className="max-w-6xl mx-auto">
             <SectionHeader
-              title="Cruise-tested"
-              accent="picks."
-              description="Items Yolanda keeps talking about because they genuinely make the trip easier."
+              title="Travelholics"
+              accent="Originals."
+              description="Owned Travelholics products first: the pieces made for the cruise door, the room key, and the travelers already moving like family."
             />
             <p className="type-caption italic text-stone-400 mb-6 text-center">
-              Affiliate links may earn Travelholics a small commission at no extra cost to you. You&apos;ll be sent to TikTok Shop to complete your purchase.
-            </p>
-            <CardRow>
-              {TIKTOK_PRODUCTS.map((p, i) => (
-                <div key={p.id} className="w-[78vw] max-w-[280px] shrink-0 snap-start md:w-[280px]">
-                  <TikTokCard product={p} index={i} />
-                </div>
-              ))}
-            </CardRow>
-          </div>
-        </section>
-
-        <div className="w-full h-16 md:h-24 bg-repeat-x" style={{ backgroundImage: "url('/images/travelholics_pattern_nautical-background.png')" }} />
-
-        {/* ── Amazon Finds ─────────────────────────────────── */}
-        <section id="amazon-finds" className="py-16 px-6 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              title="Curated Amazon"
-              accent="finds."
-              description="Travel essentials, style on the go, and the everyday carries Yolanda actually reaches for."
-            />
-            <p className="type-caption italic text-stone-400 mb-6 text-center">
-              Amazon links may be affiliate links. Product prices, availability, shipping, and return options are controlled by Amazon or the listed seller and may change after you leave Travelholics.
-            </p>
-            <CardRow>
-              {AMAZON_PRODUCTS.map((p, i) => (
-                <div key={p.id} className="w-[72vw] max-w-[260px] shrink-0 snap-start md:w-[260px]">
-                  <AmazonCard product={p} index={i} />
-                </div>
-              ))}
-            </CardRow>
-          </div>
-        </section>
-
-        {/* ── Interstitial Divider ─────────────────────────── */}
-        <div className="w-full h-16 md:h-24 bg-repeat-x" style={{ backgroundImage: "url('/images/travelholics_pattern_nautical-background.png')" }} />
-
-        {/* ── Official Merch ───────────────────────────────── */}
-        <section id="official-merch" className="py-16 px-6">
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              title="Wear the"
-              accent="brand."
-              description="Official Travelholics gear. Built for the airport, the deck, and everywhere in between."
-            />
-            <p className="type-caption italic text-stone-400 mb-6 text-center">
-              Official merch is sold by Travelholics. The bucket hat, magnets, and apparel use the same secure checkout path. Final shipping, returns, and fulfillment details should be confirmed within your Stripe order communication.
+              Official Travelholics originals are sold directly by Travelholics through secure Stripe checkout. Final shipping, returns, and fulfillment details should be confirmed within your Stripe order communication.
             </p>
 
             <div className="flex items-center justify-center gap-2 mb-8 text-sm font-medium text-[#047857]">
@@ -485,10 +513,9 @@ export default function ShopPage() {
               </div>
             )}
 
-            {/* Mobile: swipe shelf */}
             <div className="md:hidden -mx-6 px-6">
               <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {MERCH_PRODUCTS.map((p) => (
+                {originalProducts.map((p) => (
                   <div key={p.id} className="w-[82vw] max-w-[320px] shrink-0 snap-start">
                     <MerchCard
                       product={p}
@@ -502,9 +529,8 @@ export default function ShopPage() {
               </div>
             </div>
 
-            {/* Desktop: grid */}
             <div className="hidden md:grid md:grid-cols-3 gap-6">
-              {MERCH_PRODUCTS.map((p) => (
+              {originalProducts.map((p) => (
                 <MerchCard
                   key={p.id}
                   product={p}
@@ -517,6 +543,47 @@ export default function ShopPage() {
             </div>
           </div>
         </section>
+
+        <div className="w-full h-16 md:h-24 bg-repeat-x" style={{ backgroundImage: "url('/images/travelholics_pattern_nautical-background.png')" }} />
+
+        {/* ── Travelholics Finds ───────────────────────────── */}
+        <section id="travelholics-finds" className="py-16 px-6 bg-white">
+          <div className="max-w-6xl mx-auto">
+            <SectionHeader
+              title="Travelholics"
+              accent="Finds."
+              description="A single shelf for the travel picks Yolanda recommends across Amazon, TikTok, and future affiliate partners. Use the filters when you want one platform; browse all when you just want the good stuff."
+            />
+            <p className="type-caption italic text-stone-400 mb-6 text-center">
+              Affiliate links may earn Travelholics a small commission at no extra cost to you. Prices, availability, shipping, and return options are controlled by each platform or listed seller and may change after you leave Travelholics.
+            </p>
+
+            <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+              {findFilters.map((filter) => (
+                <button
+                  key={filter.id}
+                  type="button"
+                  onClick={() => setFindFilter(filter.id)}
+                  className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-colors ${findFilter === filter.id ? "border-[#1e3a8a] bg-[#1e3a8a] text-white" : "border-stone-200 bg-white text-stone-500 hover:border-[#059669] hover:text-[#059669]"}`}
+                  aria-pressed={findFilter === filter.id}
+                >
+                  <Tag className="h-3.5 w-3.5" />
+                  {filter.label}
+                </button>
+              ))}
+            </div>
+
+            <CardRow>
+              {visibleFinds.map((p, i) => (
+                <div key={p.id} className="w-[76vw] max-w-[280px] shrink-0 snap-start md:w-[280px]">
+                  <TravelholicsFindCard product={p} index={i} />
+                </div>
+              ))}
+            </CardRow>
+          </div>
+        </section>
+
+        <div className="w-full h-16 md:h-24 bg-repeat-x" style={{ backgroundImage: "url('/images/travelholics_pattern_nautical-background.png')" }} />
 
         {/* ── CTA Banner ───────────────────────────────────── */}
         <section className="py-12 px-6">
