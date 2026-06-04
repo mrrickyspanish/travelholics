@@ -151,8 +151,11 @@ export async function POST(request: Request) {
       .single();
 
     if (error) {
-      console.error("Newsletter signup failed:", error);
-      return NextResponse.json({ error: "Unable to save your signup." }, { status: 500 });
+      console.error("Newsletter signup failed:", JSON.stringify(error, null, 2));
+      return NextResponse.json(
+        { error: "Unable to save your signup.", detail: error.message, code: error.code },
+        { status: 500 },
+      );
     }
 
     await sendNewsletterSignupNotification({
@@ -194,8 +197,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true, already: true });
     }
 
-    console.error("Newsletter signup failed:", error);
-    return NextResponse.json({ error: "Unable to save your signup." }, { status: 500 });
+    console.error("Newsletter signup failed:", JSON.stringify(error, null, 2));
+    return NextResponse.json(
+      { error: "Unable to save your signup.", detail: error.message, code: error.code },
+      { status: 500 },
+    );
   }
 
   await sendNewsletterSignupNotification({

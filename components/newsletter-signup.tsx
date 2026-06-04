@@ -39,7 +39,22 @@ export function NewsletterSignup({ source = "footer-newsletter", compact = false
       const responseBody = await response.json().catch(() => null);
 
       if (!response.ok) {
-        throw new Error(responseBody?.error || "Unable to subscribe right now.");
+        const fallbackMessage = "Unable to subscribe right now.";
+        const baseMessage =
+          typeof responseBody?.error === "string" && responseBody.error.length > 0
+            ? responseBody.error
+            : fallbackMessage;
+        const detail =
+          typeof responseBody?.detail === "string" && responseBody.detail.length > 0
+            ? responseBody.detail
+            : null;
+        const code =
+          typeof responseBody?.code === "string" && responseBody.code.length > 0
+            ? responseBody.code
+            : null;
+
+        const debugSuffix = [detail, code ? `(code: ${code})` : null].filter(Boolean).join(" ");
+        throw new Error(debugSuffix ? `${baseMessage} ${debugSuffix}` : baseMessage);
       }
 
       setStatus("success");
