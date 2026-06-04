@@ -185,14 +185,14 @@ function ProductSlide({
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
 
-      {/* ── Product image — floats in the scene ── */}
+      {/* ── Product image — floats in the scene, bleeds into card top ── */}
       <div
-        className="absolute left-1/2 z-10 -translate-x-1/2"
-        style={{ top: "13%", width: "min(80vw, 350px)" }}
+        className="absolute left-1/2 z-20 -translate-x-1/2"
+        style={{ top: "8%", width: "min(84vw, 370px)" }}
       >
         <div
           className="relative aspect-square"
-          style={{ filter: "drop-shadow(0 32px 56px rgba(5,25,38,0.36))" }}
+          style={{ filter: "drop-shadow(0 28px 48px rgba(5,25,38,0.30))" }}
         >
           <Image
             src={meta.image}
@@ -207,11 +207,11 @@ function ProductSlide({
 
       {/* ── Glass purchase panel ── */}
       <div
-        className="absolute left-3 right-3 z-20"
-        style={{ bottom: 76 }}
+        className="absolute left-3 right-3 z-[15]"
+        style={{ bottom: 60 }}
       >
         <div
-          className="rounded-3xl p-5"
+          className="rounded-3xl p-6"
           style={{
             background: "rgba(255,255,255,0.82)",
             backdropFilter: "blur(32px) saturate(180%)",
@@ -221,25 +221,13 @@ function ProductSlide({
               "0 8px 32px rgba(5,25,38,0.14), 0 2px 8px rgba(5,25,38,0.08)",
           }}
         >
-          {/* Badge + price */}
-          <div className="mb-3 flex items-center justify-between">
-            <span className="rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
-              {meta.badge}
-            </span>
-            <div className="text-right">
-              {product.compareAtPrice && (
-                <p className="text-[0.68rem] font-semibold leading-none text-stone-400 line-through">
-                  {formatMerchPrice(product.compareAtPrice)}
-                </p>
-              )}
-              <p className="text-[1.1rem] font-black text-[#1e3a8a]">
-                {formatMerchPrice(product.price)}
-              </p>
-            </div>
-          </div>
+          {/* Badge */}
+          <span className="mb-3 inline-block rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
+            {meta.badge}
+          </span>
 
-          {/* Title + subtitle */}
-          <h2 className="text-[1.15rem] font-bold leading-snug text-[#111d30]">
+          {/* Title — dominant anchor */}
+          <h2 className="text-[1.45rem] font-black leading-tight text-[#111d30]">
             {product.name}
           </h2>
           <p className="mb-2 text-[0.75rem] font-semibold tracking-wide text-[#1e3a8a]">
@@ -247,7 +235,7 @@ function ProductSlide({
           </p>
 
           {/* Description */}
-          <p className="mb-3 line-clamp-2 text-[0.85rem] font-medium leading-[1.5] text-[#2d3748]">
+          <p className="mb-3 line-clamp-2 text-[0.84rem] font-medium leading-[1.5] text-[#2d3748]">
             {meta.description}
           </p>
 
@@ -258,8 +246,21 @@ function ProductSlide({
             </p>
           )}
 
-          {/* Qty + Buy Now */}
+          {/* Bottom action row: price + qty + buy */}
           <div className="flex items-center gap-3">
+            {/* Price block */}
+            <div className="flex flex-col leading-none">
+              {product.compareAtPrice && (
+                <span className="text-[0.68rem] font-semibold text-stone-400 line-through">
+                  {formatMerchPrice(product.compareAtPrice)}
+                </span>
+              )}
+              <span className="text-[1.25rem] font-black text-[#1e3a8a]">
+                {formatMerchPrice(product.price)}
+              </span>
+            </div>
+
+            {/* Qty stepper */}
             <div
               className="flex items-center gap-2 rounded-xl border px-3 py-[11px]"
               style={{
