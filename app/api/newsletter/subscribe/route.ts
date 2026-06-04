@@ -9,6 +9,7 @@ const DEFAULT_INTERESTS = ["newsletter", "shop_deals", "cruise_deals"];
 const TO_EMAIL = "rjsmom1_68@yahoo.com";
 const BCC_EMAIL = "ricky@creativeeyestudios.com";
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+const NEWSLETTER_AUTOREPLY_ENABLED = process.env.NEWSLETTER_AUTOREPLY_ENABLED !== "false";
 
 type NewsletterSubscribeRequest = {
   firstName?: string;
@@ -38,6 +39,16 @@ function uniqueInterests(interests: string[]) {
   );
 }
 
+function getResendClient() {
+  const resendKey = process.env.RESEND_API_KEY;
+
+  if (!resendKey) {
+    return null;
+  }
+
+  return new Resend(resendKey);
+}
+
 async function sendNewsletterSignupNotification({
   firstName,
   email,
@@ -51,38 +62,94 @@ async function sendNewsletterSignupNotification({
   interests: string[];
   already?: boolean;
 }) {
-  const resendKey = process.env.RESEND_API_KEY;
+  const resend = getResendClient();
 
-  if (!resendKey) {
+  if (!resend) {
     console.warn("Newsletter signup notification skipped: RESEND_API_KEY is not configured.");
     return;
   }
 
-  const resend = new Resend(resendKey);
-  const subject = already
-    ? `Travelholics Newsletter Updated: ${email}`
-    : `New Travelholics Newsletter Signup: ${firstName || email}`;
+  try {
+    const subject = already
+      ? `Travelholics Newsletter Updated: ${email}`
+      : `New Travelholics Newsletter Signup: ${firstName || email}`;
 
-  const html = `
-    <h2>${already ? "Newsletter Subscriber Updated" : "New Newsletter Signup"}</h2>
-    <p><strong>First Name:</strong> ${firstName || "N/A"}</p>
-    <p><strong>Email:</strong> ${email}</p>
-    <p><strong>Source:</strong> ${source}</p>
-    <p><strong>Interests:</strong> ${interests.join(", ")}</p>
-    <p><strong>Status:</strong> Subscribed</p>
-  `;
+    const html = `
+      <h2>${already ? "Newsletter Subscriber Updated" : "New Newsletter Signup"}</h2>
+      <p><strong>First Name:</strong> ${firstName || "N/A"}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Source:</strong> ${source}</p>
+      <p><strong>Interests:</strong> ${interests.join(", ")}</p>
+      <p><strong>Status:</strong> Subscribed</p>
+    `;
 
-  const { error } = await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [TO_EMAIL],
-    bcc: [BCC_EMAIL],
-    subject,
-    html,
-    replyTo: email,
-  });
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [TO_EMAIL],
+      bcc: [BCC_EMAIL],
+      subject,
+      html,
+      replyTo: email,
+    });
 
-  if (error) {
-    console.error("Newsletter signup notification failed:", error);
+    if (error) {
+      console.error("Newsletter signup notification failed:", error);
+    }
+  } catch (error) {
+    console.error("Newsletter signup notification exception:", error);
+  }
+}
+
+async function sendNewsletterSignupAutoReply({
+  firstName,
+  email,
+  already,
+}: {
+  firstName: string | null;
+  email: string;
+  already?: boolean;
+}) {
+  if (!NEWSLETTER_AUTOREPLY_ENABLED) {
+    return;
+  }
+
+  const resend = getResendClient();
+
+  if (!resend) {
+    return;
+  }
+
+  try {
+    const name = firstName || "there";
+    const subject = already
+      ? "You are still on the Travelholics Cruise Life list"
+      : "Welcome to the Travelholics Cruise Life list";
+
+    const html = already
+      ? `
+        <p>Hi ${name},</p>
+        <p>You are already subscribed to Travelholics Cruise Life updates. We will keep sending cruise deals, shop drops, and travel tips to this email address.</p>
+        <p>If this was not you, reply to this email and we will help.</p>
+      `
+      : `
+        <p>Hi ${name},</p>
+        <p>Welcome to Travelholics Cruise Life. You are all set to receive cruise deals, shop drops, travel tips, and Travelholics updates.</p>
+        <p>Keep an eye out for our next email.</p>
+      `;
+
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [email],
+      subject,
+      html,
+      replyTo: TO_EMAIL,
+    });
+
+    if (error) {
+      console.error("Newsletter auto-reply failed:", error);
+    }
+  } catch (error) {
+    console.error("Newsletter auto-reply exception:", error);
   }
 }
 
@@ -158,13 +225,20 @@ export async function POST(request: Request) {
       );
     }
 
-    await sendNewsletterSignupNotification({
-      firstName,
-      email,
-      source,
-      interests: mergedInterests,
-      already: Boolean(existing),
-    });
+    await Promise.all([
+      sendNewsletterSignupNotification({
+        firstName,
+        email,
+        source,
+        interests: mergedInterests,
+        already: Boolean(existing),
+      }),
+      sendNewsletterSignupAutoReply({
+        firstName,
+        email,
+        already: Boolean(existing),
+      }),
+    ]);
 
     return NextResponse.json({ success: true, subscriberId: data?.id, already: Boolean(existing) });
   }
@@ -186,13 +260,20 @@ export async function POST(request: Request) {
 
   if (error) {
     if (error.code === "23505") {
-      await sendNewsletterSignupNotification({
-        firstName,
-        email,
-        source,
-        interests: requestedInterests,
-        already: true,
-      });
+      await Promise.all([
+        sendNewsletterSignupNotification({
+          firstName,
+          email,
+          source,
+          interests: requestedInterests,
+          already: true,
+        }),
+        sendNewsletterSignupAutoReply({
+          firstName,
+          email,
+          already: true,
+        }),
+      ]);
 
       return NextResponse.json({ success: true, already: true });
     }
@@ -204,12 +285,18 @@ export async function POST(request: Request) {
     );
   }
 
-  await sendNewsletterSignupNotification({
-    firstName,
-    email,
-    source,
-    interests: requestedInterests,
-  });
+  await Promise.all([
+    sendNewsletterSignupNotification({
+      firstName,
+      email,
+      source,
+      interests: requestedInterests,
+    }),
+    sendNewsletterSignupAutoReply({
+      firstName,
+      email,
+    }),
+  ]);
 
   return NextResponse.json({ success: true });
 }

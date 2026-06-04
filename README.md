@@ -131,8 +131,10 @@ For production on Vercel, confirm these environment variables are set:
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-side upserts, duplicate subscriber handling, and Duck Hunt lead-to-subscriber linking |
 | `RESEND_API_KEY` | Email notifications for forms and newsletter signups |
 | `RESEND_FROM_EMAIL` | Branded sender address once the sending domain is verified in Resend |
+| `NEWSLETTER_AUTOREPLY_ENABLED` | Optional. Set to `false` to disable subscriber confirmation emails |
 
 Newsletter signup notifications are sent to `rjsmom1_68@yahoo.com` with a BCC to `ricky@creativeeyestudios.com`. If `RESEND_API_KEY` is missing, newsletter records can still be saved, but the notification email is skipped.
+Subscribers also receive a confirmation response email by default. To disable that behavior while using external campaigns, set `NEWSLETTER_AUTOREPLY_ENABLED=false`.
 
 Currently using an automatic server-side flow:
 
