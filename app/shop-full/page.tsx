@@ -35,7 +35,6 @@ type ProductMeta = {
   subtitle: string;
   description: string;
   image: string;
-  bgPosition: string;
   promo?: string;
 };
 
@@ -46,7 +45,6 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     description:
       "Keeps your cruise card, room key, or travel pass close without sacrificing style.",
     image: "/images/travelholics_lanyard_hero.png",
-    bgPosition: "55% center",
     promo: "Bundle: 2 for $18.00",
   },
   "merch-magnet-ticket-pacific": {
@@ -55,7 +53,6 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     description:
       "A collectible Travelholics door magnet inspired by cruise tickets and built to stand out on your stateroom door.",
     image: "/images/travelholics_product_ticket-magnet-pacific.png",
-    bgPosition: "45% center",
   },
   "merch-magnet-mexican-pacific": {
     badge: "Original",
@@ -63,7 +60,6 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     description:
       "A bold, colorful Travelholics magnet made to bring personality and cruise energy to your stateroom door.",
     image: "/images/travelholics_product_pacific-mexican-door-magnet.png",
-    bgPosition: "50% center",
   },
 };
 
@@ -148,40 +144,15 @@ function MobileNavDrawer({
             height={32}
             className="h-8 w-auto"
           />
-          <button
-            onClick={onClose}
-            aria-label="Close menu"
-            className="text-stone-400 hover:text-[#1e3a8a]"
-          >
+          <button onClick={onClose} aria-label="Close menu" className="text-stone-400 hover:text-[#1e3a8a]">
             <X className="h-5 w-5" />
           </button>
         </div>
-        <Link
-          href="/"
-          className="font-semibold text-[#1e3a8a] transition-colors hover:text-[#059669]"
-          onClick={onClose}
-        >
-          Home
-        </Link>
-        <Link
-          href="/shop-full"
-          className="font-semibold text-[#1e3a8a] transition-colors hover:text-[#059669]"
-          onClick={onClose}
-        >
-          Shop
-        </Link>
-        <Link
-          href="/#contact"
-          className="font-semibold text-[#1e3a8a] transition-colors hover:text-[#059669]"
-          onClick={onClose}
-        >
-          Plan My Trip
-        </Link>
+        <Link href="/" className="font-semibold text-[#1e3a8a] transition-colors hover:text-[#059669]" onClick={onClose}>Home</Link>
+        <Link href="/shop-full" className="font-semibold text-[#1e3a8a] transition-colors hover:text-[#059669]" onClick={onClose}>Shop</Link>
+        <Link href="/#contact" className="font-semibold text-[#1e3a8a] transition-colors hover:text-[#059669]" onClick={onClose}>Plan My Trip</Link>
         <button
-          onClick={() => {
-            onTrustOpen();
-            onClose();
-          }}
+          onClick={() => { onTrustOpen(); onClose(); }}
           className="text-left text-sm text-stone-500 transition-colors hover:text-[#1e3a8a]"
         >
           Why travelers trust these picks →
@@ -191,13 +162,14 @@ function MobileNavDrawer({
   );
 }
 
-/* ─── Product Slide ────────────────────────────────────────── */
+/* ─── Product Slide ─────────────────────────────────────────
+   Background is intentionally NOT here — it lives in the parent
+   section so it stays fixed while only the product content swipes.
+── */
 
 function ProductSlide({
   product,
   meta,
-  slideIndex,
-  total,
   quantity,
   isPending,
   onQuantityChange,
@@ -205,132 +177,94 @@ function ProductSlide({
 }: {
   product: MerchProduct;
   meta: ProductMeta;
-  slideIndex: number;
-  total: number;
   quantity: number;
   isPending: boolean;
   onQuantityChange: (q: number) => void;
   onCheckout: () => void;
 }) {
   return (
-    <div className="relative h-full w-full flex-shrink-0 snap-start overflow-hidden">
+    <div className="relative h-full w-full flex-shrink-0 snap-start">
 
-      {/* ── Background ─────────────────────── */}
-      <div className="absolute inset-0">
-        <Image
-          src="/images/a_bright_tropical_beach_scene_at_golden_hour_sun.png.png"
-          alt=""
-          aria-hidden
-          fill
-          className="scale-[1.03] object-cover"
-          style={{ objectPosition: meta.bgPosition }}
-          priority={slideIndex === 0}
-          sizes="100vw"
-        />
-      </div>
-
-      {/* ── Overlay gradients ──────────────── */}
-      <div
-        className="absolute inset-0"
-        aria-hidden
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, transparent 25%, rgba(6,28,45,0.28) 100%)",
-        }}
-      />
-
-      {/* ── Top labels ─────────────────────── */}
-      <div className="pointer-events-none absolute left-0 right-0 top-[68px] z-10 text-center">
-        <p className="text-[0.58rem] font-black uppercase tracking-[0.28em] text-white/55">
-          The Travelholics Shop
-        </p>
-        <p className="mt-0.5 text-[0.58rem] font-bold uppercase tracking-[0.22em] text-white/45">
-          Travelholics Originals · {slideIndex + 1} / {total}
-        </p>
-      </div>
-
-      {/* ── Product image ──────────────────── */}
+      {/* ── Product image — floats in the scene ── */}
       <div
         className="absolute left-1/2 z-10 -translate-x-1/2"
-        style={{ top: "14%", width: "min(78vw, 340px)" }}
+        style={{ top: "13%", width: "min(80vw, 350px)" }}
       >
         <div
           className="relative aspect-square"
-          style={{
-            filter: "drop-shadow(0 28px 48px rgba(5,25,38,0.32))",
-          }}
+          style={{ filter: "drop-shadow(0 32px 56px rgba(5,25,38,0.36))" }}
         >
           <Image
             src={meta.image}
             alt={product.name}
             fill
             className="object-contain"
-            sizes="(max-width: 640px) 78vw, 340px"
-            priority={slideIndex === 0}
+            sizes="(max-width: 640px) 80vw, 350px"
+            priority
           />
         </div>
       </div>
 
-      {/* ── Glass panel ────────────────────── */}
+      {/* ── Glass purchase panel ── */}
       <div
-        className="absolute left-4 right-4 z-20"
-        style={{ bottom: 72 }}
+        className="absolute left-3 right-3 z-20"
+        style={{ bottom: 76 }}
       >
         <div
-          className="rounded-3xl p-[18px]"
+          className="rounded-3xl p-5"
           style={{
-            background: "rgba(255,255,255,0.76)",
-            backdropFilter: "blur(22px)",
-            WebkitBackdropFilter: "blur(22px)",
-            border: "1px solid rgba(255,255,255,0.60)",
-            boxShadow: "0 20px 60px rgba(5,25,38,0.18)",
+            background: "rgba(255,255,255,0.82)",
+            backdropFilter: "blur(32px) saturate(180%)",
+            WebkitBackdropFilter: "blur(32px) saturate(180%)",
+            border: "1.5px solid rgba(255,255,255,0.70)",
+            boxShadow:
+              "0 8px 32px rgba(5,25,38,0.14), 0 2px 8px rgba(5,25,38,0.08)",
           }}
         >
-          {/* Meta row: badge + price */}
-          <div className="mb-2.5 flex items-center justify-between">
-            <span className="rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.60rem] font-black uppercase tracking-[0.16em] text-white">
+          {/* Badge + price */}
+          <div className="mb-3 flex items-center justify-between">
+            <span className="rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
               {meta.badge}
             </span>
             <div className="text-right">
               {product.compareAtPrice && (
-                <p className="text-[0.60rem] font-semibold leading-none text-stone-400 line-through">
+                <p className="text-[0.68rem] font-semibold leading-none text-stone-400 line-through">
                   {formatMerchPrice(product.compareAtPrice)}
                 </p>
               )}
-              <p className="text-[1rem] font-bold text-[#1e3a8a]">
+              <p className="text-[1.1rem] font-black text-[#1e3a8a]">
                 {formatMerchPrice(product.price)}
               </p>
             </div>
           </div>
 
-          {/* Title block */}
-          <h2 className="text-[1.1rem] font-bold leading-snug text-[#1a3a5c]">
+          {/* Title + subtitle */}
+          <h2 className="text-[1.15rem] font-bold leading-snug text-[#111d30]">
             {product.name}
           </h2>
-          <p className="mb-2 text-[0.70rem] font-semibold tracking-wide text-[#1e3a8a]/55">
+          <p className="mb-2 text-[0.75rem] font-semibold tracking-wide text-[#1e3a8a]">
             {meta.subtitle}
           </p>
 
           {/* Description */}
-          <p className="mb-3 line-clamp-2 text-[0.82rem] leading-[1.5] text-stone-600">
+          <p className="mb-3 line-clamp-2 text-[0.85rem] font-medium leading-[1.5] text-[#2d3748]">
             {meta.description}
           </p>
 
-          {/* Promo tag (lanyard only) */}
+          {/* Promo tag — lanyard only */}
           {meta.promo && (
-            <p className="mb-3 inline-flex w-fit rounded-full border border-amber-100 bg-amber-50 px-3 py-[5px] text-[0.68rem] font-bold text-amber-700">
+            <p className="mb-3 inline-flex w-fit rounded-full border border-amber-200 bg-amber-50 px-3 py-[5px] text-[0.72rem] font-bold text-amber-700">
               {meta.promo}
             </p>
           )}
 
-          {/* Purchase row */}
+          {/* Qty + Buy Now */}
           <div className="flex items-center gap-3">
-            {/* Quantity stepper */}
             <div
-              className="flex items-center gap-1.5 rounded-xl border px-3 py-[10px]"
+              className="flex items-center gap-2 rounded-xl border px-3 py-[11px]"
               style={{
-                background: "rgba(255,255,255,0.7)",
-                borderColor: "rgba(30,58,138,0.14)",
+                background: "rgba(255,255,255,0.9)",
+                borderColor: "rgba(30,58,138,0.18)",
               }}
             >
               <button
@@ -339,9 +273,9 @@ function ProductSlide({
                 aria-label="Decrease quantity"
                 className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
               >
-                <Minus className="h-3 w-3" />
+                <Minus className="h-3.5 w-3.5" />
               </button>
-              <span className="w-5 text-center text-sm font-bold text-[#1a3a5c]">
+              <span className="w-5 text-center text-sm font-bold text-[#111d30]">
                 {quantity}
               </span>
               <button
@@ -350,15 +284,14 @@ function ProductSlide({
                 aria-label="Increase quantity"
                 className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
               >
-                <Plus className="h-3 w-3" />
+                <Plus className="h-3.5 w-3.5" />
               </button>
             </div>
 
-            {/* Buy Now */}
             <RippleButton
               onClick={onCheckout}
               disabled={isPending}
-              className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isPending ? "Opening…" : "Buy Now"}
               {!isPending && <ArrowRight className="h-3.5 w-3.5" />}
@@ -372,7 +305,7 @@ function ProductSlide({
 
 /* ─── Page ─────────────────────────────────────────────────── */
 
-const UTILITY_H = 32; // px — h-8
+const UTILITY_H = 32;
 
 export default function ShopFullPage() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -381,20 +314,15 @@ export default function ShopFullPage() {
   const [pendingCheckoutId, setPendingCheckoutId] = useState<string | null>(null);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [quantities, setQuantities] = useState<Record<string, number>>(
-    () =>
-      PHASE1_IDS.reduce<Record<string, number>>((acc, id) => {
-        acc[id] = 1;
-        return acc;
-      }, {})
+    () => PHASE1_IDS.reduce<Record<string, number>>((acc, id) => { acc[id] = 1; return acc; }, {})
   );
 
   const trackRef = useRef<HTMLDivElement>(null);
 
-  const products = MERCH_PRODUCTS.filter((p) => PHASE1_IDS.includes(p.id)).sort(
-    (a, b) => PHASE1_IDS.indexOf(a.id) - PHASE1_IDS.indexOf(b.id)
-  );
+  const products = MERCH_PRODUCTS
+    .filter((p) => PHASE1_IDS.includes(p.id))
+    .sort((a, b) => PHASE1_IDS.indexOf(a.id) - PHASE1_IDS.indexOf(b.id));
 
-  // Sync active dot to visible slide
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -441,9 +369,7 @@ export default function ShopFullPage() {
       if (!res.ok || !data.url) throw new Error(data.error ?? "Unable to start checkout.");
       window.location.href = data.url;
     } catch (err) {
-      setCheckoutError(
-        err instanceof Error ? err.message : "Unable to start checkout."
-      );
+      setCheckoutError(err instanceof Error ? err.message : "Unable to start checkout.");
     } finally {
       setPendingCheckoutId(null);
     }
@@ -462,9 +388,7 @@ export default function ShopFullPage() {
       </AnimatePresence>
 
       {/* ── Utility Bar ─────────────────────────────────────── */}
-      <div
-        className="fixed left-0 right-0 top-0 z-[70] flex h-8 items-center justify-center bg-[#059669] text-[0.70rem] font-semibold tracking-wide text-white"
-      >
+      <div className="fixed left-0 right-0 top-0 z-[70] flex h-8 items-center justify-center bg-[#059669] text-[0.70rem] font-semibold tracking-wide text-white">
         Free shipping on orders over $50
       </div>
 
@@ -476,18 +400,38 @@ export default function ShopFullPage() {
           style={{ height: `calc(100svh - ${UTILITY_H}px)` }}
         >
 
-          {/* Overlay Header */}
+          {/* ── STATIC background — sits behind everything, never swipes ── */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/images/a_bright_tropical_beach_scene_at_golden_hour_sun.png.png"
+              alt=""
+              aria-hidden
+              fill
+              className="object-cover"
+              style={{ objectPosition: "50% center" }}
+              priority
+              sizes="100vw"
+            />
+            {/* Light gradient — preserves golden warmth, improves readability */}
+            <div
+              className="absolute inset-0"
+              aria-hidden
+              style={{
+                background:
+                  "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, transparent 20%, rgba(5,20,38,0.22) 100%)",
+              }}
+            />
+          </div>
+
+          {/* ── Overlay Header — transparent ── */}
           <div className="absolute left-0 right-0 top-0 z-30 flex h-14 items-center justify-between px-4">
-            {/* Left: menu */}
             <button
               aria-label="Open menu"
               onClick={() => setNavOpen(true)}
-              className="p-2 text-white/80 transition-colors hover:text-white"
+              className="p-2 text-white/85 transition-colors hover:text-white"
             >
               <Menu className="h-5 w-5" />
             </button>
-
-            {/* Center: logo */}
             <Link href="/" className="absolute left-1/2 -translate-x-1/2">
               <Image
                 src="/images/travelholics_logo_wordmark.svg"
@@ -498,8 +442,6 @@ export default function ShopFullPage() {
                 priority
               />
             </Link>
-
-            {/* Right: icons */}
             <div className="flex items-center gap-1">
               <button aria-label="Search" className="p-2 text-white/75 transition-colors hover:text-white">
                 <Search className="h-[18px] w-[18px]" />
@@ -513,18 +455,26 @@ export default function ShopFullPage() {
             </div>
           </div>
 
-          {/* Slide track */}
+          {/* ── Top labels — static, updates via activeIndex ── */}
+          <div className="pointer-events-none absolute left-0 right-0 top-[62px] z-10 text-center">
+            <p className="text-[0.58rem] font-black uppercase tracking-[0.28em] text-white/65">
+              The Travelholics Shop
+            </p>
+            <p className="mt-0.5 text-[0.58rem] font-bold uppercase tracking-[0.22em] text-white/55">
+              Travelholics Originals · {activeIndex + 1} / {products.length}
+            </p>
+          </div>
+
+          {/* ── Swipe track — ONLY product image + glass panel move ── */}
           <div
             ref={trackRef}
-            className="flex h-full snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="absolute inset-0 flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {products.map((product, i) => (
+            {products.map((product) => (
               <ProductSlide
                 key={product.id}
                 product={product}
                 meta={PRODUCT_META[product.id]}
-                slideIndex={i}
-                total={products.length}
                 quantity={quantities[product.id] ?? 1}
                 isPending={pendingCheckoutId === product.id}
                 onQuantityChange={(q) =>
@@ -535,22 +485,20 @@ export default function ShopFullPage() {
             ))}
           </div>
 
-          {/* Bottom controls — sit above the glass panel's bottom edge */}
+          {/* ── Bottom controls — above swipe track ── */}
           <div className="pointer-events-none absolute bottom-4 left-0 right-0 z-30 flex flex-col items-center gap-2">
-            {/* Checkout error */}
             {checkoutError && (
               <p className="pointer-events-auto rounded-full bg-rose-500/85 px-4 py-1.5 text-xs font-semibold text-white">
                 {checkoutError}
               </p>
             )}
 
-            {/* Arrows + dots */}
             <div className="pointer-events-auto flex items-center gap-4">
               <button
                 onClick={() => goTo(Math.max(0, activeIndex - 1))}
                 disabled={activeIndex === 0}
                 aria-label="Previous product"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/35 disabled:opacity-25"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/25 text-white backdrop-blur-sm transition-colors hover:bg-white/40 disabled:opacity-25"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
@@ -563,8 +511,8 @@ export default function ShopFullPage() {
                     aria-label={`Product ${i + 1}`}
                     className={`rounded-full transition-all duration-300 ${
                       i === activeIndex
-                        ? "h-2.5 w-6 bg-white"
-                        : "h-2.5 w-2.5 bg-white/40 hover:bg-white/65"
+                        ? "h-2.5 w-7 bg-white shadow-sm"
+                        : "h-2.5 w-2.5 bg-white/45 hover:bg-white/65"
                     }`}
                   />
                 ))}
@@ -574,22 +522,21 @@ export default function ShopFullPage() {
                 onClick={() => goTo(Math.min(products.length - 1, activeIndex + 1))}
                 disabled={activeIndex === products.length - 1}
                 aria-label="Next product"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/35 disabled:opacity-25"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/25 text-white backdrop-blur-sm transition-colors hover:bg-white/40 disabled:opacity-25"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
             </div>
 
-            {/* Trust strip */}
-            <div className="pointer-events-auto flex items-center gap-3 text-white/65">
-              <span className="flex items-center gap-1 text-[0.65rem] font-semibold">
+            <div className="pointer-events-auto flex items-center gap-3">
+              <span className="flex items-center gap-1 text-[0.65rem] font-semibold text-white/75">
                 <ShieldCheck className="h-3 w-3" />
                 Secure checkout via Stripe
               </span>
               <span className="text-white/30" aria-hidden>|</span>
               <button
                 onClick={() => setTrustOpen(true)}
-                className="text-[0.65rem] font-semibold underline underline-offset-2 transition-colors hover:text-white"
+                className="text-[0.65rem] font-semibold text-white/75 underline underline-offset-2 transition-colors hover:text-white"
               >
                 Why we recommend these →
               </button>
@@ -606,18 +553,14 @@ export default function ShopFullPage() {
               viewport={{ once: true }}
               className="relative overflow-hidden rounded-2xl px-8 py-12 text-center text-white"
               style={{
-                backgroundImage:
-                  "url('/images/travelholics_brand-hero_cruise-ship.png')",
+                backgroundImage: "url('/images/travelholics_brand-hero_cruise-ship.png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center 90%",
               }}
             >
               <div
                 className="absolute inset-0 rounded-2xl"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(30,58,92,0.82), rgba(30,58,92,0.58))",
-                }}
+                style={{ background: "linear-gradient(135deg, rgba(30,58,92,0.82), rgba(30,58,92,0.58))" }}
                 aria-hidden
               />
               <div className="relative z-10">
@@ -626,9 +569,7 @@ export default function ShopFullPage() {
                 </p>
                 <h2 className="mb-2 text-2xl font-bold text-white md:text-3xl">
                   Need help planning{" "}
-                  <em className="font-serif font-light italic text-[#f59e0b]">
-                    the trip too?
-                  </em>
+                  <em className="font-serif font-light italic text-[#f59e0b]">the trip too?</em>
                 </h2>
                 <p className="mx-auto mb-6 max-w-xs text-sm leading-relaxed text-white/70">
                   Shop the gear, then let Travelholics help plan the experience.
