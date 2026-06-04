@@ -10,6 +10,8 @@ const TO_EMAIL = "rjsmom1_68@yahoo.com";
 const BCC_EMAIL = "ricky@creativeeyestudios.com";
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 const NEWSLETTER_AUTOREPLY_ENABLED = process.env.NEWSLETTER_AUTOREPLY_ENABLED !== "false";
+const NEWSLETTER_CONTACT_EMAIL = "hello@yotravelholic.com";
+const NEWSLETTER_WEBSITE_URL = "yotravelholic.com";
 
 type NewsletterSubscribeRequest = {
   firstName?: string;
@@ -130,11 +132,13 @@ async function sendNewsletterSignupAutoReply({
         <p>Hi ${name},</p>
         <p>You are already subscribed to Travelholics Cruise Life updates. We will keep sending cruise deals, shop drops, and travel tips to this email address.</p>
         <p>If this was not you, reply to this email and we will help.</p>
+        <p>Best,<br />Travelholics Team<br />${NEWSLETTER_CONTACT_EMAIL}<br />${NEWSLETTER_WEBSITE_URL}</p>
       `
       : `
         <p>Hi ${name},</p>
         <p>Welcome to Travelholics Cruise Life. You are all set to receive cruise deals, shop drops, travel tips, and Travelholics updates.</p>
         <p>Keep an eye out for our next email.</p>
+        <p>Best,<br />Travelholics Team<br />${NEWSLETTER_CONTACT_EMAIL}<br />${NEWSLETTER_WEBSITE_URL}</p>
       `;
 
     const { error } = await resend.emails.send({
