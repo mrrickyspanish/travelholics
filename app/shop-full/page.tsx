@@ -44,7 +44,7 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     subtitle: "Atlantis Travelholics Edition",
     description:
       "Keeps your cruise card, room key, or travel pass close without sacrificing style.",
-    image: "/images/travelholics_lanyard_hero.png",
+    image: "/images/travelholics_lanyard_transparent.png",
     promo: "Bundle: 2 for $18.00",
   },
   "merch-magnet-ticket-pacific": {
