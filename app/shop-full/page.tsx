@@ -46,7 +46,7 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     description:
       "Keeps your cruise card, room key, or travel pass close without sacrificing style.",
     image: "/images/travelholics_lanyard_hero.png",
-    bgPosition: "62% center",
+    bgPosition: "55% center",
     promo: "Bundle: 2 for $18.00",
   },
   "merch-magnet-ticket-pacific": {
@@ -55,7 +55,7 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     description:
       "A collectible Travelholics door magnet inspired by cruise tickets and built to stand out on your stateroom door.",
     image: "/images/travelholics_product_ticket-magnet-pacific.png",
-    bgPosition: "38% center",
+    bgPosition: "45% center",
   },
   "merch-magnet-mexican-pacific": {
     badge: "Original",
@@ -218,11 +218,11 @@ function ProductSlide({
       {/* ── Background ─────────────────────── */}
       <div className="absolute inset-0">
         <Image
-          src="/images/01-travelholics-lanyard-alana-beach.png"
+          src="/images/a_bright_tropical_beach_scene_at_golden_hour_sun.png.png"
           alt=""
           aria-hidden
           fill
-          className="scale-[1.04] object-cover"
+          className="scale-[1.03] object-cover"
           style={{ objectPosition: meta.bgPosition }}
           priority={slideIndex === 0}
           sizes="100vw"
@@ -235,7 +235,7 @@ function ProductSlide({
         aria-hidden
         style={{
           background:
-            "linear-gradient(to bottom, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.02) 32%, rgba(6,28,45,0.20) 100%), radial-gradient(circle at 50% 28%, rgba(255,255,255,0.32) 0%, transparent 46%)",
+            "linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, transparent 25%, rgba(6,28,45,0.28) 100%)",
         }}
       />
 
