@@ -269,7 +269,7 @@ export default function ProductPage() {
         </div>
       </div>
 
-      <main className="min-h-screen bg-[#FDFCF9]">
+      <main className="min-h-screen overflow-x-hidden bg-[#FDFCF9]">
         <div className="mx-auto max-w-5xl px-4 py-8 md:py-14">
           <div className="grid gap-8 md:grid-cols-2 md:gap-14">
 
@@ -291,15 +291,15 @@ export default function ProductPage() {
                 />
               </button>
 
-              {/* Thumbnail strip — max 6 shown, scrollable */}
+              {/* Thumbnail strip — 4 visible on mobile, +N more button */}
               {gallery.length > 1 && (
-                <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                  {gallery.slice(0, 6).map((src, i) => (
+                <div className="grid grid-cols-5 gap-2">
+                  {gallery.slice(0, 4).map((src, i) => (
                     <button
                       key={i}
                       onClick={() => setActiveImage(i)}
                       aria-label={`View image ${i + 1}`}
-                      className={`relative h-[72px] w-[72px] flex-shrink-0 overflow-hidden rounded-xl bg-stone-100 transition-all ${
+                      className={`relative aspect-square overflow-hidden rounded-xl bg-stone-100 transition-all ${
                         i === activeImage
                           ? "ring-2 ring-[#1e3a8a] ring-offset-2"
                           : "opacity-55 hover:opacity-90"
@@ -310,16 +310,16 @@ export default function ProductPage() {
                         alt={`${product.name} view ${i + 1}`}
                         fill
                         className="object-contain p-2"
-                        sizes="72px"
+                        sizes="20vw"
                       />
                     </button>
                   ))}
-                  {gallery.length > 6 && (
+                  {gallery.length > 4 && (
                     <button
                       onClick={() => setGalleryOpen(true)}
-                      className="flex h-[72px] w-[72px] flex-shrink-0 items-center justify-center rounded-xl bg-stone-100 text-[0.65rem] font-bold text-stone-500 transition-colors hover:bg-stone-200"
+                      className="flex aspect-square items-center justify-center rounded-xl bg-stone-100 text-[0.65rem] font-bold text-stone-500 transition-colors hover:bg-stone-200"
                     >
-                      +{gallery.length - 6} more
+                      +{gallery.length - 4}
                     </button>
                   )}
                 </div>
