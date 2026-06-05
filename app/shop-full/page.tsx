@@ -417,6 +417,14 @@ function ProductSlide({
             </p>
           )}
 
+          {/* View details link */}
+          <Link
+            href={`/shop/${product.id}`}
+            className="mb-3 inline-block text-[0.72rem] font-semibold text-[#1e3a8a] underline underline-offset-2 hover:text-[#059669] transition-colors"
+          >
+            View full details →
+          </Link>
+
           {/* Bottom action row: price + qty + buy */}
           <div className="flex items-center gap-3">
             {/* Price block */}
