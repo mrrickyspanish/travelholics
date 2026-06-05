@@ -188,7 +188,12 @@ function GalleryModal({
   );
 }
 
-/* ─── Page ─────────────────────────────────────────────────── */
+/* ─── Creator video map ────────────────────────────────────── */
+
+const PRODUCT_VIDEOS: Record<string, string> = {
+  "merch-magnet-ticket-pacific": "/videos/alana_pacific_cruise_magnent_ad.mp4",
+  "merch-magnet-mexican-pacific": "/videos/traveholic_pacific_door_magnent.mp4",
+};
 
 export default function ProductPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -440,6 +445,30 @@ export default function ProductPage() {
           </div>
         </div>
       </main>
+
+      {/* ── Creator video section ───────────────────────────── */}
+      {PRODUCT_VIDEOS[product.id] && (
+        <section className="bg-[#0f172a] px-4 py-14">
+          <div className="mx-auto max-w-md">
+            <p className="mb-1 text-center text-[0.62rem] font-black uppercase tracking-[0.22em] text-white/40">
+              As worn by
+            </p>
+            <h2 className="mb-8 text-center text-xl font-black text-white">
+              See it in action
+            </h2>
+            <div className="overflow-hidden rounded-2xl bg-black shadow-2xl">
+              <video
+                src={PRODUCT_VIDEOS[product.id]}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full"
+              />
+            </div>
+          </div>
+        </section>
+      )}
 
       <Footer />
     </>
