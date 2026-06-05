@@ -8,6 +8,7 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
+  Expand,
   Heart,
   Menu,
   Minus,
@@ -35,6 +36,7 @@ type ProductMeta = {
   subtitle: string;
   description: string;
   image: string;
+  gallery: string[];
   promo?: string;
 };
 
@@ -45,6 +47,20 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     description:
       "Keeps your cruise card, room key, or travel pass close without sacrificing style.",
     image: "/images/travelholics_lanyard_transparent.png",
+    gallery: [
+      "/images/travelholics_lanyard_transparent.png",
+      "/images/01-travelholics-cruise-card-lanyard-flatlay-passport.png",
+      "/images/02-travelholics-cruise-card-lanyard-front-back-view.png",
+      "/images/03-travelholics-cruise-card-lanyard-closeup-logo.png",
+      "/images/04-travelholics-cruise-card-lanyard-hero.png",
+      "/images/01-travelholics-lanyard-alana-beach.png",
+      "/images/02-travelholics-lanyard-alana-cruise-room.png",
+      "/images/03-travelholics-lanyard-alana-packing.png",
+      "/images/04-travelholics-lanyard-alana-resort.png",
+      "/images/05-travelholics-lanyard-alana-port-shopping.png",
+      "/images/travelholics_lanyard_clip_detail.png",
+      "/images/travelholics_lanyard_lifestyle.png",
+    ],
     promo: "Bundle: 2 for $18.00",
   },
   "merch-magnet-ticket-pacific": {
@@ -53,6 +69,13 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     description:
       "A collectible Travelholics door magnet inspired by cruise tickets and built to stand out on your stateroom door.",
     image: "/images/travelholics_product_ticket-magnet-pacific.png",
+    gallery: [
+      "/images/travelholics_product_ticket-magnet-pacific.png",
+      "/images/travelholic_ticket_magnent_pacific.png",
+      "/images/travelholics_mockup_cruise-life-magnet-flatlay.png",
+      "/images/travelholics_product_cruise-life-door-magnet.png",
+      "/images/travelholics_product_cruise-life-magnet-on-journal.png",
+    ],
   },
   "merch-magnet-mexican-pacific": {
     badge: "Original",
@@ -60,8 +83,153 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     description:
       "A bold, colorful Travelholics magnet made to bring personality and cruise energy to your stateroom door.",
     image: "/images/travelholics_product_pacific-mexican-door-magnet.png",
+    gallery: [
+      "/images/travelholics_product_pacific-mexican-door-magnet.png",
+      "/images/pacific_mexican_door_magnent.png",
+      "/images/travelholics_mockup_pacific-mexican-door-magnet.png",
+      "/images/travelholics_product_pacific-mexican-voyage-2026-magnet.png",
+    ],
   },
 };
+
+/* ─── Image Gallery Modal ──────────────────────────────────── */
+
+function ImageGalleryModal({
+  images,
+  initialIndex,
+  productName,
+  onClose,
+}: {
+  images: string[];
+  initialIndex: number;
+  productName: string;
+  onClose: () => void;
+}) {
+  const [current, setCurrent] = useState(initialIndex);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // Sync scroll position when current changes via dots/arrows
+  useEffect(() => {
+    const el = trackRef.current?.children[current] as HTMLElement | undefined;
+    el?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [current]);
+
+  // Sync current index when user swipes
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const hit = entries.find((e) => e.isIntersecting);
+        if (hit) {
+          const i = Array.from(track.children).indexOf(hit.target);
+          if (i >= 0) setCurrent(i);
+        }
+      },
+      { root: track, threshold: 0.55 }
+    );
+    Array.from(track.children).forEach((c) => observer.observe(c));
+    return () => observer.disconnect();
+  }, []);
+
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[110] flex flex-col bg-black"
+      onClick={onClose}
+    >
+      {/* Header */}
+      <div
+        className="relative z-10 flex items-center justify-between px-4 py-3"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-white/50">
+          {current + 1} / {images.length}
+        </span>
+        <p className="absolute left-1/2 -translate-x-1/2 text-[0.72rem] font-semibold text-white/70">
+          {productName}
+        </p>
+        <button
+          onClick={onClose}
+          aria-label="Close gallery"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+
+      {/* Swipe track */}
+      <div
+        ref={trackRef}
+        className="flex flex-1 snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {images.map((src, i) => (
+          <div key={i} className="relative h-full w-full flex-shrink-0 snap-start">
+            <Image
+              src={src}
+              alt={`${productName} — image ${i + 1}`}
+              fill
+              className="object-contain"
+              sizes="100vw"
+              priority={i === 0}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Dot indicators + arrows */}
+      <div
+        className="flex flex-col items-center gap-3 pb-8 pt-4"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setCurrent((c) => Math.max(0, c - 1))}
+            disabled={current === 0}
+            aria-label="Previous image"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/25 disabled:opacity-25"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+
+          <div className="flex items-center gap-1.5">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                aria-label={`Image ${i + 1}`}
+                className={`rounded-full transition-all duration-300 ${
+                  i === current
+                    ? "h-2 w-6 bg-white"
+                    : "h-2 w-2 bg-white/30 hover:bg-white/55"
+                }`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => setCurrent((c) => Math.min(images.length - 1, c + 1))}
+            disabled={current === images.length - 1}
+            aria-label="Next image"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/25 disabled:opacity-25"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 /* ─── Trust Modal ──────────────────────────────────────────── */
 
@@ -174,6 +342,7 @@ function ProductSlide({
   isPending,
   onQuantityChange,
   onCheckout,
+  onGalleryOpen,
 }: {
   product: MerchProduct;
   meta: ProductMeta;
@@ -181,13 +350,16 @@ function ProductSlide({
   isPending: boolean;
   onQuantityChange: (q: number) => void;
   onCheckout: () => void;
+  onGalleryOpen: () => void;
 }) {
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
 
-      {/* ── Product image — floats in the scene, bleeds into card top ── */}
-      <div
-        className="absolute left-1/2 z-20 -translate-x-1/2"
+      {/* ── Product image — tappable, opens gallery ── */}
+      <button
+        onClick={onGalleryOpen}
+        aria-label={`View all photos of ${product.name}`}
+        className="absolute left-1/2 z-20 -translate-x-1/2 cursor-zoom-in focus:outline-none"
         style={{ top: "8%", width: "min(84vw, 370px)" }}
       >
         <div
@@ -203,7 +375,14 @@ function ProductSlide({
             priority
           />
         </div>
-      </div>
+        {/* Expand hint badge */}
+        <div className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-black/30 px-2 py-1 backdrop-blur-sm">
+          <Expand className="h-3 w-3 text-white/80" />
+          <span className="text-[0.58rem] font-semibold text-white/80">
+            {meta.gallery.length} photos
+          </span>
+        </div>
+      </button>
 
       {/* ── Glass purchase panel ── */}
       <div
@@ -312,6 +491,7 @@ export default function ShopFullPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [trustOpen, setTrustOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [galleryProduct, setGalleryProduct] = useState<string | null>(null);
   const [pendingCheckoutId, setPendingCheckoutId] = useState<string | null>(null);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [quantities, setQuantities] = useState<Record<string, number>>(
@@ -379,6 +559,14 @@ export default function ShopFullPage() {
   return (
     <>
       <AnimatePresence>
+        {galleryProduct && (
+          <ImageGalleryModal
+            images={PRODUCT_META[galleryProduct].gallery}
+            initialIndex={0}
+            productName={products.find((p) => p.id === galleryProduct)?.name ?? ""}
+            onClose={() => setGalleryProduct(null)}
+          />
+        )}
         {trustOpen && <ShopTrustModal onClose={() => setTrustOpen(false)} />}
         {navOpen && (
           <MobileNavDrawer
@@ -482,6 +670,7 @@ export default function ShopFullPage() {
                   setQuantities((s) => ({ ...s, [product.id]: q }))
                 }
                 onCheckout={() => void handleCheckout(product)}
+                onGalleryOpen={() => setGalleryProduct(product.id)}
               />
             ))}
           </div>
