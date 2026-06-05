@@ -230,7 +230,7 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
   {
     id: "merch-cruise-card-lanyard-atlantis",
     zone: "merch",
-    name: "Cruise Card Lanyard",
+    name: "Travelholics Atlantis Lanyard",
     subtitle: "Atlantis Travelholics Edition",
     description:
       "The Travelholics Cruise Card Lanyard keeps your cruise card, room key, or travel pass close without sacrificing style. Designed in the signature Atlantis colorway with Travelholics branding, cruise-inspired icons, and a silver lobster claw clip.",

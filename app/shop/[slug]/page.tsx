@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { notFound } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
@@ -190,9 +190,11 @@ function GalleryModal({
 
 /* ─── Page ─────────────────────────────────────────────────── */
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
-  const product = MERCH_PRODUCTS.find((p) => p.id === params.slug);
-  if (!product) return notFound();
+export default function ProductPage() {
+  const { slug } = useParams<{ slug: string }>();
+  const product = MERCH_PRODUCTS.find((p) => p.id === slug);
+
+  if (!product) return <div className="flex min-h-screen items-center justify-center text-stone-400">Product not found.</div>;
 
   const images = PRODUCT_IMAGES[product.id];
   const gallery = images?.gallery ?? (product.imageSrc ? [product.imageSrc] : []);
@@ -318,21 +320,16 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             </div>
 
             {/* ── Details column ────────────────────────────── */}
-            <div className="flex flex-col">
+            <div className="flex flex-col items-center text-center">
               {/* Badge */}
-              <span className="mb-3 inline-flex w-fit rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
+              <span className="mb-3 inline-flex rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
                 {product.badge}
               </span>
 
-              {/* Name + subtitle */}
+              {/* Name */}
               <h1 className="text-[1.75rem] font-black leading-tight text-[#111d30] md:text-[2rem]">
                 {product.name}
               </h1>
-              {product.subtitle && (
-                <p className="mt-1 text-[0.82rem] font-semibold tracking-wide text-[#1e3a8a]">
-                  {product.subtitle}
-                </p>
-              )}
 
               {/* Price */}
               <div className="mt-4 flex items-baseline gap-2">
@@ -346,13 +343,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                 )}
               </div>
 
-              {/* Bundle callout */}
-              {product.bundlePrice && product.bundleQuantity && (
-                <div className="mt-2 inline-flex w-fit items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-bold text-amber-700">
-                  Bundle: {product.bundleQuantity} for {formatMerchPrice(product.bundlePrice)}
-                </div>
-              )}
-
               {/* Description */}
               <p className="mt-5 text-[0.95rem] leading-relaxed text-stone-600">
                 {product.description}
@@ -360,7 +350,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
               {/* Details list */}
               {product.details && product.details.length > 0 && (
-                <div className="mt-6">
+                <div className="mt-6 w-full text-left">
                   <p className="mb-2 text-[0.72rem] font-black uppercase tracking-[0.16em] text-stone-400">
                     Details
                   </p>
@@ -376,7 +366,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               )}
 
               {/* Qty + Buy */}
-              <div className="mt-8 flex items-center gap-3">
+              <div className="mt-8 flex w-full items-center gap-3">
                 <div className="flex items-center gap-2 rounded-xl border border-stone-200 bg-white px-3 py-3">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -418,7 +408,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               )}
 
               {/* Trust signals */}
-              <div className="mt-6 flex flex-col gap-2 border-t border-stone-100 pt-6">
+              <div className="mt-6 flex w-full flex-col gap-2 border-t border-stone-100 pt-6 text-left">
                 <div className="flex items-center gap-2 text-xs text-stone-500">
                   <ShieldCheck className="h-3.5 w-3.5 text-[#059669]" />
                   Secure checkout via Stripe
