@@ -191,8 +191,8 @@ function GalleryModal({
 /* ─── Creator video map ────────────────────────────────────── */
 
 const PRODUCT_VIDEOS: Record<string, string> = {
-  "merch-magnet-ticket-pacific": "/videos/alana_pacific_cruise_magnent_ad.mp4",
-  "merch-magnet-mexican-pacific": "/videos/traveholic_pacific_door_magnent.mp4",
+  "merch-magnet-ticket-pacific": "/videos/travelholics_cruise_ticket_door_magnet.mp4",
+  "merch-magnet-mexican-pacific": "/videos/travelholics_pacific_mexican_door_magnet.mp4",
 };
 
 export default function ProductPage() {
