@@ -410,13 +410,6 @@ function ProductSlide({
             {meta.description}
           </p>
 
-          {/* Promo tag — lanyard only */}
-          {meta.promo && (
-            <p className="mb-3 inline-flex w-fit rounded-full border border-amber-200 bg-amber-50 px-3 py-[5px] text-[0.72rem] font-bold text-amber-700">
-              {meta.promo}
-            </p>
-          )}
-
           {/* View details link */}
           <Link
             href={`/shop/${product.id}`}
@@ -692,21 +685,6 @@ export default function ShopFullPage() {
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
-
-              <div className="flex items-center gap-2">
-                {products.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => goTo(i)}
-                    aria-label={`Product ${i + 1}`}
-                    className={`rounded-full transition-all duration-300 ${
-                      i === activeIndex
-                        ? "h-2.5 w-7 bg-white shadow-sm"
-                        : "h-2.5 w-2.5 bg-white/45 hover:bg-white/65"
-                    }`}
-                  />
-                ))}
-              </div>
 
               <button
                 onClick={() => goTo(Math.min(products.length - 1, activeIndex + 1))}
