@@ -374,17 +374,6 @@ function ProductSlide({
             priority
           />
         </div>
-        {/* Thumbnail dot hints — tap opens gallery */}
-        <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-1.5">
-          {meta.gallery.slice(0, 4).map((_, i) => (
-            <span
-              key={i}
-              className={`block rounded-full bg-white transition-all ${
-                i === 0 ? "h-1.5 w-4 opacity-90" : "h-1.5 w-1.5 opacity-45"
-              }`}
-            />
-          ))}
-        </div>
       </button>
 
       {/* ── Glass purchase panel ── */}
