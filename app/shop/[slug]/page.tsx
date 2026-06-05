@@ -271,7 +271,7 @@ export default function ProductPage() {
 
       <main className="min-h-screen bg-[#FDFCF9]">
         <div className="mx-auto max-w-5xl px-4 py-8 md:py-14">
-          <div className="grid gap-10 md:grid-cols-2 md:gap-16">
+          <div className="grid gap-8 md:grid-cols-2 md:gap-14">
 
             {/* ── Image column ──────────────────────────────── */}
             <div className="flex flex-col gap-3">
@@ -279,61 +279,70 @@ export default function ProductPage() {
               <button
                 onClick={() => setGalleryOpen(true)}
                 aria-label="View full gallery"
-                className="group relative aspect-square w-full overflow-hidden rounded-2xl bg-stone-50 cursor-zoom-in"
+                className="group relative aspect-square w-full overflow-hidden rounded-2xl bg-stone-100 cursor-zoom-in"
               >
                 <Image
                   src={displayImage}
                   alt={product.name}
                   fill
-                  className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
+                  className="object-contain p-8 transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority
                 />
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-stone-200/60" />
               </button>
 
-              {/* Thumbnail strip */}
+              {/* Thumbnail strip — max 6 shown, scrollable */}
               {gallery.length > 1 && (
-                <div className="flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                  {gallery.map((src, i) => (
+                <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  {gallery.slice(0, 6).map((src, i) => (
                     <button
                       key={i}
                       onClick={() => setActiveImage(i)}
                       aria-label={`View image ${i + 1}`}
-                      className={`relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl bg-stone-50 transition-all ${
+                      className={`relative h-[72px] w-[72px] flex-shrink-0 overflow-hidden rounded-xl bg-stone-100 transition-all ${
                         i === activeImage
-                          ? "ring-2 ring-[#1e3a8a] ring-offset-1"
-                          : "opacity-60 hover:opacity-100"
+                          ? "ring-2 ring-[#1e3a8a] ring-offset-2"
+                          : "opacity-55 hover:opacity-90"
                       }`}
                     >
                       <Image
                         src={src}
-                        alt={`${product.name} thumbnail ${i + 1}`}
+                        alt={`${product.name} view ${i + 1}`}
                         fill
-                        className="object-contain p-1.5"
-                        sizes="64px"
+                        className="object-contain p-2"
+                        sizes="72px"
                       />
                     </button>
                   ))}
+                  {gallery.length > 6 && (
+                    <button
+                      onClick={() => setGalleryOpen(true)}
+                      className="flex h-[72px] w-[72px] flex-shrink-0 items-center justify-center rounded-xl bg-stone-100 text-[0.65rem] font-bold text-stone-500 transition-colors hover:bg-stone-200"
+                    >
+                      +{gallery.length - 6} more
+                    </button>
+                  )}
                 </div>
               )}
             </div>
 
             {/* ── Details column ────────────────────────────── */}
-            <div className="flex flex-col items-center text-center">
+            <div className="flex flex-col">
               {/* Badge */}
-              <span className="mb-3 inline-flex rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
-                {product.badge}
-              </span>
+              <div className="mb-3 text-center">
+                <span className="inline-flex rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
+                  {product.badge}
+                </span>
+              </div>
 
               {/* Name */}
-              <h1 className="text-[1.75rem] font-black leading-tight text-[#111d30] md:text-[2rem]">
+              <h1 className="text-center text-[1.6rem] font-black leading-tight text-[#111d30] md:text-[1.85rem]">
                 {product.name}
               </h1>
 
               {/* Price */}
-              <div className="mt-4 flex items-baseline gap-2">
-                <span className="text-[1.6rem] font-black text-[#1e3a8a]">
+              <div className="mt-3 flex items-baseline justify-center gap-2">
+                <span className="text-[1.5rem] font-black text-[#1e3a8a]">
                   {formatMerchPrice(product.price)}
                 </span>
                 {product.compareAtPrice && (
@@ -344,19 +353,22 @@ export default function ProductPage() {
               </div>
 
               {/* Description */}
-              <p className="mt-5 text-[0.95rem] leading-relaxed text-stone-600">
+              <p className="mx-auto mt-5 max-w-sm text-center text-[0.92rem] leading-relaxed text-stone-500">
                 {product.description}
               </p>
 
+              {/* Divider */}
+              <div className="my-6 border-t border-stone-100" />
+
               {/* Details list */}
               {product.details && product.details.length > 0 && (
-                <div className="mt-6 w-full text-left">
-                  <p className="mb-2 text-[0.72rem] font-black uppercase tracking-[0.16em] text-stone-400">
+                <div className="mb-6">
+                  <p className="mb-3 text-[0.68rem] font-black uppercase tracking-[0.18em] text-stone-400">
                     Details
                   </p>
-                  <ul className="flex flex-col gap-1.5">
+                  <ul className="flex flex-col gap-2">
                     {product.details.map((d, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-stone-600">
+                      <li key={i} className="flex items-start gap-2.5 text-[0.88rem] text-stone-600">
                         <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#059669]" />
                         {d}
                       </li>
@@ -366,8 +378,8 @@ export default function ProductPage() {
               )}
 
               {/* Qty + Buy */}
-              <div className="mt-8 flex w-full items-center gap-3">
-                <div className="flex items-center gap-2 rounded-xl border border-stone-200 bg-white px-3 py-3">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 rounded-xl border border-stone-200 bg-white px-4 py-3.5">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                     disabled={isPending}
@@ -376,7 +388,7 @@ export default function ProductPage() {
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </button>
-                  <span className="w-6 text-center text-sm font-bold text-[#111d30]">
+                  <span className="w-5 text-center text-sm font-bold text-[#111d30]">
                     {quantity}
                   </span>
                   <button
@@ -394,11 +406,7 @@ export default function ProductPage() {
                   disabled={isPending || product.comingSoon}
                   className="flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {product.comingSoon
-                    ? "Coming Soon"
-                    : isPending
-                    ? "Opening…"
-                    : "Buy Now"}
+                  {product.comingSoon ? "Coming Soon" : isPending ? "Opening…" : "Buy Now"}
                   {!isPending && !product.comingSoon && <ArrowRight className="h-3.5 w-3.5" />}
                 </RippleButton>
               </div>
@@ -408,18 +416,18 @@ export default function ProductPage() {
               )}
 
               {/* Trust signals */}
-              <div className="mt-6 flex w-full flex-col gap-2 border-t border-stone-100 pt-6 text-left">
-                <div className="flex items-center gap-2 text-xs text-stone-500">
+              <div className="mt-6 flex flex-col gap-2 border-t border-stone-100 pt-5">
+                <div className="flex items-center gap-2 text-xs text-stone-400">
                   <ShieldCheck className="h-3.5 w-3.5 text-[#059669]" />
                   Secure checkout via Stripe
                 </div>
-                <div className="flex items-center gap-2 text-xs text-stone-500">
+                <div className="flex items-center gap-2 text-xs text-stone-400">
                   <Truck className="h-3.5 w-3.5 text-[#059669]" />
                   Free shipping on orders over $50
                 </div>
-                <div className="flex items-center gap-2 text-xs text-stone-500">
+                <div className="flex items-center gap-2 text-xs text-stone-400">
                   <RotateCcw className="h-3.5 w-3.5 text-[#059669]" />
-                  Questions? Reach us at{" "}
+                  Questions?{" "}
                   <a
                     href="mailto:hello@yotravelholic.com"
                     className="underline underline-offset-2 hover:text-[#1e3a8a]"
