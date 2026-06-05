@@ -8,7 +8,6 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  Expand,
   Heart,
   Menu,
   Minus,
@@ -375,12 +374,16 @@ function ProductSlide({
             priority
           />
         </div>
-        {/* Expand hint badge */}
-        <div className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-black/30 px-2 py-1 backdrop-blur-sm">
-          <Expand className="h-3 w-3 text-white/80" />
-          <span className="text-[0.58rem] font-semibold text-white/80">
-            {meta.gallery.length} photos
-          </span>
+        {/* Thumbnail dot hints — tap opens gallery */}
+        <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-1.5">
+          {meta.gallery.slice(0, 4).map((_, i) => (
+            <span
+              key={i}
+              className={`block rounded-full bg-white transition-all ${
+                i === 0 ? "h-1.5 w-4 opacity-90" : "h-1.5 w-1.5 opacity-45"
+              }`}
+            />
+          ))}
         </div>
       </button>
 
@@ -392,12 +395,12 @@ function ProductSlide({
         <div
           className="rounded-3xl p-6"
           style={{
-            background: "rgba(255,255,255,0.82)",
-            backdropFilter: "blur(32px) saturate(180%)",
-            WebkitBackdropFilter: "blur(32px) saturate(180%)",
-            border: "1.5px solid rgba(255,255,255,0.70)",
+            background: "rgba(255,255,255,0.68)",
+            backdropFilter: "blur(28px) saturate(160%)",
+            WebkitBackdropFilter: "blur(28px) saturate(160%)",
+            border: "1.5px solid rgba(255,255,255,0.55)",
             boxShadow:
-              "0 8px 32px rgba(5,25,38,0.14), 0 2px 8px rgba(5,25,38,0.08)",
+              "0 8px 32px rgba(5,25,38,0.12), 0 2px 8px rgba(5,25,38,0.06)",
           }}
         >
           {/* Badge */}
