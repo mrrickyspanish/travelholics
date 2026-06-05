@@ -235,8 +235,8 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     description:
       "The Travelholics Cruise Card Lanyard keeps your cruise card, room key, or travel pass close without sacrificing style. Designed in the signature Atlantis colorway with Travelholics branding, cruise-inspired icons, and a silver lobster claw clip.",
     badge: "Travel Essentials",
-    price: 1000,
-    compareAtPrice: 1200,
+    price: 1200,
+    compareAtPrice: 1400,
     bundlePrice: 1800,
     bundleQuantity: 2,
     currency: "usd",
