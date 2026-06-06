@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { Breadcrumb } from "@/components/breadcrumb";
 import { sendFormEmail } from "@/lib/form-email";
 import { motion } from "framer-motion";
 import {
@@ -147,8 +148,13 @@ export default function CollaboratePage() {
       <Header />
       <main className="min-h-screen bg-[#FAF9F6] text-slate-900">
 
+      {/* Breadcrumb */}
+      <div className="max-w-6xl mx-auto px-6 pt-24 pb-0">
+        <Breadcrumb crumbs={[{ label: "Home", href: "/" }, { label: "Collaborate" }]} />
+      </div>
+
       {/* 1. Editorial Hero */}
-      <section className="relative bg-[#FAF9F6] overflow-hidden pt-20 pb-16 px-6">
+      <section className="relative bg-[#FAF9F6] overflow-hidden pt-8 pb-16 px-6">
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{

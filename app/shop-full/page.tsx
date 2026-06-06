@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
@@ -802,13 +803,18 @@ function DesktopProductCard({
   onCheckout: () => void;
   onGalleryOpen: () => void;
 }) {
+  const router = useRouter();
+  const productHref = `/shop/${product.id}`;
+  const stopProp = (e: React.MouseEvent) => e.stopPropagation();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.38 }}
-      className="flex flex-col overflow-hidden"
+      onClick={() => router.push(productHref)}
+      className="flex flex-col overflow-hidden cursor-pointer"
       style={{
         borderRadius: "26px",
         background: "rgba(255,255,255,0.82)",
@@ -818,7 +824,7 @@ function DesktopProductCard({
     >
       {/* Image area — 68% of card height. Warm sand bg so cutout products don't float on grey. */}
       <button
-        onClick={onGalleryOpen}
+        onClick={(e) => { stopProp(e); onGalleryOpen(); }}
         aria-label={`View photos of ${product.name}`}
         className="relative block cursor-zoom-in overflow-hidden focus:outline-none"
         style={{
@@ -863,7 +869,7 @@ function DesktopProductCard({
         </div>
 
         {/* Qty stepper + Buy Now */}
-        <div className="mt-auto flex items-center gap-2.5">
+        <div className="mt-auto flex items-center gap-2.5" onClick={stopProp}>
           <div
             className="flex items-center gap-2 rounded-xl border px-3 py-[10px]"
             style={{ borderColor: "rgba(30,58,138,0.16)" }}
@@ -890,7 +896,7 @@ function DesktopProductCard({
           </div>
 
           <RippleButton
-            onClick={onCheckout}
+            onClick={(e) => { e.stopPropagation(); onCheckout(); }}
             disabled={isPending}
             className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-[0.88rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
           >
@@ -898,14 +904,6 @@ function DesktopProductCard({
             {!isPending && <ArrowRight className="h-3.5 w-3.5" />}
           </RippleButton>
         </div>
-
-        {/* View details — secondary, quiet */}
-        <Link
-          href={`/shop/${product.id}`}
-          className="mt-3 text-center text-[0.68rem] font-semibold text-stone-400 underline underline-offset-2 transition-colors hover:text-[#1e3a8a]"
-        >
-          View full details →
-        </Link>
 
         {checkoutError && (
           <p className="mt-2 rounded-xl bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-600">
@@ -1052,7 +1050,8 @@ export default function ShopFullPage() {
             </div>
 
             {/* Overlay header */}
-            <div className="absolute left-0 right-0 top-0 z-30 flex h-14 items-center justify-between px-4">
+            <div className="absolute left-0 right-0 top-0 z-30 flex flex-col">
+            <div className="flex h-14 items-center justify-between px-4">
               <button
                 aria-label="Open menu"
                 onClick={() => setNavOpen(true)}
@@ -1082,6 +1081,15 @@ export default function ShopFullPage() {
                   <ShoppingCart className="h-[18px] w-[18px]" />
                 </button>
               </div>
+            </div>
+            {/* Breadcrumb row — sits just below the header bar */}
+            <div className="px-5 pb-1">
+              <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-[0.65rem] font-semibold text-white/55">
+                <Link href="/" className="hover:text-white/80 transition-colors">Home</Link>
+                <span className="text-white/30">›</span>
+                <span className="text-white/75">Shop</span>
+              </nav>
+            </div>
             </div>
 
             {/* Swipe track */}
@@ -1186,6 +1194,15 @@ export default function ShopFullPage() {
               </button>
             </div>
           </header>
+
+          {/* Desktop breadcrumb */}
+          <div className="bg-white/5 px-10 py-2">
+            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[0.72rem] font-semibold text-white/50">
+              <Link href="/" className="hover:text-white/80 transition-colors">Home</Link>
+              <span className="text-white/25">›</span>
+              <span className="text-white/75">Shop</span>
+            </nav>
+          </div>
 
           {/* Collection hero + cards — beach atmosphere */}
           <section className="relative overflow-hidden">

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Anchor, CheckCircle2, Ship } from "lucide-react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { Breadcrumb } from "@/components/breadcrumb";
 import { supabase } from "@/lib/supabase";
 import { sendFormEmail } from "@/lib/form-email";
 import { RippleButton } from "@/components/ripple-button";
@@ -178,8 +179,10 @@ export default function CruiseInterestPage() {
   return (
     <>
       <Header />
-      <main className="bg-[#FAF9F6] min-h-screen pt-36 pb-24">
+      <main className="bg-[#FAF9F6] min-h-screen pt-28 pb-24">
         <section className="max-w-5xl mx-auto px-6">
+          <Breadcrumb crumbs={[{ label: "Home", href: "/" }, { label: "Plan My Trip" }]} />
+          <div className="mt-6" />
           <div className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#059669] mb-3">
               Cruise Lead Intake

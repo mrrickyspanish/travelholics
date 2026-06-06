@@ -1,5 +1,6 @@
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { Breadcrumb } from "@/components/breadcrumb";
 
 export default function PrivacyPage() {
   return (
@@ -7,7 +8,8 @@ export default function PrivacyPage() {
       <Header />
       <main className="min-h-screen bg-[#FAF9F6] pt-32 pb-20">
         <section className="mx-auto max-w-3xl px-6">
-          <h1 className="text-4xl font-extrabold text-[#1e3a8a] mb-6">Privacy Policy</h1>
+          <Breadcrumb crumbs={[{ label: "Home", href: "/" }, { label: "Privacy Policy" }]} />
+          <h1 className="mt-4 text-4xl font-extrabold text-[#1e3a8a] mb-6">Privacy Policy</h1>
           <p className="text-slate-700 leading-relaxed mb-4">
             Travelholics collects contact information you submit through forms so we can respond to your
             inquiry and provide travel planning support.
