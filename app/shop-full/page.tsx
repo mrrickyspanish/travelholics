@@ -361,8 +361,10 @@ function ProductSlide({
 }) {
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
-      {/* Flex column anchored to bottom — image above card, no overlap possible */}
-      <div className="absolute inset-x-0 bottom-14 flex flex-col items-center gap-3 px-3">
+      {/* Bounded content zone — hard ceiling at header (56px), hard floor above trust bar (84px) */}
+      <div className="absolute inset-x-0 flex flex-col items-center justify-end gap-3 px-3"
+        style={{ top: 56, bottom: 84 }}
+      >
 
         {/* ── Product image + flanking nav arrows ── */}
         <div className="flex w-full items-center justify-center gap-3 px-1">
