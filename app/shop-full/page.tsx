@@ -1239,71 +1239,77 @@ export default function ShopFullPage() {
         </div>
 
         {/* ── About Travelholics ───────────────────────────── */}
-        <section className="bg-[#FAF9F6] px-5 py-16 lg:px-10 lg:py-20">
+        <section className="bg-[#FAF9F6] px-5 py-12 lg:px-10 lg:py-16">
           <div className="mx-auto max-w-[1240px]">
 
             {/* Two-column: story left, image right */}
-            <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-16">
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-14">
 
               {/* Left — story */}
               <div className="flex-1">
-                <p className="mb-3 text-[0.65rem] font-bold uppercase tracking-[0.26em] text-[#4a5568]">
+                <p className="mb-2 text-[0.65rem] font-bold uppercase tracking-[0.26em] text-[#4a5568]">
                   The Story Behind
                 </p>
                 <h2
-                  className="mb-5 text-[2.8rem] font-black leading-[1.05] text-[#0a1a2e] lg:text-[3.4rem]"
-                  style={{ fontFamily: "Georgia, serif", fontWeight: 900 }}
+                  className="mb-4 text-[2.6rem] font-black leading-[1.05] text-[#0a1a2e] lg:text-[3.2rem]"
+                  style={{ fontFamily: "Georgia, serif" }}
                 >
                   Travelholics
                 </h2>
-                <p className="mb-4 max-w-lg text-[0.95rem] leading-[1.7] text-[#4a5568]">
+                <p className="mb-3 max-w-lg text-[0.92rem] leading-[1.7] text-[#4a5568]">
                   Travelholics was built by real cruisers for real cruisers. What started as a
                   passion for documenting every sail-away, port stop, and cabin moment turned into
                   a community of travelers who love the journey as much as the destination.
                 </p>
-                <p className="mb-8 max-w-lg text-[0.95rem] leading-[1.7] text-[#4a5568]">
-                  Every product in the Travelholics shop is designed with that same spirit — cruise-tested,
-                  community-approved, and made to travel with you.
+                <p className="mb-7 max-w-lg text-[0.92rem] leading-[1.7] text-[#4a5568]">
+                  Every product in the Travelholics shop is designed with that same spirit —
+                  cruise-tested, community-approved, and made to travel with you.
                 </p>
                 <Link
                   href="/#contact"
-                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#0a1a2e] px-7 py-3 text-[0.85rem] font-bold uppercase tracking-[0.12em] text-[#0a1a2e] transition-colors hover:bg-[#0a1a2e] hover:text-white"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#0a1a2e] px-7 py-3.5 text-[0.82rem] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1e3a8a]"
                 >
                   Our Story
                 </Link>
               </div>
 
-              {/* Right — brand image */}
+              {/* Right — lifestyle image, shorter 16:9 */}
               <div
-                className="relative w-full overflow-hidden lg:w-[48%] lg:flex-shrink-0"
-                style={{ borderRadius: 24, aspectRatio: "4/3" }}
+                className="relative w-full overflow-hidden lg:w-[50%] lg:flex-shrink-0"
+                style={{ borderRadius: 20, aspectRatio: "16/9" }}
               >
                 <Image
-                  src="/images/travelholics_brand-hero_cruise-ship.png"
-                  alt="Travelholics community on a cruise"
+                  src="/images/04-travelholics-lanyard-alana-resort.png"
+                  alt="Travelholics community traveling"
                   fill
                   className="object-cover"
-                  sizes="(min-width: 1024px) 48vw, 100vw"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                 />
               </div>
             </div>
 
-            {/* Trust / value tiles */}
-            <div className="mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+            {/* Trust / value tiles — prominent, full-width */}
+            <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
               {[
-                { icon: <Heart className="h-5 w-5" />, label: "Community First" },
-                { icon: <Star className="h-5 w-5" />, label: "Cruise-Tested" },
-                { icon: <ShieldCheck className="h-5 w-5" />, label: "Original Designs" },
-                { icon: <Users className="h-5 w-5" />, label: "Real Travelers" },
-              ].map(({ icon, label }) => (
+                { icon: <Heart className="h-7 w-7" />, label: "+300,000", sub: "Community Members" },
+                { icon: <Star className="h-7 w-7" />, label: "Cruise-Tested", sub: "Every Pick" },
+                { icon: <ShieldCheck className="h-7 w-7" />, label: "Original", sub: "Designs" },
+                { icon: <Users className="h-7 w-7" />, label: "Real Travelers", sub: "Real Reviews" },
+              ].map(({ icon, label, sub }) => (
                 <div
                   key={label}
-                  className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-white px-5 py-4"
+                  className="flex items-center gap-4 rounded-2xl bg-white px-5 py-5 shadow-sm"
+                  style={{ border: "1px solid rgba(0,0,0,0.06)" }}
                 >
-                  <span className="text-[#059669]">{icon}</span>
-                  <span className="text-[0.78rem] font-bold uppercase tracking-[0.12em] text-[#0a1a2e]">
-                    {label}
-                  </span>
+                  <span className="flex-shrink-0 text-[#059669]">{icon}</span>
+                  <div>
+                    <p className="text-[0.88rem] font-black uppercase tracking-[0.08em] text-[#0a1a2e]">
+                      {label}
+                    </p>
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-[#4a5568]">
+                      {sub}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
