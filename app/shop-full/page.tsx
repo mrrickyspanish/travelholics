@@ -353,34 +353,33 @@ function ProductSlide({
 }) {
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
+      {/* Flex column anchored to bottom — image above card, no overlap possible */}
+      <div className="absolute inset-x-0 bottom-14 flex flex-col items-center gap-3 px-3">
 
-      {/* ── Product image — tappable, opens gallery ── */}
-      <button
-        onClick={onGalleryOpen}
-        aria-label={`View all photos of ${product.name}`}
-        className="absolute left-1/2 z-20 -translate-x-1/2 cursor-zoom-in focus:outline-none"
-        style={{ top: "8%", width: "min(84vw, 370px)" }}
-      >
-        <div
-          className="relative aspect-square"
-          style={{ filter: "drop-shadow(0 28px 48px rgba(5,25,38,0.30))" }}
+        {/* ── Product image ── */}
+        <button
+          onClick={onGalleryOpen}
+          aria-label={`View all photos of ${product.name}`}
+          className="cursor-zoom-in focus:outline-none"
+          style={{ width: "min(80vw, 340px)" }}
         >
-          <Image
-            src={meta.image}
-            alt={product.name}
-            fill
-            className="object-contain"
-            sizes="(max-width: 640px) 80vw, 350px"
-            priority
-          />
-        </div>
-      </button>
+          <div
+            className="relative aspect-square w-full"
+            style={{ filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))" }}
+          >
+            <Image
+              src={meta.image}
+              alt={product.name}
+              fill
+              className="object-contain"
+              sizes="(max-width: 640px) 80vw, 340px"
+              priority
+            />
+          </div>
+        </button>
 
-      {/* ── Glass purchase panel ── */}
-      <div
-        className="absolute left-3 right-3 z-[15]"
-        style={{ bottom: 60 }}
-      >
+        {/* ── Glass purchase panel ── */}
+        <div className="w-full">
         <div
           className="rounded-3xl p-6"
           style={{
@@ -471,7 +470,8 @@ function ProductSlide({
             </RippleButton>
           </div>
         </div>
-      </div>
+        </div>{/* end glass panel */}
+      </div>{/* end flex column */}
     </div>
   );
 }
@@ -637,14 +637,15 @@ export default function ShopFullPage() {
             </div>
           </div>
 
-          {/* ── Top labels — static, updates via activeIndex ── */}
-          <div className="pointer-events-none absolute left-0 right-0 top-[62px] z-10 text-center">
-            <p className="text-[0.58rem] font-black uppercase tracking-[0.28em] text-white/65">
-              The Travelholics Shop
-            </p>
-            <p className="mt-0.5 text-[0.58rem] font-bold uppercase tracking-[0.22em] text-white/55">
-              Travelholics Originals · {activeIndex + 1} / {products.length}
-            </p>
+          {/* ── Swipe label ── */}
+          <div className="pointer-events-none absolute left-0 right-0 top-[62px] z-10 flex justify-center">
+            <div className="flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 backdrop-blur-sm">
+              <ChevronLeft className="h-3 w-3 text-white/70" />
+              <span className="text-[0.6rem] font-black uppercase tracking-[0.22em] text-white/85">
+                Swipe
+              </span>
+              <ChevronRight className="h-3 w-3 text-white/70" />
+            </div>
           </div>
 
           {/* ── Swipe track — ONLY product image + glass panel move ── */}
