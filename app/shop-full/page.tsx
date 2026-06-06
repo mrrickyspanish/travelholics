@@ -431,8 +431,8 @@ function ProductSlide({
     <div className="relative h-full w-full flex-shrink-0 snap-start">
       {/* Bounded zone — overflow:hidden enforces top ceiling on Android */}
       <div
-        className="absolute inset-x-0 flex flex-col items-center justify-end gap-2 overflow-hidden px-3"
-        style={{ top: 44, bottom: 84 }}
+        className="absolute inset-x-0 flex flex-col items-center justify-between gap-2 overflow-hidden px-3"
+        style={{ top: 56, bottom: 84 }}
       >
         {/* Image row with flanking arrows */}
         <div className="flex w-full flex-shrink-0 items-center justify-center gap-3 px-1">
