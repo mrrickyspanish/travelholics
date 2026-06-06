@@ -495,9 +495,6 @@ function ProductSlide({
             <h2 className="text-[1.45rem] font-black leading-tight text-[#111d30]">
               {product.name}
             </h2>
-            <p className="mb-2 text-[0.75rem] font-semibold tracking-wide text-[#1e3a8a]">
-              {meta.subtitle}
-            </p>
 
             <p className="mb-3 line-clamp-2 text-[0.84rem] font-medium leading-[1.5] text-[#2d3748]">
               {meta.description}
@@ -838,10 +835,6 @@ function DesktopProductCard({
 
       {/* Info panel — compact, lets image breathe */}
       <div className="flex flex-1 flex-col" style={{ padding: "22px 24px 24px" }}>
-        {/* Eyebrow / subtitle */}
-        <p className="mb-1 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-[#1e3a8a]/60">
-          {meta.subtitle}
-        </p>
 
         {/* Product name — dominant */}
         <h3 className="mb-1.5 text-[1.31rem] font-extrabold leading-[1.15] text-[#0a1a2e]">
