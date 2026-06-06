@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Fraunces, Caveat } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import { CartProvider } from "@/lib/cart-context";
+import { CartDrawer } from "@/components/cart-drawer";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yotravelholic.com";
@@ -133,7 +135,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        {children}
+        <CartProvider>
+          {children}
+          <CartDrawer />
+        </CartProvider>
         <Analytics />
       </body>
     </html>

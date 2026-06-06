@@ -26,6 +26,7 @@ import {
 import { Footer } from "@/components/footer";
 import { RippleButton } from "@/components/ripple-button";
 import { MERCH_PRODUCTS, formatMerchPrice, type MerchProduct } from "@/lib/shop-catalog";
+import { useCart } from "@/lib/cart-context";
 
 /* ─── Product data ─────────────────────────────────────────── */
 
@@ -411,12 +412,14 @@ function ProductSlide({
   product,
   meta,
   onGalleryOpen,
+  onBuy,
   index,
   total,
 }: {
   product: MerchProduct;
   meta: ProductMeta;
   onGalleryOpen: () => void;
+  onBuy: () => void;
   index: number;
   total: number;
 }) {
@@ -532,12 +535,12 @@ function ProductSlide({
               </div>
 
               {/* Buy button */}
-              <Link
-                href={`/shop/${product.id}`}
-                style={{ minWidth: 116, height: 52, borderRadius: 14, background: "#008f62", color: "#fff", fontSize: 18, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, whiteSpace: "nowrap" }}
+              <button
+                onClick={onBuy}
+                style={{ minWidth: 116, height: 52, borderRadius: 14, background: "#008f62", color: "#fff", fontSize: 18, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, whiteSpace: "nowrap", border: "none", cursor: "pointer" }}
               >
                 Buy
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -851,6 +854,7 @@ function DesktopProductCard({
 const UTILITY_H = 32;
 
 export default function ShopFullPage() {
+  const { addItem, openDrawer } = useCart();
   const [activeIndex, setActiveIndex] = useState(0);
   const [trustOpen, setTrustOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -1034,6 +1038,18 @@ export default function ShopFullPage() {
                   product={product}
                   meta={PRODUCT_META[product.id]}
                   onGalleryOpen={() => setGalleryProduct(product.id)}
+                  onBuy={() => {
+                    addItem({
+                      productId: product.id,
+                      name: product.name,
+                      displayName: product.displayName,
+                      price: product.price,
+                      image: PRODUCT_META[product.id].image,
+                      color: product.colors[0] ?? "",
+                      size: product.sizes[0] ?? "",
+                    });
+                    openDrawer();
+                  }}
                   index={i}
                   total={products.length}
                 />

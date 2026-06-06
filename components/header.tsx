@@ -4,9 +4,10 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/button";
+import { useCart } from "@/lib/cart-context";
 
 const NAV_LINKS = [
   { label: "Join the Crew", href: "/#contact" },
@@ -26,6 +27,7 @@ export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const { count, openDrawer } = useCart();
 
   // Scroll/solid background logic
   useEffect(() => {
@@ -89,15 +91,30 @@ export const Header = () => {
                 priority
               />
             </Link>
-            <button
-              type="button"
-              onClick={() => setMenuOpen(true)}
-              className="ml-auto w-auto h-12 flex items-center justify-center rounded-full hover:bg-sand transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none text-lg font-bold tracking-wide px-5 py-2"
-              aria-label="Open navigation menu"
-              aria-expanded={menuOpen}
-            >
-              <span className="font-serif text-[1.1rem] tracking-wide">MENU</span>
-            </button>
+            <div className="flex items-center gap-1 ml-auto">
+              <button
+                type="button"
+                onClick={openDrawer}
+                aria-label={`Open cart${count > 0 ? `, ${count} item${count !== 1 ? "s" : ""}` : ""}`}
+                className="relative flex h-10 w-10 items-center justify-center rounded-full hover:bg-sand transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none"
+              >
+                <ShoppingBag className="h-5 w-5" />
+                {count > 0 && (
+                  <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#059669] text-[0.6rem] font-black text-white">
+                    {count > 9 ? "9+" : count}
+                  </span>
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => setMenuOpen(true)}
+                className="w-auto h-12 flex items-center justify-center rounded-full hover:bg-sand transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none text-lg font-bold tracking-wide px-5 py-2"
+                aria-label="Open navigation menu"
+                aria-expanded={menuOpen}
+              >
+                <span className="font-serif text-[1.1rem] tracking-wide">MENU</span>
+              </button>
+            </div>
           </div>
           {/* Desktop: left MENU, center logo, right CTA */}
           <div className="hidden sm:flex w-full items-center justify-between">
@@ -122,12 +139,27 @@ export const Header = () => {
                 priority
               />
             </Link>
-            <a
-              href="/#contact"
-              className="font-serif text-[1.1rem] tracking-wide font-bold text-royal-deep hover:underline hover:text-coral transition-colors duration-200 hidden sm:inline-block"
-            >
-              Join the Crew
-            </a>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={openDrawer}
+                aria-label={`Open cart${count > 0 ? `, ${count} item${count !== 1 ? "s" : ""}` : ""}`}
+                className="relative flex h-10 w-10 items-center justify-center rounded-full hover:bg-sand transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none"
+              >
+                <ShoppingBag className="h-5 w-5" />
+                {count > 0 && (
+                  <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#059669] text-[0.6rem] font-black text-white">
+                    {count > 9 ? "9+" : count}
+                  </span>
+                )}
+              </button>
+              <a
+                href="/#contact"
+                className="font-serif text-[1.1rem] tracking-wide font-bold text-royal-deep hover:underline hover:text-coral transition-colors duration-200 hidden sm:inline-block"
+              >
+                Join the Crew
+              </a>
+            </div>
           </div>
         </div>
       </header>

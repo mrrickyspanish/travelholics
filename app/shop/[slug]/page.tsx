@@ -20,6 +20,7 @@ import {
 import { Footer } from "@/components/footer";
 import { RippleButton } from "@/components/ripple-button";
 import { MERCH_PRODUCTS, formatMerchPrice, type MerchProduct } from "@/lib/shop-catalog";
+import { useCart } from "@/lib/cart-context";
 
 /* ─── Product image data per slug ──────────────────────────── */
 
@@ -205,34 +206,26 @@ export default function ProductPage() {
   const gallery = images?.gallery ?? (product.imageSrc ? [product.imageSrc] : []);
   const hero = images?.hero ?? product.imageSrc ?? "";
 
+  const { addItem, openDrawer } = useCart();
   const [activeImage, setActiveImage] = useState(0);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [isPending, setIsPending] = useState(false);
-  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [added, setAdded] = useState(false);
 
-  const handleCheckout = async () => {
-    setCheckoutError(null);
-    setIsPending(true);
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: product.id,
-          color: product.colors[0],
-          size: product.sizes[0],
-          quantity,
-        }),
-      });
-      const data = (await res.json()) as { url?: string; error?: string };
-      if (!res.ok || !data.url) throw new Error(data.error ?? "Unable to start checkout.");
-      window.location.href = data.url;
-    } catch (err) {
-      setCheckoutError(err instanceof Error ? err.message : "Unable to start checkout.");
-    } finally {
-      setIsPending(false);
-    }
+  const handleAddToCart = () => {
+    addItem({
+      productId: product.id,
+      name: product.name,
+      displayName: product.displayName,
+      price: product.price,
+      image: gallery[0] ?? hero,
+      color: product.colors[0] ?? "",
+      size: product.sizes[0] ?? "",
+      quantity,
+    });
+    setAdded(true);
+    openDrawer();
+    setTimeout(() => setAdded(false), 2000);
   };
 
   const displayImage = gallery[activeImage] ?? hero;
@@ -407,18 +400,14 @@ export default function ProductPage() {
                 </div>
 
                 <RippleButton
-                  onClick={handleCheckout}
-                  disabled={isPending || product.comingSoon}
+                  onClick={handleAddToCart}
+                  disabled={product.comingSoon}
                   className="flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {product.comingSoon ? "Coming Soon" : isPending ? "Opening…" : "Buy Now"}
-                  {!isPending && !product.comingSoon && <ArrowRight className="h-3.5 w-3.5" />}
+                  {product.comingSoon ? "Coming Soon" : added ? "Added!" : "Add to Cart"}
+                  {!product.comingSoon && !added && <ArrowRight className="h-3.5 w-3.5" />}
                 </RippleButton>
               </div>
-
-              {checkoutError && (
-                <p className="mt-2 text-xs font-semibold text-rose-500">{checkoutError}</p>
-              )}
 
               {/* Trust signals */}
               <div className="mt-6 flex flex-col gap-2 border-t border-stone-100 pt-5">
