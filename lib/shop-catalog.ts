@@ -292,7 +292,7 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     id: "merch-magnet-ticket-pacific",
     zone: "merch",
     name: "Cruise Ticket Door Magnet",
-    displayName: "Cruise Life",
+    displayName: "Cruise Life Door Magnet",
     description:
       "A collectible Travelholics door magnet made to stand out on your stateroom door.",
     badge: "Cruise Life",
