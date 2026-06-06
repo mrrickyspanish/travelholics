@@ -1201,9 +1201,9 @@ export default function ShopFullPage() {
               </p>
             </div>
 
-            {/* Horizontal snap carousel — full width so cards can overflow */}
+            {/* Centered when few videos; becomes scrollable carousel as more are added */}
             <div
-              className="flex gap-4 overflow-x-auto px-10 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="flex justify-center gap-8 overflow-x-auto px-10 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               style={{ scrollSnapType: "x mandatory" }}
             >
               {COMMUNITY_VIDEOS.map((item) => {
