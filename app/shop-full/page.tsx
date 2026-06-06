@@ -15,6 +15,8 @@ import {
   Search,
   ShieldCheck,
   ShoppingCart,
+  Star,
+  Users,
   Volume2,
   VolumeX,
   X,
@@ -1235,6 +1237,78 @@ export default function ShopFullPage() {
             </div>
           </section>
         </div>
+
+        {/* ── About Travelholics ───────────────────────────── */}
+        <section className="bg-[#FAF9F6] px-5 py-16 lg:px-10 lg:py-20">
+          <div className="mx-auto max-w-[1240px]">
+
+            {/* Two-column: story left, image right */}
+            <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-16">
+
+              {/* Left — story */}
+              <div className="flex-1">
+                <p className="mb-3 text-[0.65rem] font-bold uppercase tracking-[0.26em] text-[#4a5568]">
+                  The Story Behind
+                </p>
+                <h2
+                  className="mb-5 text-[2.8rem] font-black leading-[1.05] text-[#0a1a2e] lg:text-[3.4rem]"
+                  style={{ fontFamily: "Georgia, serif", fontWeight: 900 }}
+                >
+                  Travelholics
+                </h2>
+                <p className="mb-4 max-w-lg text-[0.95rem] leading-[1.7] text-[#4a5568]">
+                  Travelholics was built by real cruisers for real cruisers. What started as a
+                  passion for documenting every sail-away, port stop, and cabin moment turned into
+                  a community of travelers who love the journey as much as the destination.
+                </p>
+                <p className="mb-8 max-w-lg text-[0.95rem] leading-[1.7] text-[#4a5568]">
+                  Every product in the Travelholics shop is designed with that same spirit — cruise-tested,
+                  community-approved, and made to travel with you.
+                </p>
+                <Link
+                  href="/#contact"
+                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#0a1a2e] px-7 py-3 text-[0.85rem] font-bold uppercase tracking-[0.12em] text-[#0a1a2e] transition-colors hover:bg-[#0a1a2e] hover:text-white"
+                >
+                  Our Story
+                </Link>
+              </div>
+
+              {/* Right — brand image */}
+              <div
+                className="relative w-full overflow-hidden lg:w-[48%] lg:flex-shrink-0"
+                style={{ borderRadius: 24, aspectRatio: "4/3" }}
+              >
+                <Image
+                  src="/images/travelholics_brand-hero_cruise-ship.png"
+                  alt="Travelholics community on a cruise"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 48vw, 100vw"
+                />
+              </div>
+            </div>
+
+            {/* Trust / value tiles */}
+            <div className="mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+              {[
+                { icon: <Heart className="h-5 w-5" />, label: "Community First" },
+                { icon: <Star className="h-5 w-5" />, label: "Cruise-Tested" },
+                { icon: <ShieldCheck className="h-5 w-5" />, label: "Original Designs" },
+                { icon: <Users className="h-5 w-5" />, label: "Real Travelers" },
+              ].map(({ icon, label }) => (
+                <div
+                  key={label}
+                  className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-white px-5 py-4"
+                >
+                  <span className="text-[#059669]">{icon}</span>
+                  <span className="text-[0.78rem] font-bold uppercase tracking-[0.12em] text-[#0a1a2e]">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* ── Post-Shop Trip CTA ────────────────────────────── */}
         <section className="bg-[#FAF9F6] px-5 py-10">
