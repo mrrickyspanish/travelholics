@@ -1267,7 +1267,7 @@ export default function ShopFullPage() {
                 </p>
                 <Link
                   href="/#contact"
-                  className="inline-flex items-center gap-2 rounded-xl bg-[#0a1a2e] px-7 py-3.5 text-[0.82rem] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1e3a8a]"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#059669] px-7 py-3.5 text-[0.82rem] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#047857]"
                 >
                   Our Story
                 </Link>
@@ -1279,7 +1279,7 @@ export default function ShopFullPage() {
                 style={{ borderRadius: 20, aspectRatio: "16/9" }}
               >
                 <Image
-                  src="/images/04-travelholics-lanyard-alana-resort.png"
+                  src="/images/about-with-travelers.jpg"
                   alt="Travelholics community traveling"
                   fill
                   className="object-cover"
@@ -1291,7 +1291,7 @@ export default function ShopFullPage() {
             {/* Trust / value tiles — prominent, full-width */}
             <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
               {[
-                { icon: <Heart className="h-7 w-7" />, label: "+300,000", sub: "Community Members" },
+                { icon: <Heart className="h-7 w-7" />, label: "20K+", sub: "Community Members" },
                 { icon: <Star className="h-7 w-7" />, label: "Cruise-Tested", sub: "Every Pick" },
                 { icon: <ShieldCheck className="h-7 w-7" />, label: "Original", sub: "Designs" },
                 { icon: <Users className="h-7 w-7" />, label: "Real Travelers", sub: "Real Reviews" },
