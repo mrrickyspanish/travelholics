@@ -406,10 +406,6 @@ function SwipeHint() {
 function ProductSlide({
   product,
   meta,
-  quantity,
-  isPending,
-  onQuantityChange,
-  onCheckout,
   onGalleryOpen,
   isFirst,
   isLast,
@@ -418,10 +414,6 @@ function ProductSlide({
 }: {
   product: MerchProduct;
   meta: ProductMeta;
-  quantity: number;
-  isPending: boolean;
-  onQuantityChange: (q: number) => void;
-  onCheckout: () => void;
   onGalleryOpen: () => void;
   isFirst: boolean;
   isLast: boolean;
@@ -497,70 +489,27 @@ function ProductSlide({
             }}
           >
 
-            <h2 className="text-[1.45rem] font-black leading-tight text-[#111d30]">
+            <h2 className="mb-1 text-[1.45rem] font-black leading-tight text-[#111d30]">
               {product.name}
             </h2>
 
-            <p className="mb-3 line-clamp-2 text-[0.84rem] font-medium leading-[1.5] text-[#2d3748]">
-              {meta.description}
-            </p>
+            <div className="mb-4 flex items-baseline gap-2">
+              {product.compareAtPrice && (
+                <span className="text-[0.68rem] font-semibold text-stone-400 line-through">
+                  {formatMerchPrice(product.compareAtPrice)}
+                </span>
+              )}
+              <span className="text-[1.25rem] font-black text-[#1e3a8a]">
+                {formatMerchPrice(product.price)}
+              </span>
+            </div>
 
             <Link
               href={`/shop/${product.id}`}
-              className="mb-3 inline-block text-[0.72rem] font-semibold text-[#1e3a8a] underline underline-offset-2 hover:text-[#059669] transition-colors"
+              className="flex min-h-[48px] w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:bg-[#047857]"
             >
-              View full details →
+              View Product <ArrowRight className="h-3.5 w-3.5 flex-shrink-0" />
             </Link>
-
-            <div className="flex items-center gap-3">
-              <div className="flex flex-col leading-none">
-                {product.compareAtPrice && (
-                  <span className="text-[0.68rem] font-semibold text-stone-400 line-through">
-                    {formatMerchPrice(product.compareAtPrice)}
-                  </span>
-                )}
-                <span className="text-[1.25rem] font-black text-[#1e3a8a]">
-                  {formatMerchPrice(product.price)}
-                </span>
-              </div>
-
-              <div
-                className="flex items-center gap-2 rounded-xl border px-3 py-[11px]"
-                style={{
-                  background: "rgba(255,255,255,0.9)",
-                  borderColor: "rgba(30,58,138,0.18)",
-                }}
-              >
-                <button
-                  onClick={() => onQuantityChange(Math.max(1, quantity - 1))}
-                  disabled={isPending}
-                  aria-label="Decrease quantity"
-                  className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
-                >
-                  <Minus className="h-3.5 w-3.5" />
-                </button>
-                <span className="w-5 text-center text-sm font-bold text-[#111d30]">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => onQuantityChange(Math.min(10, quantity + 1))}
-                  disabled={isPending}
-                  aria-label="Increase quantity"
-                  className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
-                >
-                  <Plus className="h-3.5 w-3.5" />
-                </button>
-              </div>
-
-              <RippleButton
-                onClick={onCheckout}
-                disabled={isPending}
-                className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {isPending ? "Opening…" : "Buy Now"}
-                {!isPending && <ArrowRight className="h-3.5 w-3.5" />}
-              </RippleButton>
-            </div>
           </div>
         </div>
       </div>
@@ -1055,12 +1004,6 @@ export default function ShopFullPage() {
                   key={product.id}
                   product={product}
                   meta={PRODUCT_META[product.id]}
-                  quantity={quantities[product.id] ?? 1}
-                  isPending={pendingCheckoutId === product.id}
-                  onQuantityChange={(q) =>
-                    setQuantities((s) => ({ ...s, [product.id]: q }))
-                  }
-                  onCheckout={() => void handleCheckout(product)}
                   onGalleryOpen={() => setGalleryProduct(product.id)}
                   isFirst={i === 0}
                   isLast={i === products.length - 1}
