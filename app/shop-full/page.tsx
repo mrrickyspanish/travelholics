@@ -493,6 +493,10 @@ function ProductSlide({
               {product.name}
             </h2>
 
+            <p className="mb-3 line-clamp-2 text-[0.84rem] font-medium leading-[1.5] text-[#2d3748]">
+              {meta.description}
+            </p>
+
             <div className="mb-4 flex items-baseline gap-2">
               {product.compareAtPrice && (
                 <span className="text-[0.68rem] font-semibold text-stone-400 line-through">
