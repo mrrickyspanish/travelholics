@@ -235,7 +235,7 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     displayName: "Atlantis Lanyard",
     subtitle: "Atlantis Travelholics Edition",
     description:
-      "Keeps your cruise card, room key, or travel pass close without sacrificing style.",
+      "Keeps your cruise card, room key, or travel pass close without sacrificing style. Designed in the signature Atlantis colorway with Travelholics branding, cruise-inspired icons, and a silver lobster claw clip.",
     badge: "Travel Essentials",
     price: 1200,
     compareAtPrice: 1400,
@@ -291,10 +291,10 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
   {
     id: "merch-magnet-ticket-pacific",
     zone: "merch",
-    name: "Cruise Ticket Door Magnet",
+    name: "Travelholics Cruise Life Door Magnet",
     displayName: "Cruise Life Door Magnet",
     description:
-      "A collectible Travelholics door magnet made to stand out on your stateroom door.",
+      "A collectible Travelholics door magnet made to stand out on your stateroom door. Inspired by the Cruise Life aesthetic — bold, graphic, and built for the sailing community.",
     badge: "Cruise Life",
     price: 1999,
     currency: "usd",
