@@ -338,11 +338,11 @@ function SwipeHint() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (sessionStorage.getItem("swipeHintSeen")) return;
+    // if (sessionStorage.getItem("swipeHintSeen")) return;
     const show = setTimeout(() => setVisible(true), 400);
     const hide = setTimeout(() => {
       setVisible(false);
-      sessionStorage.setItem("swipeHintSeen", "1");
+      // sessionStorage.setItem("swipeHintSeen", "1");
     }, 2800);
     return () => { clearTimeout(show); clearTimeout(hide); };
   }, []);
