@@ -411,18 +411,14 @@ function ProductSlide({
   product,
   meta,
   onGalleryOpen,
-  isFirst,
-  isLast,
-  onPrev,
-  onNext,
+  index,
+  total,
 }: {
   product: MerchProduct;
   meta: ProductMeta;
   onGalleryOpen: () => void;
-  isFirst: boolean;
-  isLast: boolean;
-  onPrev: () => void;
-  onNext: () => void;
+  index: number;
+  total: number;
 }) {
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
@@ -454,20 +450,12 @@ function ProductSlide({
         style={{ top: 0, bottom: 0, paddingTop: 64, paddingBottom: 92, zIndex: 2 }}
       >
         {/* Image row — fills all available space above the card */}
-        <div className="flex min-h-0 w-full flex-1 items-center justify-center gap-3 px-1">
-          <button
-            onClick={onPrev}
-            aria-label="Previous product"
-            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white/8 text-white/60 backdrop-blur-sm transition-colors hover:bg-white/18 hover:text-white ${isFirst ? "invisible" : ""}`}
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-
+        <div className="flex min-h-0 w-full flex-1 items-center justify-center">
           <button
             onClick={onGalleryOpen}
             aria-label={`View all photos of ${product.name}`}
             className="cursor-zoom-in focus:outline-none"
-            style={{ width: "min(68vw, 300px)" }}
+            style={{ width: "min(72vw, 300px)" }}
           >
             <div
               className="relative w-full"
@@ -482,19 +470,28 @@ function ProductSlide({
                 alt={product.name}
                 fill
                 className="object-contain"
-                sizes="68vw"
+                sizes="72vw"
                 priority
               />
             </div>
           </button>
+        </div>
 
-          <button
-            onClick={onNext}
-            aria-label="Next product"
-            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white/8 text-white/60 backdrop-blur-sm transition-colors hover:bg-white/18 hover:text-white ${isLast ? "invisible" : ""}`}
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+        {/* Position dots */}
+        <div className="flex flex-shrink-0 items-center justify-center gap-[7px]" aria-hidden>
+          {Array.from({ length: total }).map((_, i) => (
+            <span
+              key={i}
+              style={{
+                width: i === index ? 18 : 6,
+                height: 6,
+                borderRadius: 3,
+                background: "rgba(255,255,255,0.9)",
+                opacity: i === index ? 0.9 : 0.32,
+                transition: "width 0.3s ease, opacity 0.3s ease",
+              }}
+            />
+          ))}
         </div>
 
         {/* Glass purchase panel */}
@@ -1037,10 +1034,8 @@ export default function ShopFullPage() {
                   product={product}
                   meta={PRODUCT_META[product.id]}
                   onGalleryOpen={() => setGalleryProduct(product.id)}
-                  isFirst={i === 0}
-                  isLast={i === products.length - 1}
-                  onPrev={() => goTo(i - 1)}
-                  onNext={() => goTo(i + 1)}
+                  index={i}
+                  total={products.length}
                 />
               ))}
             </div>
