@@ -380,7 +380,6 @@ export default function ProductPage() {
                 <div className="flex items-center gap-3 rounded-xl border border-stone-200 bg-white px-4 py-3.5">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    disabled={isPending}
                     aria-label="Decrease quantity"
                     className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
                   >
@@ -391,7 +390,6 @@ export default function ProductPage() {
                   </span>
                   <button
                     onClick={() => setQuantity((q) => Math.min(10, q + 1))}
-                    disabled={isPending}
                     aria-label="Increase quantity"
                     className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
                   >
