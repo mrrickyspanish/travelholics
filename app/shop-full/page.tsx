@@ -481,7 +481,7 @@ function ProductSlide({
           <div
             style={{
               borderRadius: 26,
-              padding: 22,
+              padding: "28px 22px 24px",
               background: "rgba(255,255,255,0.74)",
               backdropFilter: "blur(18px)",
               WebkitBackdropFilter: "blur(18px)",
@@ -489,26 +489,26 @@ function ProductSlide({
               boxShadow: "0 22px 60px rgba(5,25,38,0.18)",
             }}
           >
-            {/* Name */}
-            <h2 style={{ margin: 0, fontSize: "clamp(22px, 6.4vw, 30px)", lineHeight: 1.08, fontWeight: 800, letterSpacing: "-0.03em", color: "#0c2238" }}>
-              {product.name}
+            {/* Display name — short, one line */}
+            <h2 style={{ margin: 0, fontSize: "clamp(28px, 7vw, 38px)", lineHeight: 1.05, fontWeight: 800, letterSpacing: "-0.03em", color: "#0c2238", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              {product.displayName ?? product.name}
             </h2>
 
             {/* Description */}
-            <p className="line-clamp-2" style={{ marginTop: 12, fontSize: 14, lineHeight: 1.45, color: "rgba(12,34,56,0.76)" }}>
+            <p className="line-clamp-2" style={{ marginTop: 14, fontSize: 15, lineHeight: 1.45, color: "rgba(12,34,56,0.76)" }}>
               {meta.description}
             </p>
 
             {/* Purchase row: price left, Buy button right */}
-            <div style={{ marginTop: 18, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+            <div style={{ marginTop: 22, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
               {/* Price group */}
               <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
                 {product.compareAtPrice && (
-                  <span style={{ fontSize: 14, color: "rgba(12,34,56,0.38)", textDecoration: "line-through" }}>
+                  <span style={{ fontSize: 15, color: "rgba(12,34,56,0.38)", textDecoration: "line-through" }}>
                     {formatMerchPrice(product.compareAtPrice)}
                   </span>
                 )}
-                <span style={{ fontSize: 24, lineHeight: 1, fontWeight: 900, color: "#143b73" }}>
+                <span style={{ fontSize: 30, lineHeight: 1, fontWeight: 900, letterSpacing: "0.06em", color: "#143b73" }}>
                   {formatMerchPrice(product.price)}
                 </span>
               </div>
@@ -516,7 +516,7 @@ function ProductSlide({
               {/* Buy button */}
               <Link
                 href={`/shop/${product.id}`}
-                style={{ minWidth: 116, height: 44, borderRadius: 12, background: "#008f62", color: "#fff", fontSize: 15, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, whiteSpace: "nowrap" }}
+                style={{ minWidth: 116, height: 52, borderRadius: 14, background: "#008f62", color: "#fff", fontSize: 18, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, whiteSpace: "nowrap" }}
               >
                 Buy
               </Link>

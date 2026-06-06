@@ -23,6 +23,7 @@ export interface MerchProduct {
   id: string;
   zone: "merch";
   name: string;
+  displayName?: string;
   description: string;
   badge: string;
   price: number;
@@ -231,9 +232,10 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     id: "merch-cruise-card-lanyard-atlantis",
     zone: "merch",
     name: "Travelholics Atlantis Lanyard",
+    displayName: "Atlantis Lanyard",
     subtitle: "Atlantis Travelholics Edition",
     description:
-      "The Travelholics Cruise Card Lanyard keeps your cruise card, room key, or travel pass close without sacrificing style. Designed in the signature Atlantis colorway with Travelholics branding, cruise-inspired icons, and a silver lobster claw clip.",
+      "Keeps your cruise card, room key, or travel pass close without sacrificing style.",
     badge: "Travel Essentials",
     price: 1200,
     compareAtPrice: 1400,
@@ -290,8 +292,9 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     id: "merch-magnet-ticket-pacific",
     zone: "merch",
     name: "Cruise Ticket Door Magnet",
+    displayName: "Cruise Life",
     description:
-      "The collectible Travelholics Cruise Life ticket magnet featured in the Pacific duck hunt. Grab one for your next sailing.",
+      "A collectible Travelholics door magnet made to stand out on your stateroom door.",
     badge: "Cruise Life",
     price: 1999,
     currency: "usd",
@@ -306,8 +309,9 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     id: "merch-magnet-mexican-pacific",
     zone: "merch",
     name: "Pacific Mexican Door Magnet",
+    displayName: "Pacific Coast Magnet",
     description:
-      "The original Pacific Mexican-style cruise magnet design. Built to pop on your stateroom door.",
+      "A bold Travelholics magnet made to bring personality and cruise energy to your door.",
     badge: "Original",
     price: 1999,
     currency: "usd",
