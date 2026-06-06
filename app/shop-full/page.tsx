@@ -787,25 +787,14 @@ function CommunityVideoCard({
 function DesktopProductCard({
   product,
   meta,
-  quantity,
-  isPending,
-  checkoutError,
-  onQuantityChange,
-  onCheckout,
   onGalleryOpen,
 }: {
   product: MerchProduct;
   meta: ProductMeta;
-  quantity: number;
-  isPending: boolean;
-  checkoutError: string | null;
-  onQuantityChange: (q: number) => void;
-  onCheckout: () => void;
   onGalleryOpen: () => void;
 }) {
   const router = useRouter();
   const productHref = `/shop/${product.id}`;
-  const stopProp = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
     <motion.div
@@ -868,48 +857,12 @@ function DesktopProductCard({
           )}
         </div>
 
-        {/* Qty stepper + Buy Now */}
-        <div className="mt-auto flex items-center gap-2.5" onClick={stopProp}>
-          <div
-            className="flex items-center gap-2 rounded-xl border px-3 py-[10px]"
-            style={{ borderColor: "rgba(30,58,138,0.16)" }}
-          >
-            <button
-              onClick={() => onQuantityChange(Math.max(1, quantity - 1))}
-              disabled={isPending}
-              aria-label="Decrease quantity"
-              className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
-            >
-              <Minus className="h-3.5 w-3.5" />
-            </button>
-            <span className="w-5 text-center text-sm font-bold text-[#111d30]">
-              {quantity}
-            </span>
-            <button
-              onClick={() => onQuantityChange(Math.min(10, quantity + 1))}
-              disabled={isPending}
-              aria-label="Increase quantity"
-              className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
-            >
-              <Plus className="h-3.5 w-3.5" />
-            </button>
+        {/* CTA */}
+        <div className="mt-auto">
+          <div className="flex min-h-[46px] w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#059669] px-4 text-[0.88rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857]">
+            View Product <ArrowRight className="h-3.5 w-3.5 flex-shrink-0" />
           </div>
-
-          <RippleButton
-            onClick={(e) => { e.stopPropagation(); onCheckout(); }}
-            disabled={isPending}
-            className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-[0.88rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {isPending ? "Opening…" : "Buy Now"}
-            {!isPending && <ArrowRight className="h-3.5 w-3.5" />}
-          </RippleButton>
         </div>
-
-        {checkoutError && (
-          <p className="mt-2 rounded-xl bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-600">
-            {checkoutError}
-          </p>
-        )}
       </div>
     </motion.div>
   );
@@ -1267,13 +1220,6 @@ export default function ShopFullPage() {
                     key={product.id}
                     product={product}
                     meta={PRODUCT_META[product.id]}
-                    quantity={quantities[product.id] ?? 1}
-                    isPending={pendingCheckoutId === product.id}
-                    checkoutError={checkoutError[product.id] ?? null}
-                    onQuantityChange={(q) =>
-                      setQuantities((s) => ({ ...s, [product.id]: q }))
-                    }
-                    onCheckout={() => void handleCheckout(product)}
                     onGalleryOpen={() => setGalleryProduct(product.id)}
                   />
                 ))}
