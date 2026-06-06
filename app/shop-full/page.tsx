@@ -42,6 +42,7 @@ type ProductMeta = {
   image: string;
   gallery: string[];
   promo?: string;
+  imageScale?: number;
 };
 
 const PRODUCT_META: Record<string, ProductMeta> = {
@@ -51,6 +52,7 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     description:
       "Keeps your cruise card, room key, or travel pass close without sacrificing style.",
     image: "/images/travelholics_lanyard_transparent.png",
+    imageScale: 1.05,
     gallery: [
       "/images/travelholics_lanyard_transparent.png",
       "/images/01-travelholics-cruise-card-lanyard-flatlay-passport.png",
@@ -73,6 +75,7 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     description:
       "A collectible Travelholics door magnet inspired by cruise tickets and built to stand out on your stateroom door.",
     image: "/images/travelholics_product_ticket-magnet-pacific.png",
+    imageScale: 1.14,
     gallery: [
       "/images/travelholics_product_ticket-magnet-pacific.png",
       "/images/travelholic_ticket_magnent_pacific.png",
@@ -87,6 +90,7 @@ const PRODUCT_META: Record<string, ProductMeta> = {
     description:
       "A bold, colorful Travelholics magnet made to bring personality and cruise energy to your stateroom door.",
     image: "/images/travelholics_product_pacific-mexican-door-magnet.png",
+    imageScale: 1.14,
     gallery: [
       "/images/travelholics_product_pacific-mexican-door-magnet.png",
       "/images/pacific_mexican_door_magnent.png",
@@ -422,6 +426,22 @@ function ProductSlide({
 }) {
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
+      {/* Shared focus overlay — calms background behind the product zone */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          zIndex: 1,
+          background:
+            "radial-gradient(circle at 50% 42%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.12) 22%, rgba(255,255,255,0.04) 40%, rgba(255,255,255,0.00) 62%)",
+          backdropFilter: "blur(2px)",
+          WebkitBackdropFilter: "blur(2px)",
+          maskImage: "radial-gradient(circle at 50% 42%, black 30%, transparent 68%)",
+          WebkitMaskImage: "radial-gradient(circle at 50% 42%, black 30%, transparent 68%)",
+        }}
+      />
       {/*
         True flex column layout — no hardcoded pixel guesses.
         - pt accounts for the fixed header (56px) + breathing room
@@ -431,7 +451,7 @@ function ProductSlide({
       */}
       <div
         className="absolute inset-x-0 flex flex-col items-center gap-3 px-3"
-        style={{ top: 0, bottom: 0, paddingTop: 64, paddingBottom: 92 }}
+        style={{ top: 0, bottom: 0, paddingTop: 64, paddingBottom: 92, zIndex: 2 }}
       >
         {/* Image row — fills all available space above the card */}
         <div className="flex min-h-0 w-full flex-1 items-center justify-center gap-3 px-1">
@@ -453,7 +473,8 @@ function ProductSlide({
               className="relative w-full"
               style={{
                 aspectRatio: "1 / 1",
-                filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))",
+                transform: meta.imageScale ? `scale(${meta.imageScale})` : undefined,
+                filter: "drop-shadow(0 18px 28px rgba(5,25,38,0.18)) drop-shadow(0 28px 46px rgba(5,25,38,0.12))",
               }}
             >
               <Image
