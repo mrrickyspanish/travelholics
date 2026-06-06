@@ -491,9 +491,6 @@ function ProductSlide({
               boxShadow: "0 8px 32px rgba(5,25,38,0.12), 0 2px 8px rgba(5,25,38,0.06)",
             }}
           >
-            <span className="mb-3 inline-block rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
-              {meta.badge}
-            </span>
 
             <h2 className="text-[1.45rem] font-black leading-tight text-[#111d30]">
               {product.name}
