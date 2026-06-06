@@ -327,9 +327,56 @@ function MobileNavDrawer({
   );
 }
 
-/* ─── Mobile Product Slide ──────────────────────────────────
-   Pure mobile layout — desktop has its own separate section.
+/* ─── Mobile Swipe Hint ─────────────────────────────────────
+   Fades in after 800ms, holds, fades out. Shows once per session.
 ── */
+
+function SwipeHint() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (sessionStorage.getItem("swipeHintSeen")) return;
+    const show = setTimeout(() => setVisible(true), 800);
+    const hide = setTimeout(() => {
+      setVisible(false);
+      sessionStorage.setItem("swipeHintSeen", "1");
+    }, 3000);
+    return () => { clearTimeout(show); clearTimeout(hide); };
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 6 }}
+          transition={{ duration: 0.3 }}
+          className="pointer-events-none absolute inset-x-0 z-40 flex justify-center"
+          style={{ bottom: 96 }}
+        >
+          <div
+            className="flex items-center gap-2 rounded-full px-5 py-2.5"
+            style={{
+              background: "rgba(5,20,38,0.62)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              border: "1px solid rgba(255,255,255,0.18)",
+            }}
+          >
+            <span className="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-white/90">
+              Swipe for more
+            </span>
+            <ChevronRight className="h-3.5 w-3.5 text-white/70" />
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+
 
 function ProductSlide({
   product,
@@ -1037,6 +1084,9 @@ export default function ShopFullPage() {
                 />
               ))}
             </div>
+
+            {/* Swipe hint — mobile only, shows once per session */}
+            <SwipeHint />
 
             {/* Bottom controls */}
             <div className="pointer-events-none absolute bottom-4 left-0 right-0 z-30 flex flex-col items-center gap-2">
