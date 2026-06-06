@@ -479,38 +479,45 @@ function ProductSlide({
         {/* Glass purchase panel — fixed height, never compressed */}
         <div className="w-full flex-shrink-0">
           <div
-            className="rounded-3xl p-6"
+            className="rounded-3xl"
             style={{
               background: "rgba(255,255,255,0.68)",
               backdropFilter: "blur(28px) saturate(160%)",
               WebkitBackdropFilter: "blur(28px) saturate(160%)",
               border: "1.5px solid rgba(255,255,255,0.55)",
               boxShadow: "0 8px 32px rgba(5,25,38,0.12), 0 2px 8px rgba(5,25,38,0.06)",
+              padding: "22px 24px 24px",
             }}
           >
+            {/* Top row: title+description left | price right */}
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) auto", columnGap: 16, alignItems: "start" }}>
+              {/* Left: name + description */}
+              <div style={{ minWidth: 0 }}>
+                <h2 style={{ margin: 0, fontSize: "1.18rem", fontWeight: 900, lineHeight: 1.08, letterSpacing: "-0.02em", color: "#111d30" }}>
+                  {product.name}
+                </h2>
+                <p style={{ margin: "10px 0 0", fontSize: "0.78rem", fontWeight: 500, lineHeight: 1.55, color: "#2d3748" }} className="line-clamp-2">
+                  {meta.description}
+                </p>
+              </div>
 
-            <h2 className="mb-1 text-[1.45rem] font-black leading-tight text-[#111d30]">
-              {product.name}
-            </h2>
-
-            <p className="mb-3 line-clamp-2 text-[0.84rem] font-medium leading-[1.5] text-[#2d3748]">
-              {meta.description}
-            </p>
-
-            <div className="mb-4 flex items-baseline gap-2">
-              {product.compareAtPrice && (
-                <span className="text-[0.68rem] font-semibold text-stone-400 line-through">
-                  {formatMerchPrice(product.compareAtPrice)}
+              {/* Right: sale price + compare-at */}
+              <div style={{ textAlign: "right", flexShrink: 0 }}>
+                <span style={{ display: "block", whiteSpace: "nowrap", fontSize: "1.35rem", fontWeight: 900, color: "#111d30", lineHeight: 1.1 }}>
+                  {formatMerchPrice(product.price)}
                 </span>
-              )}
-              <span className="text-[1.25rem] font-black text-[#1e3a8a]">
-                {formatMerchPrice(product.price)}
-              </span>
+                {product.compareAtPrice && (
+                  <span style={{ display: "block", marginTop: 6, whiteSpace: "nowrap", fontSize: "0.72rem", fontWeight: 600, color: "#9ca3af", textDecoration: "line-through", textAlign: "right" }}>
+                    {formatMerchPrice(product.compareAtPrice)}
+                  </span>
+                )}
+              </div>
             </div>
 
+            {/* CTA */}
             <Link
               href={`/shop/${product.id}`}
-              className="flex min-h-[48px] w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:bg-[#047857]"
+              className="mt-6 flex min-h-[52px] w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:bg-[#047857]"
             >
               View Product <ArrowRight className="h-3.5 w-3.5 flex-shrink-0" />
             </Link>
