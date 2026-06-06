@@ -498,28 +498,31 @@ function ProductSlide({
 const COMMUNITY_VIDEOS = [
   {
     src: "/videos/travelholics_cruise_ticket_door_magnet.mp4",
-    productName: "Cruise Ticket Door Magnet",
-    caption: "Making a statement on every stateroom door.",
+    productId: "merch-magnet-ticket-pacific",
   },
   {
     src: "/videos/travelholics_pacific_mexican_door_magnet.mp4",
-    productName: "Pacific Mexican Door Magnet",
-    caption: "Bringing color and cruise energy wherever you sail.",
+    productId: "merch-magnet-mexican-pacific",
   },
 ];
 
 function CommunityVideoCard({
   src,
-  productName,
-  caption,
+  product,
+  meta,
+  isPending,
+  onCheckout,
 }: {
   src: string;
-  productName: string;
-  caption: string;
+  product: MerchProduct;
+  meta: ProductMeta;
+  isPending: boolean;
+  onCheckout: (qty: number) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [qty, setQty] = useState(1);
 
   // Autoplay when in view, pause when not
   useEffect(() => {
@@ -569,9 +572,9 @@ function CommunityVideoCard({
 
   return (
     <div
-      className="flex-shrink-0 overflow-hidden"
+      className="flex-shrink-0 overflow-hidden bg-white"
       style={{
-        width: 252,
+        width: 300,
         borderRadius: 20,
         boxShadow: "0 16px 48px rgba(5,25,38,0.14)",
         scrollSnapAlign: "start",
@@ -593,7 +596,7 @@ function CommunityVideoCard({
         <button
           onClick={toggleMute}
           aria-label={muted ? "Unmute video" : "Mute video"}
-          className="absolute left-3 bottom-10 z-10 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.68rem] font-semibold text-white transition-colors hover:bg-black/70"
+          className="absolute bottom-10 left-3 z-10 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.68rem] font-semibold text-white transition-colors hover:bg-black/70"
           style={{ background: "rgba(0,0,0,0.52)" }}
         >
           {muted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
@@ -613,17 +616,79 @@ function CommunityVideoCard({
         />
       </div>
 
-      {/* Caption bar */}
-      <div className="bg-white px-4 py-4">
-        <p className="text-[0.62rem] font-bold uppercase tracking-[0.14em] text-[#059669]">
-          Travelholics Original
-        </p>
-        <p className="mt-0.5 text-[0.95rem] font-extrabold leading-tight text-[#0a1a2e]">
-          {productName}
-        </p>
-        <p className="mt-1 text-[0.78rem] leading-relaxed text-[#4a5568]">
-          {caption}
-        </p>
+      {/* Product card — Switch Nails style: thumbnail + info + buy */}
+      <div className="px-4 py-4">
+        <div className="flex items-center gap-3">
+          {/* Product thumbnail */}
+          <div
+            className="relative flex-shrink-0 overflow-hidden rounded-xl"
+            style={{ width: 64, height: 64, background: "linear-gradient(160deg,#f5ede0,#eee8dc)" }}
+          >
+            <Image
+              src={meta.image}
+              alt={product.name}
+              fill
+              className="object-contain p-1.5"
+              sizes="64px"
+            />
+          </div>
+
+          {/* Name + price */}
+          <div className="min-w-0 flex-1">
+            <p className="text-[0.62rem] font-bold uppercase tracking-[0.12em] text-[#059669]">
+              Travelholics Original
+            </p>
+            <p className="truncate text-[0.88rem] font-extrabold leading-tight text-[#0a1a2e]">
+              {product.name}
+            </p>
+            <div className="mt-0.5 flex items-baseline gap-1.5">
+              <span className="text-[0.95rem] font-black text-[#1e3a8a]">
+                {formatMerchPrice(product.price)}
+              </span>
+              {product.compareAtPrice && (
+                <span className="text-[0.72rem] font-semibold text-stone-400 line-through">
+                  {formatMerchPrice(product.compareAtPrice)}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Qty + Add to cart */}
+        <div className="mt-3 flex items-center gap-2">
+          {/* Qty stepper */}
+          <div
+            className="flex items-center gap-1.5 rounded-xl border px-2.5 py-2"
+            style={{ borderColor: "rgba(30,58,138,0.16)" }}
+          >
+            <button
+              onClick={() => setQty((q) => Math.max(1, q - 1))}
+              disabled={isPending}
+              aria-label="Decrease quantity"
+              className="flex h-4 w-4 items-center justify-center text-stone-400 hover:text-[#1e3a8a] disabled:opacity-40"
+            >
+              <Minus className="h-3 w-3" />
+            </button>
+            <span className="w-4 text-center text-xs font-bold text-[#111d30]">{qty}</span>
+            <button
+              onClick={() => setQty((q) => Math.min(10, q + 1))}
+              disabled={isPending}
+              aria-label="Increase quantity"
+              className="flex h-4 w-4 items-center justify-center text-stone-400 hover:text-[#1e3a8a] disabled:opacity-40"
+            >
+              <Plus className="h-3 w-3" />
+            </button>
+          </div>
+
+          <RippleButton
+            onClick={() => onCheckout(qty)}
+            disabled={isPending}
+            className="flex min-h-[38px] flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#059669] text-[0.8rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isPending ? "Opening…" : "Add to Cart"}
+            {!isPending && <ArrowRight className="h-3 w-3" />}
+          </RippleButton>
+        </div>
       </div>
     </div>
   );
@@ -1148,9 +1213,24 @@ export default function ShopFullPage() {
               className="flex gap-4 overflow-x-auto px-10 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               style={{ scrollSnapType: "x mandatory" }}
             >
-              {COMMUNITY_VIDEOS.map((item) => (
-                <CommunityVideoCard key={item.src} {...item} />
-              ))}
+              {COMMUNITY_VIDEOS.map((item) => {
+                const product = products.find((p) => p.id === item.productId);
+                const meta = PRODUCT_META[item.productId];
+                if (!product || !meta) return null;
+                return (
+                  <CommunityVideoCard
+                    key={item.src}
+                    src={item.src}
+                    product={product}
+                    meta={meta}
+                    isPending={pendingCheckoutId === item.productId}
+                    onCheckout={(qty) => {
+                      setQuantities((s) => ({ ...s, [item.productId]: qty }));
+                      void handleCheckout(product);
+                    }}
+                  />
+                );
+              })}
             </div>
           </section>
         </div>
