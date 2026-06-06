@@ -339,11 +339,11 @@ function SwipeHint() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (sessionStorage.getItem("swipeHintSeen")) return;
-    const show = setTimeout(() => setVisible(true), 600);
+    const show = setTimeout(() => setVisible(true), 400);
     const hide = setTimeout(() => {
       setVisible(false);
       sessionStorage.setItem("swipeHintSeen", "1");
-    }, 4200);
+    }, 2800);
     return () => { clearTimeout(show); clearTimeout(hide); };
   }, []);
 
@@ -358,7 +358,7 @@ function SwipeHint() {
 
   const charVariants = {
     hidden: { opacity: 0, x: -14 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.22, ease: "easeOut" } },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.16, ease: "easeOut" } },
   };
 
   return (
@@ -375,10 +375,10 @@ function SwipeHint() {
           <div
             className="rounded-2xl px-6 py-4"
             style={{
-              background: "rgba(5,15,30,0.72)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              border: "1px solid rgba(255,255,255,0.14)",
+              background: "rgba(5,150,105,0.88)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              border: "1px solid rgba(255,255,255,0.20)",
             }}
           >
             <div className="flex flex-wrap justify-center">

@@ -15,31 +15,31 @@ const VISIBLE = 3;
 
 const products = [
   {
-    name: "Cruise Card Lanyard",
-    price: "$10.00 launch · 2 for $18",
-    image: "/images/travelholics_lanyard_hero.png",
-    href: "/shop#lanyard",
-    imageAlt: "Travelholics Cruise Card Lanyard Atlantis Edition placeholder",
+    name: "Travelholics Atlantis Lanyard",
+    price: "$12.00",
+    image: "/images/travelholics_lanyard_transparent.png",
+    href: "/shop-full",
+    imageAlt: "Travelholics Cruise Card Lanyard Atlantis Edition",
   },
   {
-    name: "Pacific Mexico Cruise Door Magnet",
-    price: "$18.99",
-    image: "/images/pacific_mexican_door_magnent.png",
-    href: "/shop",
-    imageAlt: "Pacific Mexican Cruise door magnet with cruise ship and coastal artwork",
-  },
-  {
-    name: "Cruise Life Ticket Door Magnet",
-    price: "$16.99",
-    image: "/images/travelholic_ticket_magnent_pacific.png",
-    href: "/shop",
+    name: "Cruise Ticket Door Magnet",
+    price: "$19.99",
+    image: "/images/travelholics_product_ticket-magnet-pacific.png",
+    href: "/shop-full",
     imageAlt: "Cruise Life ticket-style door magnet",
   },
   {
+    name: "Pacific Mexican Door Magnet",
+    price: "$19.99",
+    image: "/images/travelholics_product_pacific-mexican-door-magnet.png",
+    href: "/shop-full",
+    imageAlt: "Pacific Mexican cruise door magnet with coastal artwork",
+  },
+  {
     name: "Travelholics Bucket Hat",
-    price: "$25.00",
+    price: "$38.00",
     image: "/images/Travelholics_merch_bucket_hat.png",
-    href: "/shop",
+    href: "/shop-full",
     imageAlt: "Travelholics beige bucket hat with embroidered logo",
   },
 ];
@@ -62,7 +62,7 @@ export const ShopStrip = () => {
               Cruise-tested essentials and merch picks you will actually use.
             </p>
             <Link
-              href="/shop"
+              href="/shop-full"
               className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border-2 border-emerald-mid bg-white px-6 py-3 text-sm font-semibold text-emerald-mid transition-colors hover:bg-emerald-mid hover:text-white"
             >
               Shop All Picks →
@@ -99,7 +99,7 @@ export const ShopStrip = () => {
 
           <div className="mt-4 text-center">
             <Link
-              href="/shop"
+              href="/shop-full"
               className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-emerald-mid underline underline-offset-4"
             >
               View all picks
@@ -119,7 +119,7 @@ export const ShopStrip = () => {
               Cruise-tested essentials and merch picks you will actually use.
             </p>
             <Link
-              href="/shop"
+              href="/shop-full"
               className="inline-flex items-center gap-2 rounded-full border-2 border-emerald-mid bg-white px-6 py-3 text-sm font-semibold text-emerald-mid transition-colors hover:bg-emerald-mid hover:text-white"
             >
               Shop All Picks →
