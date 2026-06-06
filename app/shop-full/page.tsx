@@ -503,7 +503,7 @@ function ProductSlide({
             style={{
               borderRadius: 26,
               padding: "28px 22px 24px",
-              background: "rgba(255,255,255,0.74)",
+              background: "rgba(255,255,255,0.58)",
               backdropFilter: "blur(18px)",
               WebkitBackdropFilter: "blur(18px)",
               border: "1px solid rgba(255,255,255,0.58)",
@@ -511,7 +511,11 @@ function ProductSlide({
             }}
           >
             {/* Display name — tappable link to product page */}
-            <Link href={`/shop/${product.id}`}>
+            <Link
+              href={`/shop/${product.id}`}
+              className="block transition-transform duration-100 active:scale-[0.96] active:opacity-70"
+              style={{ transformOrigin: "left center" }}
+            >
               <h2 style={{ margin: 0, fontSize: "clamp(28px, 7vw, 38px)", lineHeight: 1.05, fontWeight: 800, letterSpacing: "-0.03em", color: "#0c2238", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                 {product.displayName ?? product.name}
               </h2>
