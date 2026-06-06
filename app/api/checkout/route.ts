@@ -48,7 +48,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Cart is empty." }, { status: 400 });
     }
 
-    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+    const lineItems: Stripe.Checkout.SessionCreateParams["line_items"] = [];
 
     for (const item of body.items) {
       const product = MERCH_PRODUCTS.find((p) => p.id === item.productId);
