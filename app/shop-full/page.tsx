@@ -342,6 +342,10 @@ function ProductSlide({
   onQuantityChange,
   onCheckout,
   onGalleryOpen,
+  isFirst,
+  isLast,
+  onPrev,
+  onNext,
 }: {
   product: MerchProduct;
   meta: ProductMeta;
@@ -350,33 +354,58 @@ function ProductSlide({
   onQuantityChange: (q: number) => void;
   onCheckout: () => void;
   onGalleryOpen: () => void;
+  isFirst: boolean;
+  isLast: boolean;
+  onPrev: () => void;
+  onNext: () => void;
 }) {
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
       {/* Flex column anchored to bottom — image above card, no overlap possible */}
       <div className="absolute inset-x-0 bottom-14 flex flex-col items-center gap-3 px-3">
 
-        {/* ── Product image ── */}
-        <button
-          onClick={onGalleryOpen}
-          aria-label={`View all photos of ${product.name}`}
-          className="cursor-zoom-in focus:outline-none"
-          style={{ width: "min(80vw, 340px)" }}
-        >
-          <div
-            className="relative aspect-square w-full"
-            style={{ filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))" }}
+        {/* ── Product image + flanking nav arrows ── */}
+        <div className="flex w-full items-center justify-center gap-3 px-1">
+          {/* Left arrow */}
+          <button
+            onClick={onPrev}
+            aria-label="Previous product"
+            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/35 ${isFirst ? "invisible" : ""}`}
           >
-            <Image
-              src={meta.image}
-              alt={product.name}
-              fill
-              className="object-contain"
-              sizes="(max-width: 640px) 80vw, 340px"
-              priority
-            />
-          </div>
-        </button>
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          {/* Image */}
+          <button
+            onClick={onGalleryOpen}
+            aria-label={`View all photos of ${product.name}`}
+            className="cursor-zoom-in focus:outline-none"
+            style={{ width: "min(68vw, 300px)" }}
+          >
+            <div
+              className="relative aspect-square w-full"
+              style={{ filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))" }}
+            >
+              <Image
+                src={meta.image}
+                alt={product.name}
+                fill
+                className="object-contain"
+                sizes="(max-width: 640px) 68vw, 300px"
+                priority
+              />
+            </div>
+          </button>
+
+          {/* Right arrow */}
+          <button
+            onClick={onNext}
+            aria-label="Next product"
+            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/35 ${isLast ? "invisible" : ""}`}
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
 
         {/* ── Glass purchase panel ── */}
         <div className="w-full">
@@ -637,23 +666,13 @@ export default function ShopFullPage() {
             </div>
           </div>
 
-          {/* ── Swipe label ── */}
-          <div className="pointer-events-none absolute left-0 right-0 top-[62px] z-10 flex justify-center">
-            <div className="flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 backdrop-blur-sm">
-              <ChevronLeft className="h-3 w-3 text-white/70" />
-              <span className="text-[0.6rem] font-black uppercase tracking-[0.22em] text-white/85">
-                Swipe
-              </span>
-              <ChevronRight className="h-3 w-3 text-white/70" />
-            </div>
-          </div>
 
           {/* ── Swipe track — ONLY product image + glass panel move ── */}
           <div
             ref={trackRef}
             className="absolute inset-0 flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {products.map((product) => (
+            {products.map((product, i) => (
               <ProductSlide
                 key={product.id}
                 product={product}
@@ -665,6 +684,10 @@ export default function ShopFullPage() {
                 }
                 onCheckout={() => void handleCheckout(product)}
                 onGalleryOpen={() => setGalleryProduct(product.id)}
+                isFirst={i === 0}
+                isLast={i === products.length - 1}
+                onPrev={() => goTo(i - 1)}
+                onNext={() => goTo(i + 1)}
               />
             ))}
           </div>
@@ -676,26 +699,6 @@ export default function ShopFullPage() {
                 {checkoutError}
               </p>
             )}
-
-            <div className="pointer-events-auto flex items-center gap-4">
-              <button
-                onClick={() => goTo(Math.max(0, activeIndex - 1))}
-                disabled={activeIndex === 0}
-                aria-label="Previous product"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/25 text-white backdrop-blur-sm transition-colors hover:bg-white/40 disabled:opacity-25"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-
-              <button
-                onClick={() => goTo(Math.min(products.length - 1, activeIndex + 1))}
-                disabled={activeIndex === products.length - 1}
-                aria-label="Next product"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/25 text-white backdrop-blur-sm transition-colors hover:bg-white/40 disabled:opacity-25"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
 
             <div className="pointer-events-auto flex items-center gap-3">
               <span className="flex items-center gap-1 text-[0.65rem] font-semibold text-white/75">
