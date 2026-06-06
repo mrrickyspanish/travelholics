@@ -370,7 +370,7 @@ function ProductSlide({
           <button
             onClick={onPrev}
             aria-label="Previous product"
-            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/35 ${isFirst ? "invisible" : ""}`}
+            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white/8 text-white/60 backdrop-blur-sm transition-colors hover:bg-white/18 hover:text-white ${isFirst ? "invisible" : ""}`}
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
