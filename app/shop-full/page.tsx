@@ -361,13 +361,14 @@ function ProductSlide({
 }) {
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
-      {/* Bounded content zone — hard ceiling at header (56px), hard floor above trust bar (84px) */}
-      <div className="absolute inset-x-0 flex flex-col items-center justify-end gap-3 px-3"
+      {/* Bounded content zone */}
+      <div
+        className="absolute inset-x-0 flex flex-col items-center justify-end gap-3 px-3 md:flex-row md:items-center md:justify-center md:gap-12 md:px-12"
         style={{ top: 56, bottom: 84 }}
       >
 
-        {/* ── Product image + flanking nav arrows ── */}
-        <div className="flex w-full items-center justify-center gap-3 px-1">
+        {/* ── Left col: image + arrows (mobile: full row, desktop: left half) ── */}
+        <div className="flex w-full items-center justify-center gap-3 px-1 md:flex-1 md:justify-end md:px-0">
           {/* Left arrow */}
           <button
             onClick={onPrev}
@@ -385,7 +386,7 @@ function ProductSlide({
             style={{ width: "min(68vw, 300px)" }}
           >
             <div
-              className="relative aspect-square w-full"
+              className="relative aspect-square w-full md:hidden"
               style={{ filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))" }}
             >
               <Image
@@ -393,7 +394,21 @@ function ProductSlide({
                 alt={product.name}
                 fill
                 className="object-contain"
-                sizes="(max-width: 640px) 68vw, 300px"
+                sizes="68vw"
+                priority
+              />
+            </div>
+            {/* Desktop image — larger */}
+            <div
+              className="relative hidden aspect-square md:block"
+              style={{ width: "min(40vw, 500px)", filter: "drop-shadow(0 32px 56px rgba(5,25,38,0.32))" }}
+            >
+              <Image
+                src={meta.image}
+                alt={product.name}
+                fill
+                className="object-contain"
+                sizes="(min-width: 768px) min(40vw, 500px)"
                 priority
               />
             </div>
@@ -403,14 +418,14 @@ function ProductSlide({
           <button
             onClick={onNext}
             aria-label="Next product"
-            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/35 ${isLast ? "invisible" : ""}`}
+            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white/8 text-white/60 backdrop-blur-sm transition-colors hover:bg-white/18 hover:text-white ${isLast ? "invisible" : ""}`}
           >
             <ChevronRight className="h-5 w-5" />
           </button>
         </div>
 
         {/* ── Glass purchase panel ── */}
-        <div className="w-full">
+        <div className="w-full md:w-[420px] md:flex-shrink-0">
         <div
           className="rounded-3xl p-6"
           style={{
@@ -609,7 +624,7 @@ export default function ShopFullPage() {
 
         {/* ── Fullscreen Swiper ──────────────────────────────── */}
         <section
-          className="relative overflow-hidden"
+          className="relative w-full overflow-hidden"
           style={{ height: `calc(100svh - ${UTILITY_H}px)` }}
         >
 
@@ -637,14 +652,21 @@ export default function ShopFullPage() {
           </div>
 
           {/* ── Overlay Header — transparent ── */}
-          <div className="absolute left-0 right-0 top-0 z-30 flex h-14 items-center justify-between px-4">
+          <div className="absolute left-0 right-0 top-0 z-30 flex h-14 items-center justify-between px-4 md:px-8">
+            {/* Mobile: hamburger | Desktop: nav links */}
             <button
               aria-label="Open menu"
               onClick={() => setNavOpen(true)}
-              className="p-2 text-white/85 transition-colors hover:text-white"
+              className="p-2 text-white/85 transition-colors hover:text-white md:hidden"
             >
               <Menu className="h-5 w-5" />
             </button>
+            <nav className="hidden md:flex items-center gap-6">
+              <Link href="/" className="text-sm font-semibold text-white/80 hover:text-white transition-colors">Home</Link>
+              <Link href="/shop-full" className="text-sm font-semibold text-white transition-colors">Shop</Link>
+              <Link href="/#contact" className="text-sm font-semibold text-white/80 hover:text-white transition-colors">Plan My Trip</Link>
+            </nav>
+
             <Link href="/" className="absolute left-1/2 -translate-x-1/2">
               <Image
                 src="/images/travelholics_logo_wordmark.svg"
