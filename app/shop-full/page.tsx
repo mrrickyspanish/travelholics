@@ -476,51 +476,51 @@ function ProductSlide({
           </button>
         </div>
 
-        {/* Glass purchase panel — fixed height, never compressed */}
+        {/* Glass purchase panel */}
         <div className="w-full flex-shrink-0">
           <div
-            className="rounded-3xl"
             style={{
-              background: "rgba(255,255,255,0.68)",
-              backdropFilter: "blur(28px) saturate(160%)",
-              WebkitBackdropFilter: "blur(28px) saturate(160%)",
-              border: "1.5px solid rgba(255,255,255,0.55)",
-              boxShadow: "0 8px 32px rgba(5,25,38,0.12), 0 2px 8px rgba(5,25,38,0.06)",
-              padding: "22px 24px 24px",
+              borderRadius: 26,
+              padding: 22,
+              background: "rgba(255,255,255,0.74)",
+              backdropFilter: "blur(18px)",
+              WebkitBackdropFilter: "blur(18px)",
+              border: "1px solid rgba(255,255,255,0.58)",
+              boxShadow: "0 22px 60px rgba(5,25,38,0.18)",
             }}
           >
-            {/* Top row: title+description left | price right */}
-            <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) auto", columnGap: 16, alignItems: "start" }}>
-              {/* Left: name + description */}
-              <div style={{ minWidth: 0 }}>
-                <h2 style={{ margin: 0, fontSize: "1.18rem", fontWeight: 900, lineHeight: 1.08, letterSpacing: "-0.02em", color: "#111d30" }}>
-                  {product.name}
-                </h2>
-                <p style={{ margin: "10px 0 0", fontSize: "0.78rem", fontWeight: 500, lineHeight: 1.55, color: "#2d3748" }} className="line-clamp-2">
-                  {meta.description}
-                </p>
-              </div>
+            {/* Name */}
+            <h2 style={{ margin: 0, fontSize: "clamp(22px, 6.4vw, 30px)", lineHeight: 1.08, fontWeight: 800, letterSpacing: "-0.03em", color: "#0c2238" }}>
+              {product.name}
+            </h2>
 
-              {/* Right: sale price + compare-at */}
-              <div style={{ textAlign: "right", flexShrink: 0 }}>
-                <span style={{ display: "block", whiteSpace: "nowrap", fontSize: "1.35rem", fontWeight: 900, color: "#111d30", lineHeight: 1.1 }}>
-                  {formatMerchPrice(product.price)}
-                </span>
+            {/* Description */}
+            <p className="line-clamp-2" style={{ marginTop: 12, fontSize: 14, lineHeight: 1.45, color: "rgba(12,34,56,0.76)" }}>
+              {meta.description}
+            </p>
+
+            {/* Purchase row: price left, Buy button right */}
+            <div style={{ marginTop: 18, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+              {/* Price group */}
+              <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
                 {product.compareAtPrice && (
-                  <span style={{ display: "block", marginTop: 6, whiteSpace: "nowrap", fontSize: "0.72rem", fontWeight: 600, color: "#9ca3af", textDecoration: "line-through", textAlign: "right" }}>
+                  <span style={{ fontSize: 14, color: "rgba(12,34,56,0.38)", textDecoration: "line-through" }}>
                     {formatMerchPrice(product.compareAtPrice)}
                   </span>
                 )}
+                <span style={{ fontSize: 24, lineHeight: 1, fontWeight: 900, color: "#143b73" }}>
+                  {formatMerchPrice(product.price)}
+                </span>
               </div>
-            </div>
 
-            {/* CTA */}
-            <Link
-              href={`/shop/${product.id}`}
-              className="mt-6 flex min-h-[52px] w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:bg-[#047857]"
-            >
-              View Product <ArrowRight className="h-3.5 w-3.5 flex-shrink-0" />
-            </Link>
+              {/* Buy button */}
+              <Link
+                href={`/shop/${product.id}`}
+                style={{ minWidth: 116, height: 44, borderRadius: 12, background: "#008f62", color: "#fff", fontSize: 15, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, whiteSpace: "nowrap" }}
+              >
+                Buy
+              </Link>
+            </div>
           </div>
         </div>
       </div>
