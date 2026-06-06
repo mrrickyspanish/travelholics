@@ -331,44 +331,68 @@ function MobileNavDrawer({
    Fades in after 800ms, holds, fades out. Shows once per session.
 ── */
 
+const SWIPE_HINT_TEXT = "SWIPE TO SEE MORE PRODUCTS >>>>>";
+
 function SwipeHint() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (sessionStorage.getItem("swipeHintSeen")) return;
-    const show = setTimeout(() => setVisible(true), 800);
+    const show = setTimeout(() => setVisible(true), 600);
     const hide = setTimeout(() => {
       setVisible(false);
       sessionStorage.setItem("swipeHintSeen", "1");
-    }, 3000);
+    }, 4200);
     return () => { clearTimeout(show); clearTimeout(hide); };
   }, []);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.04, delayChildren: 0.1 },
+    },
+    exit: { opacity: 0, transition: { duration: 0.4 } },
+  };
+
+  const charVariants = {
+    hidden: { opacity: 0, x: -14 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.22, ease: "easeOut" } },
+  };
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 6 }}
-          transition={{ duration: 0.3 }}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
           className="pointer-events-none absolute inset-x-0 z-40 flex justify-center"
-          style={{ bottom: 96 }}
+          style={{ top: "38%" }}
         >
           <div
-            className="flex items-center gap-2 rounded-full px-5 py-2.5"
+            className="rounded-2xl px-6 py-4"
             style={{
-              background: "rgba(5,20,38,0.62)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
-              border: "1px solid rgba(255,255,255,0.18)",
+              background: "rgba(5,15,30,0.72)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              border: "1px solid rgba(255,255,255,0.14)",
             }}
           >
-            <span className="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-white/90">
-              Swipe for more
-            </span>
-            <ChevronRight className="h-3.5 w-3.5 text-white/70" />
+            <div className="flex flex-wrap justify-center">
+              {SWIPE_HINT_TEXT.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  variants={charVariants}
+                  className="text-[1.05rem] font-black tracking-[0.10em] text-white"
+                  style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </div>
           </div>
         </motion.div>
       )}
