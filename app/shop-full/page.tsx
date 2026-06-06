@@ -622,7 +622,7 @@ function CommunityVideoCard({
           {/* Product thumbnail */}
           <div
             className="relative flex-shrink-0 overflow-hidden rounded-xl"
-            style={{ width: 64, height: 64, background: "linear-gradient(160deg,#f5ede0,#eee8dc)" }}
+            style={{ width: 64, height: 64, background: "#ffffff" }}
           >
             <Image
               src={meta.image}
@@ -738,7 +738,7 @@ function DesktopProductCard({
         className="relative block cursor-zoom-in overflow-hidden focus:outline-none"
         style={{
           paddingBottom: "68%",
-          background: "linear-gradient(160deg, #f5ede0 0%, #eee8dc 100%)",
+          background: "#ffffff",
           borderRadius: "26px 26px 0 0",
         }}
       >
