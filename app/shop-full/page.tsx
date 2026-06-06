@@ -572,16 +572,18 @@ function CommunityVideoCard({
 
   return (
     <div
-      className="flex-shrink-0 overflow-hidden bg-white"
-      style={{
-        width: 300,
-        borderRadius: 20,
-        boxShadow: "0 16px 48px rgba(5,25,38,0.14)",
-        scrollSnapAlign: "start",
-      }}
+      className="flex-shrink-0 flex flex-col gap-3"
+      style={{ width: 300, scrollSnapAlign: "start" }}
     >
-      {/* Video zone — 9:16 */}
-      <div className="relative bg-[#0f172a]" style={{ aspectRatio: "9 / 16" }}>
+      {/* Video card — self-contained */}
+      <div
+        className="relative overflow-hidden bg-[#0f172a]"
+        style={{
+          aspectRatio: "9 / 16",
+          borderRadius: 20,
+          boxShadow: "0 16px 48px rgba(5,25,38,0.14)",
+        }}
+      >
         <video
           ref={videoRef}
           src={src}
@@ -616,8 +618,14 @@ function CommunityVideoCard({
         />
       </div>
 
-      {/* Product card — Switch Nails style: thumbnail + info + buy */}
-      <div className="px-4 py-4">
+      {/* Product card — separate, floating below video */}
+      <div
+        className="overflow-hidden bg-white px-4 py-4"
+        style={{
+          borderRadius: 20,
+          boxShadow: "0 8px 24px rgba(5,25,38,0.09)",
+        }}
+      >
         <div className="flex items-center gap-3">
           {/* Product thumbnail */}
           <div
