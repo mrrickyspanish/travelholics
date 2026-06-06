@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
@@ -15,6 +15,8 @@ import {
   Search,
   ShieldCheck,
   ShoppingCart,
+  Volume2,
+  VolumeX,
   X,
 } from "lucide-react";
 
@@ -483,6 +485,145 @@ function ProductSlide({
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Community Video Card ──────────────────────────────────
+   Self-contained: manages its own mute state, progress bar,
+   and IntersectionObserver autoplay/pause.
+── */
+
+const COMMUNITY_VIDEOS = [
+  {
+    src: "/videos/travelholics_cruise_ticket_door_magnet.mp4",
+    productName: "Cruise Ticket Door Magnet",
+    caption: "Making a statement on every stateroom door.",
+  },
+  {
+    src: "/videos/travelholics_pacific_mexican_door_magnet.mp4",
+    productName: "Pacific Mexican Door Magnet",
+    caption: "Bringing color and cruise energy wherever you sail.",
+  },
+];
+
+function CommunityVideoCard({
+  src,
+  productName,
+  caption,
+}: {
+  src: string;
+  productName: string;
+  caption: string;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  // Autoplay when in view, pause when not
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
+  // Sync progress bar
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const onTimeUpdate = () => {
+      if (video.duration) {
+        setProgress((video.currentTime / video.duration) * 100);
+      }
+    };
+    video.addEventListener("timeupdate", onTimeUpdate);
+    return () => video.removeEventListener("timeupdate", onTimeUpdate);
+  }, []);
+
+  const toggleMute = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    setMuted(video.muted);
+  }, []);
+
+  const scrub = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const video = videoRef.current;
+    if (!video || !video.duration) return;
+    const val = Number(e.target.value);
+    video.currentTime = (val / 100) * video.duration;
+    setProgress(val);
+  }, []);
+
+  return (
+    <div
+      className="flex-shrink-0 overflow-hidden"
+      style={{
+        width: 252,
+        borderRadius: 20,
+        boxShadow: "0 16px 48px rgba(5,25,38,0.14)",
+        scrollSnapAlign: "start",
+      }}
+    >
+      {/* Video zone — 9:16 */}
+      <div className="relative bg-[#0f172a]" style={{ aspectRatio: "9 / 16" }}>
+        <video
+          ref={videoRef}
+          src={src}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="h-full w-full object-cover"
+        />
+
+        {/* Mute toggle */}
+        <button
+          onClick={toggleMute}
+          aria-label={muted ? "Unmute video" : "Mute video"}
+          className="absolute left-3 bottom-10 z-10 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.68rem] font-semibold text-white transition-colors hover:bg-black/70"
+          style={{ background: "rgba(0,0,0,0.52)" }}
+        >
+          {muted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
+          {muted ? "Unmute" : "Mute"}
+        </button>
+
+        {/* Progress scrubber */}
+        <input
+          type="range"
+          min={0}
+          max={100}
+          step={0.1}
+          value={progress}
+          onChange={scrub}
+          aria-label="Video progress"
+          className="absolute bottom-3 left-3 right-3 h-1 w-[calc(100%-24px)] cursor-pointer appearance-none rounded-full bg-white/25 accent-white"
+        />
+      </div>
+
+      {/* Caption bar */}
+      <div className="bg-white px-4 py-4">
+        <p className="text-[0.62rem] font-bold uppercase tracking-[0.14em] text-[#059669]">
+          Travelholics Original
+        </p>
+        <p className="mt-0.5 text-[0.95rem] font-extrabold leading-tight text-[#0a1a2e]">
+          {productName}
+        </p>
+        <p className="mt-1 text-[0.78rem] leading-relaxed text-[#4a5568]">
+          {caption}
+        </p>
       </div>
     </div>
   );
@@ -988,74 +1129,28 @@ export default function ShopFullPage() {
           </section>
 
           {/* ── Community Video Section — desktop only ─────── */}
-          <section className="bg-[#FAF9F6] px-10 py-14">
-            <div className="mx-auto max-w-[1240px]">
-              {/* Section header */}
-              <div className="mb-10 text-center">
-                <p className="mb-2 text-[0.62rem] font-bold uppercase tracking-[0.26em] text-[#059669]">
-                  Travelholics Community
-                </p>
-                <h2 className="text-[1.9rem] font-black text-[#0a1a2e]">
-                  Products Our Community Loves 🤍
-                </h2>
-                <p className="mx-auto mt-2 max-w-sm text-[0.88rem] leading-relaxed text-[#4a5568]">
-                  Real creators. Real trips. See the Travelholics collection in action.
-                </p>
-              </div>
+          <section className="bg-[#FAF9F6] py-14">
+            {/* Header — constrained width */}
+            <div className="mx-auto mb-10 max-w-[1240px] px-10 text-center">
+              <p className="mb-2 text-[0.62rem] font-bold uppercase tracking-[0.26em] text-[#059669]">
+                Travelholics Community
+              </p>
+              <h2 className="text-[1.9rem] font-black text-[#0a1a2e]">
+                Products Our Community Loves 🤍
+              </h2>
+              <p className="mx-auto mt-2 max-w-sm text-[0.88rem] leading-relaxed text-[#4a5568]">
+                Real creators. Real trips. See the Travelholics collection in action.
+              </p>
+            </div>
 
-              {/* Video grid — 2 columns now, expands to 3 when lanyard video is ready */}
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  {
-                    src: "/videos/travelholics_cruise_ticket_door_magnet.mp4",
-                    productName: "Cruise Ticket Door Magnet",
-                    caption: "Making a statement on every stateroom door.",
-                  },
-                  {
-                    src: "/videos/travelholics_pacific_mexican_door_magnet.mp4",
-                    productName: "Pacific Mexican Door Magnet",
-                    caption: "Bringing color and cruise energy wherever you sail.",
-                  },
-                ].map((item) => (
-                  <motion.div
-                    key={item.src}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4 }}
-                    className="overflow-hidden"
-                    style={{
-                      borderRadius: "22px",
-                      boxShadow: "0 16px 48px rgba(5,25,38,0.12)",
-                    }}
-                  >
-                    {/* Video — tall UGC ratio */}
-                    <div className="relative w-full overflow-hidden bg-[#0f172a]" style={{ aspectRatio: "4/5" }}>
-                      <video
-                        src={item.src}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="absolute inset-0 h-full w-full object-cover"
-                      />
-                    </div>
-
-                    {/* Caption bar */}
-                    <div className="bg-white px-6 py-5">
-                      <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-[#059669]">
-                        Travelholics Original
-                      </p>
-                      <p className="mt-0.5 text-[1.05rem] font-extrabold text-[#0a1a2e]">
-                        {item.productName}
-                      </p>
-                      <p className="mt-1 text-[0.82rem] leading-relaxed text-[#4a5568]">
-                        {item.caption}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+            {/* Horizontal snap carousel — full width so cards can overflow */}
+            <div
+              className="flex gap-4 overflow-x-auto px-10 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              style={{ scrollSnapType: "x mandatory" }}
+            >
+              {COMMUNITY_VIDEOS.map((item) => (
+                <CommunityVideoCard key={item.src} {...item} />
+              ))}
             </div>
           </section>
         </div>
