@@ -762,7 +762,7 @@ function DesktopProductCard({
     >
       {/* Image area — 68% of card height. Warm sand bg so cutout products don't float on grey. */}
       <button
-        onClick={(e) => { stopProp(e); onGalleryOpen(); }}
+        onClick={(e) => { e.stopPropagation(); onGalleryOpen(); }}
         aria-label={`View photos of ${product.name}`}
         className="relative block cursor-zoom-in overflow-hidden focus:outline-none"
         style={{
