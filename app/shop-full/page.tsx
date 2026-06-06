@@ -429,13 +429,19 @@ function ProductSlide({
 }) {
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
-      {/* Bounded zone — overflow:hidden enforces top ceiling on Android */}
+      {/*
+        True flex column layout — no hardcoded pixel guesses.
+        - pt accounts for the fixed header (56px) + breathing room
+        - pb accounts for the bottom bar (84px) + breathing room
+        - Image slot (flex-1) fills all remaining vertical space
+        - Card slot (flex-shrink-0) takes only what it needs at the bottom
+      */}
       <div
-        className="absolute inset-x-0 flex flex-col items-center justify-between gap-2 overflow-hidden px-3"
-        style={{ top: 56, bottom: 84 }}
+        className="absolute inset-x-0 flex flex-col items-center gap-3 px-3"
+        style={{ top: 0, bottom: 0, paddingTop: 64, paddingBottom: 92 }}
       >
-        {/* Image row with flanking arrows */}
-        <div className="flex w-full flex-shrink-0 items-center justify-center gap-3 px-1">
+        {/* Image row — fills all available space above the card */}
+        <div className="flex min-h-0 w-full flex-1 items-center justify-center gap-3 px-1">
           <button
             onClick={onPrev}
             aria-label="Previous product"
@@ -444,20 +450,16 @@ function ProductSlide({
             <ChevronLeft className="h-5 w-5" />
           </button>
 
+          {/* Image fills its slot height, capped at square */}
           <button
             onClick={onGalleryOpen}
             aria-label={`View all photos of ${product.name}`}
-            className="cursor-zoom-in focus:outline-none"
-            style={{ width: "min(68vw, 300px)" }}
+            className="relative min-h-0 flex-1 cursor-zoom-in focus:outline-none"
+            style={{ maxWidth: "min(68vw, 300px)" }}
           >
-            {/* Image: square by default, but maxHeight caps it on short Android screens */}
             <div
-              className="relative w-full"
-              style={{
-                aspectRatio: "1 / 1",
-                maxHeight: "min(min(68vw, 300px), 36svh)",
-                filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))",
-              }}
+              className="relative h-full w-full"
+              style={{ filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))" }}
             >
               <Image
                 src={meta.image}
@@ -479,7 +481,7 @@ function ProductSlide({
           </button>
         </div>
 
-        {/* Glass purchase panel — flex-shrink-0 keeps card whole, image shrinks instead */}
+        {/* Glass purchase panel — fixed height, never compressed */}
         <div className="w-full flex-shrink-0">
           <div
             className="rounded-3xl p-6"
