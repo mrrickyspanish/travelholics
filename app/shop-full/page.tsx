@@ -750,13 +750,6 @@ function DesktopProductCard({
           sizes="(min-width: 1024px) 33vw"
           priority
         />
-        {/* Badge */}
-        <span
-          className="absolute left-4 top-4 rounded-full px-3 py-[5px] text-[0.60rem] font-black uppercase tracking-[0.16em] text-white"
-          style={{ background: "rgba(30,58,138,0.88)", backdropFilter: "blur(4px)" }}
-        >
-          {meta.badge}
-        </span>
       </button>
 
       {/* Info panel — compact, lets image breathe */}
