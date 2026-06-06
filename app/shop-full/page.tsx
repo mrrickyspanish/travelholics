@@ -513,53 +513,64 @@ function DesktopProductCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.38 }}
       className="flex flex-col overflow-hidden"
       style={{
-        borderRadius: "24px",
-        boxShadow: "0 20px 60px rgba(5,25,38,0.22), 0 4px 16px rgba(5,25,38,0.10)",
+        borderRadius: "26px",
+        background: "rgba(255,255,255,0.82)",
+        border: "1px solid rgba(255,255,255,0.50)",
+        boxShadow: "0 22px 60px rgba(5,25,38,0.18), 0 4px 16px rgba(5,25,38,0.08)",
       }}
     >
-      {/* Image area — ~58% of card */}
+      {/* Image area — 68% of card height. Warm sand bg so cutout products don't float on grey. */}
       <button
         onClick={onGalleryOpen}
         aria-label={`View photos of ${product.name}`}
-        className="relative block cursor-zoom-in bg-[#f0f4f8] focus:outline-none"
-        style={{ paddingBottom: "58%" }}
+        className="relative block cursor-zoom-in overflow-hidden focus:outline-none"
+        style={{
+          paddingBottom: "68%",
+          background: "linear-gradient(160deg, #f5ede0 0%, #eee8dc 100%)",
+          borderRadius: "26px 26px 0 0",
+        }}
       >
         <Image
           src={meta.image}
           alt={product.name}
           fill
-          className="object-contain p-6 transition-transform duration-300 hover:scale-[1.03]"
+          className="object-contain p-4 transition-transform duration-300 hover:scale-[1.04]"
           sizes="(min-width: 1024px) 33vw"
           priority
         />
-        {/* Badge overlay */}
+        {/* Badge */}
         <span
           className="absolute left-4 top-4 rounded-full px-3 py-[5px] text-[0.60rem] font-black uppercase tracking-[0.16em] text-white"
-          style={{ background: "rgba(30,58,138,0.90)" }}
+          style={{ background: "rgba(30,58,138,0.88)", backdropFilter: "blur(4px)" }}
         >
           {meta.badge}
         </span>
       </button>
 
-      {/* Info panel */}
-      <div className="flex flex-1 flex-col bg-[#FDFCF9] p-6">
-        <h3 className="text-[1.15rem] font-black leading-tight text-[#111d30]">
-          {product.name}
-        </h3>
-        <p className="mb-2 mt-0.5 text-[0.72rem] font-semibold tracking-wide text-[#1e3a8a]">
+      {/* Info panel — compact, lets image breathe */}
+      <div className="flex flex-1 flex-col" style={{ padding: "22px 24px 24px" }}>
+        {/* Eyebrow / subtitle */}
+        <p className="mb-1 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-[#1e3a8a]/60">
           {meta.subtitle}
         </p>
-        <p className="mb-4 text-[0.83rem] font-medium leading-[1.55] text-[#4a5568]">
+
+        {/* Product name — dominant */}
+        <h3 className="mb-1.5 text-[1.31rem] font-extrabold leading-[1.15] text-[#0a1a2e]">
+          {product.name}
+        </h3>
+
+        {/* Short description — 2 lines max */}
+        <p className="mb-4 line-clamp-2 text-[0.83rem] leading-[1.45] text-[#0a2234]/70">
           {meta.description}
         </p>
 
-        {/* Price */}
+        {/* Price row */}
         <div className="mb-4 flex items-baseline gap-2">
           <span className="text-[1.5rem] font-black text-[#1e3a8a]">
             {formatMerchPrice(product.price)}
@@ -571,14 +582,11 @@ function DesktopProductCard({
           )}
         </div>
 
-        {/* Qty + Buy */}
-        <div className="mt-auto flex items-center gap-3">
+        {/* Qty stepper + Buy Now */}
+        <div className="mt-auto flex items-center gap-2.5">
           <div
             className="flex items-center gap-2 rounded-xl border px-3 py-[10px]"
-            style={{
-              background: "rgba(255,255,255,0.9)",
-              borderColor: "rgba(30,58,138,0.18)",
-            }}
+            style={{ borderColor: "rgba(30,58,138,0.16)" }}
           >
             <button
               onClick={() => onQuantityChange(Math.max(1, quantity - 1))}
@@ -604,17 +612,17 @@ function DesktopProductCard({
           <RippleButton
             onClick={onCheckout}
             disabled={isPending}
-            className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-[0.88rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isPending ? "Opening…" : "Buy Now"}
             {!isPending && <ArrowRight className="h-3.5 w-3.5" />}
           </RippleButton>
         </div>
 
-        {/* View details */}
+        {/* View details — secondary, quiet */}
         <Link
           href={`/shop/${product.id}`}
-          className="mt-3 text-center text-[0.70rem] font-semibold text-stone-400 underline underline-offset-2 transition-colors hover:text-[#1e3a8a]"
+          className="mt-3 text-center text-[0.68rem] font-semibold text-stone-400 underline underline-offset-2 transition-colors hover:text-[#1e3a8a]"
         >
           View full details →
         </Link>
@@ -910,13 +918,13 @@ export default function ShopFullPage() {
                 priority
                 sizes="100vw"
               />
-              {/* Rich overlay: darken top for text, warm-teal wash overall */}
+              {/* Overlay: dark enough for white intro text, lighter mid so card images pop */}
               <div
                 className="absolute inset-0"
                 aria-hidden
                 style={{
                   background:
-                    "linear-gradient(to bottom, rgba(0,30,50,0.62) 0%, rgba(0,30,50,0.30) 30%, rgba(0,30,50,0.52) 100%)",
+                    "linear-gradient(to bottom, rgba(0,20,40,0.58) 0%, rgba(0,20,40,0.18) 28%, rgba(0,20,40,0.42) 100%)",
                 }}
               />
               <div
@@ -924,13 +932,13 @@ export default function ShopFullPage() {
                 aria-hidden
                 style={{
                   background:
-                    "linear-gradient(105deg, rgba(0,75,68,0.18) 0%, transparent 55%)",
+                    "linear-gradient(105deg, rgba(0,75,68,0.14) 0%, transparent 50%)",
                 }}
               />
             </div>
 
             {/* Collection intro */}
-            <div className="relative z-10 pt-16 pb-10 text-center">
+            <div className="relative z-10 pt-12 pb-8 text-center">
               <p className="mb-3 text-[0.62rem] font-bold uppercase tracking-[0.28em] text-white/50">
                 Travelholics Originals
               </p>
