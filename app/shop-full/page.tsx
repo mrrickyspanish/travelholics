@@ -510,10 +510,12 @@ function ProductSlide({
               boxShadow: "0 22px 60px rgba(5,25,38,0.18)",
             }}
           >
-            {/* Display name — short, one line */}
-            <h2 style={{ margin: 0, fontSize: "clamp(28px, 7vw, 38px)", lineHeight: 1.05, fontWeight: 800, letterSpacing: "-0.03em", color: "#0c2238", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-              {product.displayName ?? product.name}
-            </h2>
+            {/* Display name — tappable link to product page */}
+            <Link href={`/shop/${product.id}`}>
+              <h2 style={{ margin: 0, fontSize: "clamp(28px, 7vw, 38px)", lineHeight: 1.05, fontWeight: 800, letterSpacing: "-0.03em", color: "#0c2238", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                {product.displayName ?? product.name}
+              </h2>
+            </Link>
 
             {/* Description */}
             <p className="line-clamp-2" style={{ marginTop: 14, fontSize: 15, lineHeight: 1.45, color: "rgba(12,34,56,0.76)" }}>
@@ -534,22 +536,14 @@ function ProductSlide({
                 </span>
               </div>
 
-              {/* Add to Cart button */}
+              {/* Buy button — adds to cart */}
               <button
                 onClick={onBuy}
                 style={{ minWidth: 116, height: 52, borderRadius: 14, background: "#008f62", color: "#fff", fontSize: 18, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, whiteSpace: "nowrap", border: "none", cursor: "pointer" }}
               >
-                Add to Cart
+                Buy
               </button>
             </div>
-
-            {/* View details link */}
-            <Link
-              href={`/shop/${product.id}`}
-              style={{ display: "block", marginTop: 14, textAlign: "center", fontSize: 13, fontWeight: 600, color: "rgba(12,34,56,0.45)", textDecoration: "underline", textUnderlineOffset: 3 }}
-            >
-              View full details →
-            </Link>
           </div>
         </div>
       </div>
