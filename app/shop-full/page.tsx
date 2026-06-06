@@ -324,7 +324,7 @@ function MobileNavDrawer({
 }
 
 /* ─── Mobile Product Slide ──────────────────────────────────
-   Pure mobile layout — no responsive overrides.
+   Pure mobile layout — desktop has its own separate section.
 ── */
 
 function ProductSlide({
@@ -354,7 +354,6 @@ function ProductSlide({
 }) {
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
-      {/* Bounded content zone — hard top/bottom constraints prevent header/card overlap */}
       <div
         className="absolute inset-x-0 flex flex-col items-center justify-end gap-3 px-3"
         style={{ top: 56, bottom: 84 }}
@@ -489,18 +488,158 @@ function ProductSlide({
   );
 }
 
+/* ─── Desktop Product Card ──────────────────────────────────
+   Full product card for the 3-up collection grid.
+── */
+
+function DesktopProductCard({
+  product,
+  meta,
+  quantity,
+  isPending,
+  checkoutError,
+  onQuantityChange,
+  onCheckout,
+  onGalleryOpen,
+}: {
+  product: MerchProduct;
+  meta: ProductMeta;
+  quantity: number;
+  isPending: boolean;
+  checkoutError: string | null;
+  onQuantityChange: (q: number) => void;
+  onCheckout: () => void;
+  onGalleryOpen: () => void;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4 }}
+      className="flex flex-col overflow-hidden"
+      style={{
+        borderRadius: "24px",
+        boxShadow: "0 20px 60px rgba(5,25,38,0.22), 0 4px 16px rgba(5,25,38,0.10)",
+      }}
+    >
+      {/* Image area — ~58% of card */}
+      <button
+        onClick={onGalleryOpen}
+        aria-label={`View photos of ${product.name}`}
+        className="relative block cursor-zoom-in bg-[#f0f4f8] focus:outline-none"
+        style={{ paddingBottom: "58%" }}
+      >
+        <Image
+          src={meta.image}
+          alt={product.name}
+          fill
+          className="object-contain p-6 transition-transform duration-300 hover:scale-[1.03]"
+          sizes="(min-width: 1024px) 33vw"
+          priority
+        />
+        {/* Badge overlay */}
+        <span
+          className="absolute left-4 top-4 rounded-full px-3 py-[5px] text-[0.60rem] font-black uppercase tracking-[0.16em] text-white"
+          style={{ background: "rgba(30,58,138,0.90)" }}
+        >
+          {meta.badge}
+        </span>
+      </button>
+
+      {/* Info panel */}
+      <div className="flex flex-1 flex-col bg-[#FDFCF9] p-6">
+        <h3 className="text-[1.15rem] font-black leading-tight text-[#111d30]">
+          {product.name}
+        </h3>
+        <p className="mb-2 mt-0.5 text-[0.72rem] font-semibold tracking-wide text-[#1e3a8a]">
+          {meta.subtitle}
+        </p>
+        <p className="mb-4 text-[0.83rem] font-medium leading-[1.55] text-[#4a5568]">
+          {meta.description}
+        </p>
+
+        {/* Price */}
+        <div className="mb-4 flex items-baseline gap-2">
+          <span className="text-[1.5rem] font-black text-[#1e3a8a]">
+            {formatMerchPrice(product.price)}
+          </span>
+          {product.compareAtPrice && (
+            <span className="text-[0.82rem] font-semibold text-stone-400 line-through">
+              {formatMerchPrice(product.compareAtPrice)}
+            </span>
+          )}
+        </div>
+
+        {/* Qty + Buy */}
+        <div className="mt-auto flex items-center gap-3">
+          <div
+            className="flex items-center gap-2 rounded-xl border px-3 py-[10px]"
+            style={{
+              background: "rgba(255,255,255,0.9)",
+              borderColor: "rgba(30,58,138,0.18)",
+            }}
+          >
+            <button
+              onClick={() => onQuantityChange(Math.max(1, quantity - 1))}
+              disabled={isPending}
+              aria-label="Decrease quantity"
+              className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
+            >
+              <Minus className="h-3.5 w-3.5" />
+            </button>
+            <span className="w-5 text-center text-sm font-bold text-[#111d30]">
+              {quantity}
+            </span>
+            <button
+              onClick={() => onQuantityChange(Math.min(10, quantity + 1))}
+              disabled={isPending}
+              aria-label="Increase quantity"
+              className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
+            >
+              <Plus className="h-3.5 w-3.5" />
+            </button>
+          </div>
+
+          <RippleButton
+            onClick={onCheckout}
+            disabled={isPending}
+            className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isPending ? "Opening…" : "Buy Now"}
+            {!isPending && <ArrowRight className="h-3.5 w-3.5" />}
+          </RippleButton>
+        </div>
+
+        {/* View details */}
+        <Link
+          href={`/shop/${product.id}`}
+          className="mt-3 text-center text-[0.70rem] font-semibold text-stone-400 underline underline-offset-2 transition-colors hover:text-[#1e3a8a]"
+        >
+          View full details →
+        </Link>
+
+        {checkoutError && (
+          <p className="mt-2 rounded-xl bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-600">
+            {checkoutError}
+          </p>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
 /* ─── Page ─────────────────────────────────────────────────── */
 
 const UTILITY_H = 32;
 
 export default function ShopFullPage() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
   const [trustOpen, setTrustOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [galleryProduct, setGalleryProduct] = useState<string | null>(null);
   const [pendingCheckoutId, setPendingCheckoutId] = useState<string | null>(null);
-  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [checkoutError, setCheckoutError] = useState<Record<string, string>>({});
   const [quantities, setQuantities] = useState<Record<string, number>>(
     () => PHASE1_IDS.reduce<Record<string, number>>((acc, id) => { acc[id] = 1; return acc; }, {})
   );
@@ -510,11 +649,6 @@ export default function ShopFullPage() {
   const products = MERCH_PRODUCTS
     .filter((p) => PHASE1_IDS.includes(p.id))
     .sort((a, b) => PHASE1_IDS.indexOf(a.id) - PHASE1_IDS.indexOf(b.id));
-
-  // Reset gallery index when active product changes
-  useEffect(() => {
-    setActiveGalleryIndex(0);
-  }, [activeIndex]);
 
   // Mobile swipe track observer
   useEffect(() => {
@@ -534,7 +668,6 @@ export default function ShopFullPage() {
     return () => observer.disconnect();
   }, []);
 
-  // Mobile: scrolls the snap track
   const goTo = (i: number) => {
     const track = trackRef.current;
     if (!track) return;
@@ -546,13 +679,8 @@ export default function ShopFullPage() {
     setActiveIndex(i);
   };
 
-  // Desktop: no scroll needed
-  const desktopGoTo = (i: number) => {
-    setActiveIndex(i);
-  };
-
   const handleCheckout = async (product: MerchProduct) => {
-    setCheckoutError(null);
+    setCheckoutError((e) => ({ ...e, [product.id]: "" }));
     setPendingCheckoutId(product.id);
     try {
       const res = await fetch("/api/checkout", {
@@ -569,14 +697,14 @@ export default function ShopFullPage() {
       if (!res.ok || !data.url) throw new Error(data.error ?? "Unable to start checkout.");
       window.location.href = data.url;
     } catch (err) {
-      setCheckoutError(err instanceof Error ? err.message : "Unable to start checkout.");
+      setCheckoutError((e) => ({
+        ...e,
+        [product.id]: err instanceof Error ? err.message : "Unable to start checkout.",
+      }));
     } finally {
       setPendingCheckoutId(null);
     }
   };
-
-  const activeProduct = products[activeIndex];
-  const activeMeta = activeProduct ? PRODUCT_META[activeProduct.id] : null;
 
   return (
     <>
@@ -584,7 +712,7 @@ export default function ShopFullPage() {
         {galleryProduct && (
           <ImageGalleryModal
             images={PRODUCT_META[galleryProduct].gallery}
-            initialIndex={activeGalleryIndex}
+            initialIndex={0}
             productName={products.find((p) => p.id === galleryProduct)?.name ?? ""}
             onClose={() => setGalleryProduct(null)}
           />
@@ -695,9 +823,9 @@ export default function ShopFullPage() {
 
             {/* Bottom controls */}
             <div className="pointer-events-none absolute bottom-4 left-0 right-0 z-30 flex flex-col items-center gap-2">
-              {checkoutError && (
+              {checkoutError[products[activeIndex]?.id] && (
                 <p className="pointer-events-auto rounded-full bg-rose-500/85 px-4 py-1.5 text-xs font-semibold text-white">
-                  {checkoutError}
+                  {checkoutError[products[activeIndex].id]}
                 </p>
               )}
               <div className="pointer-events-auto flex items-center gap-3">
@@ -719,13 +847,58 @@ export default function ShopFullPage() {
 
         {/* ════════════════════════════════════════════════════
             DESKTOP  (hidden below lg)
+            Collection-first: all 3 products at equal priority.
         ════════════════════════════════════════════════════ */}
-        {activeProduct && activeMeta && (
-          <div
-            className="relative hidden lg:flex lg:flex-col"
-            style={{ minHeight: `calc(100svh - ${UTILITY_H}px)` }}
+        <div className="hidden lg:block">
+
+          {/* Desktop header — frosted, sits over the beach bg */}
+          <header
+            className="relative z-30 flex h-16 items-center justify-between px-10"
+            style={{
+              background: "rgba(0,75,68,0.92)",
+              backdropFilter: "blur(10px)",
+              WebkitBackdropFilter: "blur(10px)",
+            }}
           >
-            {/* Static background */}
+            <nav className="flex items-center gap-7">
+              <Link href="/" className="text-sm font-semibold text-white/75 transition-colors hover:text-white">
+                Home
+              </Link>
+              <Link href="/shop-full" className="text-sm font-bold text-white">
+                Shop
+              </Link>
+              <Link href="/#contact" className="text-sm font-semibold text-white/75 transition-colors hover:text-white">
+                Plan My Trip
+              </Link>
+            </nav>
+
+            <Link href="/" className="absolute left-1/2 -translate-x-1/2">
+              <Image
+                src="/images/travelholics_logo_wordmark.svg"
+                alt="Travelholics"
+                width={172}
+                height={38}
+                className="h-9 w-auto object-contain brightness-0 invert"
+                priority
+              />
+            </Link>
+
+            <div className="flex items-center gap-1">
+              <button aria-label="Search" className="p-2 text-white/70 transition-colors hover:text-white">
+                <Search className="h-5 w-5" />
+              </button>
+              <button aria-label="Wishlist" className="p-2 text-white/70 transition-colors hover:text-white">
+                <Heart className="h-5 w-5" />
+              </button>
+              <button aria-label="Cart" className="p-2 text-white/70 transition-colors hover:text-white">
+                <ShoppingCart className="h-5 w-5" />
+              </button>
+            </div>
+          </header>
+
+          {/* Collection hero + cards — beach atmosphere */}
+          <section className="relative overflow-hidden">
+            {/* Beach background */}
             <div className="absolute inset-0 z-0">
               <Image
                 src="/images/a_bright_tropical_beach_scene_at_golden_hour_sun.png.png"
@@ -733,17 +906,17 @@ export default function ShopFullPage() {
                 aria-hidden
                 fill
                 className="object-cover"
-                style={{ objectPosition: "50% 40%" }}
+                style={{ objectPosition: "50% 35%" }}
                 priority
                 sizes="100vw"
               />
-              {/* Dual overlay gradients */}
+              {/* Rich overlay: darken top for text, warm-teal wash overall */}
               <div
                 className="absolute inset-0"
                 aria-hidden
                 style={{
                   background:
-                    "linear-gradient(to bottom, rgba(0,20,40,0.38) 0%, rgba(0,20,40,0.10) 35%, rgba(5,20,38,0.30) 100%)",
+                    "linear-gradient(to bottom, rgba(0,30,50,0.62) 0%, rgba(0,30,50,0.30) 30%, rgba(0,30,50,0.52) 100%)",
                 }}
               />
               <div
@@ -751,311 +924,61 @@ export default function ShopFullPage() {
                 aria-hidden
                 style={{
                   background:
-                    "linear-gradient(105deg, rgba(0,75,68,0.22) 0%, transparent 60%)",
+                    "linear-gradient(105deg, rgba(0,75,68,0.18) 0%, transparent 55%)",
                 }}
               />
             </div>
 
-            {/* Desktop header — frosted 64px */}
-            <header
-              className="relative z-30 flex h-16 items-center justify-between px-10"
-              style={{
-                background: "rgba(0,75,68,0.12)",
-                backdropFilter: "blur(10px)",
-                WebkitBackdropFilter: "blur(10px)",
-                borderBottom: "1px solid rgba(255,255,255,0.10)",
-              }}
-            >
-              <nav className="flex items-center gap-7">
-                <Link href="/" className="text-sm font-semibold text-white/75 transition-colors hover:text-white">
-                  Home
-                </Link>
-                <Link href="/shop-full" className="text-sm font-bold text-white transition-colors">
-                  Shop
-                </Link>
-                <Link href="/#contact" className="text-sm font-semibold text-white/75 transition-colors hover:text-white">
-                  Plan My Trip
-                </Link>
-              </nav>
-
-              <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-                <Image
-                  src="/images/travelholics_logo_wordmark.svg"
-                  alt="Travelholics"
-                  width={172}
-                  height={38}
-                  className="h-9 w-auto object-contain brightness-0 invert"
-                  priority
-                />
-              </Link>
-
-              <div className="flex items-center gap-1">
-                <button aria-label="Search" className="p-2 text-white/70 transition-colors hover:text-white">
-                  <Search className="h-5 w-5" />
-                </button>
-                <button aria-label="Wishlist" className="p-2 text-white/70 transition-colors hover:text-white">
-                  <Heart className="h-5 w-5" />
-                </button>
-                <button aria-label="Cart" className="p-2 text-white/70 transition-colors hover:text-white">
-                  <ShoppingCart className="h-5 w-5" />
-                </button>
-              </div>
-            </header>
-
-            {/* Two-column grid content area */}
-            <div className="relative z-10 flex flex-1 items-center justify-center px-12 py-16">
-              <div
-                className="grid w-full"
-                style={{
-                  maxWidth: "1240px",
-                  gridTemplateColumns: "minmax(0, 58%) minmax(420px, 42%)",
-                  gap: "clamp(32px, 5vw, 72px)",
-                }}
+            {/* Collection intro */}
+            <div className="relative z-10 pt-16 pb-10 text-center">
+              <p className="mb-3 text-[0.62rem] font-bold uppercase tracking-[0.28em] text-white/50">
+                Travelholics Originals
+              </p>
+              <h1 className="mb-3 text-[2.6rem] font-black leading-tight text-white">
+                The Travelholics Shop
+              </h1>
+              <p className="mx-auto mb-5 max-w-md text-[0.95rem] font-medium leading-relaxed text-white/70">
+                Original pieces for cruise days, cabin doors, and travel memories.
+              </p>
+              <button
+                onClick={() => setTrustOpen(true)}
+                className="text-[0.72rem] font-semibold text-white/55 underline underline-offset-2 transition-colors hover:text-white/85"
               >
-                {/* ── Left column: image + thumbnails + carousel controls ── */}
-                <div className="flex flex-col items-center gap-5">
-                  {/* Main product image */}
-                  <button
-                    onClick={() => setGalleryProduct(activeProduct.id)}
-                    aria-label={`View all photos of ${activeProduct.name}`}
-                    className="cursor-zoom-in focus:outline-none"
-                    style={{ width: "clamp(440px, 44vw, 660px)", maxWidth: "100%" }}
-                  >
-                    <div
-                      className="relative w-full"
-                      style={{
-                        aspectRatio: "1 / 1",
-                        maxHeight: "460px",
-                        filter: "drop-shadow(0 32px 64px rgba(5,25,38,0.40))",
-                      }}
-                    >
-                      <Image
-                        src={activeMeta.gallery[activeGalleryIndex] ?? activeMeta.image}
-                        alt={activeProduct.name}
-                        fill
-                        className="object-contain transition-opacity duration-200"
-                        sizes="clamp(440px, 44vw, 660px)"
-                        priority
-                      />
-                    </div>
-                  </button>
+                Why travelers trust these picks →
+              </button>
+            </div>
 
-                  {/* Frosted thumbnail strip */}
-                  {activeMeta.gallery.length > 1 && (
-                    <div
-                      className="flex items-center gap-2 rounded-2xl px-3 py-2"
-                      style={{
-                        background: "rgba(255,255,255,0.12)",
-                        backdropFilter: "blur(12px)",
-                        WebkitBackdropFilter: "blur(12px)",
-                        border: "1px solid rgba(255,255,255,0.18)",
-                      }}
-                    >
-                      {activeMeta.gallery.slice(0, 6).map((src, i) => (
-                        <button
-                          key={i}
-                          onClick={() => setActiveGalleryIndex(i)}
-                          aria-label={`View image ${i + 1}`}
-                          className="relative flex-shrink-0 overflow-hidden rounded-xl transition-all duration-200"
-                          style={{
-                            width: 72,
-                            height: 72,
-                            outline: i === activeGalleryIndex
-                              ? "2.5px solid rgba(255,255,255,0.9)"
-                              : "2px solid rgba(255,255,255,0.18)",
-                            outlineOffset: "2px",
-                            opacity: i === activeGalleryIndex ? 1 : 0.65,
-                          }}
-                        >
-                          <Image
-                            src={src}
-                            alt={`Thumbnail ${i + 1}`}
-                            fill
-                            className="object-cover"
-                            sizes="72px"
-                          />
-                        </button>
-                      ))}
-                      {activeMeta.gallery.length > 6 && (
-                        <button
-                          onClick={() => setGalleryProduct(activeProduct.id)}
-                          className="flex h-[72px] w-[72px] flex-shrink-0 items-center justify-center rounded-xl text-[0.72rem] font-bold text-white/80 transition-colors hover:text-white"
-                          style={{
-                            background: "rgba(0,0,0,0.28)",
-                            border: "2px solid rgba(255,255,255,0.18)",
-                          }}
-                        >
-                          +{activeMeta.gallery.length - 6}
-                        </button>
-                      )}
-                    </div>
-                  )}
+            {/* 3-product grid */}
+            <div className="relative z-10 mx-auto max-w-[1240px] px-8 pb-16">
+              <div
+                className="grid grid-cols-3"
+                style={{ gap: "clamp(20px, 2.5vw, 32px)" }}
+              >
+                {products.map((product) => (
+                  <DesktopProductCard
+                    key={product.id}
+                    product={product}
+                    meta={PRODUCT_META[product.id]}
+                    quantity={quantities[product.id] ?? 1}
+                    isPending={pendingCheckoutId === product.id}
+                    checkoutError={checkoutError[product.id] ?? null}
+                    onQuantityChange={(q) =>
+                      setQuantities((s) => ({ ...s, [product.id]: q }))
+                    }
+                    onCheckout={() => void handleCheckout(product)}
+                    onGalleryOpen={() => setGalleryProduct(product.id)}
+                  />
+                ))}
+              </div>
 
-                  {/* Carousel controls: ← dots → */}
-                  <div className="flex items-center gap-4">
-                    <button
-                      onClick={() => desktopGoTo(activeIndex - 1)}
-                      disabled={activeIndex === 0}
-                      aria-label="Previous product"
-                      className="flex h-9 w-9 items-center justify-center rounded-full text-white/60 transition-colors hover:bg-white/15 hover:text-white disabled:opacity-25"
-                    >
-                      <ChevronLeft className="h-5 w-5" />
-                    </button>
-
-                    <div className="flex items-center gap-2">
-                      {products.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => desktopGoTo(i)}
-                          aria-label={`Product ${i + 1}`}
-                          className={`rounded-full transition-all duration-300 ${
-                            i === activeIndex
-                              ? "h-2 w-7 bg-white"
-                              : "h-2 w-2 bg-white/35 hover:bg-white/60"
-                          }`}
-                        />
-                      ))}
-                    </div>
-
-                    <button
-                      onClick={() => desktopGoTo(activeIndex + 1)}
-                      disabled={activeIndex === products.length - 1}
-                      aria-label="Next product"
-                      className="flex h-9 w-9 items-center justify-center rounded-full text-white/60 transition-colors hover:bg-white/15 hover:text-white disabled:opacity-25"
-                    >
-                      <ChevronRight className="h-5 w-5" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* ── Right column: frosted purchase card ── */}
-                <div className="flex items-center">
-                  <div
-                    className="w-full"
-                    style={{
-                      maxWidth: "540px",
-                      borderRadius: "28px",
-                      padding: "32px",
-                      background: "rgba(255,255,255,0.72)",
-                      backdropFilter: "blur(18px) saturate(160%)",
-                      WebkitBackdropFilter: "blur(18px) saturate(160%)",
-                      border: "1.5px solid rgba(255,255,255,0.60)",
-                      boxShadow: "0 16px 48px rgba(5,25,38,0.16), 0 4px 12px rgba(5,25,38,0.08)",
-                    }}
-                  >
-                    {/* Badge */}
-                    <span className="mb-4 inline-block rounded-full bg-[#1e3a8a] px-3.5 py-[6px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
-                      {activeMeta.badge}
-                    </span>
-
-                    {/* Product name */}
-                    <h2 className="mb-1 text-[1.9rem] font-black leading-tight text-[#111d30]">
-                      {activeProduct.name}
-                    </h2>
-                    <p className="mb-3 text-[0.78rem] font-semibold tracking-wide text-[#1e3a8a]">
-                      {activeMeta.subtitle}
-                    </p>
-
-                    {/* Description */}
-                    <p className="mb-4 text-[0.88rem] font-medium leading-[1.6] text-[#2d3748]">
-                      {activeMeta.description}
-                    </p>
-
-                    {/* View full details */}
-                    <Link
-                      href={`/shop/${activeProduct.id}`}
-                      className="mb-5 inline-block text-[0.74rem] font-semibold text-[#1e3a8a] underline underline-offset-2 transition-colors hover:text-[#059669]"
-                    >
-                      View full details →
-                    </Link>
-
-                    {/* Price */}
-                    <div className="mb-5 flex items-baseline gap-2">
-                      <span className="text-[2rem] font-black text-[#1e3a8a]">
-                        {formatMerchPrice(activeProduct.price)}
-                      </span>
-                      {activeProduct.compareAtPrice && (
-                        <span className="text-[0.88rem] font-semibold text-stone-400 line-through">
-                          {formatMerchPrice(activeProduct.compareAtPrice)}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Qty + Buy */}
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="flex items-center gap-2 rounded-xl border px-4 py-3"
-                        style={{
-                          background: "rgba(255,255,255,0.9)",
-                          borderColor: "rgba(30,58,138,0.20)",
-                        }}
-                      >
-                        <button
-                          onClick={() =>
-                            setQuantities((s) => ({
-                              ...s,
-                              [activeProduct.id]: Math.max(1, (s[activeProduct.id] ?? 1) - 1),
-                            }))
-                          }
-                          disabled={pendingCheckoutId === activeProduct.id}
-                          aria-label="Decrease quantity"
-                          className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
-                        >
-                          <Minus className="h-3.5 w-3.5" />
-                        </button>
-                        <span className="w-6 text-center text-sm font-bold text-[#111d30]">
-                          {quantities[activeProduct.id] ?? 1}
-                        </span>
-                        <button
-                          onClick={() =>
-                            setQuantities((s) => ({
-                              ...s,
-                              [activeProduct.id]: Math.min(10, (s[activeProduct.id] ?? 1) + 1),
-                            }))
-                          }
-                          disabled={pendingCheckoutId === activeProduct.id}
-                          aria-label="Increase quantity"
-                          className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
-                        >
-                          <Plus className="h-3.5 w-3.5" />
-                        </button>
-                      </div>
-
-                      <RippleButton
-                        onClick={() => void handleCheckout(activeProduct)}
-                        disabled={pendingCheckoutId === activeProduct.id}
-                        className="flex min-h-[50px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-[0.9rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
-                      >
-                        {pendingCheckoutId === activeProduct.id ? "Opening…" : "Buy Now"}
-                        {pendingCheckoutId !== activeProduct.id && <ArrowRight className="h-4 w-4" />}
-                      </RippleButton>
-                    </div>
-
-                    {checkoutError && (
-                      <p className="mt-3 rounded-xl bg-rose-50 px-4 py-2 text-xs font-semibold text-rose-600">
-                        {checkoutError}
-                      </p>
-                    )}
-
-                    {/* Trust footer */}
-                    <div className="mt-5 flex items-center justify-between border-t border-stone-200/70 pt-4">
-                      <span className="flex items-center gap-1.5 text-[0.68rem] font-semibold text-stone-400">
-                        <ShieldCheck className="h-3.5 w-3.5 text-[#059669]" />
-                        Secure checkout via Stripe
-                      </span>
-                      <button
-                        onClick={() => setTrustOpen(true)}
-                        className="text-[0.68rem] font-semibold text-stone-400 underline underline-offset-2 transition-colors hover:text-[#1e3a8a]"
-                      >
-                        Why we recommend these →
-                      </button>
-                    </div>
-                  </div>
-                </div>
+              {/* Stripe trust note */}
+              <div className="mt-8 flex items-center justify-center gap-2 text-[0.68rem] font-semibold text-white/50">
+                <ShieldCheck className="h-3.5 w-3.5 text-[#34d399]" />
+                Secure checkout via Stripe
               </div>
             </div>
-          </div>
-        )}
+          </section>
+        </div>
 
         {/* ── Post-Shop Trip CTA ────────────────────────────── */}
         <section className="bg-[#FAF9F6] px-5 py-10">
