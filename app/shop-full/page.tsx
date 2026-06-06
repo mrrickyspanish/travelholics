@@ -534,14 +534,22 @@ function ProductSlide({
                 </span>
               </div>
 
-              {/* Buy button */}
+              {/* Add to Cart button */}
               <button
                 onClick={onBuy}
                 style={{ minWidth: 116, height: 52, borderRadius: 14, background: "#008f62", color: "#fff", fontSize: 18, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, whiteSpace: "nowrap", border: "none", cursor: "pointer" }}
               >
-                Buy
+                Add to Cart
               </button>
             </div>
+
+            {/* View details link */}
+            <Link
+              href={`/shop/${product.id}`}
+              style={{ display: "block", marginTop: 14, textAlign: "center", fontSize: 13, fontWeight: 600, color: "rgba(12,34,56,0.45)", textDecoration: "underline", textUnderlineOffset: 3 }}
+            >
+              View full details →
+            </Link>
           </div>
         </div>
       </div>
