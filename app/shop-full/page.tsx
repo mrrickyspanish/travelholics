@@ -107,13 +107,11 @@ function ImageGalleryModal({
   const [current, setCurrent] = useState(initialIndex);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  // Sync scroll position when current changes via dots/arrows
   useEffect(() => {
     const el = trackRef.current?.children[current] as HTMLElement | undefined;
     el?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
   }, [current]);
 
-  // Sync current index when user swipes
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -131,7 +129,6 @@ function ImageGalleryModal({
     return () => observer.disconnect();
   }, []);
 
-  // Close on Escape
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", handler);
@@ -146,7 +143,6 @@ function ImageGalleryModal({
       className="fixed inset-0 z-[110] flex flex-col bg-black"
       onClick={onClose}
     >
-      {/* Header */}
       <div
         className="relative z-10 flex items-center justify-between px-4 py-3"
         onClick={(e) => e.stopPropagation()}
@@ -166,7 +162,6 @@ function ImageGalleryModal({
         </button>
       </div>
 
-      {/* Swipe track */}
       <div
         ref={trackRef}
         className="flex flex-1 snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -186,7 +181,6 @@ function ImageGalleryModal({
         ))}
       </div>
 
-      {/* Dot indicators + arrows */}
       <div
         className="flex flex-col items-center gap-3 pb-8 pt-4"
         onClick={(e) => e.stopPropagation()}
@@ -329,9 +323,8 @@ function MobileNavDrawer({
   );
 }
 
-/* ─── Product Slide ─────────────────────────────────────────
-   Background is intentionally NOT here — it lives in the parent
-   section so it stays fixed while only the product content swipes.
+/* ─── Mobile Product Slide ──────────────────────────────────
+   Pure mobile layout — no responsive overrides.
 ── */
 
 function ProductSlide({
@@ -361,15 +354,13 @@ function ProductSlide({
 }) {
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
-      {/* Bounded content zone */}
+      {/* Bounded content zone — hard top/bottom constraints prevent header/card overlap */}
       <div
-        className="absolute inset-x-0 flex flex-col items-center justify-end gap-3 px-3 md:flex-row md:items-center md:justify-center md:gap-12 md:px-12"
+        className="absolute inset-x-0 flex flex-col items-center justify-end gap-3 px-3"
         style={{ top: 56, bottom: 84 }}
       >
-
-        {/* ── Left col: image + arrows (mobile: full row, desktop: left half) ── */}
-        <div className="flex w-full items-center justify-center gap-3 px-1 md:flex-1 md:justify-end md:px-0">
-          {/* Left arrow */}
+        {/* Image row with flanking arrows */}
+        <div className="flex w-full items-center justify-center gap-3 px-1">
           <button
             onClick={onPrev}
             aria-label="Previous product"
@@ -378,7 +369,6 @@ function ProductSlide({
             <ChevronLeft className="h-5 w-5" />
           </button>
 
-          {/* Image */}
           <button
             onClick={onGalleryOpen}
             aria-label={`View all photos of ${product.name}`}
@@ -386,7 +376,7 @@ function ProductSlide({
             style={{ width: "min(68vw, 300px)" }}
           >
             <div
-              className="relative aspect-square w-full md:hidden"
+              className="relative aspect-square w-full"
               style={{ filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))" }}
             >
               <Image
@@ -398,23 +388,8 @@ function ProductSlide({
                 priority
               />
             </div>
-            {/* Desktop image — larger */}
-            <div
-              className="relative hidden aspect-square md:block"
-              style={{ width: "min(40vw, 500px)", filter: "drop-shadow(0 32px 56px rgba(5,25,38,0.32))" }}
-            >
-              <Image
-                src={meta.image}
-                alt={product.name}
-                fill
-                className="object-contain"
-                sizes="(min-width: 768px) min(40vw, 500px)"
-                priority
-              />
-            </div>
           </button>
 
-          {/* Right arrow */}
           <button
             onClick={onNext}
             aria-label="Next product"
@@ -424,100 +399,92 @@ function ProductSlide({
           </button>
         </div>
 
-        {/* ── Glass purchase panel ── */}
-        <div className="w-full md:w-[420px] md:flex-shrink-0">
-        <div
-          className="rounded-3xl p-6"
-          style={{
-            background: "rgba(255,255,255,0.68)",
-            backdropFilter: "blur(28px) saturate(160%)",
-            WebkitBackdropFilter: "blur(28px) saturate(160%)",
-            border: "1.5px solid rgba(255,255,255,0.55)",
-            boxShadow:
-              "0 8px 32px rgba(5,25,38,0.12), 0 2px 8px rgba(5,25,38,0.06)",
-          }}
-        >
-          {/* Badge */}
-          <span className="mb-3 inline-block rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
-            {meta.badge}
-          </span>
-
-          {/* Title — dominant anchor */}
-          <h2 className="text-[1.45rem] font-black leading-tight text-[#111d30]">
-            {product.name}
-          </h2>
-          <p className="mb-2 text-[0.75rem] font-semibold tracking-wide text-[#1e3a8a]">
-            {meta.subtitle}
-          </p>
-
-          {/* Description */}
-          <p className="mb-3 line-clamp-2 text-[0.84rem] font-medium leading-[1.5] text-[#2d3748]">
-            {meta.description}
-          </p>
-
-          {/* View details link */}
-          <Link
-            href={`/shop/${product.id}`}
-            className="mb-3 inline-block text-[0.72rem] font-semibold text-[#1e3a8a] underline underline-offset-2 hover:text-[#059669] transition-colors"
+        {/* Glass purchase panel */}
+        <div className="w-full">
+          <div
+            className="rounded-3xl p-6"
+            style={{
+              background: "rgba(255,255,255,0.68)",
+              backdropFilter: "blur(28px) saturate(160%)",
+              WebkitBackdropFilter: "blur(28px) saturate(160%)",
+              border: "1.5px solid rgba(255,255,255,0.55)",
+              boxShadow: "0 8px 32px rgba(5,25,38,0.12), 0 2px 8px rgba(5,25,38,0.06)",
+            }}
           >
-            View full details →
-          </Link>
+            <span className="mb-3 inline-block rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
+              {meta.badge}
+            </span>
 
-          {/* Bottom action row: price + qty + buy */}
-          <div className="flex items-center gap-3">
-            {/* Price block */}
-            <div className="flex flex-col leading-none">
-              {product.compareAtPrice && (
-                <span className="text-[0.68rem] font-semibold text-stone-400 line-through">
-                  {formatMerchPrice(product.compareAtPrice)}
+            <h2 className="text-[1.45rem] font-black leading-tight text-[#111d30]">
+              {product.name}
+            </h2>
+            <p className="mb-2 text-[0.75rem] font-semibold tracking-wide text-[#1e3a8a]">
+              {meta.subtitle}
+            </p>
+
+            <p className="mb-3 line-clamp-2 text-[0.84rem] font-medium leading-[1.5] text-[#2d3748]">
+              {meta.description}
+            </p>
+
+            <Link
+              href={`/shop/${product.id}`}
+              className="mb-3 inline-block text-[0.72rem] font-semibold text-[#1e3a8a] underline underline-offset-2 hover:text-[#059669] transition-colors"
+            >
+              View full details →
+            </Link>
+
+            <div className="flex items-center gap-3">
+              <div className="flex flex-col leading-none">
+                {product.compareAtPrice && (
+                  <span className="text-[0.68rem] font-semibold text-stone-400 line-through">
+                    {formatMerchPrice(product.compareAtPrice)}
+                  </span>
+                )}
+                <span className="text-[1.25rem] font-black text-[#1e3a8a]">
+                  {formatMerchPrice(product.price)}
                 </span>
-              )}
-              <span className="text-[1.25rem] font-black text-[#1e3a8a]">
-                {formatMerchPrice(product.price)}
-              </span>
-            </div>
+              </div>
 
-            {/* Qty stepper */}
-            <div
-              className="flex items-center gap-2 rounded-xl border px-3 py-[11px]"
-              style={{
-                background: "rgba(255,255,255,0.9)",
-                borderColor: "rgba(30,58,138,0.18)",
-              }}
-            >
-              <button
-                onClick={() => onQuantityChange(Math.max(1, quantity - 1))}
-                disabled={isPending}
-                aria-label="Decrease quantity"
-                className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
+              <div
+                className="flex items-center gap-2 rounded-xl border px-3 py-[11px]"
+                style={{
+                  background: "rgba(255,255,255,0.9)",
+                  borderColor: "rgba(30,58,138,0.18)",
+                }}
               >
-                <Minus className="h-3.5 w-3.5" />
-              </button>
-              <span className="w-5 text-center text-sm font-bold text-[#111d30]">
-                {quantity}
-              </span>
-              <button
-                onClick={() => onQuantityChange(Math.min(10, quantity + 1))}
-                disabled={isPending}
-                aria-label="Increase quantity"
-                className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
-              >
-                <Plus className="h-3.5 w-3.5" />
-              </button>
-            </div>
+                <button
+                  onClick={() => onQuantityChange(Math.max(1, quantity - 1))}
+                  disabled={isPending}
+                  aria-label="Decrease quantity"
+                  className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
+                >
+                  <Minus className="h-3.5 w-3.5" />
+                </button>
+                <span className="w-5 text-center text-sm font-bold text-[#111d30]">
+                  {quantity}
+                </span>
+                <button
+                  onClick={() => onQuantityChange(Math.min(10, quantity + 1))}
+                  disabled={isPending}
+                  aria-label="Increase quantity"
+                  className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                </button>
+              </div>
 
-            <RippleButton
-              onClick={onCheckout}
-              disabled={isPending}
-              className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {isPending ? "Opening…" : "Buy Now"}
-              {!isPending && <ArrowRight className="h-3.5 w-3.5" />}
-            </RippleButton>
+              <RippleButton
+                onClick={onCheckout}
+                disabled={isPending}
+                className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isPending ? "Opening…" : "Buy Now"}
+                {!isPending && <ArrowRight className="h-3.5 w-3.5" />}
+              </RippleButton>
+            </div>
           </div>
         </div>
-        </div>{/* end glass panel */}
-      </div>{/* end flex column */}
+      </div>
     </div>
   );
 }
@@ -528,6 +495,7 @@ const UTILITY_H = 32;
 
 export default function ShopFullPage() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
   const [trustOpen, setTrustOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [galleryProduct, setGalleryProduct] = useState<string | null>(null);
@@ -543,6 +511,12 @@ export default function ShopFullPage() {
     .filter((p) => PHASE1_IDS.includes(p.id))
     .sort((a, b) => PHASE1_IDS.indexOf(a.id) - PHASE1_IDS.indexOf(b.id));
 
+  // Reset gallery index when active product changes
+  useEffect(() => {
+    setActiveGalleryIndex(0);
+  }, [activeIndex]);
+
+  // Mobile swipe track observer
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -560,6 +534,7 @@ export default function ShopFullPage() {
     return () => observer.disconnect();
   }, []);
 
+  // Mobile: scrolls the snap track
   const goTo = (i: number) => {
     const track = trackRef.current;
     if (!track) return;
@@ -568,6 +543,11 @@ export default function ShopFullPage() {
       block: "nearest",
       inline: "center",
     });
+    setActiveIndex(i);
+  };
+
+  // Desktop: no scroll needed
+  const desktopGoTo = (i: number) => {
     setActiveIndex(i);
   };
 
@@ -595,13 +575,16 @@ export default function ShopFullPage() {
     }
   };
 
+  const activeProduct = products[activeIndex];
+  const activeMeta = activeProduct ? PRODUCT_META[activeProduct.id] : null;
+
   return (
     <>
       <AnimatePresence>
         {galleryProduct && (
           <ImageGalleryModal
             images={PRODUCT_META[galleryProduct].gallery}
-            initialIndex={0}
+            initialIndex={activeGalleryIndex}
             productName={products.find((p) => p.id === galleryProduct)?.name ?? ""}
             onClose={() => setGalleryProduct(null)}
           />
@@ -622,141 +605,479 @@ export default function ShopFullPage() {
 
       <div style={{ paddingTop: UTILITY_H }}>
 
-        {/* ── Fullscreen Swiper ──────────────────────────────── */}
-        <section
-          className="relative w-full overflow-hidden"
-          style={{ height: `calc(100svh - ${UTILITY_H}px)` }}
-        >
-
-          {/* ── STATIC background — sits behind everything, never swipes ── */}
-          <div className="absolute inset-0 z-0">
-            <Image
-              src="/images/a_bright_tropical_beach_scene_at_golden_hour_sun.png.png"
-              alt=""
-              aria-hidden
-              fill
-              className="object-cover"
-              style={{ objectPosition: "50% center" }}
-              priority
-              sizes="100vw"
-            />
-            {/* Light gradient — preserves golden warmth, improves readability */}
-            <div
-              className="absolute inset-0"
-              aria-hidden
-              style={{
-                background:
-                  "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, transparent 20%, rgba(5,20,38,0.22) 100%)",
-              }}
-            />
-          </div>
-
-          {/* ── Overlay Header — transparent ── */}
-          <div className="absolute left-0 right-0 top-0 z-30 flex h-14 items-center justify-between px-4 md:px-8">
-            {/* Mobile: hamburger | Desktop: nav links */}
-            <button
-              aria-label="Open menu"
-              onClick={() => setNavOpen(true)}
-              className="p-2 text-white/85 transition-colors hover:text-white md:hidden"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-            <nav className="hidden md:flex items-center gap-6">
-              <Link href="/" className="text-sm font-semibold text-white/80 hover:text-white transition-colors">Home</Link>
-              <Link href="/shop-full" className="text-sm font-semibold text-white transition-colors">Shop</Link>
-              <Link href="/#contact" className="text-sm font-semibold text-white/80 hover:text-white transition-colors">Plan My Trip</Link>
-            </nav>
-
-            <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-              <Image
-                src="/images/travelholics_logo_wordmark.svg"
-                alt="Travelholics"
-                width={160}
-                height={36}
-                className="h-9 w-auto object-contain brightness-0 invert"
-                priority
-              />
-            </Link>
-            <div className="flex items-center gap-1">
-              <button aria-label="Search" className="p-2 text-white/75 transition-colors hover:text-white">
-                <Search className="h-[18px] w-[18px]" />
-              </button>
-              <button aria-label="Wishlist" className="p-2 text-white/75 transition-colors hover:text-white">
-                <Heart className="h-[18px] w-[18px]" />
-              </button>
-              <button aria-label="Cart" className="p-2 text-white/75 transition-colors hover:text-white">
-                <ShoppingCart className="h-[18px] w-[18px]" />
-              </button>
-            </div>
-          </div>
-
-
-          {/* ── Swipe track — ONLY product image + glass panel move ── */}
-          <div
-            ref={trackRef}
-            className="absolute inset-0 flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        {/* ════════════════════════════════════════════════════
+            MOBILE / TABLET  (hidden on lg+)
+        ════════════════════════════════════════════════════ */}
+        <div className="lg:hidden">
+          <section
+            className="relative w-full overflow-hidden"
+            style={{ height: `calc(100svh - ${UTILITY_H}px)` }}
           >
-            {products.map((product, i) => (
-              <ProductSlide
-                key={product.id}
-                product={product}
-                meta={PRODUCT_META[product.id]}
-                quantity={quantities[product.id] ?? 1}
-                isPending={pendingCheckoutId === product.id}
-                onQuantityChange={(q) =>
-                  setQuantities((s) => ({ ...s, [product.id]: q }))
-                }
-                onCheckout={() => void handleCheckout(product)}
-                onGalleryOpen={() => setGalleryProduct(product.id)}
-                isFirst={i === 0}
-                isLast={i === products.length - 1}
-                onPrev={() => goTo(i - 1)}
-                onNext={() => goTo(i + 1)}
+            {/* Static background */}
+            <div className="absolute inset-0 z-0">
+              <Image
+                src="/images/a_bright_tropical_beach_scene_at_golden_hour_sun.png.png"
+                alt=""
+                aria-hidden
+                fill
+                className="object-cover"
+                style={{ objectPosition: "50% center" }}
+                priority
+                sizes="100vw"
               />
-            ))}
-          </div>
+              <div
+                className="absolute inset-0"
+                aria-hidden
+                style={{
+                  background:
+                    "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, transparent 20%, rgba(5,20,38,0.22) 100%)",
+                }}
+              />
+            </div>
 
-          {/* ── Bottom controls — above swipe track ── */}
-          <div className="pointer-events-none absolute bottom-4 left-0 right-0 z-30 flex flex-col items-center gap-2">
-            {checkoutError && (
-              <p className="pointer-events-auto rounded-full bg-rose-500/85 px-4 py-1.5 text-xs font-semibold text-white">
-                {checkoutError}
-              </p>
-            )}
-
-            <div className="pointer-events-auto flex items-center gap-3">
-              <span className="flex items-center gap-1 text-[0.65rem] font-semibold text-white/75">
-                <ShieldCheck className="h-3 w-3" />
-                Secure checkout via Stripe
-              </span>
-              <span className="text-white/30" aria-hidden>|</span>
+            {/* Overlay header */}
+            <div className="absolute left-0 right-0 top-0 z-30 flex h-14 items-center justify-between px-4">
               <button
-                onClick={() => setTrustOpen(true)}
-                className="text-[0.65rem] font-semibold text-white/75 underline underline-offset-2 transition-colors hover:text-white"
+                aria-label="Open menu"
+                onClick={() => setNavOpen(true)}
+                className="p-2 text-white/85 transition-colors hover:text-white"
               >
-                Why we recommend these →
+                <Menu className="h-5 w-5" />
               </button>
+
+              <Link href="/" className="absolute left-1/2 -translate-x-1/2">
+                <Image
+                  src="/images/travelholics_logo_wordmark.svg"
+                  alt="Travelholics"
+                  width={160}
+                  height={36}
+                  className="h-9 w-auto object-contain brightness-0 invert"
+                  priority
+                />
+              </Link>
+              <div className="flex items-center gap-1">
+                <button aria-label="Search" className="p-2 text-white/75 transition-colors hover:text-white">
+                  <Search className="h-[18px] w-[18px]" />
+                </button>
+                <button aria-label="Wishlist" className="p-2 text-white/75 transition-colors hover:text-white">
+                  <Heart className="h-[18px] w-[18px]" />
+                </button>
+                <button aria-label="Cart" className="p-2 text-white/75 transition-colors hover:text-white">
+                  <ShoppingCart className="h-[18px] w-[18px]" />
+                </button>
+              </div>
+            </div>
+
+            {/* Swipe track */}
+            <div
+              ref={trackRef}
+              className="absolute inset-0 flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {products.map((product, i) => (
+                <ProductSlide
+                  key={product.id}
+                  product={product}
+                  meta={PRODUCT_META[product.id]}
+                  quantity={quantities[product.id] ?? 1}
+                  isPending={pendingCheckoutId === product.id}
+                  onQuantityChange={(q) =>
+                    setQuantities((s) => ({ ...s, [product.id]: q }))
+                  }
+                  onCheckout={() => void handleCheckout(product)}
+                  onGalleryOpen={() => setGalleryProduct(product.id)}
+                  isFirst={i === 0}
+                  isLast={i === products.length - 1}
+                  onPrev={() => goTo(i - 1)}
+                  onNext={() => goTo(i + 1)}
+                />
+              ))}
+            </div>
+
+            {/* Bottom controls */}
+            <div className="pointer-events-none absolute bottom-4 left-0 right-0 z-30 flex flex-col items-center gap-2">
+              {checkoutError && (
+                <p className="pointer-events-auto rounded-full bg-rose-500/85 px-4 py-1.5 text-xs font-semibold text-white">
+                  {checkoutError}
+                </p>
+              )}
+              <div className="pointer-events-auto flex items-center gap-3">
+                <span className="flex items-center gap-1 text-[0.65rem] font-semibold text-white/75">
+                  <ShieldCheck className="h-3 w-3" />
+                  Secure checkout via Stripe
+                </span>
+                <span className="text-white/30" aria-hidden>|</span>
+                <button
+                  onClick={() => setTrustOpen(true)}
+                  className="text-[0.65rem] font-semibold text-white/75 underline underline-offset-2 transition-colors hover:text-white"
+                >
+                  Why we recommend these →
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* ════════════════════════════════════════════════════
+            DESKTOP  (hidden below lg)
+        ════════════════════════════════════════════════════ */}
+        {activeProduct && activeMeta && (
+          <div
+            className="relative hidden lg:flex lg:flex-col"
+            style={{ minHeight: `calc(100svh - ${UTILITY_H}px)` }}
+          >
+            {/* Static background */}
+            <div className="absolute inset-0 z-0">
+              <Image
+                src="/images/a_bright_tropical_beach_scene_at_golden_hour_sun.png.png"
+                alt=""
+                aria-hidden
+                fill
+                className="object-cover"
+                style={{ objectPosition: "50% 40%" }}
+                priority
+                sizes="100vw"
+              />
+              {/* Dual overlay gradients */}
+              <div
+                className="absolute inset-0"
+                aria-hidden
+                style={{
+                  background:
+                    "linear-gradient(to bottom, rgba(0,20,40,0.38) 0%, rgba(0,20,40,0.10) 35%, rgba(5,20,38,0.30) 100%)",
+                }}
+              />
+              <div
+                className="absolute inset-0"
+                aria-hidden
+                style={{
+                  background:
+                    "linear-gradient(105deg, rgba(0,75,68,0.22) 0%, transparent 60%)",
+                }}
+              />
+            </div>
+
+            {/* Desktop header — frosted 64px */}
+            <header
+              className="relative z-30 flex h-16 items-center justify-between px-10"
+              style={{
+                background: "rgba(0,75,68,0.12)",
+                backdropFilter: "blur(10px)",
+                WebkitBackdropFilter: "blur(10px)",
+                borderBottom: "1px solid rgba(255,255,255,0.10)",
+              }}
+            >
+              <nav className="flex items-center gap-7">
+                <Link href="/" className="text-sm font-semibold text-white/75 transition-colors hover:text-white">
+                  Home
+                </Link>
+                <Link href="/shop-full" className="text-sm font-bold text-white transition-colors">
+                  Shop
+                </Link>
+                <Link href="/#contact" className="text-sm font-semibold text-white/75 transition-colors hover:text-white">
+                  Plan My Trip
+                </Link>
+              </nav>
+
+              <Link href="/" className="absolute left-1/2 -translate-x-1/2">
+                <Image
+                  src="/images/travelholics_logo_wordmark.svg"
+                  alt="Travelholics"
+                  width={172}
+                  height={38}
+                  className="h-9 w-auto object-contain brightness-0 invert"
+                  priority
+                />
+              </Link>
+
+              <div className="flex items-center gap-1">
+                <button aria-label="Search" className="p-2 text-white/70 transition-colors hover:text-white">
+                  <Search className="h-5 w-5" />
+                </button>
+                <button aria-label="Wishlist" className="p-2 text-white/70 transition-colors hover:text-white">
+                  <Heart className="h-5 w-5" />
+                </button>
+                <button aria-label="Cart" className="p-2 text-white/70 transition-colors hover:text-white">
+                  <ShoppingCart className="h-5 w-5" />
+                </button>
+              </div>
+            </header>
+
+            {/* Two-column grid content area */}
+            <div className="relative z-10 flex flex-1 items-center justify-center px-12 py-16">
+              <div
+                className="grid w-full"
+                style={{
+                  maxWidth: "1240px",
+                  gridTemplateColumns: "minmax(0, 58%) minmax(420px, 42%)",
+                  gap: "clamp(32px, 5vw, 72px)",
+                }}
+              >
+                {/* ── Left column: image + thumbnails + carousel controls ── */}
+                <div className="flex flex-col items-center gap-5">
+                  {/* Main product image */}
+                  <button
+                    onClick={() => setGalleryProduct(activeProduct.id)}
+                    aria-label={`View all photos of ${activeProduct.name}`}
+                    className="cursor-zoom-in focus:outline-none"
+                    style={{ width: "clamp(440px, 44vw, 660px)", maxWidth: "100%" }}
+                  >
+                    <div
+                      className="relative w-full"
+                      style={{
+                        aspectRatio: "1 / 1",
+                        maxHeight: "460px",
+                        filter: "drop-shadow(0 32px 64px rgba(5,25,38,0.40))",
+                      }}
+                    >
+                      <Image
+                        src={activeMeta.gallery[activeGalleryIndex] ?? activeMeta.image}
+                        alt={activeProduct.name}
+                        fill
+                        className="object-contain transition-opacity duration-200"
+                        sizes="clamp(440px, 44vw, 660px)"
+                        priority
+                      />
+                    </div>
+                  </button>
+
+                  {/* Frosted thumbnail strip */}
+                  {activeMeta.gallery.length > 1 && (
+                    <div
+                      className="flex items-center gap-2 rounded-2xl px-3 py-2"
+                      style={{
+                        background: "rgba(255,255,255,0.12)",
+                        backdropFilter: "blur(12px)",
+                        WebkitBackdropFilter: "blur(12px)",
+                        border: "1px solid rgba(255,255,255,0.18)",
+                      }}
+                    >
+                      {activeMeta.gallery.slice(0, 6).map((src, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setActiveGalleryIndex(i)}
+                          aria-label={`View image ${i + 1}`}
+                          className="relative flex-shrink-0 overflow-hidden rounded-xl transition-all duration-200"
+                          style={{
+                            width: 72,
+                            height: 72,
+                            outline: i === activeGalleryIndex
+                              ? "2.5px solid rgba(255,255,255,0.9)"
+                              : "2px solid rgba(255,255,255,0.18)",
+                            outlineOffset: "2px",
+                            opacity: i === activeGalleryIndex ? 1 : 0.65,
+                          }}
+                        >
+                          <Image
+                            src={src}
+                            alt={`Thumbnail ${i + 1}`}
+                            fill
+                            className="object-cover"
+                            sizes="72px"
+                          />
+                        </button>
+                      ))}
+                      {activeMeta.gallery.length > 6 && (
+                        <button
+                          onClick={() => setGalleryProduct(activeProduct.id)}
+                          className="flex h-[72px] w-[72px] flex-shrink-0 items-center justify-center rounded-xl text-[0.72rem] font-bold text-white/80 transition-colors hover:text-white"
+                          style={{
+                            background: "rgba(0,0,0,0.28)",
+                            border: "2px solid rgba(255,255,255,0.18)",
+                          }}
+                        >
+                          +{activeMeta.gallery.length - 6}
+                        </button>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Carousel controls: ← dots → */}
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={() => desktopGoTo(activeIndex - 1)}
+                      disabled={activeIndex === 0}
+                      aria-label="Previous product"
+                      className="flex h-9 w-9 items-center justify-center rounded-full text-white/60 transition-colors hover:bg-white/15 hover:text-white disabled:opacity-25"
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      {products.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => desktopGoTo(i)}
+                          aria-label={`Product ${i + 1}`}
+                          className={`rounded-full transition-all duration-300 ${
+                            i === activeIndex
+                              ? "h-2 w-7 bg-white"
+                              : "h-2 w-2 bg-white/35 hover:bg-white/60"
+                          }`}
+                        />
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={() => desktopGoTo(activeIndex + 1)}
+                      disabled={activeIndex === products.length - 1}
+                      aria-label="Next product"
+                      className="flex h-9 w-9 items-center justify-center rounded-full text-white/60 transition-colors hover:bg-white/15 hover:text-white disabled:opacity-25"
+                    >
+                      <ChevronRight className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* ── Right column: frosted purchase card ── */}
+                <div className="flex items-center">
+                  <div
+                    className="w-full"
+                    style={{
+                      maxWidth: "540px",
+                      borderRadius: "28px",
+                      padding: "32px",
+                      background: "rgba(255,255,255,0.72)",
+                      backdropFilter: "blur(18px) saturate(160%)",
+                      WebkitBackdropFilter: "blur(18px) saturate(160%)",
+                      border: "1.5px solid rgba(255,255,255,0.60)",
+                      boxShadow: "0 16px 48px rgba(5,25,38,0.16), 0 4px 12px rgba(5,25,38,0.08)",
+                    }}
+                  >
+                    {/* Badge */}
+                    <span className="mb-4 inline-block rounded-full bg-[#1e3a8a] px-3.5 py-[6px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
+                      {activeMeta.badge}
+                    </span>
+
+                    {/* Product name */}
+                    <h2 className="mb-1 text-[1.9rem] font-black leading-tight text-[#111d30]">
+                      {activeProduct.name}
+                    </h2>
+                    <p className="mb-3 text-[0.78rem] font-semibold tracking-wide text-[#1e3a8a]">
+                      {activeMeta.subtitle}
+                    </p>
+
+                    {/* Description */}
+                    <p className="mb-4 text-[0.88rem] font-medium leading-[1.6] text-[#2d3748]">
+                      {activeMeta.description}
+                    </p>
+
+                    {/* View full details */}
+                    <Link
+                      href={`/shop/${activeProduct.id}`}
+                      className="mb-5 inline-block text-[0.74rem] font-semibold text-[#1e3a8a] underline underline-offset-2 transition-colors hover:text-[#059669]"
+                    >
+                      View full details →
+                    </Link>
+
+                    {/* Price */}
+                    <div className="mb-5 flex items-baseline gap-2">
+                      <span className="text-[2rem] font-black text-[#1e3a8a]">
+                        {formatMerchPrice(activeProduct.price)}
+                      </span>
+                      {activeProduct.compareAtPrice && (
+                        <span className="text-[0.88rem] font-semibold text-stone-400 line-through">
+                          {formatMerchPrice(activeProduct.compareAtPrice)}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Qty + Buy */}
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="flex items-center gap-2 rounded-xl border px-4 py-3"
+                        style={{
+                          background: "rgba(255,255,255,0.9)",
+                          borderColor: "rgba(30,58,138,0.20)",
+                        }}
+                      >
+                        <button
+                          onClick={() =>
+                            setQuantities((s) => ({
+                              ...s,
+                              [activeProduct.id]: Math.max(1, (s[activeProduct.id] ?? 1) - 1),
+                            }))
+                          }
+                          disabled={pendingCheckoutId === activeProduct.id}
+                          aria-label="Decrease quantity"
+                          className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
+                        >
+                          <Minus className="h-3.5 w-3.5" />
+                        </button>
+                        <span className="w-6 text-center text-sm font-bold text-[#111d30]">
+                          {quantities[activeProduct.id] ?? 1}
+                        </span>
+                        <button
+                          onClick={() =>
+                            setQuantities((s) => ({
+                              ...s,
+                              [activeProduct.id]: Math.min(10, (s[activeProduct.id] ?? 1) + 1),
+                            }))
+                          }
+                          disabled={pendingCheckoutId === activeProduct.id}
+                          aria-label="Increase quantity"
+                          className="flex h-5 w-5 items-center justify-center text-stone-400 transition-colors hover:text-[#1e3a8a] disabled:opacity-40"
+                        >
+                          <Plus className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+
+                      <RippleButton
+                        onClick={() => void handleCheckout(activeProduct)}
+                        disabled={pendingCheckoutId === activeProduct.id}
+                        className="flex min-h-[50px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#059669] text-[0.9rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {pendingCheckoutId === activeProduct.id ? "Opening…" : "Buy Now"}
+                        {pendingCheckoutId !== activeProduct.id && <ArrowRight className="h-4 w-4" />}
+                      </RippleButton>
+                    </div>
+
+                    {checkoutError && (
+                      <p className="mt-3 rounded-xl bg-rose-50 px-4 py-2 text-xs font-semibold text-rose-600">
+                        {checkoutError}
+                      </p>
+                    )}
+
+                    {/* Trust footer */}
+                    <div className="mt-5 flex items-center justify-between border-t border-stone-200/70 pt-4">
+                      <span className="flex items-center gap-1.5 text-[0.68rem] font-semibold text-stone-400">
+                        <ShieldCheck className="h-3.5 w-3.5 text-[#059669]" />
+                        Secure checkout via Stripe
+                      </span>
+                      <button
+                        onClick={() => setTrustOpen(true)}
+                        className="text-[0.68rem] font-semibold text-stone-400 underline underline-offset-2 transition-colors hover:text-[#1e3a8a]"
+                      >
+                        Why we recommend these →
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+        )}
 
         {/* ── Post-Shop Trip CTA ────────────────────────────── */}
         <section className="bg-[#FAF9F6] px-5 py-10">
-          <div className="mx-auto max-w-2xl">
+          <div className="mx-auto max-w-[920px]">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="relative overflow-hidden rounded-2xl px-8 py-12 text-center text-white"
+              className="relative overflow-hidden px-8 py-12 text-center text-white"
               style={{
+                borderRadius: "28px",
                 backgroundImage: "url('/images/travelholics_brand-hero_cruise-ship.png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center 90%",
               }}
             >
               <div
-                className="absolute inset-0 rounded-2xl"
-                style={{ background: "linear-gradient(135deg, rgba(30,58,92,0.82), rgba(30,58,92,0.58))" }}
+                className="absolute inset-0"
+                style={{
+                  borderRadius: "28px",
+                  background: "linear-gradient(135deg, rgba(30,58,92,0.82), rgba(30,58,92,0.58))",
+                }}
                 aria-hidden
               />
               <div className="relative z-10">
