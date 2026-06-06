@@ -450,16 +450,18 @@ function ProductSlide({
             <ChevronLeft className="h-5 w-5" />
           </button>
 
-          {/* Image fills its slot height, capped at square */}
           <button
             onClick={onGalleryOpen}
             aria-label={`View all photos of ${product.name}`}
-            className="relative min-h-0 flex-1 cursor-zoom-in focus:outline-none"
-            style={{ maxWidth: "min(68vw, 300px)" }}
+            className="cursor-zoom-in focus:outline-none"
+            style={{ width: "min(68vw, 300px)" }}
           >
             <div
-              className="relative h-full w-full"
-              style={{ filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))" }}
+              className="relative w-full"
+              style={{
+                aspectRatio: "1 / 1",
+                filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))",
+              }}
             >
               <Image
                 src={meta.image}
