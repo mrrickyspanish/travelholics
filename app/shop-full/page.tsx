@@ -429,12 +429,13 @@ function ProductSlide({
 }) {
   return (
     <div className="relative h-full w-full flex-shrink-0 snap-start">
+      {/* Bounded zone — overflow:hidden enforces top ceiling on Android */}
       <div
-        className="absolute inset-x-0 flex flex-col items-center justify-end gap-3 px-3"
+        className="absolute inset-x-0 flex flex-col items-center justify-end gap-2 overflow-hidden px-3"
         style={{ top: 56, bottom: 84 }}
       >
         {/* Image row with flanking arrows */}
-        <div className="flex w-full items-center justify-center gap-3 px-1">
+        <div className="flex w-full flex-shrink-0 items-center justify-center gap-3 px-1">
           <button
             onClick={onPrev}
             aria-label="Previous product"
@@ -449,9 +450,14 @@ function ProductSlide({
             className="cursor-zoom-in focus:outline-none"
             style={{ width: "min(68vw, 300px)" }}
           >
+            {/* Image: square by default, but maxHeight caps it on short Android screens */}
             <div
-              className="relative aspect-square w-full"
-              style={{ filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))" }}
+              className="relative w-full"
+              style={{
+                aspectRatio: "1 / 1",
+                maxHeight: "min(min(68vw, 300px), 36svh)",
+                filter: "drop-shadow(0 24px 40px rgba(5,25,38,0.30))",
+              }}
             >
               <Image
                 src={meta.image}
@@ -473,8 +479,8 @@ function ProductSlide({
           </button>
         </div>
 
-        {/* Glass purchase panel */}
-        <div className="w-full">
+        {/* Glass purchase panel — flex-shrink-0 keeps card whole, image shrinks instead */}
+        <div className="w-full flex-shrink-0">
           <div
             className="rounded-3xl p-6"
             style={{
