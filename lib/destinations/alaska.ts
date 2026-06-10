@@ -11,7 +11,7 @@ export const alaska: DestinationConfig = {
   heroEyebrow: "Cruise Alaska",
   heroHeadline: "Alaska is the cruise that turns travelers into cruisers.",
   heroTake: "Pack the parka. Thank me on the glacier day.",
-  heroImage: "/images/dest-alaska.jpg",
+  heroImage: "/images/destinations/alaska-hero.png",
   heroImageAlt: "Glacier and mountain landscape on an Alaska cruise route",
   whyParagraphs: [
     "Alaska is the one itinerary where the ship is genuinely the best way to see the destination. The Inside Passage, the glaciers, the whales, most of it is only reachable by water. But Alaska punishes a lazy booking more than any other route. The wrong cabin side, the wrong week, or the wrong glacier itinerary and you miss the entire reason you came.",

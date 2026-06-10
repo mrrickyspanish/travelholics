@@ -11,7 +11,7 @@ export const mediterranean: DestinationConfig = {
   heroEyebrow: "Cruise the Mediterranean",
   heroHeadline: "Europe, unpacked once.",
   heroTake: "Three countries in a week and your suitcase never moves.",
-  heroImage: "/images/dest-mediterranean.jpg",
+  heroImage: "/images/destinations/mediterranean-hero.png",
   heroImageAlt: "Mediterranean coastal town seen from a cruise ship",
   whyParagraphs: [
     "The Mediterranean is the best value in European travel that almost nobody frames that way. Hotels in three countries, trains between them, restaurants every night, that adds up fast. A Med cruise gives you Barcelona, Rome, and the Greek islands with one unpack and your meals already handled.",
