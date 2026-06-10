@@ -11,7 +11,7 @@ const cards = [
     description:
       "Cruise, all-inclusive, custom - Yolanda plans it. Same prices as booking direct, with someone in your corner when something goes sideways at sea.",
     cta: "plan a trip",
-    href: "/#contact",
+    href: "/cruises/caribbean",
     icon: Ship,
     iconBg: "bg-emerald-mid",
     image: "/images/about-on-deck.jpg",

@@ -11,6 +11,7 @@ import { useCart } from "@/lib/cart-context";
 
 const NAV_LINKS = [
   { label: "Join the Crew", href: "/#contact" },
+  { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Shop", href: "/shop" },
   { label: "Journal", href: "/collaborate" },
   { label: "Our Story", href: "/#about" },
