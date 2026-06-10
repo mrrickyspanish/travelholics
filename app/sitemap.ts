@@ -1,11 +1,20 @@
 import type { MetadataRoute } from "next";
+import { destinations } from "@/lib/destinations";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yotravelholic.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
+  const destinationPages: MetadataRoute.Sitemap = destinations.map((d) => ({
+    url: `${siteUrl}/cruises/${d.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.9,
+  }));
+
   return [
+    ...destinationPages,
     {
       url: siteUrl,
       lastModified: now,
