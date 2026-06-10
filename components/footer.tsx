@@ -158,10 +158,10 @@ export const Footer = () => {
               hello@yotravelholic.com
             </a>
             <a
-              href="tel:+19855551234"
+              href="sms:+18472382473"
               className="text-footer-body text-white/70 hover:text-white transition-colors block"
             >
-              (985) 555-1234
+              Text us: (847) 238-2473
             </a>
           </div>
 
