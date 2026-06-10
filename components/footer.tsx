@@ -25,6 +25,8 @@ const shopLinks = [
   { label: "Travel Picks", href: "/shop" },
   { label: "Gift Cards",   href: "/shop" },
   { label: "New Arrivals", href: "/shop" },
+  { label: "Shipping",     href: "/shipping" },
+  { label: "Returns",      href: "/returns" },
 ];
 
 const TikTokIcon = () => (
@@ -180,6 +182,12 @@ export const Footer = () => {
             </Link>
             <Link href="/terms" className="hover:text-white/70 transition-colors">
               Terms &amp; Conditions
+            </Link>
+            <Link href="/shipping" className="hover:text-white/70 transition-colors">
+              Shipping
+            </Link>
+            <Link href="/returns" className="hover:text-white/70 transition-colors">
+              Returns
             </Link>
           </div>
         </div>
