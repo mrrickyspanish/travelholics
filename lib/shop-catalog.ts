@@ -336,6 +336,7 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     colors: ["Navy", "Sand", "Forest"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     mockupLabel: "Wordmark front",
+    imageSrc: "/images/travelholics_lifestyle_couple-beach-tees.png",
   },
   {
     id: "merch-hoodie",
@@ -351,6 +352,7 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     colors: ["Navy", "Cream", "Forest"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     mockupLabel: "Circle logo",
+    imageSrc: "/images/travelholics_lifestyle_compass-tee-backview.png",
   },
   {
     id: "merch-polo",
@@ -366,6 +368,7 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     colors: ["Navy", "White", "Forest"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     mockupLabel: "Chest mark",
+    imageSrc: "/images/travelholics_lifestyle_linen-shirt-cruise-deck.png",
   },
   {
     id: "merch-bucket-hat",

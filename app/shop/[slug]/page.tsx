@@ -66,6 +66,32 @@ const PRODUCT_IMAGES: Record<string, ProductImages> = {
       "/images/travelholics_product_pacific-mexican-voyage-2026-magnet.png",
     ],
   },
+  "merch-crewneck": {
+    hero: "/images/travelholics_lifestyle_couple-beach-tees.png",
+    gallery: [
+      "/images/travelholics_lifestyle_couple-beach-tees.png",
+      "/images/travelholics_lifestyle_compass-tee-backview.png",
+      "/images/travelholics_merch_hero.png",
+      "/images/travelholics_merch_card_2.png",
+    ],
+  },
+  "merch-hoodie": {
+    hero: "/images/travelholics_lifestyle_compass-tee-backview.png",
+    gallery: [
+      "/images/travelholics_lifestyle_compass-tee-backview.png",
+      "/images/travelholics_lifestyle_couple-beach-tees.png",
+      "/images/travelholics_lifestyle_linen-shirt-cruise-deck.png",
+      "/images/travelholics_merch_hero.png",
+    ],
+  },
+  "merch-polo": {
+    hero: "/images/travelholics_lifestyle_linen-shirt-cruise-deck.png",
+    gallery: [
+      "/images/travelholics_lifestyle_linen-shirt-cruise-deck.png",
+      "/images/travelholics_lifestyle_couple-beach-tees.png",
+      "/images/travelholics_merch_hero.png",
+    ],
+  },
 };
 
 /* ─── Fullscreen gallery modal ─────────────────────────────── */
@@ -375,6 +401,43 @@ export default function ProductPage() {
                 </div>
               )}
 
+              {/* Size guide — apparel only */}
+              {product.sizes.some((s) => s !== "One Size" && s !== "Standard") && (
+                <details className="mb-5 rounded-xl border border-stone-200 bg-stone-50 open:bg-white">
+                  <summary className="cursor-pointer select-none px-4 py-3 text-[0.75rem] font-black uppercase tracking-[0.14em] text-stone-500 hover:text-[#1e3a8a]">
+                    Size Guide
+                  </summary>
+                  <div className="overflow-x-auto px-4 pb-4 pt-2">
+                    <table className="w-full text-[0.78rem] text-stone-600">
+                      <thead>
+                        <tr className="border-b border-stone-200">
+                          {["Size", "Chest", "Waist", "Length"].map((h) => (
+                            <th key={h} className="pb-2 pr-4 text-left font-bold text-stone-400 last:pr-0">{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          ["S",   "34–36\"", "28–30\"", "27\""],
+                          ["M",   "38–40\"", "32–34\"", "28\""],
+                          ["L",   "42–44\"", "36–38\"", "29\""],
+                          ["XL",  "46–48\"", "40–42\"", "30\""],
+                          ["XXL", "50–52\"", "44–46\"", "31\""],
+                        ].map(([size, chest, waist, length]) => (
+                          <tr key={size} className="border-b border-stone-100 last:border-0">
+                            <td className="py-2 pr-4 font-bold text-[#1e3a8a]">{size}</td>
+                            <td className="py-2 pr-4">{chest}</td>
+                            <td className="py-2 pr-4">{waist}</td>
+                            <td className="py-2">{length}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <p className="mt-3 text-[0.7rem] text-stone-400">All measurements in inches. When in between sizes, size up.</p>
+                  </div>
+                </details>
+              )}
+
               {/* Qty + Buy */}
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-3 rounded-xl border border-stone-200 bg-white px-4 py-3.5">
@@ -419,7 +482,10 @@ export default function ProductPage() {
                 </div>
                 <div className="flex items-center gap-2 text-xs text-stone-400">
                   <RotateCcw className="h-3.5 w-3.5 text-[#059669]" />
-                  Questions?{" "}
+                  <Link href="/returns" className="underline underline-offset-2 hover:text-[#1e3a8a]">
+                    30-day returns
+                  </Link>
+                  <span>·</span>
                   <a
                     href="mailto:hello@yotravelholic.com"
                     className="underline underline-offset-2 hover:text-[#1e3a8a]"
