@@ -13,7 +13,7 @@ export const caribbean: DestinationConfig = {
   heroEyebrow: "Cruise the Caribbean",
   heroHeadline: "The Caribbean, planned by someone who keeps going back.",
   heroTake: "Twenty years in and I still book myself a balcony for this one.",
-  heroImage: "/images/dest-caribbean.jpg",
+  heroImage: "/images/destinations/caribbean-hero.png",
   heroImageAlt: "Cruise ship docked at a Caribbean port with turquoise water",
   whyParagraphs: [
     "The Caribbean is where most people fall in love with cruising, and it is where most people get oversold. Every itinerary looks the same in the brochure. They are not the same. The difference between a trip you repeat and a trip you tolerate comes down to the ship, the cabin side, and which ports you actually get off at.",
