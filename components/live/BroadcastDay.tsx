@@ -33,7 +33,7 @@ export default function BroadcastDay({ status }: { status: LiveStatus | null }) 
   return (
     <div aria-label="Daily live schedule timeline, all times Central">
       {/* Track */}
-      <div className="relative h-14 w-full rounded-full bg-neutral-200/80 sm:h-16">
+      <div className="relative h-14 w-full rounded-full bg-stone/20 sm:h-16">
         {SHOWS.map((show) => {
           const left = pct(show.startMin);
           const width = pct(show.endMin) - left;
@@ -42,7 +42,7 @@ export default function BroadcastDay({ status }: { status: LiveStatus | null }) 
             <div
               key={show.key}
               className={`absolute top-0 flex h-full items-center justify-center rounded-full transition-colors ${
-                isLiveNow ? "bg-[#161311]" : "bg-[#E85D5D]"
+                isLiveNow ? "bg-navy" : "bg-coral"
               }`}
               style={{ left: `${left}%`, width: `${width}%` }}
               title={`${show.name} · ${show.timeLabel}`}
@@ -57,11 +57,11 @@ export default function BroadcastDay({ status }: { status: LiveStatus | null }) 
         {/* NOW marker */}
         {nowInWindow && (
           <div
-            className="absolute -top-2 -bottom-2 z-10 w-[3px] rounded-full bg-[#161311]"
+            className="absolute -top-2 -bottom-2 z-10 w-[3px] rounded-full bg-navy"
             style={{ left: `${pct(nowMin)}%` }}
             aria-hidden="true"
           >
-            <span className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-bold uppercase tracking-widest text-[#161311]">
+            <span className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-bold uppercase tracking-widest text-navy">
               Now
             </span>
           </div>
@@ -73,7 +73,7 @@ export default function BroadcastDay({ status }: { status: LiveStatus | null }) 
         {TICKS.map((t) => (
           <span
             key={t.label}
-            className="absolute -translate-x-1/2 text-xs font-semibold uppercase tracking-wide text-neutral-500 first:translate-x-0 last:-translate-x-full"
+            className="absolute -translate-x-1/2 text-xs font-semibold uppercase tracking-wide text-stone/70 first:translate-x-0 last:-translate-x-full"
             style={{ left: `${pct(t.min)}%` }}
           >
             {t.label}
