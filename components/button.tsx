@@ -15,7 +15,7 @@ const base =
 
 const variantStyles: Record<ButtonVariant, string> = {
   coral:
-    "bg-coral text-white hover:bg-coral-deep shadow-coral/20 focus-visible:ring-coral border-0",
+    "bg-[#D04444] text-white hover:bg-[#b83939] shadow-coral/20 focus-visible:ring-coral border-0",
   emerald:
     "bg-white border-2 border-emerald-mid text-emerald-mid hover:bg-emerald-mid hover:text-white focus-visible:ring-emerald-mid",
   white:

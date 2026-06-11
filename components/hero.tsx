@@ -73,11 +73,13 @@ export const Hero = () => {
             <div className="mt-5 flex w-full max-w-[34rem] flex-col items-center gap-3 sm:flex-row sm:justify-center lg:max-w-none lg:items-start lg:justify-start">
               <Button
                 variant="coral"
-                className="w-full sm:w-auto"
-                onClick={() => window.location.href = '/#group-trips'}
+                className="w-full gap-2 sm:w-auto"
+                onClick={() => window.location.href = '/#group-trips' /* TODO: repoint to /caribbean-2027 when page ships */}
               >
-                <span>Reserve a Cabin · Caribbean 2027</span>
-                <span className="inline-block text-[12px] translate-x-0 group-hover:translate-x-[2px] transition-transform duration-200" aria-hidden="true">↗</span>
+                Reserve a Cabin · Caribbean 2027
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </Button>
               <Button
                 variant="white"
