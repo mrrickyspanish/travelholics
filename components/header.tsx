@@ -8,6 +8,7 @@ import { Menu, X, ShoppingBag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/button";
 import { useCart } from "@/lib/cart-context";
+import LiveBanner from "@/components/live/LiveBanner";
 
 const NAV_LINKS = [
   { label: "Join the Crew", href: "/#contact" },
@@ -164,6 +165,7 @@ export const Header = () => {
             </div>
           </div>
         </div>
+        <LiveBanner />
       </header>
 
       {/* Full-screen menu overlay */}
