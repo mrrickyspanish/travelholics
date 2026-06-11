@@ -123,7 +123,7 @@ export const Header = () => {
                 alt="Travelholics"
                 width={220}
                 height={40}
-                className={`${navSolid || isActive ? "h-[28px]" : "h-[40px]"} w-auto transition-all duration-300`}
+                className={`${isActive ? "h-[38px]" : navSolid ? "h-[28px]" : "h-[40px]"} w-auto transition-all duration-300`}
                 priority
               />
             </Link>
