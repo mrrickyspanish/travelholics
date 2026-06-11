@@ -4,11 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ShoppingBag } from "lucide-react";
+import { X, ShoppingBag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/button";
 import { useCart } from "@/lib/cart-context";
-import LiveBanner from "@/components/live/LiveBanner";
+import { useLiveStatus } from "@/hooks/useLiveStatus";
+import { TIKTOK_LIVE_URL, TIKTOK_PROFILE_URL } from "@/lib/liveSchedule";
 
 const NAV_LINKS = [
   { label: "Join the Crew", href: "/#contact" },
@@ -25,21 +25,42 @@ const SOCIAL_LINKS = [
   { label: "Instagram", href: "https://www.instagram.com/rjsmom1/" },
 ];
 
+function PulsingDot({ className = "" }: { className?: string }) {
+  return (
+    <span className={`relative flex h-2 w-2 shrink-0 ${className}`} aria-hidden="true">
+      <span className="absolute inline-flex h-full w-full rounded-full bg-white opacity-75 motion-safe:animate-ping" />
+      <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
+    </span>
+  );
+}
+
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showAlt, setShowAlt] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { count, openDrawer } = useCart();
+  const liveStatus = useLiveStatus();
 
-  // Scroll/solid background logic
+  const isLive = liveStatus?.state === "live";
+  const isSoon = liveStatus?.state === "soon";
+  const isActive = isLive || isSoon;
+  const liveHref = isLive ? TIKTOK_LIVE_URL : TIKTOK_PROFILE_URL;
+
+  // Cycle CTA copy between show name and "Watch live →" every 3s
+  useEffect(() => {
+    if (!isLive) { setShowAlt(false); return; }
+    const id = setInterval(() => setShowAlt((v) => !v), 3000);
+    return () => clearInterval(id);
+  }, [isLive]);
+
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // ESC close and focus trap
   useEffect(() => {
     if (!menuOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -52,11 +73,9 @@ export const Header = () => {
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
         if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
+          e.preventDefault(); last.focus();
         } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
+          e.preventDefault(); first.focus();
         }
       }
     };
@@ -64,54 +83,84 @@ export const Header = () => {
     return () => document.removeEventListener("keydown", onKey);
   }, [menuOpen]);
 
-  // Lock scroll while menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  // Color swap for logo and nav
-  // Solid white background only on /shop-full
   const isShopFull = pathname === "/shop-full";
   const navSolid = isShopFull || isScrolled || menuOpen;
 
+  // Background: live state overrides scroll state
+  const navBg = isLive
+    ? "bg-coral shadow-md"
+    : isSoon
+    ? "bg-ink shadow-md"
+    : navSolid
+    ? (isShopFull ? "bg-white shadow-sm" : "bg-cream/98 shadow-sm")
+    : "bg-transparent";
+
+  // Logo: white version on live/soon (coral/ink bg), default otherwise
+  const logoSrc = isActive
+    ? "/images/Traveholic_logo_wordmark_white.png"
+    : "/images/traveholics%20logos%20(1200%20x%20300%20px).svg";
+
+  // MENU button + icon tints
+  const menuBtnHover = isActive ? "hover:bg-white/15" : "hover:bg-sand";
+  const menuTextColor = isActive ? "text-white" : "";
+  const iconColor = isActive ? "text-white" : "";
+
   return (
     <>
-      <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${navSolid ? (isShopFull ? "bg-white shadow-sm" : "bg-cream/98 shadow-sm") : "bg-transparent"}`}
-        style={{ color: navSolid ? "#0E125C" : "#0E125C" }}
-      >
-        <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between gap-6 transition-all duration-300 ${navSolid ? 'h-14 py-1' : 'h-20 py-0'}`}>
-          {/* Mobile: left logo, right MENU */}
+      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${navBg}`}>
+        <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between gap-6 transition-all duration-300 ${navSolid || isActive ? "h-14 py-1" : "h-20 py-0"}`}>
+
+          {/* ── Mobile ─────────────────────────────────────────── */}
           <div className="flex w-full items-center justify-between sm:hidden">
-            <Link href="/" className="flex items-center focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none rounded-lg transition-all duration-300">
+            <Link href="/" className="flex items-center focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none rounded-lg">
               <Image
-                src="/images/traveholics%20logos%20(1200%20x%20300%20px).svg"
+                src={logoSrc}
                 alt="Travelholics"
                 width={220}
                 height={40}
-                className={`${navSolid ? 'h-[28px] sm:h-[38px]' : 'h-[40px] sm:h-[60px]'} w-auto transition-all duration-300`}
+                className={`${navSolid || isActive ? "h-[28px]" : "h-[40px]"} w-auto transition-all duration-300`}
                 priority
               />
             </Link>
+
             <div className="flex items-center gap-1 ml-auto">
-              <button
-                type="button"
-                onClick={openDrawer}
-                aria-label={`Open cart${count > 0 ? `, ${count} item${count !== 1 ? "s" : ""}` : ""}`}
-                className="relative flex h-10 w-10 items-center justify-center rounded-full hover:bg-sand transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none"
-              >
-                <ShoppingBag className="h-5 w-5" />
-                {count > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#059669] text-[0.6rem] font-black text-white">
-                    {count > 9 ? "9+" : count}
-                  </span>
-                )}
-              </button>
+              {/* Live pill replaces cart icon on mobile when active */}
+              {isActive ? (
+                <a
+                  href={liveHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={isLive ? "Watch live on TikTok" : `Going live in ${liveStatus?.minutesUntilNext} minutes`}
+                  className="flex h-10 items-center gap-2 rounded-full bg-white/20 px-4 text-[0.7rem] font-black uppercase tracking-[0.14em] text-white transition-colors hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                >
+                  <PulsingDot />
+                  {isLive ? "Live" : `${liveStatus?.minutesUntilNext}m`}
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  onClick={openDrawer}
+                  aria-label={`Open cart${count > 0 ? `, ${count} item${count !== 1 ? "s" : ""}` : ""}`}
+                  className={`relative flex h-10 w-10 items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none ${menuBtnHover} ${iconColor}`}
+                >
+                  <ShoppingBag className="h-5 w-5" />
+                  {count > 0 && (
+                    <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#059669] text-[0.6rem] font-black text-white">
+                      {count > 9 ? "9+" : count}
+                    </span>
+                  )}
+                </button>
+              )}
+
               <button
                 type="button"
                 onClick={() => setMenuOpen(true)}
-                className="w-auto h-12 flex items-center justify-center rounded-full hover:bg-sand transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none text-lg font-bold tracking-wide px-5 py-2"
+                className={`w-auto h-12 flex items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none text-lg font-bold tracking-wide px-5 py-2 ${menuBtnHover} ${menuTextColor}`}
                 aria-label="Open navigation menu"
                 aria-expanded={menuOpen}
               >
@@ -119,35 +168,39 @@ export const Header = () => {
               </button>
             </div>
           </div>
-          {/* Desktop: left MENU, center logo, right CTA */}
+
+          {/* ── Desktop ─────────────────────────────────────────── */}
           <div className="hidden sm:flex w-full items-center justify-between">
             <div className="flex items-center gap-2.5 shrink-0 mr-4">
               <button
                 type="button"
                 onClick={() => setMenuOpen(true)}
-                className="w-12 h-12 flex items-center justify-center rounded-full hover:bg-sand transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none text-lg font-bold tracking-wide"
+                className={`w-12 h-12 flex items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none ${menuBtnHover} ${menuTextColor}`}
                 aria-label="Open navigation menu"
                 aria-expanded={menuOpen}
               >
                 <span className="hidden sm:inline font-serif text-[1.1rem] tracking-wide">MENU</span>
               </button>
             </div>
-            <Link href="/" className="flex items-center justify-center focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none rounded-lg transition-all duration-300">
+
+            <Link href="/" className="flex items-center justify-center focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none rounded-lg">
               <Image
-                src="/images/traveholics%20logos%20(1200%20x%20300%20px).svg"
+                src={logoSrc}
                 alt="Travelholics"
                 width={220}
                 height={40}
-                className={`${navSolid ? 'h-[28px] sm:h-[38px]' : 'h-[40px] sm:h-[60px]'} w-auto transition-all duration-300`}
+                className={`${navSolid || isActive ? "h-[28px] sm:h-[38px]" : "h-[40px] sm:h-[60px]"} w-auto transition-all duration-300`}
                 priority
               />
             </Link>
-            <div className="flex items-center gap-2">
+
+            <div className="flex items-center gap-3">
+              {/* Cart icon — always visible on desktop */}
               <button
                 type="button"
                 onClick={openDrawer}
                 aria-label={`Open cart${count > 0 ? `, ${count} item${count !== 1 ? "s" : ""}` : ""}`}
-                className="relative flex h-10 w-10 items-center justify-center rounded-full hover:bg-sand transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none"
+                className={`relative flex h-10 w-10 items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none ${menuBtnHover} ${iconColor}`}
               >
                 <ShoppingBag className="h-5 w-5" />
                 {count > 0 && (
@@ -156,16 +209,54 @@ export const Header = () => {
                   </span>
                 )}
               </button>
-              <a
-                href="/#contact"
-                className="font-serif text-[1.1rem] tracking-wide font-bold text-royal-deep hover:underline hover:text-coral transition-colors duration-200 hidden sm:inline-block"
-              >
-                Join the Crew
-              </a>
+
+              {/* CTA: live state swaps "Join the Crew" */}
+              {isActive ? (
+                <a
+                  href={liveHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={isLive ? "Watch live on TikTok" : `Going live in ${liveStatus?.minutesUntilNext} minutes`}
+                  className="inline-flex items-center gap-2 rounded-full bg-white/20 px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 min-w-[148px] justify-center"
+                >
+                  <PulsingDot />
+                  <AnimatePresence mode="wait" initial={false}>
+                    {isLive ? (
+                      <motion.span
+                        key={showAlt ? "alt" : "main"}
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.25 }}
+                        className="whitespace-nowrap"
+                      >
+                        {showAlt ? "Watch live →" : (liveStatus?.show?.name ?? "Live now")}
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="soon"
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.25 }}
+                        className="whitespace-nowrap"
+                      >
+                        Live in {liveStatus?.minutesUntilNext}m →
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </a>
+              ) : (
+                <a
+                  href="/#contact"
+                  className="font-serif text-[1.1rem] tracking-wide font-bold text-royal-deep hover:underline hover:text-coral transition-colors duration-200 hidden sm:inline-block"
+                >
+                  Join the Crew
+                </a>
+              )}
             </div>
           </div>
         </div>
-        <LiveBanner />
       </header>
 
       {/* Full-screen menu overlay */}
@@ -184,7 +275,6 @@ export const Header = () => {
             role="dialog"
           >
             <div className="flex items-center justify-between px-8 pt-8 pb-2">
-              {/* Close */}
               <button
                 type="button"
                 onClick={() => setMenuOpen(false)}
@@ -194,7 +284,6 @@ export const Header = () => {
                 <X size={28} />
                 <span className="hidden sm:inline">CLOSE</span>
               </button>
-              {/* Center logo - larger */}
               <Link href="/" className="flex items-center justify-center" tabIndex={menuOpen ? 0 : -1}>
                 <Image
                   src="/images/traveholics%20logos%20(1200%20x%20300%20px).svg"
@@ -205,8 +294,7 @@ export const Header = () => {
                   priority
                 />
               </Link>
-              {/* CTA - emerald */}
-              <a href="/#contact" className="px-6 py-3 text-base font-semibold text-royal-deep hover:text-emerald-dark focus-visible:underline focus-visible:outline-none transition-colors">
+              <a href="/#contact" className="px-6 py-3 text-base font-semibold text-cream/80 hover:text-coral focus-visible:underline focus-visible:outline-none transition-colors">
                 Join the Crew
               </a>
             </div>
@@ -246,4 +334,3 @@ export const Header = () => {
     </>
   );
 };
-
