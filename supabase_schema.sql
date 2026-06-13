@@ -196,9 +196,18 @@ END $$;
 
 
 -- ------------------------------------------------------------
+-- TABLE 5: articles
+-- Content engine — trip blogs, cruise news, deals, shop announcements
+-- Managed via Supabase Studio; see supabase/migrations/20260613000000_create_articles.sql
+-- ------------------------------------------------------------
+-- (Run the migration file referenced above to create this table.)
+
+
+-- ------------------------------------------------------------
 -- Quick verification — run after the above to confirm setup:
 --   SELECT COUNT(*) FROM public.cruise_inquiries;
 --   SELECT COUNT(*) FROM public.duck_hunt_leads;
 --   SELECT COUNT(*) FROM public.shop_waitlist;
 --   SELECT COUNT(*) FROM public.newsletter_subscribers;
+--   SELECT COUNT(*) FROM public.articles;
 -- ------------------------------------------------------------

@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 import { destinations } from "@/lib/destinations";
+import { getAllPublishedSlugs } from "@/lib/articles";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yotravelholic.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const destinationPages: MetadataRoute.Sitemap = destinations.map((d) => ({
@@ -13,8 +14,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
+  const articleSlugs = await getAllPublishedSlugs();
+  const articlePages: MetadataRoute.Sitemap = articleSlugs.map((slug) => ({
+    url: `${siteUrl}/blog/${slug}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
+
   return [
     ...destinationPages,
+    ...articlePages,
+    {
+      url: `${siteUrl}/blog`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
     {
       url: siteUrl,
       lastModified: now,
