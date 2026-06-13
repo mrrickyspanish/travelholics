@@ -15,7 +15,7 @@ const NAV_LINKS = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Live", href: "/live" },
   { label: "Shop", href: "/shop" },
-  { label: "Journal", href: "/collaborate" },
+  { label: "Journal", href: "/blog" },
   { label: "Our Story", href: "/#about" },
   { label: "Contact", href: "/#contact" },
 ];

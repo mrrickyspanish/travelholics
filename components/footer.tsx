@@ -13,6 +13,14 @@ const quickLinks = [
   { label: "Contact",      href: "/#contact"       },
 ];
 
+const journalLinks = [
+  { label: "All Posts",   href: "/blog"                           },
+  { label: "Trip Blogs",  href: "/blog?category=trip-blog"        },
+  { label: "Cruise News", href: "/blog?category=cruise-news"      },
+  { label: "Deals",       href: "/blog?category=deal"             },
+  { label: "Shop News",   href: "/blog?category=shop-announcement"},
+];
+
 const travelLinks = [
   { label: "Plan a Cruise",    href: "/#contact"     },
   { label: "Group Trips",      href: "/#group-trips" },
@@ -45,7 +53,7 @@ export const Footer = () => {
   return (
     <footer className="bg-navy">
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 mb-12">
 
           {/* Brand column */}
           <div>
@@ -133,6 +141,20 @@ export const Footer = () => {
                   <a href={href} className="text-footer-body text-white/70 hover:text-white transition-colors">
                     {label}
                   </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Journal */}
+          <div>
+            <h3 className="text-eyebrow font-bold text-white/40 mb-4">Journal</h3>
+            <ul className="space-y-2.5">
+              {journalLinks.map(({ label, href }) => (
+                <li key={label}>
+                  <Link href={href} className="text-footer-body text-white/70 hover:text-white transition-colors">
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>
