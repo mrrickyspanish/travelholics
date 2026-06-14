@@ -23,7 +23,7 @@ export const Hero = () => {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[88rem] px-5 py-8 sm:px-6 sm:py-12 lg:py-16">
+      <div className="relative z-10 mx-auto w-full max-w-[88rem] px-5 pt-8 pb-[26px] sm:px-6 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-[56%_44%] gap-12 lg:gap-8 items-center">
 
           {/* Left column */}
