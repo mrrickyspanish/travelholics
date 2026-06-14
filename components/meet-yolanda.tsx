@@ -19,7 +19,7 @@ export const MeetYolanda = () => {
   return (
     <section id="about" className="relative overflow-hidden bg-cream pb-10 pt-14 sm:pt-16 lg:pb-16 lg:pt-20">
       <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-6">
-        <div className="grid items-start gap-7 sm:gap-8 lg:grid-cols-[35%_40%_25%] lg:gap-12">
+        <div className="grid items-start gap-7 sm:gap-8 lg:grid-cols-[7fr_8fr_5fr] lg:gap-10">
 
           {/* Left: Photo */}
           <motion.div
