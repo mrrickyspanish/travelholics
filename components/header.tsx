@@ -107,7 +107,7 @@ export const Header = () => {
               alt="Travelholics"
               width={180}
               height={44}
-              className="h-9 lg:h-[54px] w-auto"
+              className="h-9 w-auto"
               priority
             />
           </Link>
