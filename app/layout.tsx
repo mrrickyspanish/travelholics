@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { CartProvider } from "@/lib/cart-context";
 import { CartDrawer } from "@/components/cart-drawer";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { PageTransition } from "@/components/page-transition";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yotravelholic.com";
@@ -157,7 +158,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         <CartProvider>
-          {children}
+          <PageTransition>
+            {children}
+          </PageTransition>
           <CartDrawer />
         </CartProvider>
         <ScrollToTop />

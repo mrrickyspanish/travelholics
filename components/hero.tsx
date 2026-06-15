@@ -68,17 +68,9 @@ export const Hero = () => {
               <p className="mx-auto text-[1.3rem] leading-[1.65] font-medium text-royal-deep [text-shadow:0_1px_2px_rgba(255,255,255,0.18)] lg:mx-0 lg:max-w-[40ch]">
                 Always planning the next getaway. No cure, just better trips, a crew that gets it, and gear to match.
               </p>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.9, duration: 0.5 }}
-                className="mx-auto mt-3 border-t border-blush/70 pt-3 text-[1.3rem] leading-[1.65] font-semibold text-ink lg:mx-0 lg:max-w-[44ch]"
-              >
-                Certified Cruise Specialist · 20+ years · every major line. Same price as booking direct — no fees.
-              </motion.p>
             </div>
 
-            <div className="mt-5 flex w-full max-w-[34rem] flex-col items-center gap-3 sm:flex-row sm:justify-center lg:max-w-none lg:items-start lg:justify-start">
+            <div className="mt-5 flex w-full max-w-[34rem] flex-col items-center gap-2.5 lg:max-w-none lg:items-start">
               <Button
                 variant="coral"
                 className="w-full sm:w-auto"
@@ -86,12 +78,9 @@ export const Hero = () => {
               >
                 Plan My Cruise
               </Button>
-              <a
-                href="/shop"
-                className="py-2 text-[15px] font-medium text-royal-deep/55 underline underline-offset-2 transition-colors hover:text-royal-deep"
-              >
-                shop the merch
-              </a>
+              <p className="text-[14px] font-medium text-stone/70 text-center lg:text-left">
+                Certified Cruise Specialist · No planning fees
+              </p>
             </div>
           </motion.div>
 
