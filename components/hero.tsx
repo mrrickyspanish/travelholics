@@ -66,7 +66,10 @@ export const Hero = () => {
               </div>
 
               <p className="mx-auto text-body-mobile font-medium text-royal-deep [text-shadow:0_1px_2px_rgba(255,255,255,0.18)] lg:mx-0 lg:max-w-[40ch]">
-                Always planning the next getaway. Saving cruise deals at 1 a.m. Packing early. No cure, just better trips, a crew that gets it, and gear to match.
+                Always planning the next getaway. No cure, just better trips, a crew that gets it, and gear to match.
+              </p>
+              <p className="mx-auto mt-3 border-t border-blush/70 pt-3 text-body-mobile font-semibold text-ink lg:mx-0 lg:max-w-[44ch]">
+                Certified Cruise Specialist · 20+ years · every major line. Same price as booking direct — no fees.
               </p>
             </div>
 
@@ -78,13 +81,12 @@ export const Hero = () => {
               >
                 Plan My Cruise
               </Button>
-              <Button
-                variant="white"
-                className="w-full sm:w-auto"
-                onClick={() => window.location.href = '/shop'}
+              <a
+                href="/shop"
+                className="py-2 text-[15px] font-medium text-royal-deep/55 underline underline-offset-2 transition-colors hover:text-royal-deep"
               >
-                Shop the Merch
-              </Button>
+                shop the merch
+              </a>
             </div>
           </motion.div>
 
