@@ -9,6 +9,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const VISIBLE = 3;
@@ -50,7 +51,13 @@ export const ShopStrip = () => {
 
   return (
     <section className="bg-cream py-12 md:py-16 overflow-x-clip">
-      <div className="max-w-7xl mx-auto px-6">
+      <motion.div
+        className="max-w-7xl mx-auto px-6"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
         {/* Mobile-only layout */}
         <div className="md:hidden">
           <div className="mx-auto w-full max-w-[38rem] text-center">
@@ -177,7 +184,7 @@ export const ShopStrip = () => {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

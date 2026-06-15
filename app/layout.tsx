@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Fraunces, Caveat } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { CartProvider } from "@/lib/cart-context";
 import { CartDrawer } from "@/components/cart-drawer";
+import { ScrollToTop } from "@/components/scroll-to-top";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yotravelholic.com";
@@ -100,7 +101,12 @@ const structuredData = {
       "@id": `${siteUrl}/#organization`,
       name: "Travelholics",
       url: siteUrl,
-      sameAs: ["https://www.tiktok.com/@rjsmom1"],
+      sameAs: [
+        "https://www.tiktok.com/@rjsmom1",
+        "https://www.instagram.com/yotravelholic",
+        "https://www.youtube.com/@yotravelholic",
+        "https://www.facebook.com/yotravelholic",
+      ],
       founder: {
         "@id": `${siteUrl}/#person`,
       },
@@ -108,15 +114,30 @@ const structuredData = {
     {
       "@type": "Person",
       "@id": `${siteUrl}/#person`,
-      name: "Yolanda",
+      name: "Yolanda Harris",
       jobTitle: "Certified Cruise Specialist",
       worksFor: {
         "@id": `${siteUrl}/#organization`,
       },
       url: siteUrl,
-      sameAs: ["https://www.tiktok.com/@rjsmom1"],
+      sameAs: [
+        "https://www.tiktok.com/@rjsmom1",
+        "https://www.instagram.com/yotravelholic",
+        "https://www.youtube.com/@yotravelholic",
+        "https://www.facebook.com/yotravelholic",
+      ],
       description:
-        "Yolanda is a Certified Cruise Specialist helping travelers book family, group, and couples cruise vacations.",
+        "Yolanda Harris is a Certified Cruise Specialist helping travelers book family, group, and couples cruise vacations.",
+    },
+    {
+      "@type": "Service",
+      "@id": `${siteUrl}/#service`,
+      name: "Cruise Planning",
+      description:
+        "Expert cruise planning for families, couples, and groups. Same price as booking direct — no fees.",
+      provider: { "@id": `${siteUrl}/#organization` },
+      areaServed: "Worldwide",
+      serviceType: "Travel Agency",
     },
   ],
 };
@@ -139,6 +160,7 @@ export default function RootLayout({
           {children}
           <CartDrawer />
         </CartProvider>
+        <ScrollToTop />
         <Analytics />
       </body>
     </html>

@@ -68,9 +68,14 @@ export const Hero = () => {
               <p className="mx-auto text-[1.3rem] leading-[1.65] font-medium text-royal-deep [text-shadow:0_1px_2px_rgba(255,255,255,0.18)] lg:mx-0 lg:max-w-[40ch]">
                 Always planning the next getaway. No cure, just better trips, a crew that gets it, and gear to match.
               </p>
-              <p className="mx-auto mt-3 border-t border-blush/70 pt-3 text-[1.3rem] leading-[1.65] font-semibold text-ink lg:mx-0 lg:max-w-[44ch]">
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.9, duration: 0.5 }}
+                className="mx-auto mt-3 border-t border-blush/70 pt-3 text-[1.3rem] leading-[1.65] font-semibold text-ink lg:mx-0 lg:max-w-[44ch]"
+              >
                 Certified Cruise Specialist · 20+ years · every major line. Same price as booking direct — no fees.
-              </p>
+              </motion.p>
             </div>
 
             <div className="mt-5 flex w-full max-w-[34rem] flex-col items-center gap-3 sm:flex-row sm:justify-center lg:max-w-none lg:items-start lg:justify-start">
