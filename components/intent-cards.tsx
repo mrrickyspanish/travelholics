@@ -9,8 +9,8 @@ const cards = [
   {
     title: "THE TRIP",
     description:
-      "Cruise, all-inclusive, custom - Yolanda plans it. Same prices as booking direct, with someone in your corner when something goes sideways at sea.",
-    cta: "plan a trip",
+      "Cruise, all-inclusive, or fully custom — Yolanda plans the whole thing. Same price as booking direct, zero fees, and a real person in your corner when something goes sideways at sea.",
+    cta: "Plan My Cruise",
     href: "/cruises/caribbean",
     icon: Ship,
     iconBg: "bg-emerald-mid",
@@ -20,7 +20,7 @@ const cards = [
   {
     title: "THE CREW TRIP",
     description:
-      "Sail with the community, not strangers. Group dinners, deck parties, port days. Next sailing: Caribbean 2027.",
+      "Sail with the community, not strangers. Group dinners, deck parties, port days — all planned. Next sailing: Caribbean 2027.",
     cta: "see the sailing",
     href: "/#group-trips",
     icon: Users,
@@ -48,12 +48,12 @@ export const IntentCards = () => {
     <section className="bg-sand py-20">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
-          <p className="text-eyebrow text-coral mb-3">THREE WAYS TO BE A TRAVELHOLIC</p>
+          <p className="text-eyebrow text-coral mb-3">THREE WAYS TO TRAVEL WITH US</p>
           <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-ink tracking-tight">
-            Pick your altitude.
+            Start with the trip.
           </h2>
           <p className="text-eyebrow text-ink/65 mt-3">
-            Plan the trip. Join the crew. Shop the gear.
+            Yolanda books it. The crew comes with it. The gear says it.
           </p>
         </div>
 
