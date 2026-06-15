@@ -78,9 +78,6 @@ export const Header = () => {
     : "bg-transparent";
 
   const onDark = isActive;
-  const logoSrc = onDark
-    ? "/images/Traveholic_logo_wordmark_white.png"
-    : "/images/traveholics%20logos%20(1200%20x%20300%20px).svg";
 
   const linkBase = "text-sm font-medium px-3 py-2 rounded-lg transition-colors duration-150";
   const linkColor = onDark
@@ -103,11 +100,11 @@ export const Header = () => {
             className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded-md"
           >
             <Image
-              src={logoSrc}
+              src="/images/traveholics%20logos%20(1200%20x%20300%20px).svg"
               alt="Travelholics"
               width={180}
               height={44}
-              className="h-9 lg:h-[54px] w-auto"
+              className={`h-9 lg:h-[54px] w-auto transition-all duration-300 ${onDark ? "brightness-0 invert" : ""}`}
               priority
             />
           </Link>
@@ -216,7 +213,7 @@ export const Header = () => {
                   alt="Travelholics"
                   width={160}
                   height={40}
-                  className="h-9 w-auto"
+                  className="h-9 w-auto brightness-0 invert"
                 />
               </Link>
               <button
