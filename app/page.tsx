@@ -18,10 +18,10 @@ export default function Home() {
       <MobileCTA />
       <Hero />
       <StatsStrip />
-      <IntentCards />
       <MeetYolanda />
-      <DestinationMap />
+      <IntentCards />
       <GroupTrips />
+      <DestinationMap />
       <ShopStrip />
       <Testimonials />
       <ContactForm />
