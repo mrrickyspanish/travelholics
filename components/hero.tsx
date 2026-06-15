@@ -65,10 +65,10 @@ export const Hero = () => {
                 </p>
               </div>
 
-              <p className="mx-auto text-body-mobile font-medium text-royal-deep [text-shadow:0_1px_2px_rgba(255,255,255,0.18)] lg:mx-0 lg:max-w-[40ch]">
+              <p className="mx-auto text-[1.3rem] leading-[1.65] font-medium text-royal-deep [text-shadow:0_1px_2px_rgba(255,255,255,0.18)] lg:mx-0 lg:max-w-[40ch]">
                 Always planning the next getaway. No cure, just better trips, a crew that gets it, and gear to match.
               </p>
-              <p className="mx-auto mt-3 border-t border-blush/70 pt-3 text-body-mobile font-semibold text-ink lg:mx-0 lg:max-w-[44ch]">
+              <p className="mx-auto mt-3 border-t border-blush/70 pt-3 text-[1.3rem] leading-[1.65] font-semibold text-ink lg:mx-0 lg:max-w-[44ch]">
                 Certified Cruise Specialist · 20+ years · every major line. Same price as booking direct — no fees.
               </p>
             </div>
