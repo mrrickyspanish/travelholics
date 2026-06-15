@@ -16,6 +16,7 @@ const cards = [
     iconBg: "bg-emerald-mid",
     image: "/images/about-on-deck.jpg",
     imageAlt: "Woman relaxing on a cruise ship deck at sunset",
+    preserveCase: true,
   },
   {
     title: "THE CREW TRIP",
@@ -58,7 +59,7 @@ export const IntentCards = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-5">
-          {cards.map(({ title, description, cta, href, icon: Icon, iconBg, image, imageAlt, imageFit, imagePosition }, i) => (
+          {cards.map(({ title, description, cta, href, icon: Icon, iconBg, image, imageAlt, imageFit, imagePosition, preserveCase }, i) => (
             <motion.div
               key={title}
               initial={{ opacity: 0, y: 20 }}
@@ -92,7 +93,7 @@ export const IntentCards = () => {
                 <p className="mb-4 text-card-body text-ink/82">{description}</p>
                 <a
                   href={href}
-                  className="group inline-flex items-center gap-1 text-coral font-semibold text-footer-body lowercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded"
+                  className={`group inline-flex items-center gap-1 text-coral font-semibold text-footer-body focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded${preserveCase ? "" : " lowercase"}`}
                 >
                   <span>{cta}</span>
                   <span className="inline-block translate-x-0 group-hover:translate-x-[2px] transition-transform duration-200" aria-hidden="true">

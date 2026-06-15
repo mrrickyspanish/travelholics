@@ -213,6 +213,16 @@ export const Footer = () => {
             </Link>
           </div>
         </div>
+        <p className="mt-4 text-center text-[11px]">
+          <a
+            href="https://creativeeyestudios.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="italic text-white/15 hover:text-white/60 transition-colors duration-500"
+          >
+            meticulously crafted by Creative Eye Studios.
+          </a>
+        </p>
       </div>
     </footer>
   );
