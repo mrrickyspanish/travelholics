@@ -42,7 +42,7 @@ export const Hero = () => {
                   <span className="mb-2 text-[1.35rem] italic leading-none text-[#0E125C] lg:text-[1.9rem]">(noun)</span>
                 </div>
                 <p className="text-eyebrow text-stone/85 lg:text-[13px]">/ˈtra-vəl-hä-lik/</p>
-                <p className="mx-auto max-w-[24ch] text-section-intro font-medium leading-[1.12] text-[#0E125C] lg:mx-0 lg:max-w-none lg:text-[2rem] xl:text-[2.2rem]">
+                <p className="mx-auto max-w-[24ch] text-[1.3rem] leading-[1.12] font-medium text-[#0E125C] lg:mx-0 lg:max-w-none lg:text-[2rem] xl:text-[2.2rem]">
                   Someone who travels{" "}
                   <span className="relative inline-block rounded-full bg-cream/92 px-2 pb-1 pt-0.5 font-script text-[1.72rem] font-semibold leading-none text-[#D84E59] shadow-[0_4px_12px_rgba(252,250,245,0.45)] align-baseline lg:bg-cream/80 lg:text-[2.1rem] xl:text-[2.3rem]">
                     between trips.
