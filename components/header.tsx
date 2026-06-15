@@ -1,17 +1,24 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { X, ShoppingBag } from "lucide-react";
+import { X, ShoppingBag, Menu } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/lib/cart-context";
 import { useLiveStatus } from "@/hooks/useLiveStatus";
 import { TIKTOK_LIVE_URL, TIKTOK_PROFILE_URL } from "@/lib/liveSchedule";
 
-const NAV_LINKS = [
-  { label: "Join the Crew", href: "/#contact" },
+const DESKTOP_NAV = [
+  { label: "Cruises", href: "/cruises/caribbean" },
+  { label: "Live", href: "/live", liveIndicator: true },
+  { label: "Shop", href: "/shop" },
+  { label: "Journal", href: "/blog" },
+  { label: "Our Story", href: "/#about" },
+];
+
+const MOBILE_NAV = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Live", href: "/live" },
   { label: "Shop", href: "/shop" },
@@ -20,16 +27,11 @@ const NAV_LINKS = [
   { label: "Contact", href: "/#contact" },
 ];
 
-const SOCIAL_LINKS = [
-  { label: "TikTok", href: "https://www.tiktok.com/@rjsmom1" },
-  { label: "Instagram", href: "https://www.instagram.com/rjsmom1/" },
-];
-
 function PulsingDot({ className = "" }: { className?: string }) {
   return (
     <span className={`relative flex h-2 w-2 shrink-0 ${className}`} aria-hidden="true">
-      <span className="absolute inline-flex h-full w-full rounded-full bg-white opacity-75 motion-safe:animate-ping" />
-      <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
+      <span className="absolute inline-flex h-full w-full rounded-full bg-current opacity-70 motion-safe:animate-ping" />
+      <span className="relative inline-flex h-2 w-2 rounded-full bg-current" />
     </span>
   );
 }
@@ -38,7 +40,6 @@ export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAlt, setShowAlt] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { count, openDrawer } = useCart();
   const liveStatus = useLiveStatus();
@@ -48,7 +49,6 @@ export const Header = () => {
   const isActive = isLive || isSoon;
   const liveHref = isLive ? TIKTOK_LIVE_URL : TIKTOK_PROFILE_URL;
 
-  // Cycle CTA copy between show name and "Watch live →" every 3s
   useEffect(() => {
     if (!isLive) { setShowAlt(false); return; }
     const id = setInterval(() => setShowAlt((v) => !v), 3000);
@@ -56,32 +56,10 @@ export const Header = () => {
   }, [isLive]);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 60);
+    const onScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    if (!menuOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMenuOpen(false);
-      if (e.key === "Tab" && menuRef.current) {
-        const focusable = menuRef.current.querySelectorAll<HTMLElement>(
-          'a,button,[tabindex]:not([tabindex="-1"])'
-        );
-        if (!focusable.length) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault(); last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault(); first.focus();
-        }
-      }
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [menuOpen]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -89,244 +67,199 @@ export const Header = () => {
   }, [menuOpen]);
 
   const isShopFull = pathname === "/shop-full";
-  const navSolid = isShopFull || isScrolled || menuOpen;
+  const solidBg = isScrolled || isShopFull || menuOpen;
 
-  // Background: live state overrides scroll state
   const navBg = isLive
-    ? "bg-coral shadow-md"
+    ? "bg-coral shadow-sm"
     : isSoon
-    ? "bg-ink shadow-md"
-    : navSolid
-    ? (isShopFull ? "bg-white shadow-sm" : "bg-cream/98 shadow-sm")
+    ? "bg-ink shadow-sm"
+    : solidBg
+    ? (isShopFull ? "bg-white shadow-sm" : "bg-cream/96 backdrop-blur-sm shadow-sm")
     : "bg-transparent";
 
-  // Logo: white version on live/soon (coral/ink bg), default otherwise
-  const logoSrc = isActive
-    ? "/images/Traveholic_logo_wordmark_white.png"
-    : "/images/traveholics%20logos%20(1200%20x%20300%20px).svg";
+  const onDark = isActive;
 
-  // MENU button + icon tints
-  const menuBtnHover = isActive ? "hover:bg-white/15" : "hover:bg-sand";
-  const menuTextColor = isActive ? "text-white" : "";
-  const iconColor = isActive ? "text-white" : "";
+  const linkBase = "text-sm font-medium px-3 py-2 rounded-lg transition-colors duration-150";
+  const linkColor = onDark
+    ? "text-white/85 hover:text-white hover:bg-white/10"
+    : "text-ink/70 hover:text-ink hover:bg-sand";
+  const linkActive = onDark ? "text-white font-semibold" : "text-ink font-semibold";
+
+  const iconBtn = `relative flex h-10 w-10 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral ${
+    onDark ? "hover:bg-white/15 text-white" : "hover:bg-sand text-ink"
+  }`;
 
   return (
     <>
       <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${navBg}`}>
-        <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between gap-6 transition-all duration-300 ${navSolid || isActive ? "h-14 py-1" : "h-20 py-0"}`}>
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-[auto_1fr_auto] items-center h-16 gap-4">
 
-          {/* ── Mobile ─────────────────────────────────────────── */}
-          <div className="flex w-full items-center justify-between sm:hidden">
-            <Link href="/" className="flex items-center focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none rounded-lg">
-              <Image
-                src={logoSrc}
-                alt="Travelholics"
-                width={220}
-                height={40}
-                className={`${isActive ? "h-[38px]" : navSolid ? "h-[28px]" : "h-[40px]"} w-auto transition-all duration-300`}
-                priority
-              />
-            </Link>
+          {/* ── Logo ─────────────────────────────── */}
+          <Link
+            href="/"
+            className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded-md"
+          >
+            <Image
+              src="/images/traveholics%20logos%20(1200%20x%20300%20px).svg"
+              alt="Travelholics"
+              width={180}
+              height={44}
+              className={`h-9 lg:h-[54px] w-auto transition-all duration-300 ${onDark ? "brightness-0 invert" : ""}`}
+              priority
+            />
+          </Link>
 
-            <div className="flex items-center gap-1 ml-auto">
-              {/* Live pill replaces cart icon on mobile when active */}
-              {isActive ? (
-                <a
-                  href={liveHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={isLive ? "Watch live on TikTok" : `Going live in ${liveStatus?.minutesUntilNext} minutes`}
-                  className="flex h-10 items-center gap-2 rounded-full bg-white/20 px-4 text-[0.7rem] font-black uppercase tracking-[0.14em] text-white transition-colors hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+          {/* ── Desktop nav links (center) ────────── */}
+          <nav className="hidden lg:flex items-center justify-center gap-0.5">
+            {DESKTOP_NAV.map((link) => {
+              const active = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href.split("#")[0]));
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`${linkBase} ${linkColor} ${active ? linkActive : ""} flex items-center gap-1.5`}
                 >
-                  <PulsingDot />
-                  {isLive ? "Live" : `${liveStatus?.minutesUntilNext}m`}
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  onClick={openDrawer}
-                  aria-label={`Open cart${count > 0 ? `, ${count} item${count !== 1 ? "s" : ""}` : ""}`}
-                  className={`relative flex h-10 w-10 items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none ${menuBtnHover} ${iconColor}`}
-                >
-                  <ShoppingBag className="h-5 w-5" />
-                  {count > 0 && (
-                    <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#059669] text-[0.6rem] font-black text-white">
-                      {count > 9 ? "9+" : count}
-                    </span>
+                  {link.label}
+                  {link.liveIndicator && isActive && (
+                    <PulsingDot className={onDark ? "text-white" : "text-coral"} />
                   )}
-                </button>
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* ── Right actions ─────────────────────── */}
+          <div className="flex items-center gap-1 sm:gap-2 justify-end">
+
+            {/* Cart */}
+            <button type="button" onClick={openDrawer} aria-label={`Cart${count > 0 ? `, ${count} items` : ""}`} className={iconBtn}>
+              <ShoppingBag className="h-5 w-5" />
+              {count > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-coral text-[0.6rem] font-black text-white">
+                  {count > 9 ? "9+" : count}
+                </span>
               )}
+            </button>
 
-              <button
-                type="button"
-                onClick={() => setMenuOpen(true)}
-                className={`w-auto h-12 flex items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none text-lg font-bold tracking-wide px-5 py-2 ${menuBtnHover} ${menuTextColor}`}
-                aria-label="Open navigation menu"
-                aria-expanded={menuOpen}
+            {/* CTA — hidden on mobile, shown sm+ */}
+            {isActive ? (
+              <a
+                href={liveHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex items-center gap-2 rounded-full bg-white/20 border border-white/25 px-4 py-2 text-sm font-semibold text-white hover:bg-white/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white min-w-[140px] justify-center"
               >
-                <span className="font-serif text-[1.1rem] tracking-wide">MENU</span>
-              </button>
-            </div>
-          </div>
-
-          {/* ── Desktop ─────────────────────────────────────────── */}
-          <div className="hidden sm:flex w-full items-center justify-between">
-            <div className="flex items-center gap-2.5 shrink-0 mr-4">
-              <button
-                type="button"
-                onClick={() => setMenuOpen(true)}
-                className={`w-12 h-12 flex items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none ${menuBtnHover} ${menuTextColor}`}
-                aria-label="Open navigation menu"
-                aria-expanded={menuOpen}
+                <PulsingDot className="text-white" />
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={`${isLive}-${showAlt}`}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.2 }}
+                    className="whitespace-nowrap"
+                  >
+                    {isLive
+                      ? (showAlt ? "Watch live →" : (liveStatus?.show?.name ?? "Live now"))
+                      : `Live in ${liveStatus?.minutesUntilNext}m →`}
+                  </motion.span>
+                </AnimatePresence>
+              </a>
+            ) : (
+              <a
+                href="/#contact"
+                className="hidden sm:inline-flex items-center rounded-full bg-coral px-5 py-2 text-sm font-semibold text-white hover:bg-coral-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2"
               >
-                <span className="hidden sm:inline font-serif text-[1.1rem] tracking-wide">MENU</span>
-              </button>
-            </div>
+                Join the Crew
+              </a>
+            )}
 
-            <Link href="/" className="flex items-center justify-center focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none rounded-lg">
-              <Image
-                src={logoSrc}
-                alt="Travelholics"
-                width={220}
-                height={40}
-                className={`${navSolid || isActive ? "h-[28px] sm:h-[38px]" : "h-[40px] sm:h-[60px]"} w-auto transition-all duration-300`}
-                priority
-              />
-            </Link>
-
-            <div className="flex items-center gap-3">
-              {/* Cart icon — always visible on desktop */}
-              <button
-                type="button"
-                onClick={openDrawer}
-                aria-label={`Open cart${count > 0 ? `, ${count} item${count !== 1 ? "s" : ""}` : ""}`}
-                className={`relative flex h-10 w-10 items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none ${menuBtnHover} ${iconColor}`}
-              >
-                <ShoppingBag className="h-5 w-5" />
-                {count > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#059669] text-[0.6rem] font-black text-white">
-                    {count > 9 ? "9+" : count}
-                  </span>
-                )}
-              </button>
-
-              {/* CTA: live state swaps "Join the Crew" */}
-              {isActive ? (
-                <a
-                  href={liveHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={isLive ? "Watch live on TikTok" : `Going live in ${liveStatus?.minutesUntilNext} minutes`}
-                  className="inline-flex items-center gap-2 rounded-full bg-white/20 px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 min-w-[148px] justify-center"
-                >
-                  <PulsingDot />
-                  <AnimatePresence mode="wait" initial={false}>
-                    {isLive ? (
-                      <motion.span
-                        key={showAlt ? "alt" : "main"}
-                        initial={{ opacity: 0, y: 5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -5 }}
-                        transition={{ duration: 0.25 }}
-                        className="whitespace-nowrap"
-                      >
-                        {showAlt ? "Watch live →" : (liveStatus?.show?.name ?? "Live now")}
-                      </motion.span>
-                    ) : (
-                      <motion.span
-                        key="soon"
-                        initial={{ opacity: 0, y: 5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -5 }}
-                        transition={{ duration: 0.25 }}
-                        className="whitespace-nowrap"
-                      >
-                        Live in {liveStatus?.minutesUntilNext}m →
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </a>
-              ) : (
-                <a
-                  href="/#contact"
-                  className="font-serif text-[1.1rem] tracking-wide font-bold text-royal-deep hover:underline hover:text-coral transition-colors duration-200 hidden sm:inline-block"
-                >
-                  Join the Crew
-                </a>
-              )}
-            </div>
+            {/* Hamburger */}
+            <button
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open navigation menu"
+              aria-expanded={menuOpen}
+              className={iconBtn}
+            >
+              <Menu className="h-5 w-5" />
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Full-screen menu overlay */}
+      {/* ── Full-screen nav overlay ───────────────── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.22 }}
-            className="fixed inset-0 z-[100] flex flex-col bg-navy text-cream"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[100] flex flex-col"
             style={{ background: "#0E125C" }}
-            ref={menuRef}
-            tabIndex={-1}
             aria-modal="true"
             role="dialog"
           >
-            <div className="flex items-center justify-between px-8 pt-8 pb-2">
-              <button
-                type="button"
+            {/* Overlay header */}
+            <div className="flex items-center justify-between px-5 sm:px-8 h-16 border-b border-white/10">
+              <Link
+                href="/"
                 onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2 text-cream hover:text-coral font-serif text-lg focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none"
-                aria-label="Close menu"
+                className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-md"
               >
-                <X size={28} />
-                <span className="hidden sm:inline">CLOSE</span>
-              </button>
-              <Link href="/" className="flex items-center justify-center" tabIndex={menuOpen ? 0 : -1}>
                 <Image
                   src="/images/traveholics%20logos%20(1200%20x%20300%20px).svg"
                   alt="Travelholics"
-                  width={220}
-                  height={60}
-                  className="h-[60px] w-auto"
-                  priority
+                  width={160}
+                  height={40}
+                  className="h-9 w-auto brightness-0 invert"
                 />
               </Link>
-              <a href="/#contact" className="px-6 py-3 text-base font-semibold text-cream/80 hover:text-coral focus-visible:underline focus-visible:outline-none transition-colors">
-                Join the Crew
-              </a>
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                aria-label="Close menu"
+                className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
-            <nav className="flex-1 flex flex-col items-center justify-center gap-8">
-              {NAV_LINKS.map((link) => (
-                <a
+
+            {/* Nav links */}
+            <nav className="flex-1 flex flex-col justify-center px-8 sm:px-16 gap-1">
+              {MOBILE_NAV.map((link, i) => (
+                <motion.div
                   key={link.label}
-                  href={link.href}
-                  className="font-serif text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight hover:text-coral focus-visible:text-coral transition-colors duration-150 py-2 px-4 rounded focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none"
-                  tabIndex={menuOpen ? 0 : -1}
-                  onClick={() => setMenuOpen(false)}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.04, duration: 0.2 }}
                 >
-                  {link.label}
-                </a>
+                  <Link
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="block font-serif text-[2.5rem] sm:text-5xl font-semibold tracking-tight text-white/90 hover:text-coral transition-colors py-1"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
             </nav>
-            <div className="flex flex-col items-center gap-2 pb-10">
-              <div className="flex gap-4 mb-2">
-                {SOCIAL_LINKS.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-cream/80 hover:text-coral text-lg focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none"
-                    tabIndex={menuOpen ? 0 : -1}
-                  >
-                    {s.label}
-                  </a>
-                ))}
+
+            {/* Overlay footer */}
+            <div className="px-8 sm:px-16 pb-10 space-y-4">
+              <a
+                href="/#contact"
+                onClick={() => setMenuOpen(false)}
+                className="inline-flex items-center rounded-full bg-coral px-6 py-3 text-sm font-semibold text-white hover:bg-coral-deep transition-colors"
+              >
+                Join the Crew
+              </a>
+              <div className="flex gap-5">
+                <a href="https://www.tiktok.com/@rjsmom1" target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">TikTok</a>
+                <a href="https://www.instagram.com/rjsmom1/" target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">Instagram</a>
               </div>
-              <span className="text-xs text-cream/60">© {new Date().getFullYear()} Travelholics</span>
+              <p className="text-xs text-white/25">© {new Date().getFullYear()} Travelholics</p>
             </div>
           </motion.div>
         )}
