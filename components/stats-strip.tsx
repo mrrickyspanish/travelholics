@@ -1,30 +1,59 @@
-import { Ship, Users, Globe, MapPin } from "lucide-react";
+import { BadgeDollarSign, Globe, Ship, Sparkles } from "lucide-react";
 
 const stats = [
-  { icon: Ship, value: "6+", line1: "cruise lines", line2: "yolanda's sailed" },
-  { icon: Globe, value: "15+", line1: "countries", line2: "and counting" },
-  { icon: Users, value: "17.2k+", line1: "travelholics", line2: "in the crew" },
-  { icon: MapPin, value: "4+", line1: "group trips", line2: "on the books" },
+  {
+    icon: Ship,
+    value: "6+",
+    label: "Cruise lines sailed",
+    note: "Real ship experience, not brochure guesses",
+  },
+  {
+    icon: Globe,
+    value: "15+",
+    label: "Countries visited",
+    note: "Ports, resorts, excursions, and local finds",
+  },
+  {
+    icon: Sparkles,
+    value: "20+",
+    label: "Years of travel experience",
+    note: "A planner who has actually been there",
+  },
+  {
+    icon: BadgeDollarSign,
+    value: "No Fees",
+    label: "Same price as booking direct",
+    note: "You get guidance without the markup",
+  },
 ];
 
 export const StatsStrip = () => {
   return (
-    <section className="relative overflow-hidden bg-cream py-6 sm:py-8 md:py-10">
-      <div className="mx-auto w-full max-w-[92rem] px-4 sm:px-6 lg:px-14 xl:px-20">
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-4 md:gap-0 md:divide-x md:divide-stone/20">
-          {stats.map(({ icon: Icon, value, line1, line2 }) => (
-            <div
-              key={`${value}-${line1}`}
-              className="flex min-h-[124px] items-center gap-3 rounded-2xl border border-stone/10 bg-white/65 px-3.5 py-3 shadow-[0_6px_16px_rgba(26,58,82,0.06)] backdrop-blur-[1px] sm:min-h-[132px] sm:gap-3.5 sm:px-4 sm:py-3.5 md:min-h-0 md:justify-center md:gap-4 md:rounded-none md:border-0 md:bg-transparent md:px-6 md:py-3 md:shadow-none md:backdrop-blur-0"
-            >
-              <Icon className="shrink-0 text-coral" size={32} strokeWidth={2} />
-              <div className="flex flex-col items-start gap-1">
-                <span className="font-serif text-footer-body font-medium leading-none text-navy sm:text-[2rem]">{value}</span>
-                <span className="text-eyebrow text-stone/90">{line1}</span>
-                <span className="text-eyebrow text-stone/90">{line2}</span>
+    <section className="relative overflow-hidden bg-sand py-10 sm:py-12 lg:py-14">
+      <div className="mx-auto w-full max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
+        <div className="rounded-[2rem] border border-white/70 bg-cream/82 p-3 shadow-[0_22px_60px_rgba(26,58,82,0.08)] backdrop-blur-sm sm:p-4 lg:rounded-[2.5rem] lg:p-5">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-stone/16">
+            {stats.map(({ icon: Icon, value, label, note }) => (
+              <div
+                key={label}
+                className="group relative min-h-[11rem] rounded-[1.5rem] bg-white/78 p-4 shadow-[0_10px_30px_rgba(26,58,82,0.06)] ring-1 ring-stone/8 transition-transform duration-300 hover:-translate-y-1 sm:p-5 lg:min-h-[13rem] lg:rounded-[2rem] lg:bg-transparent lg:shadow-none lg:ring-0"
+              >
+                <div className="mb-5 flex items-center justify-between gap-4">
+                  <Icon className="text-coral" size={25} strokeWidth={2} />
+                  <span className="h-px flex-1 bg-stone/12" aria-hidden="true" />
+                </div>
+                <p className="font-serif text-[clamp(2rem,6vw,3.25rem)] font-semibold leading-none tracking-[-0.04em] text-[#0E125C]">
+                  {value}
+                </p>
+                <p className="mt-3 text-[1rem] font-bold leading-tight text-ink">
+                  {label}
+                </p>
+                <p className="mt-2 max-w-[20ch] text-[0.92rem] font-medium leading-snug text-stone">
+                  {note}
+                </p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
