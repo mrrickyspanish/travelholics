@@ -225,7 +225,7 @@ export const Testimonials = () => {
       {header}
       <motion.div
         ref={trackRef}
-        className="flex cursor-grab gap-4 active:cursor-grabbing select-none pl-6 pr-6 lg:pl-10"
+        className="flex cursor-grab gap-4 active:cursor-grabbing select-none pl-[18vw] pr-6 lg:pl-[8vw]"
         style={{ x, width: "max-content", willChange: "transform" }}
         drag="x"
         dragConstraints={{ left: trackWidth > 0 ? -trackWidth : 0, right: 0 }}
