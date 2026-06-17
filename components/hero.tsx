@@ -78,7 +78,7 @@ export const Hero = () => {
               >
                 Plan My Cruise
               </Button>
-              <p className="text-[14px] font-medium text-stone/70 text-center lg:text-left">
+              <p className="rounded-full bg-white/85 px-4 py-1.5 text-[13px] font-semibold text-royal-deep shadow-sm backdrop-blur-sm text-center lg:text-left">
                 Certified Cruise Specialist · No planning fees
               </p>
             </div>
