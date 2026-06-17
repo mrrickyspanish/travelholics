@@ -5,8 +5,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, animate } from "framer-motion";
 import { X } from "lucide-react";
 
-// ─── Tunable: increase to slow the drift, decrease to speed it up ──────────
-const SCROLL_DURATION = 50; // seconds for one full loop
+const SCROLL_DURATION = 50;
+const VISUAL_TESTIMONIAL_COUNT = 10;
 
 const RENDER_TESTIMONIALS = true;
 
@@ -21,7 +21,7 @@ type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     quote:
-      "Planning me and my wife's honeymoon cruise with Yolanda & Travelholics was the best decision of my life (after marrying my wife). She was helpful from beginning to end. Destination planning, cruise ship amenity alignment to the vibe we wanted, excursion breakdown, travel hacks to save $$, EVERYTHING. She's the best. And you'll understand why as soon as you finish your first planning call with her. Can't wait to work with Travelholics again for a family cruise in 2027!",
+      "Yolanda helped us plan a honeymoon cruise that felt easy from start to finish. She matched the ship, excursions, and details to the trip we wanted, and we cannot wait to book with Travelholics again.",
     name: "RJ Barnes",
     trip: "Caribbean Cruise · 2017 · Royal Caribbean",
     photo: "/images/testimonials/barnes_cruise_travelholic.JPG",
@@ -29,30 +29,17 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-// ─── Stars ───────────────────────────────────────────────────────────────────
 const Stars = ({ count = 5 }: { count?: number }) => (
   <div className="flex gap-0.5 flex-none" aria-label={`${count} out of 5 stars`}>
     {Array.from({ length: count }).map((_, i) => (
-      <svg
-        key={i}
-        className="w-3 h-3 text-coral fill-current"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
+      <svg key={i} className="w-3 h-3 text-coral fill-current" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
       </svg>
     ))}
   </div>
 );
 
-// ─── Lightbox ────────────────────────────────────────────────────────────────
-function TestimonialLightbox({
-  testimonial,
-  onClose,
-}: {
-  testimonial: Testimonial;
-  onClose: () => void;
-}) {
+function TestimonialLightbox({ testimonial, onClose }: { testimonial: Testimonial; onClose: () => void }) {
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -86,24 +73,12 @@ function TestimonialLightbox({
         className="relative max-h-[90vh] w-full max-w-lg overflow-hidden rounded-2xl border border-blush/60 bg-cream shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-ink shadow-sm transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
-          aria-label="Close testimonial"
-        >
+        <button type="button" onClick={onClose} className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-ink shadow-sm transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral" aria-label="Close testimonial">
           <X className="h-4 w-4" />
         </button>
 
         <div className="relative aspect-[4/5] w-full max-h-[50vh]">
-          <Image
-            src={testimonial.photo}
-            alt={`${testimonial.name} — ${testimonial.trip}`}
-            fill
-            className="object-cover"
-            sizes="(max-width: 512px) 100vw, 512px"
-            priority
-          />
+          <Image src={testimonial.photo} alt={`${testimonial.name} — ${testimonial.trip}`} fill className="object-cover" sizes="(max-width: 512px) 100vw, 512px" priority />
         </div>
 
         <div className="max-h-[40vh] overflow-y-auto px-5 py-5 sm:px-6">
@@ -121,35 +96,12 @@ function TestimonialLightbox({
   );
 }
 
-// ─── Card ────────────────────────────────────────────────────────────────────
-function TestimonialCard({
-  quote,
-  name,
-  trip,
-  photo,
-  rating = 5,
-  onExpand,
-}: Testimonial & { onExpand: () => void }) {
+function TestimonialCard({ quote, name, trip, photo, rating = 5, onExpand }: Testimonial & { onExpand: () => void }) {
   return (
-    <article
-      className="flex-none rounded-2xl border border-blush/60 bg-cream shadow-sm overflow-hidden"
-      style={{ width: "clamp(240px, 72vw, 300px)" }}
-    >
-      <button
-        type="button"
-        onClick={onExpand}
-        className="w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-inset"
-        aria-label={`Read full testimonial from ${name}`}
-      >
+    <article className="flex-none rounded-2xl border border-blush/60 bg-cream shadow-sm overflow-hidden" style={{ width: "clamp(240px, 72vw, 300px)" }}>
+      <button type="button" onClick={onExpand} className="w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-inset" aria-label={`Read full testimonial from ${name}`}>
         <div className="relative aspect-[4/5] w-full">
-          <Image
-            src={photo}
-            alt={`${name} — ${trip}`}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 72vw, 300px"
-            loading="lazy"
-          />
+          <Image src={photo} alt={`${name} — ${trip}`} fill className="object-cover" sizes="(max-width: 768px) 72vw, 300px" loading="lazy" />
         </div>
 
         <div className="px-3 pt-2.5 pb-3">
@@ -171,19 +123,21 @@ function TestimonialCard({
 function TestimonialsCTA() {
   return (
     <div className="mt-10 px-6 text-center">
-      <a
-        href="/#contact"
-        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-coral px-8 py-4 text-base font-semibold text-white shadow-md shadow-coral/15 transition-colors hover:bg-coral-deep sm:w-auto"
-      >
+      <a href="/#contact" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-coral px-8 py-4 text-base font-semibold text-white shadow-md shadow-coral/15 transition-colors hover:bg-coral-deep sm:w-auto">
         Start Planning My Trip →
       </a>
     </div>
   );
 }
 
-// ─── Section ─────────────────────────────────────────────────────────────────
 export const Testimonials = () => {
   if (!RENDER_TESTIMONIALS || testimonials.length === 0) return null;
+
+  const visualTestimonials = Array.from(
+    { length: VISUAL_TESTIMONIAL_COUNT },
+    (_, index) => testimonials[index % testimonials.length],
+  );
+  const loopedTestimonials = [...visualTestimonials, ...visualTestimonials];
 
   const [expanded, setExpanded] = useState<Testimonial | null>(null);
   const [prefersReduced, setPrefersReduced] = useState(false);
@@ -195,13 +149,8 @@ export const Testimonials = () => {
   const hoverPaused = useRef(false);
   const dragActive = useRef(false);
 
-  const openTestimonial = useCallback((t: Testimonial) => {
-    setExpanded(t);
-  }, []);
-
-  const closeTestimonial = useCallback(() => {
-    setExpanded(null);
-  }, []);
+  const openTestimonial = useCallback((t: Testimonial) => { setExpanded(t); }, []);
+  const closeTestimonial = useCallback(() => { setExpanded(null); }, []);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -248,10 +197,7 @@ export const Testimonials = () => {
     };
   }, [prefersReduced, trackWidth]);
 
-  const pauseAnim = () => {
-    animRef.current?.stop();
-  };
-
+  const pauseAnim = () => { animRef.current?.stop(); };
   const resumeAnim = () => {
     if (hoverPaused.current || dragActive.current) return;
     loopRef.current(x.get());
@@ -259,13 +205,7 @@ export const Testimonials = () => {
 
   const header = (
     <div className="mx-auto mb-10 max-w-7xl px-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="text-center"
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-center">
         <p className="mb-3 text-eyebrow text-coral">What Travelers Are Saying</p>
         <h2 className="font-serif text-[1.9rem] font-semibold tracking-tight text-ink lg:text-4xl">
           Real People. Real Memories.
@@ -276,9 +216,7 @@ export const Testimonials = () => {
 
   const lightbox = (
     <AnimatePresence>
-      {expanded && (
-        <TestimonialLightbox testimonial={expanded} onClose={closeTestimonial} />
-      )}
+      {expanded && <TestimonialLightbox testimonial={expanded} onClose={closeTestimonial} />}
     </AnimatePresence>
   );
 
@@ -286,14 +224,9 @@ export const Testimonials = () => {
     return (
       <section id="testimonials" className="bg-sand py-14 md:py-16">
         {header}
-        <div
-          className="flex gap-4 overflow-x-auto px-6 pb-4 snap-x snap-mandatory"
-          style={{ scrollbarWidth: "none" } as React.CSSProperties}
-          role="region"
-          aria-label="Traveler testimonials — scroll to explore"
-        >
-          {testimonials.map((t) => (
-            <div key={t.name} className="flex-none snap-start">
+        <div className="flex gap-4 overflow-x-auto px-6 pb-4 snap-x snap-mandatory" style={{ scrollbarWidth: "none" } as React.CSSProperties} role="region" aria-label="Traveler testimonials — scroll to explore">
+          {visualTestimonials.map((t, index) => (
+            <div key={`${t.name}-static-${index}`} className="flex-none snap-start">
               <TestimonialCard {...t} onExpand={() => openTestimonial(t)} />
             </div>
           ))}
@@ -305,40 +238,27 @@ export const Testimonials = () => {
   }
 
   return (
-    <section
-      id="testimonials"
-      className="overflow-hidden bg-sand py-14 md:py-16"
-      aria-label="Traveler testimonials"
-    >
+    <section id="testimonials" className="overflow-hidden bg-sand py-14 md:py-16" aria-label="Traveler testimonials">
       {header}
       <motion.div
         ref={trackRef}
-        className="flex cursor-grab gap-4 active:cursor-grabbing select-none"
+        className="flex cursor-grab gap-4 active:cursor-grabbing select-none pl-6 pr-6 lg:pl-10"
         style={{ x, width: "max-content", willChange: "transform" }}
         drag="x"
         dragConstraints={{ left: trackWidth > 0 ? -trackWidth : 0, right: 0 }}
         dragElastic={0.04}
-        onDragStart={() => {
-          dragActive.current = true;
-          pauseAnim();
-        }}
+        onDragStart={() => { dragActive.current = true; pauseAnim(); }}
         onDragEnd={() => {
           dragActive.current = false;
           const clamped = Math.max(trackWidth > 0 ? -trackWidth : 0, Math.min(0, x.get()));
           x.set(clamped);
           resumeAnim();
         }}
-        onHoverStart={() => {
-          hoverPaused.current = true;
-          pauseAnim();
-        }}
-        onHoverEnd={() => {
-          hoverPaused.current = false;
-          resumeAnim();
-        }}
+        onHoverStart={() => { hoverPaused.current = true; pauseAnim(); }}
+        onHoverEnd={() => { hoverPaused.current = false; resumeAnim(); }}
       >
-        {[...testimonials, ...testimonials].map((t, i) => (
-          <TestimonialCard key={`${t.name}-${i}`} {...t} onExpand={() => openTestimonial(t)} />
+        {loopedTestimonials.map((t, i) => (
+          <TestimonialCard key={`${t.name}-loop-${i}`} {...t} onExpand={() => openTestimonial(t)} />
         ))}
       </motion.div>
       <TestimonialsCTA />
