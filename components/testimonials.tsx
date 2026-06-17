@@ -67,8 +67,8 @@ export const Testimonials = () => {
     <section id="testimonials" className="overflow-hidden bg-sand py-14 md:py-16" aria-label="Traveler testimonials">
       <style>{`
         @keyframes testimonialRiver {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
+          from { transform: translateX(-50%); }
+          to { transform: translateX(0); }
         }
         .testimonial-river-track {
           animation: testimonialRiver 52s linear infinite;
