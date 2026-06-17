@@ -12,7 +12,6 @@ import { ArrowUpRight } from "lucide-react";
 const products = [
   {
     name: "Premium Atlantis Lanyard",
-    tag: "Cruise card ready",
     price: "$12.00",
     image: "/images/travelholics_lanyard_transparent.png",
     href: "/shop-full",
@@ -20,7 +19,6 @@ const products = [
   },
   {
     name: "Cruise Life Door Magnet",
-    tag: "Cabin door energy",
     price: "$19.99",
     image: "/images/travelholics_product_ticket-magnet-pacific.png",
     href: "/shop-full",
@@ -28,7 +26,6 @@ const products = [
   },
   {
     name: "Pacific Mexican Door Magnet",
-    tag: "Collector cruise art",
     price: "$19.99",
     image: "/images/travelholics_product_pacific-mexican-door-magnet.png",
     href: "/shop-full",
@@ -36,7 +33,6 @@ const products = [
   },
   {
     name: "Travelholics Bucket Hat",
-    tag: "Pool deck uniform",
     price: "$38.00",
     image: "/images/Travelholics_merch_bucket_hat.png",
     href: "/shop-full",
@@ -44,9 +40,27 @@ const products = [
   },
 ];
 
+const lazyRiverProducts = [...products, ...products];
+
 export const ShopStrip = () => {
   return (
     <section className="relative overflow-hidden bg-cream py-16 sm:py-20 lg:py-28">
+      <style>{`
+        @keyframes shopLazyRiver {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+        .shop-lazy-river {
+          animation: shopLazyRiver 34s linear infinite;
+        }
+        .shop-river-shell:hover .shop-lazy-river,
+        .shop-river-shell:focus-within .shop-lazy-river {
+          animation-play-state: paused;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .shop-lazy-river { animation: none; }
+        }
+      `}</style>
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-sand" aria-hidden="true" />
       <motion.div
         className="relative z-10 mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12"
@@ -55,17 +69,17 @@ export const ShopStrip = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.55 }}
       >
-        <div className="rounded-[2.5rem] bg-[#0E125C] p-5 text-white shadow-[0_30px_80px_rgba(14,18,92,0.18)] sm:p-7 lg:p-10">
-          <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
+        <div className="overflow-hidden rounded-[2.5rem] bg-[#0E125C] p-5 text-white shadow-[0_30px_80px_rgba(14,18,92,0.18)] sm:p-7 lg:p-10">
+          <div className="grid gap-9 lg:grid-cols-[0.42fr_0.58fr] lg:items-center xl:gap-12">
             <div className="max-w-[34rem]">
               <p className="font-script text-[2.65rem] font-semibold leading-none text-coral sm:text-[3rem]">
                 Travelholics Originals
               </p>
-              <h2 className="mt-3 font-serif text-[clamp(2.5rem,7vw,5.25rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white">
+              <h2 className="mt-3 font-serif text-[clamp(2.5rem,6.2vw,5rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white">
                 Gear for people already packing.
               </h2>
-              <p className="mt-5 max-w-[37ch] text-[1.05rem] font-medium leading-[1.7] text-white/76 sm:text-[1.14rem]">
-                Cruise-tested pieces, cabin-door personality, and travel lifestyle goods that make the crew feel official before the ship even leaves port.
+              <p className="mt-5 max-w-[36ch] text-[1.05rem] font-medium leading-[1.7] text-white/76 sm:text-[1.14rem]">
+                Cruise-tested pieces, cabin-door personality, and travel lifestyle goods made for the crew that is already thinking about the next one.
               </p>
               <Link
                 href="/shop-full"
@@ -76,36 +90,36 @@ export const ShopStrip = () => {
               </Link>
             </div>
 
-            <div className="-mx-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:overflow-visible lg:px-0">
-              <div className="flex gap-4 lg:grid lg:grid-cols-4 lg:gap-5">
-                {products.map((product, index) => (
+            <div className="shop-river-shell -mx-5 overflow-hidden px-5 pb-2 lg:mx-0 lg:px-0">
+              <div className="shop-lazy-river flex w-max gap-5 pr-5">
+                {lazyRiverProducts.map((product, index) => (
                   <Link
-                    key={product.name}
+                    key={`${product.name}-${index}`}
                     href={product.href}
-                    className={`group block w-[72vw] max-w-[19rem] shrink-0 rounded-[2rem] bg-white p-3 text-ink shadow-[0_22px_50px_rgba(0,0,0,0.16)] transition-transform duration-300 hover:-translate-y-1 sm:w-[18rem] lg:w-auto lg:max-w-none ${index % 2 === 1 ? "lg:translate-y-8" : ""}`}
+                    aria-label={`Shop ${product.name}`}
+                    className="group block w-[74vw] max-w-[23rem] shrink-0 overflow-hidden rounded-[2rem] bg-white p-3 text-ink shadow-[0_22px_50px_rgba(0,0,0,0.16)] transition-transform duration-300 hover:-translate-y-1 sm:w-[22rem]"
+                    aria-hidden={index >= products.length ? true : undefined}
+                    tabIndex={index >= products.length ? -1 : undefined}
                   >
-                    <div className="relative aspect-square overflow-hidden rounded-[1.5rem] bg-sand">
+                    <div className="relative aspect-[1.05/1] overflow-hidden rounded-[1.55rem] bg-sand">
                       <Image
                         src={product.image}
                         alt={product.imageAlt}
                         fill
-                        className="object-contain p-5 transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 1024px) 72vw, 22vw"
+                        className="object-contain p-7 transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 1024px) 74vw, 23rem"
                       />
                     </div>
-                    <div className="px-1 pb-1 pt-4">
-                      <div className="mb-3 flex items-center justify-between gap-3">
-                        <p className="rounded-full bg-sand px-3 py-1 text-[0.875rem] font-bold text-emerald-mid">
-                          {product.tag}
-                        </p>
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink text-white transition-transform duration-300 group-hover:rotate-12">
-                          <ArrowUpRight size={17} strokeWidth={2.2} />
-                        </span>
+                    <div className="flex items-end justify-between gap-4 px-1 pb-1 pt-4">
+                      <div>
+                        <h3 className="font-serif text-[1.55rem] font-semibold leading-tight tracking-[-0.03em] text-ink">
+                          {product.name}
+                        </h3>
+                        <p className="mt-2 text-[1rem] font-bold text-coral">{product.price}</p>
                       </div>
-                      <h3 className="font-serif text-[1.45rem] font-semibold leading-tight tracking-[-0.03em] text-ink">
-                        {product.name}
-                      </h3>
-                      <p className="mt-2 text-[1rem] font-bold text-coral">{product.price}</p>
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink text-white transition-transform duration-300 group-hover:rotate-12">
+                        <ArrowUpRight size={17} strokeWidth={2.2} />
+                      </span>
                     </div>
                   </Link>
                 ))}
