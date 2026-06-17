@@ -322,7 +322,7 @@ export function DestinationMap() {
   const showDestinationLabels = view.zoom >= DESTINATION_LABEL_ZOOM_THRESHOLD;
 
   return (
-    <section id="map" className="relative overflow-hidden bg-sand py-20 lg:py-24">
+    <section id="map" className="relative overflow-hidden bg-cream py-16 sm:py-20 lg:py-28">
       <style>{`
         @keyframes destinationPinPulse {
           0%, 100% { transform: scale(1); opacity: 0.95; }
@@ -342,351 +342,348 @@ export function DestinationMap() {
         .destination-pin-ring { animation: destinationRingPulse 2.1s ease-out infinite; }
       `}</style>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-sand/55 to-transparent" aria-hidden="true" />
+      <div className="pointer-events-none absolute right-[-8rem] top-20 h-64 w-64 rounded-full bg-coral/8 blur-3xl" aria-hidden="true" />
 
-        {/* Desktop: 2-col — text left, map right (no sidebar inside map) */}
-        <div className="hidden lg:grid lg:grid-cols-[36%_64%] gap-10 xl:gap-14 items-start">
-
-          {/* Left: text */}
-          <motion.div
-            initial={{ opacity: 0, x: -18 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
-            className="pt-6"
-          >
-            <p className="type-kicker text-coral mb-3">THE TRAVELHOLICS ATLAS</p>
-            <h2 className="font-serif text-3xl lg:text-[2.4rem] font-semibold text-ink leading-tight tracking-tight mb-4">
-              Where we&apos;ve sailed. Where we&apos;re sailing next.
-            </h2>
-            <p className="mb-7 max-w-[46ch] text-[17px] font-medium leading-[1.65] text-ink/82">
-              Every pin is a port Yolanda has actually been to, or a trip the Crew is already eyeing. Click around. Some become group sailings. All of them get a real opinion when you book.
-            </p>
-            <a
-              href="/#contact"
-              className="inline-flex items-center gap-2 rounded-full bg-coral px-6 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
+      <div className="relative z-10 mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
+        <div className="rounded-[2.5rem] bg-sand/72 p-4 shadow-[0_28px_80px_rgba(26,58,82,0.08)] ring-1 ring-white/70 sm:p-5 lg:rounded-[3rem] lg:p-8 xl:p-10">
+          <div className="hidden lg:grid lg:grid-cols-[0.34fr_0.66fr] gap-8 xl:gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -18 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55 }}
+              className="max-w-[32rem]"
             >
-              Plan My Cruise →
-            </a>
-          </motion.div>
+              <p className="mb-4 text-[0.82rem] font-bold uppercase tracking-[0.16em] text-coral">
+                THE TRAVELHOLICS ATLAS
+              </p>
+              <h2 className="font-serif text-[clamp(2.65rem,4.7vw,5.6rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-ink">
+                Where we&apos;ve sailed. Where we&apos;re sailing next.
+              </h2>
+              <p className="mt-6 max-w-[43ch] text-[1.06rem] font-medium leading-[1.75] text-ink/76">
+                Every pin is a port Yolanda has actually been to, or a trip the Crew is already eyeing. Click around. Some become group sailings. All of them get a real opinion when you book.
+              </p>
+              <a
+                href="/#contact"
+                className="mt-8 inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
+              >
+                Plan My Cruise
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </motion.div>
 
-          {/* Right: illustrated-style map */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, delay: 0.08 }}
+              className="rounded-[2.25rem] bg-cream/88 p-4 shadow-[0_24px_70px_rgba(26,58,82,0.1)] ring-1 ring-white/80 xl:p-5"
+            >
+              <div className="mb-4 flex items-center justify-between gap-5 px-1">
+                <div>
+                  <p className="font-serif text-[1.55rem] font-semibold leading-none tracking-[-0.04em] text-ink">
+                    Yolanda&apos;s proof map
+                  </p>
+                  <p className="mt-1 text-[0.95rem] font-medium text-stone/78">
+                    Green pins are sailed. Coral pins are on the list.
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 rounded-full bg-white/76 px-4 py-2 shadow-sm ring-1 ring-stone/10">
+                  <span className="inline-flex items-center gap-2 text-[0.82rem] font-bold text-stone">
+                    <svg width="10" height="14" viewBox="0 0 14 20" fill="none" className="shrink-0">
+                      <path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#10755A" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" />
+                    </svg>
+                    Sailed
+                  </span>
+                  <span className="h-4 w-px bg-stone/14" aria-hidden="true" />
+                  <span className="inline-flex items-center gap-2 text-[0.82rem] font-bold text-stone">
+                    <svg width="10" height="14" viewBox="0 0 14 20" fill="none" className="shrink-0">
+                      <path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#E85D5D" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" />
+                    </svg>
+                    On the list
+                  </span>
+                </div>
+              </div>
+
+              <div
+                ref={mapContainerRef}
+                onClick={() => { void handleReset(); }}
+                className="relative aspect-[16/7.3] overflow-hidden rounded-[1.85rem] border border-stone/10 bg-[#F8F1E6] shadow-inner cursor-default"
+                style={{ filter: "sepia(0.06) saturate(0.94)" }}
+              >
+                <div className="absolute inset-0">
+                  <ComposableMap
+                    projection="geoMercator"
+                    projectionConfig={{ scale: PROJECTION_SCALE, center: PROJECTION_CENTER }}
+                    width={MAP_WIDTH}
+                    height={MAP_HEIGHT}
+                    style={{ width: "100%", height: "100%" }}
+                  >
+                    <ZoomableGroup
+                      center={view.center}
+                      zoom={view.zoom}
+                      minZoom={1}
+                      maxZoom={6}
+                      onMoveEnd={({ coordinates, zoom }: { coordinates: [number, number]; zoom: number }) => {
+                        commitView({ center: [coordinates[0], coordinates[1]], zoom });
+                      }}
+                    >
+                      <Sphere id="map-ocean" fill="#F5EFE4" stroke="rgba(180,155,120,0.2)" strokeWidth={0.5} />
+
+                      <Geographies geography={DESTINATION_MAP_GEOGRAPHY}>
+                        {({ geographies }: { geographies: Array<{ rsmKey: string }> }) =>
+                          geographies.map((geo: { rsmKey: string }) => (
+                            <Geography
+                              key={geo.rsmKey}
+                              geography={geo}
+                              fill="#E8D4B0"
+                              stroke="#C9A87E"
+                              strokeWidth={0.8}
+                              style={{
+                                default: { outline: "none" },
+                                hover:   { outline: "none", fill: "#D9C099" },
+                                pressed: { outline: "none" },
+                              }}
+                            />
+                          ))
+                        }
+                      </Geographies>
+
+                      {!showDestinationLabels && regionLabels.map((regionLabel) => (
+                        <Marker
+                          key={regionLabel.region}
+                          coordinates={regionLabel.coordinates}
+                        >
+                          <g style={{ pointerEvents: "none", userSelect: "none" }}>
+                            <text
+                              x={regionLabel.dx ?? 0}
+                              y={regionLabel.dy ?? 0}
+                              textAnchor={regionLabel.textAnchor}
+                              fontSize="10"
+                              fontWeight="700"
+                              letterSpacing="0.18em"
+                              fill="#1A2E2A"
+                              opacity={0.8}
+                              style={{ textTransform: "uppercase" }}
+                              stroke="rgba(252,250,245,0.95)"
+                              strokeWidth="2.5"
+                              paintOrder="stroke"
+                            >
+                              {regionLabel.region}
+                            </text>
+                          </g>
+                        </Marker>
+                      ))}
+
+                      {destinations.map((destination) => {
+                        const isActive  = activeId === destination.id;
+                        const isHovered = hoveredId === destination.id;
+                        const isInteractive = isActive || isHovered;
+                        const isSailed = !!destination.photo;
+                        const pinFill   = isSailed ? "#10755A" : "#E85D5D";
+                        const ringFill  = isSailed ? "#10755A" : "#E85D5D";
+                        const shouldShowLabel = showDestinationLabels || isInteractive;
+
+                        return (
+                          <Marker
+                            key={destination.id}
+                            coordinates={destination.coordinates}
+                            onMouseEnter={() => setHoveredId(destination.id)}
+                            onMouseLeave={() => setHoveredId((cur) => cur === destination.id ? null : cur)}
+                            onClick={(e: React.MouseEvent<SVGGElement>) => {
+                              e.stopPropagation();
+                              void handleDestinationSelect(destination);
+                            }}
+                          >
+                            <g className="cursor-pointer" aria-label={destination.label}>
+                              {isInteractive && (
+                                <circle
+                                  className="destination-pin-ring"
+                                  cx="0" cy="-16"
+                                  r={14}
+                                  fill="none"
+                                  stroke={ringFill}
+                                  strokeWidth={1.5}
+                                  opacity={0.7}
+                                />
+                              )}
+                              <ellipse cx="0" cy="1.5" rx="5" ry="2.5" fill="rgba(42,59,54,0.18)" />
+                              <path
+                                className={isInteractive ? "destination-pin-core" : undefined}
+                                d="M0,0 L-7,-12 A8,8 0 1,1 7,-12 Z"
+                                fill={pinFill}
+                                stroke="rgba(255,255,255,0.6)"
+                                strokeWidth={1.2}
+                                strokeLinejoin="round"
+                              />
+                              <circle cx="0" cy="-17" r="3" fill="rgba(255,255,255,0.35)" />
+                              {shouldShowLabel && (
+                                <text
+                                  x="12"
+                                  y="-13"
+                                  fontSize={isInteractive ? "8.5" : "8"}
+                                  fontWeight={isInteractive ? "700" : "600"}
+                                  fill="#1A2E2A"
+                                  stroke="rgba(252,250,245,0.95)"
+                                  strokeWidth="2"
+                                  paintOrder="stroke"
+                                  style={{ userSelect: "none", pointerEvents: "none" }}
+                                >
+                                  {destination.label}
+                                </text>
+                              )}
+                            </g>
+                          </Marker>
+                        );
+                      })}
+                    </ZoomableGroup>
+                  </ComposableMap>
+                </div>
+
+                <div className="pointer-events-none absolute bottom-4 right-4 flex items-center gap-1.5 rounded-full bg-cream/86 px-3 py-1.5 shadow-sm ring-1 ring-stone/10 backdrop-blur">
+                  <MapPinned className="h-3 w-3 text-stone/60" />
+                  <span className="text-[0.7rem] font-semibold text-stone/72">Click a pin to see Yolanda&apos;s notes</span>
+                </div>
+
+                <AnimatePresence>
+                  {canRenderPopup && activeDestination && popupPosition ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.92, y: 8 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.96, y: 6 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      onClick={(e) => e.stopPropagation()}
+                      className="absolute z-20 overflow-hidden rounded-[1.25rem] border border-stone/10 bg-cream shadow-[0_24px_60px_rgba(26,58,82,0.18)]"
+                      style={{ left: popupPosition.left, top: popupPosition.top, width: popupPosition.width }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setActiveId(null)}
+                        className="absolute right-3 top-3 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-cream/86 text-stone shadow-sm transition-colors hover:text-ink"
+                        aria-label={`Close ${activeDestination.label} details`}
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </button>
+
+                      {activeDestination.photo ? (
+                        <div className="relative h-[136px] w-full">
+                          <Image
+                            src={activeDestination.photo}
+                            alt={activeDestination.photoAlt ?? activeDestination.label}
+                            fill className="object-cover" sizes="280px"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-ink/52 via-transparent to-transparent" />
+                        </div>
+                      ) : null}
+
+                      <div className="p-4">
+                        <p className="font-serif text-[1.2rem] font-semibold leading-tight tracking-[-0.03em] text-ink">{activeDestination.label}</p>
+                        <p className="mt-1 text-[0.86rem] font-medium leading-snug text-stone">{activeDestination.sub}</p>
+                        <a
+                          href={DESTINATION_CTA_HREF}
+                          className="mt-4 inline-flex items-center gap-2 rounded-full bg-coral px-4 py-2 text-[0.82rem] font-semibold text-white transition-colors hover:bg-coral-deep"
+                        >
+                          Plan My Cruise <ArrowRight className="h-3.5 w-3.5" />
+                        </a>
+                      </div>
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          </div>
+
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.55, delay: 0.08 }}
+            transition={{ duration: 0.55 }}
+            className="lg:hidden"
           >
-            <div
-              ref={mapContainerRef}
-              onClick={() => { void handleReset(); }}
-              className="relative aspect-[16/7] overflow-hidden rounded-3xl border border-blush/70 bg-cream shadow-md cursor-default"
-              style={{ filter: "sepia(0.08) saturate(0.92)" }}
-            >
-              <div className="absolute inset-0">
-                <ComposableMap
-                  projection="geoMercator"
-                  projectionConfig={{ scale: PROJECTION_SCALE, center: PROJECTION_CENTER }}
-                  width={MAP_WIDTH}
-                  height={MAP_HEIGHT}
-                  style={{ width: "100%", height: "100%" }}
-                >
-                  <ZoomableGroup
-                    center={view.center}
-                    zoom={view.zoom}
-                    minZoom={1}
-                    maxZoom={6}
-                    onMoveEnd={({ coordinates, zoom }: { coordinates: [number, number]; zoom: number }) => {
-                      commitView({ center: [coordinates[0], coordinates[1]], zoom });
-                    }}
+            <div className="mx-auto max-w-[28rem] text-center">
+              <p className="mb-3 text-[0.78rem] font-bold uppercase tracking-[0.16em] text-coral">THE TRAVELHOLICS ATLAS</p>
+              <h2 className="font-serif text-[clamp(2.3rem,10vw,3.4rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-ink">
+                Where we&apos;ve sailed. Where we&apos;re sailing next.
+              </h2>
+              <p className="mx-auto mt-4 max-w-[33ch] text-[1rem] font-medium leading-[1.65] text-ink/76">
+                Every pin is a port Yolanda has been to, or a trip the Crew is eyeing next. Tap around for notes, stories, and future sailings.
+              </p>
+            </div>
+
+            <div className="mx-auto mt-7 max-w-[28rem] rounded-[2rem] bg-cream/86 p-3 shadow-[0_22px_60px_rgba(26,58,82,0.1)] ring-1 ring-white/80">
+              <div className="mb-3 flex items-center justify-center gap-4 rounded-full bg-white/76 px-4 py-2 shadow-sm ring-1 ring-stone/10">
+                <span className="inline-flex items-center gap-2 text-[0.76rem] font-bold text-stone">
+                  <svg width="10" height="14" viewBox="0 0 14 20" fill="none"><path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#10755A" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" /></svg>
+                  Sailed
+                </span>
+                <span className="h-4 w-px bg-stone/14" aria-hidden="true" />
+                <span className="inline-flex items-center gap-2 text-[0.76rem] font-bold text-stone">
+                  <svg width="10" height="14" viewBox="0 0 14 20" fill="none"><path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#E85D5D" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" /></svg>
+                  On the list
+                </span>
+              </div>
+
+              <div className="relative overflow-hidden rounded-[1.45rem] border border-stone/10 bg-[#F8F1E6] shadow-inner" style={{ aspectRatio:'4/3', minHeight:'220px', maxHeight:'340px' }}>
+                <div className="absolute inset-0">
+                  <ComposableMap
+                    projection="geoMercator"
+                    projectionConfig={{ scale: 90, center: [-60, 20] }}
+                    width={360}
+                    height={270}
+                    style={{ width: '100%', height: '100%' }}
                   >
-                    {/* Ocean: sand color — map visually floats on section bg */}
-                    <Sphere id="map-ocean" fill="#F5EFE4" stroke="rgba(180,155,120,0.2)" strokeWidth={0.5} />
-
-                    {/* Landmasses: warm painted tan — illustrated/editorial feel */}
-                    <Geographies geography={DESTINATION_MAP_GEOGRAPHY}>
-                      {({ geographies }: { geographies: Array<{ rsmKey: string }> }) =>
-                        geographies.map((geo: { rsmKey: string }) => (
-                          <Geography
-                            key={geo.rsmKey}
-                            geography={geo}
-                            fill="#E8D4B0"
-                            stroke="#C9A87E"
-                            strokeWidth={0.8}
-                            style={{
-                              default: { outline: "none" },
-                              hover:   { outline: "none", fill: "#D9C099" },
-                              pressed: { outline: "none" },
-                            }}
-                          />
-                        ))
-                      }
-                    </Geographies>
-
-                    {!showDestinationLabels && regionLabels.map((regionLabel) => (
-                      <Marker
-                        key={regionLabel.region}
-                        coordinates={regionLabel.coordinates}
-                      >
-                        <g style={{ pointerEvents: "none", userSelect: "none" }}>
-                          <text
-                            x={regionLabel.dx ?? 0}
-                            y={regionLabel.dy ?? 0}
-                            textAnchor={regionLabel.textAnchor}
-                            fontSize="10"
-                            fontWeight="700"
-                            letterSpacing="0.18em"
-                            fill="#1A2E2A"
-                            opacity={0.8}
-                            style={{ textTransform: "uppercase" }}
-                            stroke="rgba(252,250,245,0.95)"
-                            strokeWidth="2.5"
-                            paintOrder="stroke"
-                          >
-                            {regionLabel.region}
-                          </text>
-                        </g>
-                      </Marker>
-                    ))}
-
-                    {/* Teardrop pins with zoom-aware labels */}
-                    {destinations.map((destination) => {
-                      const isActive  = activeId === destination.id;
-                      const isHovered = hoveredId === destination.id;
-                      const isInteractive = isActive || isHovered;
-                      const isSailed = !!destination.photo;
-                      const pinFill   = isSailed ? "#10755A" : "#E85D5D";
-                      const ringFill  = isSailed ? "#10755A" : "#E85D5D";
-                      const shouldShowLabel = showDestinationLabels || isInteractive;
-
-                      return (
-                        <Marker
-                          key={destination.id}
-                          coordinates={destination.coordinates}
-                          onMouseEnter={() => setHoveredId(destination.id)}
-                          onMouseLeave={() => setHoveredId((cur) => cur === destination.id ? null : cur)}
-                          onClick={(e: React.MouseEvent<SVGGElement>) => {
-                            e.stopPropagation();
-                            void handleDestinationSelect(destination);
-                          }}
-                        >
-                          <g className="cursor-pointer" aria-label={destination.label}>
-                            {/* Pulse ring on active */}
-                            {isInteractive && (
-                              <circle
-                                className="destination-pin-ring"
-                                cx="0" cy="-16"
-                                r={14}
-                                fill="none"
-                                stroke={ringFill}
-                                strokeWidth={1.5}
-                                opacity={0.7}
-                              />
-                            )}
-                            {/* Drop shadow */}
-                            <ellipse cx="0" cy="1.5" rx="5" ry="2.5" fill="rgba(42,59,54,0.18)" />
-                            {/* Teardrop pin body: tip at (0,0), head ~24px tall */}
-                            <path
-                              className={isInteractive ? "destination-pin-core" : undefined}
-                              d="M0,0 L-7,-12 A8,8 0 1,1 7,-12 Z"
-                              fill={pinFill}
-                              stroke="rgba(255,255,255,0.6)"
-                              strokeWidth={1.2}
-                              strokeLinejoin="round"
+                    <ZoomableGroup center={[-60, 20]} zoom={1} minZoom={1} maxZoom={6}>
+                      <Sphere id="map-ocean" fill="#F5EFE4" stroke="rgba(180,155,120,0.2)" strokeWidth={0.5} />
+                      <Geographies geography={DESTINATION_MAP_GEOGRAPHY}>
+                        {({ geographies }: { geographies: any[] }) =>
+                          geographies.map((geo) => (
+                            <Geography
+                              key={geo.rsmKey}
+                              geography={geo}
+                              fill="#E8D4B0"
+                              stroke="#C9A87E"
+                              strokeWidth={0.8}
+                              style={{ default: { outline: 'none' }, hover: { outline: 'none', fill: '#D9C099' }, pressed: { outline: 'none' } }}
                             />
-                            {/* Highlight circle inside pin head */}
-                            <circle cx="0" cy="-17" r="3" fill="rgba(255,255,255,0.35)" />
-                            {shouldShowLabel && (
-                              <text
-                                x="12"
-                                y="-13"
-                                fontSize={isInteractive ? "8.5" : "8"}
-                                fontWeight={isInteractive ? "700" : "600"}
-                                fill="#1A2E2A"
-                                stroke="rgba(252,250,245,0.95)"
-                                strokeWidth="2"
-                                paintOrder="stroke"
-                                style={{ userSelect: "none", pointerEvents: "none" }}
-                              >
-                                {destination.label}
-                              </text>
-                            )}
-                          </g>
-                        </Marker>
-                      );
-                    })}
-                  </ZoomableGroup>
-                </ComposableMap>
-              </div>
-
-              {/* "Sailed / On the list" legend — bottom-left */}
-              <div className="pointer-events-none absolute bottom-4 left-4 bg-cream/85 backdrop-blur rounded-xl px-3 py-2 flex flex-col gap-1.5">
-                <div className="flex items-center gap-2">
-                  <svg width="10" height="14" viewBox="0 0 14 20" fill="none" className="shrink-0">
-                    <path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#10755A" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" />
-                  </svg>
-                  <span className="text-[10px] font-semibold text-stone">Sailed</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <svg width="10" height="14" viewBox="0 0 14 20" fill="none" className="shrink-0">
-                    <path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#E85D5D" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" />
-                  </svg>
-                  <span className="text-[10px] font-semibold text-stone">On the list</span>
+                          ))
+                        }
+                      </Geographies>
+                      {destinations.map((destination) => {
+                        const isSailed = !!destination.photo;
+                        const pinFill = isSailed ? "#10755A" : "#E85D5D";
+                        return (
+                          <Marker key={destination.id} coordinates={destination.coordinates}>
+                            <g className="cursor-pointer">
+                              <ellipse cx="0" cy="1.5" rx="5" ry="2.5" fill="rgba(42,59,54,0.18)" />
+                              <path d="M0,0 L-7,-12 A8,8 0 1,1 7,-12 Z" fill={pinFill} stroke="rgba(255,255,255,0.6)" strokeWidth={1.2} strokeLinejoin="round" />
+                              <circle cx="0" cy="-17" r="3" fill="rgba(255,255,255,0.35)" />
+                            </g>
+                          </Marker>
+                        );
+                      })}
+                    </ZoomableGroup>
+                  </ComposableMap>
                 </div>
               </div>
 
-              {/* Subtle hint */}
-              <div className="pointer-events-none absolute bottom-4 right-4 flex items-center gap-1.5 bg-cream/80 backdrop-blur rounded-full px-3 py-1.5">
-                <MapPinned className="h-3 w-3 text-stone/60" />
-                <span className="text-[10px] text-stone/70 font-medium">Click a pin to see Yolanda&apos;s notes →</span>
+              <div className="mt-3 flex items-center justify-center gap-1.5 text-[0.78rem] font-semibold text-stone/70">
+                <MapPinned className="h-3.5 w-3.5" />
+                Tap a pin to see Yolanda&apos;s notes
               </div>
+            </div>
 
-              {/* Destination popup */}
-              <AnimatePresence>
-                {canRenderPopup && activeDestination && popupPosition ? (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.92, y: 8 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.96, y: 6 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    onClick={(e) => e.stopPropagation()}
-                    className="absolute z-20 overflow-hidden rounded-xl border border-blush bg-cream shadow-2xl"
-                    style={{ left: popupPosition.left, top: popupPosition.top, width: popupPosition.width }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setActiveId(null)}
-                      className="absolute right-3 top-3 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-sand/80 text-stone transition-colors hover:text-ink"
-                      aria-label={`Close ${activeDestination.label} details`}
-                    >
-                      <X className="h-3.5 w-3.5" />
-                    </button>
-
-                    {activeDestination.photo ? (
-                      <div className="relative h-[130px] w-full">
-                        <Image
-                          src={activeDestination.photo}
-                          alt={activeDestination.photoAlt ?? activeDestination.label}
-                          fill className="object-cover" sizes="280px"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent" />
-                      </div>
-                    ) : null}
-
-                    <div className="p-4">
-                      <p className="font-serif text-base font-semibold text-ink">{activeDestination.label}</p>
-                      <p className="mt-0.5 text-[13px] text-stone">{activeDestination.sub}</p>
-                      <a
-                        href={DESTINATION_CTA_HREF}
-                        className="mt-3 inline-flex items-center gap-2 rounded-full bg-coral px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-coral-deep"
-                      >
-                        Plan My Cruise <ArrowRight className="h-3.5 w-3.5" />
-                      </a>
-                    </div>
-                  </motion.div>
-                ) : null}
-              </AnimatePresence>
+            <div className="mt-6 text-center">
+              <a
+                href="/#contact"
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-coral px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-coral-deep sm:w-auto"
+              >
+                Plan My Cruise
+                <ArrowRight className="h-4 w-4" />
+              </a>
             </div>
           </motion.div>
         </div>
-
-        {/* Mobile: stacked map card atlas */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
-          className="lg:hidden"
-        >
-          <div className="mx-auto max-w-[28rem] text-center">
-            <p className="type-kicker mb-2 text-coral">THE TRAVELHOLICS ATLAS</p>
-            <h2 className="mb-3 font-serif text-[1.7rem] font-semibold leading-[1.1] tracking-tight text-ink">
-              Where we&apos;ve sailed. Where we&apos;re sailing next.
-            </h2>
-            <p className="mx-auto mb-4 max-w-[32ch] text-[15px] font-medium leading-[1.6] text-ink/82">
-              Every pin is a port Yolanda has been to, or a trip the Crew is eyeing next. Tap around for notes, stories, and future sailings.
-            </p>
-          </div>
-
-          {/* Map card */}
-          <div className="mx-auto mt-4 w-full max-w-[26rem] rounded-2xl shadow-lg border border-blush/70 bg-cream overflow-hidden" style={{aspectRatio:'4/3', minHeight:'220px', maxHeight:'340px', position:'relative'}}>
-            <div className="absolute inset-0">
-              <ComposableMap
-                projection="geoMercator"
-                projectionConfig={{ scale: 90, center: [-60, 20] }}
-                width={360}
-                height={270}
-                style={{ width: '100%', height: '100%' }}
-              >
-                <ZoomableGroup center={[-60, 20]} zoom={1} minZoom={1} maxZoom={6}>
-                  <Sphere id="map-ocean" fill="#F5EFE4" stroke="rgba(180,155,120,0.2)" strokeWidth={0.5} />
-                  <Geographies geography={DESTINATION_MAP_GEOGRAPHY}>
-                    {({ geographies }: { geographies: any[] }) =>
-                      geographies.map((geo) => (
-                        <Geography
-                          key={geo.rsmKey}
-                          geography={geo}
-                          fill="#E8D4B0"
-                          stroke="#C9A87E"
-                          strokeWidth={0.8}
-                          style={{ default: { outline: 'none' }, hover: { outline: 'none', fill: '#D9C099' }, pressed: { outline: 'none' } }}
-                        />
-                      ))
-                    }
-                  </Geographies>
-                  {destinations.map((destination) => {
-                    const isSailed = !!destination.photo;
-                    const pinFill = isSailed ? "#10755A" : "#E85D5D";
-                    return (
-                      <Marker key={destination.id} coordinates={destination.coordinates}>
-                        <g className="cursor-pointer">
-                          <ellipse cx="0" cy="1.5" rx="5" ry="2.5" fill="rgba(42,59,54,0.18)" />
-                          <path d="M0,0 L-7,-12 A8,8 0 1,1 7,-12 Z" fill={pinFill} stroke="rgba(255,255,255,0.6)" strokeWidth={1.2} strokeLinejoin="round" />
-                          <circle cx="0" cy="-17" r="3" fill="rgba(255,255,255,0.35)" />
-                        </g>
-                      </Marker>
-                    );
-                  })}
-                </ZoomableGroup>
-              </ComposableMap>
-            </div>
-          </div>
-
-          {/* Legend and tap instruction */}
-          <div className="mt-3 flex flex-col items-center gap-2">
-            <div className="flex items-center gap-4">
-              <span className="inline-flex items-center gap-1 text-xs font-semibold text-stone">
-                <svg width="10" height="14" viewBox="0 0 14 20" fill="none"><path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#10755A" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" /></svg>
-                Sailed
-              </span>
-              <span className="inline-flex items-center gap-1 text-xs font-semibold text-stone">
-                <svg width="10" height="14" viewBox="0 0 14 20" fill="none"><path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#E85D5D" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" /></svg>
-                On the list
-              </span>
-            </div>
-            <span className="text-xs text-stone/70 font-medium mt-1">Tap a pin to see Yolanda’s notes →</span>
-          </div>
-
-          {/* Destination pills */}
-          <div className="mt-4 flex flex-wrap justify-center gap-2 px-2">
-            {['Caribbean','Alaska','Mediterranean','West Coast','East Coast'].map(region => (
-              <span key={region} className="inline-block rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-ink/80 border border-blush/40 shadow-sm">
-                {region}
-              </span>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div className="mt-5 mb-2 text-center">
-            <a
-              href="/#contact"
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-coral px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-coral-deep sm:w-auto"
-            >
-              Plan My Cruise →
-            </a>
-          </div>
-        </motion.div>
-
       </div>
     </section>
   );
