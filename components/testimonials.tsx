@@ -114,14 +114,6 @@ function TestimonialsCTA() {
 }
 
 export const Testimonials = () => {
-  if (!RENDER_TESTIMONIALS || testimonials.length === 0) return null;
-
-  const visualTestimonials = Array.from(
-    { length: VISUAL_TESTIMONIAL_COUNT },
-    (_, index) => testimonials[index % testimonials.length],
-  );
-  const loopedTestimonials = [...visualTestimonials, ...visualTestimonials];
-
   const [expanded, setExpanded] = useState<Testimonial | null>(null);
   const [prefersReduced, setPrefersReduced] = useState(false);
   const [trackWidth, setTrackWidth] = useState(0);
@@ -131,6 +123,12 @@ export const Testimonials = () => {
   const loopRef = useRef<(from: number) => void>(() => {});
   const hoverPaused = useRef(false);
   const dragActive = useRef(false);
+
+  const visualTestimonials = Array.from(
+    { length: VISUAL_TESTIMONIAL_COUNT },
+    (_, index) => testimonials[index % testimonials.length],
+  );
+  const loopedTestimonials = [...visualTestimonials, ...visualTestimonials];
 
   const openTestimonial = useCallback((t: Testimonial) => { setExpanded(t); }, []);
   const closeTestimonial = useCallback(() => { setExpanded(null); }, []);
@@ -202,6 +200,8 @@ export const Testimonials = () => {
       {expanded && <TestimonialLightbox testimonial={expanded} onClose={closeTestimonial} />}
     </AnimatePresence>
   );
+
+  if (!RENDER_TESTIMONIALS || testimonials.length === 0) return null;
 
   if (prefersReduced) {
     return (
