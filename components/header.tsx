@@ -14,7 +14,6 @@ const DESKTOP_NAV = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Live", href: "/live", liveIndicator: true },
   { label: "Shop", href: "/shop" },
-  { label: "Journal", href: "/blog" },
   { label: "Our Story", href: "/#about" },
 ];
 
@@ -22,7 +21,6 @@ const MOBILE_NAV = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Live", href: "/live" },
   { label: "Shop", href: "/shop" },
-  { label: "Journal", href: "/blog" },
   { label: "Our Story", href: "/#about" },
   { label: "Contact", href: "/#contact" },
 ];
