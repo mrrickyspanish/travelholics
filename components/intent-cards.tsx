@@ -49,7 +49,7 @@ const desktopSlots = [
     left: "0%",
     top: "2rem",
     width: "52%",
-    height: "27.5rem",
+    height: "25rem",
     zIndex: 30,
     opacity: 1,
   },
@@ -121,7 +121,7 @@ export const IntentCards = () => {
             transition={{ duration: 0.55 }}
             className="max-w-[34rem] lg:self-center"
           >
-            <p className="mb-4 inline-flex rounded-full bg-sand px-4 py-2 text-[0.875rem] font-bold text-coral shadow-sm ring-1 ring-stone/10">
+            <p className="mb-4 text-[0.9rem] font-bold uppercase tracking-[0.08em] text-coral">
               Where we&apos;ll take you
             </p>
             <p className="max-w-[39ch] text-[1.05rem] font-medium leading-[1.75] text-ink/76 sm:text-[1.15rem]">
@@ -136,7 +136,7 @@ export const IntentCards = () => {
           </motion.div>
 
           <div
-            className="relative hidden min-h-[33rem] overflow-hidden lg:block"
+            className="relative hidden min-h-[35rem] overflow-visible lg:block"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             onFocusCapture={() => setIsPaused(true)}
@@ -147,52 +147,58 @@ export const IntentCards = () => {
               const isActiveSlot = slotIndex === 0;
 
               return (
-                <motion.a
+                <motion.div
                   key={`${card.title}-${slotIndex}`}
-                  href={card.href}
-                  className="group absolute overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_24px_60px_rgba(26,58,82,0.14)] ring-1 ring-stone/10"
+                  className="absolute"
                   initial={false}
                   animate={slot}
                   transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <div className="relative h-full overflow-hidden rounded-[1.55rem] bg-sand">
-                    <Image
-                      src={card.image}
-                      alt={card.imageAlt}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes={isActiveSlot ? "44vw" : "30vw"}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/86 via-ink/24 to-transparent" aria-hidden="true" />
+                  <a
+                    href={card.href}
+                    className="group block h-full overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_24px_60px_rgba(26,58,82,0.14)] ring-1 ring-stone/10"
+                  >
+                    <div className="relative h-full overflow-hidden rounded-[1.55rem] bg-sand">
+                      <Image
+                        src={card.image}
+                        alt={card.imageAlt}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes={isActiveSlot ? "44vw" : "30vw"}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/64 via-ink/12 to-transparent" aria-hidden="true" />
 
-                    <div className="absolute inset-x-0 bottom-0 p-5 text-white lg:p-6">
-                      <div className="mb-3 flex items-end justify-between gap-4">
-                        <p className="font-serif text-[clamp(2rem,3.2vw,3.25rem)] font-semibold leading-none tracking-[-0.05em]">
+                      <div className="absolute inset-x-0 bottom-0 p-5 text-white lg:p-6">
+                        <p className="max-w-[9ch] font-serif text-[clamp(2rem,3.2vw,3.25rem)] font-semibold leading-none tracking-[-0.05em]">
                           {card.title}
                         </p>
-                        <span className="rounded-full bg-white/16 px-3 py-1.5 text-[0.86rem] font-bold text-white/88 ring-1 ring-white/20 backdrop-blur-sm">
+                        <p className="absolute bottom-5 right-5 text-right text-[0.66rem] font-bold uppercase tracking-[0.12em] text-white/76 lg:bottom-6 lg:right-6">
                           {card.location}
-                        </span>
+                        </p>
                       </div>
-
-                      {isActiveSlot && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: prefersReducedMotion ? 0 : 0.35 }}
-                        >
-                          <p className="max-w-[32ch] text-[1.04rem] font-medium leading-snug text-white/88">
-                            {card.description}
-                          </p>
-                          <p className="mt-5 inline-flex items-center gap-2 text-[1rem] font-bold text-white underline decoration-white/40 underline-offset-4">
-                            {card.cta}
-                            <ArrowUpRight size={18} strokeWidth={2.2} />
-                          </p>
-                        </motion.div>
-                      )}
                     </div>
-                  </div>
-                </motion.a>
+                  </a>
+
+                  {isActiveSlot && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: prefersReducedMotion ? 0 : 0.35 }}
+                      className="mt-4 max-w-[34rem]"
+                    >
+                      <p className="text-[1.02rem] font-medium leading-[1.62] text-ink/78">
+                        {card.description}
+                      </p>
+                      <a
+                        href={card.href}
+                        className="mt-3 inline-flex items-center gap-2 text-[1rem] font-bold text-ink underline decoration-ink/28 underline-offset-4 transition-colors hover:text-coral"
+                      >
+                        {card.cta}
+                        <ArrowUpRight size={18} strokeWidth={2.2} />
+                      </a>
+                    </motion.div>
+                  )}
+                </motion.div>
               );
             })}
           </div>
@@ -200,35 +206,40 @@ export const IntentCards = () => {
           <div className="-mx-5 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:hidden">
             <div className="flex snap-x snap-mandatory gap-4">
               {cards.map((card) => (
-                <a
+                <div
                   key={card.title}
-                  href={card.href}
-                  className="group relative min-h-[26rem] w-[82vw] max-w-[24rem] shrink-0 snap-start overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_22px_52px_rgba(26,58,82,0.12)] ring-1 ring-stone/10"
+                  className="w-[82vw] max-w-[24rem] shrink-0 snap-start"
                 >
-                  <div className="relative h-full overflow-hidden rounded-[1.55rem] bg-sand">
-                    <Image
-                      src={card.image}
-                      alt={card.imageAlt}
-                      fill
-                      className="object-cover"
-                      sizes="82vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/86 via-ink/28 to-transparent" aria-hidden="true" />
-                    <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                      <div className="mb-3 flex items-end justify-between gap-4">
+                  <a
+                    href={card.href}
+                    className="group relative block min-h-[24rem] overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_22px_52px_rgba(26,58,82,0.12)] ring-1 ring-stone/10"
+                  >
+                    <div className="relative h-full overflow-hidden rounded-[1.55rem] bg-sand">
+                      <Image
+                        src={card.image}
+                        alt={card.imageAlt}
+                        fill
+                        className="object-cover"
+                        sizes="82vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/68 via-ink/14 to-transparent" aria-hidden="true" />
+                      <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="font-serif text-[2.25rem] font-semibold leading-none tracking-[-0.04em]">{card.title}</p>
-                        <span className="rounded-full bg-white/16 px-3 py-1.5 text-[0.86rem] font-bold text-white/88 ring-1 ring-white/20 backdrop-blur-sm">
+                        <p className="absolute bottom-5 right-5 text-right text-[0.66rem] font-bold uppercase tracking-[0.12em] text-white/76">
                           {card.location}
-                        </span>
+                        </p>
                       </div>
-                      <p className="max-w-[30ch] text-[1rem] font-medium leading-snug text-white/88">{card.description}</p>
-                      <p className="mt-5 inline-flex items-center gap-2 text-[1rem] font-bold text-white underline decoration-white/40 underline-offset-4">
-                        {card.cta}
-                        <ArrowUpRight size={18} strokeWidth={2.2} />
-                      </p>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                  <p className="mt-4 text-[1rem] font-medium leading-[1.6] text-ink/78">{card.description}</p>
+                  <a
+                    href={card.href}
+                    className="mt-3 inline-flex items-center gap-2 text-[1rem] font-bold text-ink underline decoration-ink/28 underline-offset-4"
+                  >
+                    {card.cta}
+                    <ArrowUpRight size={18} strokeWidth={2.2} />
+                  </a>
+                </div>
               ))}
             </div>
           </div>
