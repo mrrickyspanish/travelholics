@@ -29,7 +29,7 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-const visualTestimonials = testimonials.length > 0
+const visualTestimonials: Testimonial[] = testimonials.length > 0
   ? Array.from(
       { length: VISUAL_TESTIMONIAL_COUNT },
       (_, index) => testimonials[index % testimonials.length],
