@@ -1,29 +1,26 @@
 // ⚠️ PLACEHOLDER PRICES AND PRODUCT DATA
 // Product prices and TikTok Shop affiliate URLs below are PLACEHOLDERS pending final data.
 // Rendering approved by Ricky — do NOT launch real checkout from these links until confirmed.
-// When real product images and URLs arrive, update each entry in the products array.
-// Lanyard image slots use stable placeholder filenames so final photos can be dropped into public/images without code changes.
 
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
-const VISIBLE = 3;
+import { ArrowUpRight } from "lucide-react";
 
 const products = [
   {
-    name: "Travelholics Atlantis Lanyard",
+    name: "Premium Atlantis Lanyard",
+    tag: "Cruise card ready",
     price: "$12.00",
     image: "/images/travelholics_lanyard_transparent.png",
     href: "/shop-full",
-    imageAlt: "Travelholics Cruise Card Lanyard Atlantis Edition",
+    imageAlt: "Travelholics Atlantis lanyard",
   },
   {
-    name: "Cruise Ticket Door Magnet",
+    name: "Cruise Life Door Magnet",
+    tag: "Cabin door energy",
     price: "$19.99",
     image: "/images/travelholics_product_ticket-magnet-pacific.png",
     href: "/shop-full",
@@ -31,6 +28,7 @@ const products = [
   },
   {
     name: "Pacific Mexican Door Magnet",
+    tag: "Collector cruise art",
     price: "$19.99",
     image: "/images/travelholics_product_pacific-mexican-door-magnet.png",
     href: "/shop-full",
@@ -38,6 +36,7 @@ const products = [
   },
   {
     name: "Travelholics Bucket Hat",
+    tag: "Pool deck uniform",
     price: "$38.00",
     image: "/images/Travelholics_merch_bucket_hat.png",
     href: "/shop-full",
@@ -46,142 +45,72 @@ const products = [
 ];
 
 export const ShopStrip = () => {
-  const [offset, setOffset] = useState(0);
-  const maxOffset = products.length - VISIBLE;
-
   return (
-    <section className="bg-cream py-12 md:py-16 overflow-x-clip">
+    <section className="relative overflow-hidden bg-cream py-16 sm:py-20 lg:py-28">
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-sand" aria-hidden="true" />
       <motion.div
-        className="max-w-7xl mx-auto px-6"
+        className="relative z-10 mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.55 }}
       >
-        {/* Mobile-only layout */}
-        <div className="md:hidden">
-          <div className="mx-auto w-full max-w-[38rem] text-center">
-            <p className="text-eyebrow text-coral mb-3">Travel Picks + Merch</p>
-            <h2 className="mx-auto max-w-[20ch] font-serif text-3xl font-semibold text-ink leading-tight tracking-tight mb-3">
-              Shop Our Favorite Finds
-            </h2>
-            <p className="mb-5 mx-auto max-w-[38ch] text-card-body text-ink/82">
-              Cruise-tested essentials and merch picks you will actually use.
-            </p>
-            <Link
-              href="/shop-full"
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border-2 border-emerald-mid bg-white px-6 py-3 text-sm font-semibold text-emerald-mid transition-colors hover:bg-emerald-mid hover:text-white"
-            >
-              Shop All Picks →
-            </Link>
-          </div>
-
-          <div className="mt-6 mb-3 flex items-center justify-between gap-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-stone/65">Swipe to explore</p>
-            <p className="text-[11px] font-medium text-stone/60">4 picks</p>
-          </div>
-
-          <div className="flex gap-4 overflow-x-auto pb-1 pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory">
-            {products.map(({ name, price, image, href, imageAlt }) => (
+        <div className="rounded-[2.5rem] bg-[#0E125C] p-5 text-white shadow-[0_30px_80px_rgba(14,18,92,0.18)] sm:p-7 lg:p-10">
+          <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
+            <div className="max-w-[34rem]">
+              <p className="font-script text-[2.65rem] font-semibold leading-none text-coral sm:text-[3rem]">
+                Travelholics Originals
+              </p>
+              <h2 className="mt-3 font-serif text-[clamp(2.5rem,7vw,5.25rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white">
+                Gear for people already packing.
+              </h2>
+              <p className="mt-5 max-w-[37ch] text-[1.05rem] font-medium leading-[1.7] text-white/76 sm:text-[1.14rem]">
+                Cruise-tested pieces, cabin-door personality, and travel lifestyle goods that make the crew feel official before the ship even leaves port.
+              </p>
               <Link
-                key={name}
-                href={href}
-                className="group flex-shrink-0 flex flex-col gap-2 snap-start"
-                style={{ flex: "0 0 min(78vw, 320px)" }}
+                href="/shop-full"
+                className="mt-7 inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
               >
-                <div className="relative aspect-square overflow-hidden rounded-xl bg-sand">
-                  <Image
-                    src={image}
-                    alt={imageAlt}
-                    fill
-                    className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
-                    sizes="(max-width: 768px) 78vw, 320px"
-                  />
-                </div>
-                <p className="text-card-body font-semibold text-ink leading-snug">{name}</p>
-                <p className="text-card-body font-semibold text-coral">{price}</p>
+                Shop the collection
+                <ArrowUpRight size={18} strokeWidth={2.2} />
               </Link>
-            ))}
-          </div>
+            </div>
 
-          <div className="mt-4 text-center">
-            <Link
-              href="/shop-full"
-              className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-emerald-mid underline underline-offset-4"
-            >
-              View all picks
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </Link>
-          </div>
-        </div>
-
-        {/* Tablet/Desktop layout */}
-        <div className="hidden md:grid lg:grid-cols-[30%_70%] gap-10 items-center">
-          <div>
-            <p className="type-kicker text-coral mb-3">Travel Picks + Merch</p>
-            <h2 className="font-serif text-3xl font-semibold text-ink leading-tight tracking-tight mb-3">
-              Shop Our Favorite Finds
-            </h2>
-            <p className="mb-6 max-w-[38ch] text-[17px] font-medium leading-[1.65] text-ink/82">
-              Cruise-tested essentials and merch picks you will actually use.
-            </p>
-            <Link
-              href="/shop-full"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-emerald-mid bg-white px-6 py-3 text-sm font-semibold text-emerald-mid transition-colors hover:bg-emerald-mid hover:text-white"
-            >
-              Shop All Picks →
-            </Link>
-          </div>
-
-          <div className="relative">
-            <div className="overflow-hidden">
-              <div
-                className="flex gap-6 transition-transform duration-500 ease-out"
-                style={{
-                  transform: `translateX(calc(-${offset * (100 / VISIBLE)}% - ${offset * 24 / VISIBLE}px))`,
-                }}
-              >
-                {products.map(({ name, price, image, href, imageAlt }) => (
+            <div className="-mx-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:overflow-visible lg:px-0">
+              <div className="flex gap-4 lg:grid lg:grid-cols-4 lg:gap-5">
+                {products.map((product, index) => (
                   <Link
-                    key={name}
-                    href={href}
-                    className="flex-shrink-0 flex flex-col gap-2 group"
-                    style={{ width: `calc(${100 / VISIBLE}% - ${24 * (VISIBLE - 1) / VISIBLE}px)` }}
+                    key={product.name}
+                    href={product.href}
+                    className={`group block w-[72vw] max-w-[19rem] shrink-0 rounded-[2rem] bg-white p-3 text-ink shadow-[0_22px_50px_rgba(0,0,0,0.16)] transition-transform duration-300 hover:-translate-y-1 sm:w-[18rem] lg:w-auto lg:max-w-none ${index % 2 === 1 ? "lg:translate-y-8" : ""}`}
                   >
-                    <div className="relative aspect-square overflow-hidden rounded-xl bg-sand">
+                    <div className="relative aspect-square overflow-hidden rounded-[1.5rem] bg-sand">
                       <Image
-                        src={image}
-                        alt={imageAlt}
+                        src={product.image}
+                        alt={product.imageAlt}
                         fill
-                        className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
-                        sizes="(max-width: 1024px) 33vw, 20vw"
+                        className="object-contain p-5 transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 1024px) 72vw, 22vw"
                       />
                     </div>
-                    <p className="text-[13px] font-semibold text-ink leading-snug">{name}</p>
-                    <p className="text-[13px] font-semibold text-coral">{price}</p>
+                    <div className="px-1 pb-1 pt-4">
+                      <div className="mb-3 flex items-center justify-between gap-3">
+                        <p className="rounded-full bg-sand px-3 py-1 text-[0.875rem] font-bold text-emerald-mid">
+                          {product.tag}
+                        </p>
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink text-white transition-transform duration-300 group-hover:rotate-12">
+                          <ArrowUpRight size={17} strokeWidth={2.2} />
+                        </span>
+                      </div>
+                      <h3 className="font-serif text-[1.45rem] font-semibold leading-tight tracking-[-0.03em] text-ink">
+                        {product.name}
+                      </h3>
+                      <p className="mt-2 text-[1rem] font-bold text-coral">{product.price}</p>
+                    </div>
                   </Link>
                 ))}
               </div>
             </div>
-
-            <button
-              type="button"
-              onClick={() => setOffset((o) => Math.max(0, o - 1))}
-              disabled={offset === 0}
-              className="absolute left-0 top-[40%] -translate-y-1/2 -translate-x-4 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center text-ink hover:text-coral transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-              aria-label="Previous product"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              type="button"
-              onClick={() => setOffset((o) => Math.min(maxOffset, o + 1))}
-              disabled={offset === maxOffset}
-              className="absolute right-0 top-[40%] -translate-y-1/2 translate-x-4 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center text-ink hover:text-coral transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-              aria-label="Next product"
-            >
-              <ChevronRight size={18} />
-            </button>
           </div>
         </div>
       </motion.div>
