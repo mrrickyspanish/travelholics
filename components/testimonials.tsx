@@ -29,6 +29,14 @@ const testimonials: Testimonial[] = [
   },
 ];
 
+const visualTestimonials = testimonials.length > 0
+  ? Array.from(
+      { length: VISUAL_TESTIMONIAL_COUNT },
+      (_, index) => testimonials[index % testimonials.length],
+    )
+  : [];
+const loopedTestimonials = [...visualTestimonials, ...visualTestimonials];
+
 const Stars = ({ count = 5 }: { count?: number }) => (
   <div className="flex gap-0.5 flex-none" aria-label={`${count} out of 5 stars`}>
     {Array.from({ length: count }).map((_, i) => (
@@ -123,12 +131,6 @@ export const Testimonials = () => {
   const loopRef = useRef<(from: number) => void>(() => {});
   const hoverPaused = useRef(false);
   const dragActive = useRef(false);
-
-  const visualTestimonials = Array.from(
-    { length: VISUAL_TESTIMONIAL_COUNT },
-    (_, index) => testimonials[index % testimonials.length],
-  );
-  const loopedTestimonials = [...visualTestimonials, ...visualTestimonials];
 
   const openTestimonial = useCallback((t: Testimonial) => { setExpanded(t); }, []);
   const closeTestimonial = useCallback(() => { setExpanded(null); }, []);
