@@ -17,7 +17,7 @@ const cards = [
   {
     title: "Caribbean",
     location: "Island routes",
-    detailLabel: "Caribbean, Islands",
+    detailLabel: "Caribbean Sea, Islands",
     description: "Warm water, quick flights, island days, and the kind of trip your group chat actually commits to.",
     href: "/cruises/caribbean",
     image: "/images/dest-caribbean.jpg",
@@ -122,30 +122,30 @@ export const IntentCards = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          className="mx-auto max-w-[58rem] text-center"
+          className="mx-auto max-w-[54rem] text-center"
         >
-          <h2 className="font-serif text-[clamp(3.25rem,8.5vw,7.5rem)] font-semibold leading-[0.88] tracking-[-0.07em] text-ink">
+          <h2 className="font-serif text-[clamp(2.6rem,6.8vw,6rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-ink">
             Going places, with someone who knows the way.
           </h2>
         </motion.div>
 
-        <div className="mt-12 grid items-center gap-10 lg:mt-14 lg:grid-cols-[0.42fr_0.58fr] lg:gap-12 xl:gap-16">
+        <div className="mt-12 grid items-start gap-10 lg:mt-14 lg:grid-cols-[0.42fr_0.58fr] lg:gap-12 xl:gap-16">
           <motion.div
             initial={{ opacity: 0, x: -18 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55 }}
-            className="max-w-[34rem] lg:self-center"
+            className="max-w-[34rem] lg:pt-[16.75rem]"
           >
-            <p className="mb-4 text-[0.9rem] font-bold uppercase tracking-[0.08em] text-coral">
-              Where we&apos;ll take you
-            </p>
+            <h3 className="mb-4 font-serif text-[clamp(2rem,3vw,3rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-ink">
+              Trips with real opinions.
+            </h3>
             <p className="max-w-[39ch] text-[1.05rem] font-medium leading-[1.75] text-ink/76 sm:text-[1.15rem]">
               Browse the kind of trips Travelholics is built around, then let Yolanda help you choose the ship, stay, room, and rhythm that actually fits your people.
             </p>
             <a
               href="/#contact"
-              className="mt-7 inline-flex min-h-[46px] items-center justify-center rounded-full bg-ink px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-emerald-deep"
+              className="mt-7 inline-flex min-h-[46px] items-center justify-center rounded-xl bg-ink px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-emerald-deep"
             >
               Start planning
             </a>
@@ -198,7 +198,7 @@ export const IntentCards = () => {
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: prefersReducedMotion ? 0 : 0.32, exit: { duration: 0.12 } }}
                 >
-                  <p className="text-[0.78rem] font-bold uppercase tracking-[0.12em] text-coral">
+                  <p className="text-[0.7rem] font-bold uppercase tracking-[0.12em] text-coral">
                     {activeCard.detailLabel}
                   </p>
                   <p className="mt-2 text-[1.02rem] font-medium leading-[1.62] text-ink/78">
@@ -235,7 +235,7 @@ export const IntentCards = () => {
                       </p>
                     </div>
                   </a>
-                  <p className="mt-4 text-[0.76rem] font-bold uppercase tracking-[0.12em] text-coral">{card.detailLabel}</p>
+                  <p className="mt-4 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-coral">{card.detailLabel}</p>
                   <p className="mt-2 text-[1rem] font-medium leading-[1.6] text-ink/78">{card.description}</p>
                 </div>
               ))}
