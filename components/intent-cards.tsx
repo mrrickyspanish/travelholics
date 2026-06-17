@@ -9,7 +9,7 @@ const cards = [
     title: "Cruises",
     location: "At sea",
     detailLabel: "Cruise Deck, At Sea",
-    description: "The big-ship life: cabins, ports, decks, dining, excursions, and the details that make the trip feel easy.",
+    description: "Ship views, cabin tips, and easier cruise days.",
     href: "/cruises/caribbean",
     image: "/images/hero_th_background.png",
     imageAlt: "Cruise ship deck at sunset",
@@ -18,7 +18,7 @@ const cards = [
     title: "Caribbean",
     location: "Island routes",
     detailLabel: "Caribbean Sea, Islands",
-    description: "Warm water, quick flights, island days, and the kind of trip your group chat actually commits to.",
+    description: "Warm beaches, quick flights, easy group getaways.",
     href: "/cruises/caribbean",
     image: "/images/dest-caribbean.jpg",
     imageAlt: "Caribbean destination with turquoise water",
@@ -27,7 +27,7 @@ const cards = [
     title: "Alaska",
     location: "Glacier sailings",
     detailLabel: "Alaska, USA",
-    description: "Glaciers, balcony views, cool-weather packing, and a completely different kind of cruise memory.",
+    description: "Glacier views, balcony mornings, cool-weather memories.",
     href: "/cruises/alaska",
     image: "/images/dest-alaska-glaciers.jpg",
     imageAlt: "Alaska glaciers and mountain landscape",
@@ -36,7 +36,7 @@ const cards = [
     title: "Mediterranean",
     location: "European ports",
     detailLabel: "Mediterranean, Greece",
-    description: "Ancient cities, blue coastlines, port-heavy days, and a trip that feels like a story you will keep retelling.",
+    description: "Ancient cities, blue coasts, unforgettable port days.",
     href: "/cruises/mediterranean",
     image: "/images/dest-mediterranean.jpg",
     imageAlt: "Mediterranean travel destination",
@@ -131,7 +131,7 @@ export const IntentCards = () => {
           className="mx-auto max-w-[64rem] text-center"
         >
           <h2 className="font-serif text-[clamp(2.2rem,5vw,4.8rem)] font-semibold leading-[0.92] tracking-[-0.065em] text-ink">
-            Going places, with someone who knows the way.
+            Going places, with someone who <span className="whitespace-nowrap">knows the way.</span>
           </h2>
         </motion.div>
 
@@ -212,10 +212,10 @@ export const IntentCards = () => {
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: prefersReducedMotion ? 0 : 0.32, exit: { duration: 0.12 } }}
                 >
-                  <p className="text-[0.77rem] font-bold uppercase tracking-[0.12em] text-coral">
+                  <p className="text-[0.85rem] font-bold uppercase tracking-[0.12em] text-coral">
                     {activeCard.detailLabel}
                   </p>
-                  <p className="mt-2 text-[1.02rem] font-medium leading-[1.62] text-ink/78">
+                  <p className="mt-2 max-w-[32rem] text-[1.02rem] font-medium leading-[1.62] text-ink/78">
                     {activeCard.description}
                   </p>
                 </motion.div>
@@ -249,7 +249,7 @@ export const IntentCards = () => {
                       </p>
                     </div>
                   </a>
-                  <p className="mt-4 text-[0.77rem] font-bold uppercase tracking-[0.12em] text-coral">{card.detailLabel}</p>
+                  <p className="mt-4 text-[0.85rem] font-bold uppercase tracking-[0.12em] text-coral">{card.detailLabel}</p>
                   <p className="mt-2 text-[1rem] font-medium leading-[1.6] text-ink/78">{card.description}</p>
                 </div>
               ))}
