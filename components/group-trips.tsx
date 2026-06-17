@@ -34,6 +34,8 @@ const supportingTiles = [
   },
 ];
 
+const photoLabelClass = "absolute bottom-4 right-4 text-right text-[0.56rem] font-bold uppercase leading-none tracking-[0.14em] text-white/70 lg:bottom-5 lg:right-5";
+
 export const GroupTrips = () => {
   return (
     <section id="group-trips" className="relative overflow-hidden bg-sand py-16 sm:py-20 lg:py-28">
@@ -81,10 +83,8 @@ export const GroupTrips = () => {
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 1024px) 92vw, 38vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/62 via-ink/18 to-transparent" aria-hidden="true" />
-                <p className="absolute bottom-5 left-5 text-[1.05rem] font-semibold text-white sm:text-[1.15rem]">
-                  {featuredTile.caption}
-                </p>
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/28 via-transparent to-transparent" aria-hidden="true" />
+                <p className={photoLabelClass}>{featuredTile.caption}</p>
               </div>
             </article>
 
@@ -102,10 +102,8 @@ export const GroupTrips = () => {
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 1024px) 45vw, 22vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/58 via-ink/12 to-transparent" aria-hidden="true" />
-                    <p className="absolute bottom-4 left-4 text-[0.95rem] font-semibold leading-tight text-white">
-                      {caption}
-                    </p>
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/28 via-transparent to-transparent" aria-hidden="true" />
+                    <p className={photoLabelClass}>{caption}</p>
                   </div>
                 </article>
               ))}
