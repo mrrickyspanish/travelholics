@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 import { CheckCircle, Ship } from "lucide-react";
 import { Button } from "@/components/button";
 
-// TODO: Confirm destination options with Yolanda — these are reasonable defaults
 const DESTINATION_OPTIONS = [
   "Caribbean",
   "Alaska",
@@ -29,25 +28,20 @@ const TIMING_OPTIONS = [
   "Just exploring options",
 ];
 
-// Postage-stamp decoration for left column bottom
-const PostageStamp = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 80 100" className={className} aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="3" width="74" height="94" rx="2" stroke="rgba(244,196,204,0.5)" strokeWidth="1.5" strokeDasharray="5 3" fill="rgba(255,255,255,0.06)" />
-    <rect x="10" y="10" width="60" height="62" rx="2" fill="rgba(255,255,255,0.07)" />
-    <text x="40" y="50" textAnchor="middle" fontSize="28" fill="rgba(255,255,255,0.2)">✈</text>
-    <text x="40" y="82" textAnchor="middle" fontSize="7" fill="rgba(255,255,255,0.25)" fontFamily="monospace" fontWeight="bold" letterSpacing="1">TRAVELHOLIC</text>
-  </svg>
-);
-
 export const ContactForm = () => {
   const [formData, setFormData] = useState({
-    firstName: "", lastName: "", email: "", phone: "",
-    destination: "", timing: "", message: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    destination: "",
+    timing: "",
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [website, setWebsite] = useState(""); // honeypot
+  const [website, setWebsite] = useState("");
 
   const getMissingRequiredFields = () => {
     const checks: Array<[string, string]> = [
@@ -84,7 +78,6 @@ export const ContactForm = () => {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    // Honeypot — silent discard
     if (website.trim()) {
       fireConfetti();
       setIsSuccess(true);
@@ -141,161 +134,138 @@ export const ContactForm = () => {
   };
 
   const inputClass =
-    "w-full min-h-11 px-4 py-3 rounded-xl border border-blush bg-white focus:border-emerald-mid focus:ring-2 focus:ring-emerald-mid/20 outline-none transition-all text-[15px] text-ink placeholder:text-stone/55";
-  const labelClass = "text-form-label text-ink mb-1.5 block";
+    "w-full min-h-12 rounded-2xl border border-blush bg-white px-4 py-3 text-[15px] text-ink outline-none transition-all placeholder:text-stone/55 focus:border-emerald-mid focus:ring-2 focus:ring-emerald-mid/20";
+  const labelClass = "mb-1.5 block text-[0.95rem] font-semibold text-ink";
 
   return (
-    <section id="contact" className="bg-sand py-20 relative overflow-hidden">
-      {/* Dot grid texture */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #2A3B36 1px, transparent 0)", backgroundSize: "32px 32px" }}
-        aria-hidden="true"
-      />
+    <section id="contact" className="relative overflow-hidden bg-emerald-deep text-white">
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="grid min-h-[42rem] lg:grid-cols-[0.44fr_0.56fr]"
+      >
+        <div className="relative flex items-center bg-emerald-deep px-5 py-16 sm:px-8 lg:px-10 xl:px-16">
+          <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #FCFAF5 1px, transparent 0)", backgroundSize: "28px 28px" }} aria-hidden="true" />
+          <div className="relative z-10 mx-auto w-full max-w-[34rem] lg:mr-0 lg:ml-auto">
+            <p className="font-script text-[2.7rem] font-semibold leading-none text-coral sm:text-[3.1rem]">
+              Let&apos;s make it happen
+            </p>
+            <h2 className="mt-4 font-serif text-[clamp(3rem,8vw,6.25rem)] font-semibold leading-[0.9] tracking-[-0.065em] text-white">
+              Plan your next cruise.
+            </h2>
+            <p className="mt-6 max-w-[31ch] text-[1.08rem] font-medium leading-[1.75] text-white/78 sm:text-[1.18rem]">
+              Tell Yolanda where your mind keeps wandering. She will help turn the idea into the right ship, stay, timing, and plan.
+            </p>
 
-      <div className="max-w-5xl mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="grid lg:grid-cols-[40%_60%] rounded-3xl overflow-hidden shadow-2xl shadow-ink/10"
-        >
-          {/* ── Left: Emerald-deep headline + bullets panel ── */}
-          <div className="relative bg-emerald-deep px-6 py-7 sm:px-7 sm:py-8 lg:px-8 lg:py-10 flex flex-col gap-6 overflow-hidden">
-            <div className="relative z-10">
-              <p className="text-eyebrow text-coral mb-3">Let&apos;s Make It Happen</p>
-              <h2 className="font-serif text-2xl lg:text-[1.65rem] font-semibold text-white leading-tight mb-3 tracking-tight">
-                Plan Your Next Cruise
-              </h2>
-              <p className="font-script text-[1.5rem] text-coral leading-tight mb-7">
-                Let&apos;s make your dream vacation a reality.
-              </p>
-              <ul className="space-y-2.5">
-                {[
-                  "Personalized recommendations",
-                  "Exclusive perks & upgrades",
-                  "Group trips made easy",
-                  "No booking fees, ever",
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5">
-                    <CheckCircle size={15} className="text-coral shrink-0" />
-                    <span className="text-card-body font-medium text-white/90">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <PostageStamp className="hidden lg:block absolute right-5 bottom-5 w-12 h-[60px] opacity-25" />
+            <ul className="mt-8 grid gap-3 text-left sm:grid-cols-2 lg:grid-cols-1">
+              {[
+                "Personalized recommendations",
+                "Exclusive perks and upgrades",
+                "Group trips made easier",
+                "No booking fees, ever",
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-coral ring-1 ring-white/12">
+                    <CheckCircle size={16} strokeWidth={2.3} />
+                  </span>
+                  <span className="text-[1rem] font-semibold text-white/88">{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
+        </div>
 
-          {/* ── Right: Form ── */}
-          <div className="bg-cream px-6 py-7 sm:px-8 sm:py-8">
+        <div className="flex items-center bg-cream px-5 py-16 text-ink sm:px-8 lg:px-10 xl:px-16">
+          <div className="mx-auto w-full max-w-[48rem] lg:ml-0 lg:mr-auto">
             {isSuccess ? (
-              <div className="h-full flex flex-col items-center justify-center text-center py-8">
-                <div className="w-14 h-14 bg-blush text-coral rounded-full flex items-center justify-center mb-4">
-                  <CheckCircle size={30} />
+              <div className="flex min-h-[30rem] flex-col items-center justify-center rounded-[2rem] bg-white p-8 text-center shadow-[0_22px_60px_rgba(26,58,82,0.08)]">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blush text-coral">
+                  <CheckCircle size={34} />
                 </div>
-                <h3 className="font-serif text-xl font-semibold text-ink mb-2">You&apos;re on the List!</h3>
-                <p className="mb-5 max-w-[38ch] text-card-body text-ink/82">
-                  I&apos;ve received your inquiry and will be in touch within 24 hours. Start dreaming—I&apos;ll handle the rest.
+                <h3 className="font-serif text-[2rem] font-semibold leading-tight text-ink">You&apos;re on the list!</h3>
+                <p className="mt-3 max-w-[38ch] text-[1.05rem] font-medium leading-relaxed text-ink/76">
+                  I&apos;ve received your inquiry and will be in touch within 24 hours. Start dreaming. I&apos;ll handle the rest.
                 </p>
-                <button onClick={() => setIsSuccess(false)} className="text-coral font-semibold text-footer-body hover:underline">
+                <button onClick={() => setIsSuccess(false)} className="mt-6 font-semibold text-coral underline underline-offset-4">
                   Send another inquiry
                 </button>
               </div>
             ) : (
-              <>
-                <p className="mb-4 max-w-[38ch] text-card-body text-ink/82">Ready to set sail? Tell us a little about your trip.</p>
-                <p className="mb-5 text-eyebrow text-stone/70">* Required fields</p>
+              <div className="rounded-[2rem] bg-white/76 p-5 shadow-[0_22px_60px_rgba(26,58,82,0.08)] ring-1 ring-white/80 sm:p-7 lg:p-8">
+                <p className="max-w-[42ch] text-[1.05rem] font-semibold leading-relaxed text-ink/78">
+                  Ready to set sail? Tell us a little about your trip.
+                </p>
+                <p className="mt-2 text-[0.95rem] font-semibold text-stone/70">* Required fields</p>
 
-                <form onSubmit={handleSubmit} noValidate className="space-y-3.5">
-                  {/* Honeypot */}
-                  <div className="absolute -left-[10000px] top-auto w-px h-px overflow-hidden" aria-hidden="true">
+                <form onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
+                  <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
                     <label htmlFor="website">Website</label>
                     <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
                   </div>
 
-                  {/* Row 1: First + Last */}
-                  <div className="grid sm:grid-cols-2 gap-3.5">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="firstName" className={labelClass}>First Name *</label>
-                      <input id="firstName" required type="text" placeholder="Jane" className={inputClass}
-                        value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} />
+                      <input id="firstName" required type="text" placeholder="Jane" className={inputClass} value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} />
                     </div>
                     <div>
                       <label htmlFor="lastName" className={labelClass}>Last Name *</label>
-                      <input id="lastName" required type="text" placeholder="Smith" className={inputClass}
-                        value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} />
+                      <input id="lastName" required type="text" placeholder="Smith" className={inputClass} value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} />
                     </div>
                   </div>
 
-                  {/* Row 2: Email + Phone */}
-                  <div className="grid sm:grid-cols-2 gap-3.5">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="email" className={labelClass}>Email Address *</label>
-                      <input id="email" required type="email" placeholder="jane@email.com" className={inputClass}
-                        value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+                      <input id="email" required type="email" placeholder="jane@email.com" className={inputClass} value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
                     </div>
                     <div>
-                      <label htmlFor="phone" className={labelClass}>
-                        Phone <span className="text-stone font-normal">(Optional)</span>
-                      </label>
-                      <input id="phone" type="tel" placeholder="(555) 000-0000" className={inputClass}
-                        value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
+                      <label htmlFor="phone" className={labelClass}>Phone <span className="font-normal text-stone">(Optional)</span></label>
+                      <input id="phone" type="tel" placeholder="(555) 000-0000" className={inputClass} value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
                     </div>
                   </div>
 
-                  {/* Row 3: Destination + Timing */}
-                  <div className="grid sm:grid-cols-2 gap-3.5">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="destination" className={labelClass}>Destination *</label>
-                      <select id="destination" required className={`${inputClass} appearance-none cursor-pointer`}
-                        value={formData.destination} onChange={(e) => setFormData({ ...formData, destination: e.target.value })}>
-                        <option value="" disabled>Select destination…</option>
-                        {DESTINATION_OPTIONS.map((d) => <option key={d} value={d}>{d}</option>)}
+                      <select id="destination" required className={`${inputClass} cursor-pointer appearance-none`} value={formData.destination} onChange={(e) => setFormData({ ...formData, destination: e.target.value })}>
+                        <option value="" disabled>Select destination...</option>
+                        {DESTINATION_OPTIONS.map((destination) => <option key={destination} value={destination}>{destination}</option>)}
                       </select>
                     </div>
                     <div>
                       <label htmlFor="timing" className={labelClass}>Travel Timeframe *</label>
-                      <select id="timing" required className={`${inputClass} appearance-none cursor-pointer`}
-                        value={formData.timing} onChange={(e) => setFormData({ ...formData, timing: e.target.value })}>
-                        <option value="" disabled>Select timeframe…</option>
-                        {TIMING_OPTIONS.map((t) => <option key={t} value={t}>{t}</option>)}
+                      <select id="timing" required className={`${inputClass} cursor-pointer appearance-none`} value={formData.timing} onChange={(e) => setFormData({ ...formData, timing: e.target.value })}>
+                        <option value="" disabled>Select timeframe...</option>
+                        {TIMING_OPTIONS.map((timing) => <option key={timing} value={timing}>{timing}</option>)}
                       </select>
                     </div>
                   </div>
 
-                  {/* Row 4: Message */}
                   <div>
                     <label htmlFor="message" className={labelClass}>Tell us about your dream trip *</label>
-                    <textarea id="message" required rows={4} placeholder="Where do you want to go? How many travelers? Any special occasions?"
-                      className={`${inputClass} resize-none`}
-                      value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
+                    <textarea id="message" required rows={5} placeholder="Where do you want to go? How many travelers? Any special occasions?" className={`${inputClass} resize-none`} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
                   </div>
 
-                  <Button
-                    disabled={isSubmitting}
-                    type="submit"
-                    variant="coral"
-                    className="w-full flex items-center justify-center gap-2 text-[14px]"
-                  >
-                    {isSubmitting ? "Submitting…" : (<><span>Start Planning My Trip</span> <Ship size={16} /></>)}
+                  <Button disabled={isSubmitting} type="submit" variant="coral" className="flex w-full items-center justify-center gap-2 text-[15px]">
+                    {isSubmitting ? "Submitting..." : (<><span>Start Planning My Trip</span> <Ship size={16} /></>)}
                   </Button>
 
                   {submitError && (
-                    <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                    <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
                       <p className="font-semibold">Submission issue</p>
                       <p className="mt-1">{submitError}</p>
                       <a href={directMailto} className="mt-2 inline-flex text-amber-900 underline underline-offset-2">Email directly instead</a>
                     </div>
                   )}
                 </form>
-              </>
+              </div>
             )}
           </div>
-
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </section>
   );
 };
