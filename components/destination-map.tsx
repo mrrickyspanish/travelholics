@@ -360,13 +360,13 @@ export function DestinationMap() {
               Where we&apos;ve sailed. Where we&apos;re sailing next.
             </h2>
             <p className="mb-7 max-w-[46ch] text-[17px] font-medium leading-[1.65] text-ink/82">
-              Every pin is a port Yolanda has actually been to, or a trip the Crew is already eyeing. Click around. Some of these become journal entries. Some become group sailings. All of them get a real opinion when you book.
+              Every pin is a port Yolanda has actually been to, or a trip the Crew is already eyeing. Click around. Some become group sailings. All of them get a real opinion when you book.
             </p>
             <a
-              href="/collaborate"
-              className="inline-flex items-center gap-2 border-2 border-emerald-mid text-emerald-mid hover:bg-emerald-mid hover:text-white font-semibold px-6 py-3 rounded-full transition-colors text-sm"
+              href="/#contact"
+              className="inline-flex items-center gap-2 rounded-full bg-coral px-6 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
             >
-              See the full atlas →
+              Plan My Cruise →
             </a>
           </motion.div>
 
@@ -679,10 +679,10 @@ export function DestinationMap() {
           {/* CTA */}
           <div className="mt-5 mb-2 text-center">
             <a
-              href="/collaborate"
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border-2 border-emerald-mid px-5 py-3 text-sm font-semibold text-emerald-mid transition-colors hover:bg-emerald-mid hover:text-white sm:w-auto"
+              href="/#contact"
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-coral px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-coral-deep sm:w-auto"
             >
-              See the full atlas →
+              Plan My Cruise →
             </a>
           </div>
         </motion.div>

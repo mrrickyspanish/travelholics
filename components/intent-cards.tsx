@@ -16,13 +16,12 @@ const cards = [
     iconBg: "bg-emerald-mid",
     image: "/images/about-on-deck.jpg",
     imageAlt: "Woman relaxing on a cruise ship deck at sunset",
-    preserveCase: true,
   },
   {
     title: "THE CREW TRIP",
     description:
       "Sail with the community, not strangers. Group dinners, deck parties, port days — all planned. Next sailing: Caribbean 2027.",
-    cta: "see the sailing",
+    cta: "See the Sailing",
     href: "/#group-trips",
     icon: Users,
     iconBg: "bg-emerald-mid",
@@ -33,7 +32,7 @@ const cards = [
     title: "THE GEAR",
     description:
       "Hats, totes, the Travelholic crewneck. The merch that says it without saying it - for people who pack their outfits a week early.",
-    cta: "shop the lifestyle",
+    cta: "Shop the Lifestyle",
     href: "/shop",
     icon: ShoppingBag,
     iconBg: "bg-emerald-mid",
@@ -59,7 +58,7 @@ export const IntentCards = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-5">
-          {cards.map(({ title, description, cta, href, icon: Icon, iconBg, image, imageAlt, imageFit, imagePosition, preserveCase }, i) => (
+          {cards.map(({ title, description, cta, href, icon: Icon, iconBg, image, imageAlt, imageFit, imagePosition }, i) => (
             <motion.div
               key={title}
               initial={{ opacity: 0, y: 20 }}
@@ -93,7 +92,7 @@ export const IntentCards = () => {
                 <p className="mb-4 text-card-body text-ink/82">{description}</p>
                 <a
                   href={href}
-                  className={`group inline-flex items-center gap-1 text-coral font-semibold text-footer-body focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded${preserveCase ? "" : " lowercase"}`}
+                  className="group inline-flex items-center gap-1 text-coral font-semibold text-footer-body focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded"
                 >
                   <span>{cta}</span>
                   <span className="inline-block translate-x-0 group-hover:translate-x-[2px] transition-transform duration-200" aria-hidden="true">

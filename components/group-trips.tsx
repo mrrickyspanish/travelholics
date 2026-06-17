@@ -141,7 +141,7 @@ export const GroupTrips = () => {
             className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-coral px-8 py-4 text-base font-semibold text-white shadow-md shadow-coral/15 transition-colors hover:bg-coral-deep sm:w-auto"
             style={{marginTop:'28px'}}
           >
-            View Upcoming Group Trips →
+            Join the Next Sailing →
           </Link>
         </div>
       </div>

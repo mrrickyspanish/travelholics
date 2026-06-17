@@ -67,6 +67,12 @@ export const MeetYolanda = () => {
             <div className="mt-6 lg:mt-7">
               <p className="font-script text-[1.9rem] text-coral leading-none">Let&apos;s travel.</p>
               <p className="font-script text-[1.9rem] text-coral leading-none">- Yolanda ♡</p>
+              <a
+                href="/#contact"
+                className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-coral px-6 py-3 text-[15px] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2 lg:w-auto"
+              >
+                Book With Yolanda
+              </a>
             </div>
           </motion.div>
 
