@@ -157,6 +157,10 @@ export const Header = () => {
               <a href="/#contact" onClick={() => setMenuOpen(false)} className="inline-flex items-center rounded-xl bg-coral px-6 py-3 text-sm font-semibold text-white hover:bg-coral-deep transition-colors">
                 Join the Crew
               </a>
+              <div className="flex gap-5">
+                <a href={TIKTOK_PROFILE_URL} target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">TikTok</a>
+                <a href="https://www.instagram.com/rjsmom1/" target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">Instagram</a>
+              </div>
               <p className="text-xs text-white/25">© {new Date().getFullYear()} Travelholics</p>
             </div>
           </motion.div>
