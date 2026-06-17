@@ -135,8 +135,11 @@ export const IntentCards = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55 }}
-            className="max-w-[34rem] lg:flex lg:min-h-[35rem] lg:flex-col lg:justify-end lg:pb-[1.25rem]"
+            className="relative max-w-[34rem] lg:flex lg:min-h-[35rem] lg:flex-col lg:justify-end lg:pb-[1.25rem]"
           >
+            <span className="pointer-events-none absolute left-0 top-[2rem] hidden rounded-full border border-white/65 bg-white/58 px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-coral shadow-[0_10px_26px_rgba(26,58,82,0.08)] backdrop-blur-md lg:inline-flex">
+              Real Trips
+            </span>
             <h3 className="mb-4 font-serif text-[clamp(2rem,3vw,3rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-ink">
               Trips with real opinions.
             </h3>
