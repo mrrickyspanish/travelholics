@@ -1,99 +1,61 @@
-"use client";
+import { BadgeDollarSign, Globe, Ship, Sparkles } from "lucide-react";
 
-import { useEffect, useRef, useState } from "react";
-import { useInView, useMotionValue, animate } from "framer-motion";
-
-type Stat =
-  | { numeric: number; suffix: string; label: string; display?: never }
-  | { display: string; label: string; numeric?: never; suffix?: never };
-
-const stats: Stat[] = [
-  { numeric: 6, suffix: "+", label: "cruise lines sailed" },
-  { numeric: 15, suffix: "+", label: "countries visited" },
-  { numeric: 20, suffix: "+", label: "years of travel experience" },
-  { display: "No Fees", label: "same price as booking direct" },
+const stats = [
+  {
+    icon: Ship,
+    value: "6+",
+    label: "Cruise lines sailed",
+    note: "Real ship experience, not brochure guesses",
+  },
+  {
+    icon: Globe,
+    value: "15+",
+    label: "Countries visited",
+    note: "Ports, resorts, excursions, and local finds",
+  },
+  {
+    icon: Sparkles,
+    value: "20+",
+    label: "Years of travel experience",
+    note: "A planner who has actually been there",
+  },
+  {
+    icon: BadgeDollarSign,
+    value: "No Fees",
+    label: "Same price as booking direct",
+    note: "You get guidance without the markup",
+  },
 ];
 
-const valueClass =
-  "font-serif text-[2rem] font-semibold leading-none text-navy sm:text-[2.25rem] md:text-[2.5rem]";
-
-function ManifestValue({ stat }: { stat: Stat }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const motionVal = useMotionValue(0);
-  const [text, setText] = useState("0");
-  const inView = useInView(ref, { once: true });
-  const hasDecimal = stat.numeric !== undefined && !Number.isInteger(stat.numeric);
-
-  useEffect(() => {
-    if (stat.display !== undefined || stat.numeric === undefined) return;
-    if (!inView) return;
-
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reducedMotion) {
-      setText(hasDecimal ? stat.numeric.toFixed(1) : String(stat.numeric));
-      return;
-    }
-
-    const controls = animate(motionVal, stat.numeric, {
-      duration: 1.2,
-      ease: [0.16, 1, 0.3, 1],
-      onUpdate: (v) =>
-        setText(hasDecimal ? v.toFixed(1) : String(Math.floor(v))),
-    });
-
-    return () => controls.stop();
-  }, [inView, stat, hasDecimal, motionVal]);
-
-  if (stat.display !== undefined) {
-    return <span className={valueClass}>{stat.display}</span>;
-  }
-
+export const StatsStrip = () => {
   return (
-    <span ref={ref} className={valueClass}>
-      {text}
-      {stat.suffix}
-    </span>
-  );
-}
-
-export function VoyageManifest() {
-  return (
-    <div
-      className="pointer-events-none absolute inset-x-0 bottom-0 z-20"
-      aria-label="Voyage credentials"
-    >
-      {/* Horizon wash — photo bleeds through the top of the band */}
-      <div
-        className="bg-gradient-to-b from-transparent via-[rgba(252,250,245,0.55)] to-[rgba(252,250,245,0.97)] pt-20 pb-7 sm:pt-28 sm:pb-9 md:pt-32 md:pb-10"
-      >
-        <div className="pointer-events-auto mx-auto w-full max-w-[92rem] px-5 sm:px-6 lg:px-14 xl:px-20">
-          <div className="mb-6 flex items-center justify-center gap-4 md:mb-8">
-            <span className="hidden h-px flex-1 max-w-[4rem] bg-stone/20 sm:block" aria-hidden="true" />
-            <p className="text-eyebrow text-coral">Voyage Credentials</p>
-            <span className="hidden h-px flex-1 max-w-[4rem] bg-stone/20 sm:block" aria-hidden="true" />
-          </div>
-
-          <dl className="grid grid-cols-2 gap-x-5 gap-y-7 sm:gap-x-8 sm:gap-y-8 md:grid-cols-4 md:gap-0 md:divide-x md:divide-stone/20">
-            {stats.map((stat) => (
+    <section className="relative overflow-hidden bg-sand py-10 sm:py-12 lg:py-14">
+      <div className="mx-auto w-full max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
+        <div className="rounded-[2rem] border border-white/70 bg-cream/82 p-3 shadow-[0_22px_60px_rgba(26,58,82,0.08)] backdrop-blur-sm sm:p-4 lg:rounded-[2.5rem] lg:p-5">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-stone/16">
+            {stats.map(({ icon: Icon, value, label, note }) => (
               <div
-                key={stat.label}
-                className="flex flex-col items-start gap-2 md:px-6 lg:px-8"
+                key={label}
+                className="group relative min-h-[11rem] rounded-[1.5rem] bg-white/78 p-4 shadow-[0_10px_30px_rgba(26,58,82,0.06)] ring-1 ring-stone/8 transition-transform duration-300 hover:-translate-y-1 sm:p-5 lg:min-h-[13rem] lg:rounded-[2rem] lg:bg-transparent lg:shadow-none lg:ring-0"
               >
-                <dt className="sr-only">{stat.label}</dt>
-                <dd className="m-0">
-                  <ManifestValue stat={stat} />
-                </dd>
-                <dd className="m-0 max-w-[14ch] text-[15px] leading-snug text-stone/90">
-                  {stat.label}
-                </dd>
+                <div className="mb-5 flex items-center justify-between gap-4">
+                  <Icon className="text-coral" size={25} strokeWidth={2} />
+                  <span className="h-px flex-1 bg-stone/12" aria-hidden="true" />
+                </div>
+                <p className="font-serif text-[clamp(2rem,6vw,3.25rem)] font-semibold leading-none tracking-[-0.04em] text-[#0E125C]">
+                  {value}
+                </p>
+                <p className="mt-3 text-[1rem] font-bold leading-tight text-ink">
+                  {label}
+                </p>
+                <p className="mt-2 max-w-[20ch] text-[0.92rem] font-medium leading-snug text-stone">
+                  {note}
+                </p>
               </div>
             ))}
-          </dl>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
-}
-
-/** @deprecated Use VoyageManifest inside Hero */
-export const StatsStrip = VoyageManifest;
+};
