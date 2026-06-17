@@ -84,7 +84,7 @@ export const MeetYolanda = () => {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <a
                 href="/#contact"
-                className="inline-flex min-h-[46px] items-center justify-center rounded-full bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
+                className="inline-flex min-h-[46px] items-center justify-center rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
               >
                 Book With Yolanda
               </a>
@@ -92,7 +92,7 @@ export const MeetYolanda = () => {
                 href="https://www.tiktok.com/@rjsmom1"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-[1rem] font-semibold text-emerald-mid shadow-md ring-1 ring-emerald-mid/12 transition-colors hover:bg-cream"
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-[1rem] font-semibold text-emerald-mid shadow-md ring-1 ring-emerald-mid/12 transition-colors hover:bg-cream"
               >
                 <MessageCircle size={18} strokeWidth={2.2} />
                 Follow the lifestyle
