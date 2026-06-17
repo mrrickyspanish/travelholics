@@ -10,9 +10,8 @@ const cards = [
     description: "The big-ship life: cabins, ports, decks, dining, excursions, and the details that make the trip feel easy.",
     cta: "Plan a cruise",
     href: "/cruises/caribbean",
-    image: "/images/about-on-deck.jpg",
+    image: "/images/hero_th_background.png",
     imageAlt: "Cruise ship deck at sunset",
-    size: "lg:translate-y-8",
   },
   {
     title: "Caribbean",
@@ -21,7 +20,6 @@ const cards = [
     href: "/cruises/caribbean",
     image: "/images/dest-caribbean.jpg",
     imageAlt: "Caribbean destination with turquoise water",
-    size: "lg:-translate-y-4",
   },
   {
     title: "Alaska",
@@ -30,7 +28,6 @@ const cards = [
     href: "/cruises/alaska",
     image: "/images/dest-alaska-glaciers.jpg",
     imageAlt: "Alaska glaciers and mountain landscape",
-    size: "lg:translate-y-12",
   },
   {
     title: "Mediterranean",
@@ -39,7 +36,6 @@ const cards = [
     href: "/cruises/mediterranean",
     image: "/images/dest-mediterranean.jpg",
     imageAlt: "Mediterranean travel destination",
-    size: "lg:translate-y-1",
   },
 ];
 
@@ -48,7 +44,7 @@ export const IntentCards = () => {
     <section className="relative overflow-hidden bg-cream py-16 sm:py-20 lg:py-28">
       <div className="pointer-events-none absolute left-1/2 top-8 h-40 w-40 -translate-x-1/2 rounded-full bg-coral/8 blur-3xl" aria-hidden="true" />
       <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
-        <div className="grid items-end gap-8 lg:grid-cols-[0.74fr_1.26fr] lg:gap-12">
+        <div className="grid items-center gap-9 lg:grid-cols-[0.66fr_1.34fr] lg:gap-14">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -73,8 +69,8 @@ export const IntentCards = () => {
             </a>
           </motion.div>
 
-          <div className="-mx-5 overflow-x-auto px-5 pb-4 pt-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:overflow-visible lg:px-0 lg:pb-12 lg:pt-8">
-            <div className="flex gap-4 lg:grid lg:grid-cols-4 lg:gap-5 xl:gap-6">
+          <div className="-mx-5 overflow-x-auto px-5 pb-5 pt-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:-mr-10 lg:ml-0 lg:pl-0 xl:-mr-12">
+            <div className="flex snap-x snap-mandatory gap-5 lg:gap-6">
               {cards.map((card, i) => (
                 <motion.a
                   key={card.title}
@@ -83,7 +79,7 @@ export const IntentCards = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.55, delay: i * 0.08 }}
-                  className={`group relative min-h-[27rem] w-[78vw] max-w-[21rem] shrink-0 overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_22px_52px_rgba(26,58,82,0.12)] ring-1 ring-stone/10 transition-transform duration-300 hover:-translate-y-1 sm:w-[20rem] lg:min-h-[29rem] lg:w-auto lg:max-w-none ${card.size}`}
+                  className="group relative min-h-[27rem] w-[82vw] max-w-[24rem] shrink-0 snap-start overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_22px_52px_rgba(26,58,82,0.12)] ring-1 ring-stone/10 transition-transform duration-300 hover:-translate-y-1 sm:w-[24rem] lg:min-h-[33rem] lg:w-[30rem] lg:max-w-none xl:w-[33rem]"
                 >
                   <div className="relative h-full overflow-hidden rounded-[1.55rem] bg-sand">
                     <Image
@@ -91,22 +87,26 @@ export const IntentCards = () => {
                       alt={card.imageAlt}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 1024px) 78vw, 24vw"
+                      sizes="(max-width: 1024px) 82vw, 33rem"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/88 via-ink/32 to-transparent" aria-hidden="true" />
-                    <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                      <div className="mb-4 flex items-center justify-between gap-3">
-                        <p className="font-serif text-[2.25rem] font-semibold leading-none tracking-[-0.04em]">{card.title}</p>
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/92 text-ink shadow-md transition-transform duration-300 group-hover:rotate-12">
-                          <ArrowUpRight size={20} strokeWidth={2.2} />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/86 via-ink/28 to-transparent" aria-hidden="true" />
+                    <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6 lg:p-7">
+                      <div className="mb-4 flex items-center justify-between gap-4">
+                        <p className="font-serif text-[2.35rem] font-semibold leading-none tracking-[-0.04em] sm:text-[2.65rem]">{card.title}</p>
+                        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/92 text-ink shadow-md transition-transform duration-300 group-hover:rotate-12">
+                          <ArrowUpRight size={21} strokeWidth={2.2} />
                         </span>
                       </div>
-                      <p className="max-w-[24ch] text-[1rem] font-medium leading-snug text-white/86">{card.description}</p>
-                      <p className="mt-4 text-[0.95rem] font-bold text-white underline decoration-white/40 underline-offset-4">{card.cta}</p>
+                      <p className="max-w-[30ch] text-[1rem] font-medium leading-snug text-white/88 sm:text-[1.08rem]">{card.description}</p>
+                      <p className="mt-5 text-[1rem] font-bold text-white underline decoration-white/40 underline-offset-4">{card.cta}</p>
                     </div>
                   </div>
                 </motion.a>
               ))}
+            </div>
+            <div className="mt-5 hidden items-center justify-between pr-10 text-[0.95rem] font-semibold text-stone/70 lg:flex xl:pr-12">
+              <span>Drag or scroll to explore the trip lanes.</span>
+              <span>4 destination lanes</span>
             </div>
           </div>
         </div>
