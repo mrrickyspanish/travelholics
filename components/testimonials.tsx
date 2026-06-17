@@ -173,7 +173,7 @@ function TestimonialsCTA() {
     <div className="mt-10 px-6 text-center">
       <a
         href="/#contact"
-        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-coral px-8 py-4 text-base font-semibold text-white shadow-md shadow-coral/15 transition-colors hover:bg-coral-deep sm:w-auto"
+        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-coral px-8 py-4 text-base font-semibold text-white shadow-md shadow-coral/15 transition-colors hover:bg-coral-deep sm:w-auto"
       >
         Start Planning My Trip →
       </a>
