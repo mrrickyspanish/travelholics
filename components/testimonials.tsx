@@ -21,7 +21,7 @@ type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     quote:
-      "Yolanda helped us plan a honeymoon cruise that felt easy from start to finish. She matched the ship, excursions, and details to the trip we wanted, and we cannot wait to book with Travelholics again.",
+      "Planning me and my wife\'s honeymoon cruise with Yolanda & Travelholics was the best decision of my life after marrying my wife. She was helpful from beginning to end. Destination planning, cruise ship amenity alignment, excursion breakdowns, travel hacks, everything. She is the best, and we cannot wait to work with Travelholics again for a family cruise in 2027.",
     name: "RJ Barnes",
     trip: "Caribbean Cruise · 2017 · Royal Caribbean",
     photo: "/images/testimonials/barnes_cruise_travelholic.JPG",
@@ -54,25 +54,8 @@ function TestimonialLightbox({ testimonial, onClose }: { testimonial: Testimonia
   }, [onClose]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-ink/70 p-4 backdrop-blur-sm"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-label={`Testimonial from ${testimonial.name}`}
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 12 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 12 }}
-        transition={{ duration: 0.22, ease: "easeOut" }}
-        className="relative max-h-[90vh] w-full max-w-lg overflow-hidden rounded-2xl border border-blush/60 bg-cream shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-ink/70 p-4 backdrop-blur-sm" onClick={onClose} role="dialog" aria-modal="true" aria-label={`Testimonial from ${testimonial.name}`}>
+      <motion.div initial={{ opacity: 0, scale: 0.95, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 12 }} transition={{ duration: 0.22, ease: "easeOut" }} className="relative max-h-[90vh] w-full max-w-lg overflow-hidden rounded-2xl border border-blush/60 bg-cream shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <button type="button" onClick={onClose} className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-ink shadow-sm transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral" aria-label="Close testimonial">
           <X className="h-4 w-4" />
         </button>
