@@ -122,9 +122,9 @@ export const IntentCards = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          className="mx-auto max-w-[54rem] text-center"
+          className="mx-auto max-w-[64rem] text-center"
         >
-          <h2 className="font-serif text-[clamp(2.6rem,6.8vw,6rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-ink">
+          <h2 className="font-serif text-[clamp(2.2rem,5vw,4.8rem)] font-semibold leading-[0.92] tracking-[-0.065em] text-ink">
             Going places, with someone who knows the way.
           </h2>
         </motion.div>
@@ -135,7 +135,7 @@ export const IntentCards = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55 }}
-            className="max-w-[34rem] lg:pt-[16.75rem]"
+            className="max-w-[34rem] lg:flex lg:min-h-[35rem] lg:flex-col lg:justify-end lg:pb-[1.25rem]"
           >
             <h3 className="mb-4 font-serif text-[clamp(2rem,3vw,3rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-ink">
               Trips with real opinions.
@@ -145,7 +145,7 @@ export const IntentCards = () => {
             </p>
             <a
               href="/#contact"
-              className="mt-7 inline-flex min-h-[46px] items-center justify-center rounded-xl bg-ink px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-emerald-deep"
+              className="mt-7 inline-flex min-h-[46px] w-fit items-center justify-center rounded-xl bg-ink px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-emerald-deep"
             >
               Start planning
             </a>
@@ -198,7 +198,7 @@ export const IntentCards = () => {
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: prefersReducedMotion ? 0 : 0.32, exit: { duration: 0.12 } }}
                 >
-                  <p className="text-[0.7rem] font-bold uppercase tracking-[0.12em] text-coral">
+                  <p className="text-[0.77rem] font-bold uppercase tracking-[0.12em] text-coral">
                     {activeCard.detailLabel}
                   </p>
                   <p className="mt-2 text-[1.02rem] font-medium leading-[1.62] text-ink/78">
@@ -235,7 +235,7 @@ export const IntentCards = () => {
                       </p>
                     </div>
                   </a>
-                  <p className="mt-4 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-coral">{card.detailLabel}</p>
+                  <p className="mt-4 text-[0.77rem] font-bold uppercase tracking-[0.12em] text-coral">{card.detailLabel}</p>
                   <p className="mt-2 text-[1rem] font-medium leading-[1.6] text-ink/78">{card.description}</p>
                 </div>
               ))}
