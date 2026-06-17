@@ -114,6 +114,12 @@ export const IntentCards = () => {
 
   return (
     <section className="relative overflow-hidden bg-cream py-16 sm:py-20 lg:py-28">
+      <style>{`
+        @keyframes travelholicsDotPulse {
+          0%, 100% { transform: scale(1); opacity: 0.78; box-shadow: 0 0 0 0 rgba(16,117,90,0.34), 0 0 10px rgba(16,117,90,0.58); }
+          50% { transform: scale(1.18); opacity: 1; box-shadow: 0 0 0 4px rgba(16,117,90,0.10), 0 0 16px rgba(16,117,90,0.76); }
+        }
+      `}</style>
       <div className="pointer-events-none absolute left-1/2 top-8 h-40 w-40 -translate-x-1/2 rounded-full bg-coral/8 blur-3xl" aria-hidden="true" />
 
       <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
@@ -137,11 +143,16 @@ export const IntentCards = () => {
             transition={{ duration: 0.55 }}
             className="relative max-w-[34rem] lg:flex lg:min-h-[35rem] lg:flex-col lg:justify-end lg:pb-[1.25rem]"
           >
-            <span className="pointer-events-none absolute left-0 top-[2rem] hidden rounded-full border border-white/65 bg-white/58 px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-coral shadow-[0_10px_26px_rgba(26,58,82,0.08)] backdrop-blur-md lg:inline-flex">
-              Real Trips
+            <span className="pointer-events-none absolute left-0 top-[5.5rem] hidden items-center gap-2 rounded-full border border-white/65 bg-white/58 px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-coral shadow-[0_10px_26px_rgba(26,58,82,0.08)] backdrop-blur-md lg:inline-flex">
+              Wander Freely
+              <span
+                className="h-1.5 w-1.5 rounded-full bg-emerald-mid"
+                style={{ animation: "travelholicsDotPulse 2.1s ease-in-out infinite" }}
+                aria-hidden="true"
+              />
             </span>
             <h3 className="mb-4 font-serif text-[clamp(2rem,3vw,3rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-ink">
-              Trips with real opinions.
+              Not Your Boring Travel Agent
             </h3>
             <p className="max-w-[39ch] text-[1.05rem] font-medium leading-[1.75] text-ink/76 sm:text-[1.15rem]">
               Browse the kind of trips Travelholics is built around, then let Yolanda help you choose the ship, stay, room, and rhythm that actually fits your people.
