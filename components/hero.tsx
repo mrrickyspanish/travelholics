@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/button";
+import { VoyageManifest } from "@/components/stats-strip";
 
 export const Hero = () => {
   return (
-    <section className="relative flex items-start overflow-hidden bg-gradient-to-b from-hero-sky via-cream to-sand pt-16 lg:min-h-[90vh] lg:items-center">
+    <section className="relative overflow-hidden bg-cream pt-16 lg:min-h-[90vh]">
       {/* Full hero background image */}
       <div className="absolute inset-0" aria-hidden="true">
         <Image
@@ -23,9 +24,8 @@ export const Hero = () => {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[88rem] px-5 pt-8 pb-[26px] sm:px-6 sm:py-12 lg:py-16">
-        <div className="grid lg:grid-cols-[56%_44%] gap-12 lg:gap-8 items-center">
-
+      <div className="relative z-10 mx-auto w-full max-w-[88rem] px-5 pt-8 pb-44 sm:px-6 sm:pb-48 sm:py-12 lg:flex lg:min-h-[calc(90vh-12rem)] lg:flex-col lg:justify-center lg:py-16 lg:pb-52">
+        <div className="grid items-center gap-12 lg:grid-cols-[56%_44%] lg:gap-8">
           {/* Left column */}
           <motion.div
             initial={{ opacity: 0, y: 28 }}
@@ -68,36 +68,35 @@ export const Hero = () => {
               <p className="mx-auto text-[1.3rem] leading-[1.65] font-medium text-royal-deep [text-shadow:0_1px_2px_rgba(255,255,255,0.18)] lg:mx-0 lg:max-w-[40ch]">
                 Always planning the next getaway. No cure, just better trips, a crew that gets it, and gear to match.
               </p>
+
+              <p className="mx-auto mt-5 border-t border-stone/15 pt-4 text-[13px] font-medium leading-relaxed text-stone/80 lg:mx-0">
+                Certified Cruise Specialist · No planning fees
+              </p>
             </div>
 
-            <div className="mt-5 flex w-full max-w-[34rem] flex-col items-center gap-2.5 lg:max-w-none lg:items-start">
+            <div className="mt-5 flex w-full max-w-[34rem] flex-col items-center lg:max-w-none lg:items-start">
               <Button
                 variant="coral"
                 className="w-full sm:w-auto"
-                onClick={() => window.location.href = '/#contact'}
+                onClick={() => { window.location.href = "/#contact"; }}
               >
                 Plan My Cruise
               </Button>
-              <p className="rounded-full bg-white/85 px-4 py-1.5 text-[13px] font-semibold text-royal-deep shadow-sm backdrop-blur-sm text-center lg:text-left">
-                Certified Cruise Specialist · No planning fees
-              </p>
             </div>
           </motion.div>
 
           {/* Right column — compact Yolanda polaroid + intro card */}
           <motion.div
             initial={{ opacity: 0, x: 28 }}
-            animate={{ opacity: 1, x: 0 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="hidden lg:flex flex-col items-end gap-0 lg:pr-3"
+            className="hidden flex-col items-end gap-0 lg:flex lg:pr-3"
           >
-            {/* Polaroid card: white border, slight rotation, shadow */}
             <div
-              className="bg-white p-[7px] pb-8 shadow-2xl shadow-ink/15 w-[320px] xl:w-[340px]"
+              className="w-[320px] bg-white p-[7px] pb-8 shadow-2xl shadow-ink/15 xl:w-[340px]"
               style={{ transform: "rotate(-1deg)" }}
             >
               <div className="relative aspect-[3/4] overflow-hidden bg-blush">
-                {/* Hero card image */}
                 <Image
                   src="/images/why-stress-free.jpg"
                   alt="Yolanda, Your Cruise Curator & Travel Partner"
@@ -109,25 +108,25 @@ export const Hero = () => {
               </div>
             </div>
 
-            {/* Floating intro card — overlaps bottom of polaroid */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="bg-white/97 backdrop-blur rounded-2xl shadow-xl p-6 w-[320px] xl:w-[340px] border border-blush/80"
+              className="w-[320px] rounded-2xl border border-blush/80 bg-white/97 p-6 shadow-xl backdrop-blur xl:w-[340px]"
               style={{ marginTop: "-2.4rem", marginRight: "1rem" }}
             >
-              <p className="font-script text-[2.2rem] text-coral leading-none mb-2">Hi, I&apos;m Yolanda</p>
-              <p className="text-[24px] font-semibold text-royal-deep leading-snug mb-3">Travelholic in Chief</p>
-              <p className="text-[18px] font-medium text-royal-deep/90 leading-relaxed">
+              <p className="mb-2 font-script text-[2.2rem] leading-none text-coral">Hi, I&apos;m Yolanda</p>
+              <p className="mb-3 text-[24px] font-semibold leading-snug text-royal-deep">Travelholic in Chief</p>
+              <p className="text-[18px] font-medium leading-relaxed text-royal-deep/90">
                 20+ years addicted to ports, decks, and packing lists.
               </p>
-              <p className="font-script text-[1.55rem] text-coral leading-none text-right mt-4">No regrets.</p>
+              <p className="mt-4 text-right font-script text-[1.55rem] leading-none text-coral">No regrets.</p>
             </motion.div>
           </motion.div>
-
         </div>
       </div>
+
+      <VoyageManifest />
     </section>
   );
 };

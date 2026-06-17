@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
-import { StatsStrip } from "@/components/stats-strip";
 import { IntentCards } from "@/components/intent-cards";
 import { MeetYolanda } from "@/components/meet-yolanda";
 import { DestinationMap } from "@/components/destination-map";
@@ -32,7 +31,6 @@ export default function Home() {
       <Header />
       <MobileCTA />
       <Hero />
-      <StatsStrip />
       <MeetYolanda />
       <IntentCards />
       <GroupTrips />
