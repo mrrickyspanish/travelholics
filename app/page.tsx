@@ -17,9 +17,9 @@ export default function Home() {
       <Header />
       <MobileCTA />
       <Hero />
-      <StatsStrip />
       <IntentCards />
       <MeetYolanda />
+      <StatsStrip />
       <DestinationMap />
       <GroupTrips />
       <ShopStrip />
