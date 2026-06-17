@@ -157,6 +157,7 @@ export const IntentCards = () => {
                   <a
                     href={card.href}
                     className="group block h-full overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_24px_60px_rgba(26,58,82,0.14)] ring-1 ring-stone/10"
+                    aria-label={card.title}
                   >
                     <div className="relative h-full overflow-hidden rounded-[1.55rem] bg-sand">
                       <Image
@@ -166,16 +167,10 @@ export const IntentCards = () => {
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                         sizes={isActiveSlot ? "44vw" : "30vw"}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-ink/64 via-ink/12 to-transparent" aria-hidden="true" />
-
-                      <div className="absolute inset-x-0 bottom-0 p-5 text-white lg:p-6">
-                        <p className="max-w-[9ch] font-serif text-[clamp(2rem,3.2vw,3.25rem)] font-semibold leading-none tracking-[-0.05em]">
-                          {card.title}
-                        </p>
-                        <p className="absolute bottom-5 right-5 text-right text-[0.66rem] font-bold uppercase tracking-[0.12em] text-white/76 lg:bottom-6 lg:right-6">
-                          {card.location}
-                        </p>
-                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/28 via-transparent to-transparent" aria-hidden="true" />
+                      <p className="absolute bottom-4 right-4 text-right text-[0.58rem] font-bold uppercase leading-none tracking-[0.14em] text-white/72 sm:text-[0.62rem] lg:bottom-5 lg:right-5">
+                        {card.location}
+                      </p>
                     </div>
                   </a>
 
@@ -186,7 +181,10 @@ export const IntentCards = () => {
                       transition={{ duration: prefersReducedMotion ? 0 : 0.35 }}
                       className="mt-4 max-w-[34rem]"
                     >
-                      <p className="text-[1.02rem] font-medium leading-[1.62] text-ink/78">
+                      <h3 className="font-serif text-[2.15rem] font-semibold leading-none tracking-[-0.045em] text-ink">
+                        {card.title}
+                      </h3>
+                      <p className="mt-3 text-[1.02rem] font-medium leading-[1.62] text-ink/78">
                         {card.description}
                       </p>
                       <a
@@ -213,6 +211,7 @@ export const IntentCards = () => {
                   <a
                     href={card.href}
                     className="group relative block min-h-[24rem] overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_22px_52px_rgba(26,58,82,0.12)] ring-1 ring-stone/10"
+                    aria-label={card.title}
                   >
                     <div className="relative h-full overflow-hidden rounded-[1.55rem] bg-sand">
                       <Image
@@ -222,16 +221,14 @@ export const IntentCards = () => {
                         className="object-cover"
                         sizes="82vw"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-ink/68 via-ink/14 to-transparent" aria-hidden="true" />
-                      <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                        <p className="font-serif text-[2.25rem] font-semibold leading-none tracking-[-0.04em]">{card.title}</p>
-                        <p className="absolute bottom-5 right-5 text-right text-[0.66rem] font-bold uppercase tracking-[0.12em] text-white/76">
-                          {card.location}
-                        </p>
-                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/28 via-transparent to-transparent" aria-hidden="true" />
+                      <p className="absolute bottom-4 right-4 text-right text-[0.58rem] font-bold uppercase leading-none tracking-[0.14em] text-white/72">
+                        {card.location}
+                      </p>
                     </div>
                   </a>
-                  <p className="mt-4 text-[1rem] font-medium leading-[1.6] text-ink/78">{card.description}</p>
+                  <h3 className="mt-4 font-serif text-[2rem] font-semibold leading-none tracking-[-0.04em] text-ink">{card.title}</h3>
+                  <p className="mt-3 text-[1rem] font-medium leading-[1.6] text-ink/78">{card.description}</p>
                   <a
                     href={card.href}
                     className="mt-3 inline-flex items-center gap-2 text-[1rem] font-bold text-ink underline decoration-ink/28 underline-offset-4"
