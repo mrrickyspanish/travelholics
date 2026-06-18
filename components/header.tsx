@@ -10,20 +10,26 @@ import { useCart } from "@/lib/cart-context";
 import { useLiveStatus } from "@/hooks/useLiveStatus";
 import { TIKTOK_LIVE_URL, TIKTOK_PROFILE_URL } from "@/lib/liveSchedule";
 
-const DESKTOP_NAV = [
+type NavItem = {
+  label: string;
+  href: string;
+  liveIndicator?: boolean;
+};
+
+const DESKTOP_NAV: NavItem[] = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Live", href: "/live", liveIndicator: true },
   { label: "Shop", href: "/shop" },
   { label: "Our Story", href: "/#about" },
 ];
 
-const HERO_NAV = [
+const HERO_NAV: NavItem[] = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Shop", href: "/shop" },
   { label: "Our Story", href: "/#about" },
 ];
 
-const MOBILE_NAV = [
+const MOBILE_NAV: NavItem[] = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Live", href: "/live" },
   { label: "Shop", href: "/shop" },
@@ -116,7 +122,7 @@ export const Header = () => {
               return (
                 <Link key={link.label} href={link.href} className={`${linkBase} ${linkColor} ${active ? linkActive : ""} flex items-center gap-1.5`}>
                   {link.label}
-                  {"liveIndicator" in link && link.liveIndicator && isActive && <PulsingDot className={onDark ? "text-white" : "text-coral"} />}
+                  {link.liveIndicator && isActive && <PulsingDot className={onDark ? "text-white" : "text-coral"} />}
                 </Link>
               );
             })}
