@@ -73,7 +73,7 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.12 }}
-              className="absolute inset-x-5 bottom-6 mx-auto max-w-[92rem] sm:inset-x-8 sm:bottom-8 lg:inset-x-10 lg:bottom-10 xl:inset-x-12"
+              className="absolute inset-x-5 bottom-10 mx-auto max-w-[92rem] sm:inset-x-8 sm:bottom-12 lg:inset-x-10 lg:bottom-16 xl:inset-x-12 xl:bottom-18"
             >
               <p className="max-w-[38ch] text-left text-[0.88rem] font-medium leading-[1.55] text-white/82 sm:text-[0.95rem] lg:text-[0.97rem]">
                 Always planning the next getaway? No cure, just better trips, a crew that gets it, and gear to match.
