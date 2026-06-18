@@ -41,12 +41,12 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="absolute inset-x-5 top-1/2 mx-auto max-w-[74rem] -translate-y-1/2 text-center sm:inset-x-8 lg:inset-x-12"
+              className="absolute inset-x-5 top-[45%] mx-auto max-w-[66rem] -translate-y-1/2 text-center sm:inset-x-8 lg:inset-x-12"
             >
-              <h1 className="font-serif text-[clamp(3.7rem,13vw,12.2rem)] font-semibold leading-[0.82] tracking-[-0.075em] text-white drop-shadow-[0_8px_28px_rgba(10,31,44,0.28)]">
+              <h1 className="font-serif text-[clamp(3.25rem,11.6vw,10.8rem)] font-semibold leading-[0.82] tracking-[-0.075em] text-white drop-shadow-[0_8px_28px_rgba(10,31,44,0.28)]">
                 Travelholic
               </h1>
-              <p className="mx-auto mt-4 max-w-[22ch] font-serif text-[clamp(1.5rem,4.15vw,4.2rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white drop-shadow-[0_6px_20px_rgba(10,31,44,0.24)] sm:mt-5">
+              <p className="mx-auto mt-4 max-w-[22ch] font-serif text-[clamp(1.3rem,3.65vw,3.7rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white drop-shadow-[0_6px_20px_rgba(10,31,44,0.24)] sm:mt-5">
                 Someone who travels{" "}
                 <span className="relative inline-block whitespace-nowrap font-script text-[1.08em] font-semibold tracking-normal text-coral">
                   between trips.
@@ -73,13 +73,13 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.12 }}
-              className="absolute inset-x-5 bottom-10 mx-auto max-w-[92rem] sm:inset-x-8 sm:bottom-12 lg:inset-x-10 lg:bottom-16 xl:inset-x-12 xl:bottom-18"
+              className="absolute inset-x-5 bottom-7 mx-auto max-w-[92rem] sm:inset-x-8 sm:bottom-8 lg:inset-x-10 lg:bottom-10 xl:inset-x-12 xl:bottom-12"
             >
               <p className="max-w-[38ch] text-left text-[0.88rem] font-medium leading-[1.55] text-white/82 sm:text-[0.95rem] lg:text-[0.97rem]">
                 Always planning the next getaway? No cure, just better trips, a crew that gets it, and gear to match.
               </p>
 
-              <div className="mt-5 border-t border-dashed border-white/38 pt-5 sm:mt-6 sm:pt-6">
+              <div className="mt-6 border-t border-dashed border-white/38 pt-6 sm:mt-7 sm:pt-7">
                 <nav aria-label="Hero quick links" className="grid grid-cols-3 gap-3 text-center">
                   {heroLinks.map((link) => (
                     <a
