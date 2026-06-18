@@ -15,7 +15,13 @@ export const Hero = () => {
       <div className="mx-auto w-full px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5 lg:pb-5">
         <div className="relative min-h-[calc(100svh-5rem)] overflow-hidden rounded-[2rem] bg-ink shadow-[0_30px_90px_rgba(26,58,82,0.18)] sm:rounded-[2.5rem] lg:min-h-[calc(100svh-5.5rem)] lg:rounded-[2.75rem]">
           {/* Future video background can replace this media layer without changing the hero structure. */}
-          <div className="absolute inset-0" aria-hidden="true">
+          <motion.div
+            className="absolute inset-0"
+            aria-hidden="true"
+            initial={{ scale: 1 }}
+            animate={{ scale: 1.08 }}
+            transition={{ duration: 28, ease: "easeInOut", repeat: Infinity, repeatType: "mirror" }}
+          >
             <Image
               src="/images/Charlotte_Amalie_StThomas.png"
               alt=""
@@ -24,10 +30,7 @@ export const Hero = () => {
               className="object-cover object-center"
               sizes="100vw"
             />
-          </div>
-
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,31,44,0.18)_0%,rgba(10,31,44,0.08)_38%,rgba(10,31,44,0.62)_100%),linear-gradient(90deg,rgba(10,31,44,0.30)_0%,rgba(10,31,44,0.04)_46%,rgba(10,31,44,0.20)_100%)]" aria-hidden="true" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_46%,rgba(252,250,245,0.12)_0%,rgba(252,250,245,0)_36%),radial-gradient(circle_at_18%_78%,rgba(242,106,117,0.14)_0%,rgba(242,106,117,0)_30%)]" aria-hidden="true" />
+          </motion.div>
 
           <div className="absolute left-5 top-5 z-20 rounded-full bg-white/14 px-4 py-2 text-[0.875rem] font-semibold text-white/76 ring-1 ring-white/18 backdrop-blur-sm sm:left-8 sm:top-8 lg:left-10 lg:top-10">
             Charlotte Amalie · St. Thomas
