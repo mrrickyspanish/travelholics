@@ -17,6 +17,12 @@ const DESKTOP_NAV = [
   { label: "Our Story", href: "/#about" },
 ];
 
+const HERO_NAV = [
+  { label: "Cruises", href: "/cruises/caribbean" },
+  { label: "Shop", href: "/shop" },
+  { label: "Our Story", href: "/#about" },
+];
+
 const MOBILE_NAV = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Live", href: "/live" },
@@ -42,6 +48,8 @@ export const Header = () => {
   const { count, openDrawer } = useCart();
   const liveStatus = useLiveStatus();
 
+  const isHome = pathname === "/";
+  const isHeroArrival = isHome && !isScrolled && !menuOpen;
   const isLive = liveStatus?.state === "live";
   const isSoon = liveStatus?.state === "soon";
   const isActive = isLive || isSoon;
@@ -54,10 +62,18 @@ export const Header = () => {
   }, [isLive]);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      const threshold = pathname === "/" ? Math.max(window.innerHeight * 0.82, 520) : 40;
+      setIsScrolled(window.scrollY > threshold);
+    };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -66,14 +82,17 @@ export const Header = () => {
 
   const isShopFull = pathname === "/shop-full";
   const solidBg = isScrolled || isShopFull || menuOpen;
-  const navBg = isLive
+  const navBg = isHeroArrival
+    ? "bg-transparent"
+    : isLive
     ? "bg-coral shadow-sm"
     : isSoon
     ? "bg-ink shadow-sm"
     : solidBg
     ? (isShopFull ? "bg-white shadow-sm" : "bg-cream/96 backdrop-blur-sm shadow-sm")
     : "bg-transparent";
-  const onDark = isActive;
+  const onDark = isActive || isHeroArrival;
+  const navItems = isHeroArrival ? HERO_NAV : DESKTOP_NAV;
   const linkBase = "text-sm font-medium px-3 py-2 rounded-lg transition-colors duration-150";
   const linkColor = onDark ? "text-white/85 hover:text-white hover:bg-white/10" : "text-ink/70 hover:text-ink hover:bg-sand";
   const linkActive = onDark ? "text-white font-semibold" : "text-ink font-semibold";
@@ -82,18 +101,22 @@ export const Header = () => {
   return (
     <>
       <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${navBg}`}>
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-[auto_1fr_auto] items-center h-16 gap-4">
-          <Link href="/" className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded-md">
-            <Image src="/images/traveholics%20logos%20(1200%20x%20300%20px).svg" alt="Travelholics" width={180} height={44} className={`h-9 lg:h-[54px] w-auto transition-all duration-300 ${onDark ? "brightness-0 invert" : ""}`} priority />
-          </Link>
+        <div className={`${isHeroArrival ? "mx-auto grid h-16 max-w-[calc(100%-1.5rem)] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 sm:max-w-[calc(100%-2rem)] lg:max-w-[calc(100%-2.5rem)]" : "max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-[auto_1fr_auto] items-center h-16 gap-4"}`}>
+          {isHeroArrival ? (
+            <div aria-hidden="true" />
+          ) : (
+            <Link href="/" className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded-md">
+              <Image src="/images/traveholics%20logos%20(1200%20x%20300%20px).svg" alt="Travelholics" width={180} height={44} className={`h-9 lg:h-[54px] w-auto transition-all duration-300 ${onDark ? "brightness-0 invert" : ""}`} priority />
+            </Link>
+          )}
 
           <nav className="hidden lg:flex items-center justify-center gap-0.5">
-            {DESKTOP_NAV.map((link) => {
-              const active = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href.split("#")[0]));
+            {navItems.map((link) => {
+              const active = !link.href.includes("#") && (pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href.split("#")[0])));
               return (
                 <Link key={link.label} href={link.href} className={`${linkBase} ${linkColor} ${active ? linkActive : ""} flex items-center gap-1.5`}>
                   {link.label}
-                  {link.liveIndicator && isActive && <PulsingDot className={onDark ? "text-white" : "text-coral"} />}
+                  {"liveIndicator" in link && link.liveIndicator && isActive && <PulsingDot className={onDark ? "text-white" : "text-coral"} />}
                 </Link>
               );
             })}
@@ -109,7 +132,7 @@ export const Header = () => {
               )}
             </button>
 
-            {isActive ? (
+            {isActive && !isHeroArrival ? (
               <a href={liveHref} target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-white/20 border border-white/25 px-4 py-2 text-sm font-semibold text-white hover:bg-white/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white min-w-[140px] justify-center">
                 <PulsingDot className="text-white" />
                 <AnimatePresence mode="wait" initial={false}>
@@ -119,8 +142,8 @@ export const Header = () => {
                 </AnimatePresence>
               </a>
             ) : (
-              <a href="/#contact" className="hidden sm:inline-flex items-center rounded-xl bg-coral px-5 py-2 text-sm font-semibold text-white hover:bg-coral-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2">
-                Join the Crew
+              <a href="/#contact" className={`${isHeroArrival ? "hidden sm:inline-flex items-center rounded-xl border border-white/24 bg-white/16 px-5 py-2 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/24 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white" : "hidden sm:inline-flex items-center rounded-xl bg-coral px-5 py-2 text-sm font-semibold text-white hover:bg-coral-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2"}`}>
+                {isHeroArrival ? "Plan" : "Join the Crew"}
               </a>
             )}
 
