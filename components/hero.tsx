@@ -73,13 +73,13 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.12 }}
-              className="absolute inset-x-5 bottom-7 mx-auto max-w-[92rem] sm:inset-x-8 sm:bottom-8 lg:inset-x-10 lg:bottom-10 xl:inset-x-12 xl:bottom-12"
+              className="absolute inset-x-5 bottom-3 mx-auto max-w-[92rem] sm:inset-x-8 sm:bottom-4 lg:inset-x-10 lg:bottom-5 xl:inset-x-12 xl:bottom-6"
             >
               <p className="max-w-[38ch] text-left text-[0.88rem] font-medium leading-[1.55] text-white/82 sm:text-[0.95rem] lg:text-[0.97rem]">
                 Always planning the next getaway? No cure, just better trips, a crew that gets it, and gear to match.
               </p>
 
-              <div className="mt-6 border-t border-dashed border-white/38 pt-6 sm:mt-7 sm:pt-7">
+              <div className="mt-5 border-t border-dashed border-white/38 pt-3 sm:mt-6 sm:pt-3 lg:pt-4">
                 <nav aria-label="Hero quick links" className="grid grid-cols-3 gap-3 text-center">
                   {heroLinks.map((link) => (
                     <a
