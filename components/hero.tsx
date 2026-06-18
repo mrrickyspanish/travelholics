@@ -13,7 +13,7 @@ export const Hero = () => {
   return (
     <section className="relative isolate overflow-hidden bg-cream pt-16 text-white">
       <div className="mx-auto w-full px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5 lg:pb-5">
-        <div className="relative min-h-[calc(100svh-5rem)] overflow-hidden rounded-[2rem] bg-ink shadow-[0_30px_90px_rgba(26,58,82,0.18)] sm:rounded-[2.5rem] lg:min-h-[calc(100svh-5.5rem)] lg:rounded-[2.75rem]">
+        <div className="relative min-h-[calc(100svh-5rem)] overflow-hidden rounded-[1rem] bg-ink shadow-[0_30px_90px_rgba(26,58,82,0.18)] sm:rounded-[1.25rem] lg:min-h-[calc(100svh-5.5rem)] lg:rounded-[1.375rem]">
           {/* Future video background can replace this media layer without changing the hero structure. */}
           <motion.div
             className="absolute inset-0"
