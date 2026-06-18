@@ -24,9 +24,8 @@ const DESKTOP_NAV: NavItem[] = [
 ];
 
 const HERO_NAV: NavItem[] = [
-  { label: "Cruises", href: "/cruises/caribbean" },
-  { label: "Shop", href: "/shop" },
-  { label: "Our Story", href: "/#about" },
+  { label: "Open Trip", href: "/cruises/caribbean" },
+  { label: "Private Trip", href: "/#contact" },
 ];
 
 const MOBILE_NAV: NavItem[] = [
@@ -99,36 +98,40 @@ export const Header = () => {
     : "bg-transparent";
   const onDark = isActive || isHeroArrival;
   const navItems = isHeroArrival ? HERO_NAV : DESKTOP_NAV;
-  const linkBase = "text-sm font-medium px-3 py-2 rounded-lg transition-colors duration-150";
-  const linkColor = onDark ? "text-white/85 hover:text-white hover:bg-white/10" : "text-ink/70 hover:text-ink hover:bg-sand";
+  const linkBase = isHeroArrival ? "text-sm font-semibold px-3 py-2 rounded-lg transition-colors duration-150" : "text-sm font-medium px-3 py-2 rounded-lg transition-colors duration-150";
+  const linkColor = onDark ? "text-white/88 hover:text-white hover:bg-white/10" : "text-ink/70 hover:text-ink hover:bg-sand";
   const linkActive = onDark ? "text-white font-semibold" : "text-ink font-semibold";
   const iconBtn = `relative flex h-10 w-10 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral ${onDark ? "hover:bg-white/15 text-white" : "hover:bg-sand text-ink"}`;
 
   return (
     <>
-      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${navBg}`}>
-        <div className={`${isHeroArrival ? "mx-auto grid h-16 max-w-[calc(100%-1.5rem)] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 sm:max-w-[calc(100%-2rem)] lg:max-w-[calc(100%-2.5rem)]" : "max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-[auto_1fr_auto] items-center h-16 gap-4"}`}>
+      <header className={`fixed ${isHeroArrival ? "top-3 sm:top-4 lg:top-5" : "top-0"} inset-x-0 z-50 transition-all duration-300 ${navBg}`}>
+        <div className={`${isHeroArrival ? "mx-auto grid h-16 max-w-[calc(100%-1.5rem)] grid-cols-[auto_1fr_auto] items-center gap-4 px-4 sm:max-w-[calc(100%-2rem)] lg:max-w-[calc(100%-2.5rem)]" : "max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-[auto_1fr_auto] items-center h-16 gap-4"}`}>
           {isHeroArrival ? (
-            <div aria-hidden="true" />
+            <button type="button" onClick={() => setMenuOpen(true)} aria-label="Open navigation menu" aria-expanded={menuOpen} className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-ink shadow-sm transition-colors hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+              <Menu className="h-3.5 w-3.5" />
+              Menu
+            </button>
           ) : (
             <Link href="/" className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded-md">
               <Image src="/images/traveholics%20logos%20(1200%20x%20300%20px).svg" alt="Travelholics" width={180} height={44} className={`h-9 lg:h-[54px] w-auto transition-all duration-300 ${onDark ? "brightness-0 invert" : ""}`} priority />
             </Link>
           )}
 
-          <nav className="hidden lg:flex items-center justify-center gap-0.5">
+          <nav className={`${isHeroArrival ? "hidden sm:flex items-center justify-start gap-4" : "hidden lg:flex items-center justify-center gap-0.5"}`}>
             {navItems.map((link) => {
               const active = !link.href.includes("#") && (pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href.split("#")[0])));
               return (
-                <Link key={link.label} href={link.href} className={`${linkBase} ${linkColor} ${active ? linkActive : ""} flex items-center gap-1.5`}>
+                <Link key={link.label} href={link.href} className={`${linkBase} ${linkColor} ${active ? linkActive : ""} flex items-center gap-1.5 drop-shadow-[0_2px_10px_rgba(10,31,44,0.22)]`}>
                   {link.label}
+                  {isHeroArrival && <span className="text-[0.72em] leading-none">⌄</span>}
                   {link.liveIndicator && isActive && <PulsingDot className={onDark ? "text-white" : "text-coral"} />}
                 </Link>
               );
             })}
           </nav>
 
-          <div className="flex items-center gap-1 sm:gap-2 justify-end">
+          <div className={`${isHeroArrival ? "hidden" : "flex items-center gap-1 sm:gap-2 justify-end"}`}>
             <button type="button" onClick={openDrawer} aria-label={`Cart${count > 0 ? `, ${count} items` : ""}`} className={iconBtn}>
               <ShoppingBag className="h-5 w-5" />
               {count > 0 && (
@@ -148,8 +151,8 @@ export const Header = () => {
                 </AnimatePresence>
               </a>
             ) : (
-              <a href="/#contact" className={`${isHeroArrival ? "hidden sm:inline-flex items-center rounded-xl border border-white/24 bg-white/16 px-5 py-2 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/24 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white" : "hidden sm:inline-flex items-center rounded-xl bg-coral px-5 py-2 text-sm font-semibold text-white hover:bg-coral-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2"}`}>
-                {isHeroArrival ? "Plan" : "Join the Crew"}
+              <a href="/#contact" className="hidden sm:inline-flex items-center rounded-xl bg-coral px-5 py-2 text-sm font-semibold text-white hover:bg-coral-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2">
+                Join the Crew
               </a>
             )}
 
