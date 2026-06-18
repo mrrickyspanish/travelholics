@@ -18,9 +18,9 @@ export const Hero = () => {
           <motion.div
             className="absolute inset-0"
             aria-hidden="true"
-            initial={{ scale: 1 }}
-            animate={{ scale: 1.08 }}
-            transition={{ duration: 28, ease: "easeInOut", repeat: Infinity, repeatType: "mirror" }}
+            initial={{ scale: 1.01 }}
+            animate={{ scale: 1.12 }}
+            transition={{ duration: 14, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
               src="/images/Charlotte_Amalie_StThomas.png"
@@ -79,15 +79,24 @@ export const Hero = () => {
                 Always planning the next getaway? No cure, just better trips, a crew that gets it, and gear to match.
               </p>
 
-              <div className="mt-5 border-t border-dashed border-white/38 pt-3 sm:mt-6 sm:pt-3 lg:pt-4">
-                <nav aria-label="Hero quick links" className="grid grid-cols-3 gap-3 text-center">
-                  {heroLinks.map((link) => (
+              <div className="mt-5 border-t border-dashed border-white/38 pt-2 sm:mt-6 sm:pt-2 lg:pt-3">
+                <nav aria-label="Hero quick links" className="grid grid-cols-[1fr_auto_1fr] items-end">
+                  {heroLinks.map((link, index) => (
                     <a
                       key={link.label}
                       href={link.href}
-                      className="rounded-md px-2 py-1 text-[0.68rem] font-medium text-white/82 transition-colors hover:text-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral sm:text-[0.72rem] lg:text-[0.78rem]"
+                      className={[
+                        "inline-flex w-fit flex-col gap-1 rounded-md px-1 py-1 text-[0.68rem] font-medium text-white/82 transition-colors hover:text-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral sm:text-[0.72rem] lg:text-[0.78rem]",
+                        index === 0 ? "justify-self-start text-left" : "",
+                        index === 1 ? "justify-self-center text-center" : "",
+                        index === 2 ? "justify-self-end text-right" : "",
+                      ].join(" ")}
                     >
-                      {link.label} →
+                      <span className="inline-flex items-center gap-1">
+                        <span>{link.label}</span>
+                        <span className="text-[0.75em] leading-none">›</span>
+                      </span>
+                      <span className="h-px w-full bg-white/42" aria-hidden="true" />
                     </a>
                   ))}
                 </nav>
