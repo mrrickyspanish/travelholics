@@ -85,7 +85,7 @@ export const Hero = () => {
                     <a
                       key={link.label}
                       href={link.href}
-                      className="rounded-full px-2 py-2 text-[0.95rem] font-semibold text-white/88 transition-colors hover:text-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral sm:text-[1.02rem] lg:text-[1.08rem]"
+                      className="rounded-md px-2 py-1 text-[0.68rem] font-medium text-white/82 transition-colors hover:text-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral sm:text-[0.72rem] lg:text-[0.78rem]"
                     >
                       {link.label} →
                     </a>
