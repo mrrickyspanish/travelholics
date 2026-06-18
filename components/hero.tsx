@@ -17,7 +17,7 @@ export const Hero = () => {
           {/* Future video background can replace this media layer without changing the hero structure. */}
           <div className="absolute inset-0" aria-hidden="true">
             <Image
-              src="/images/hero_th_background.png"
+              src="/images/Charlotte_Amalie_StThomas.png"
               alt=""
               fill
               priority
