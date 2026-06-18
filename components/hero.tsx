@@ -30,7 +30,7 @@ export const Hero = () => {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_46%,rgba(252,250,245,0.12)_0%,rgba(252,250,245,0)_36%),radial-gradient(circle_at_18%_78%,rgba(242,106,117,0.14)_0%,rgba(242,106,117,0)_30%)]" aria-hidden="true" />
 
           <div className="absolute left-5 top-5 z-20 rounded-full bg-white/14 px-4 py-2 text-[0.875rem] font-semibold text-white/76 ring-1 ring-white/18 backdrop-blur-sm sm:left-8 sm:top-8 lg:left-10 lg:top-10">
-            At sea · Cruise deck sunset
+            Charlotte Amalie · St. Thomas
           </div>
 
           <div className="relative z-10 min-h-[calc(100svh-5rem)] lg:min-h-[calc(100svh-5.5rem)]">
