@@ -41,12 +41,12 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="absolute inset-x-5 top-1/2 mx-auto max-w-[82rem] -translate-y-1/2 text-center sm:inset-x-8 lg:inset-x-12"
+              className="absolute inset-x-5 top-1/2 mx-auto max-w-[74rem] -translate-y-1/2 text-center sm:inset-x-8 lg:inset-x-12"
             >
-              <h1 className="font-serif text-[clamp(4.1rem,14.5vw,13.6rem)] font-semibold leading-[0.82] tracking-[-0.075em] text-white drop-shadow-[0_8px_28px_rgba(10,31,44,0.28)]">
+              <h1 className="font-serif text-[clamp(3.7rem,13vw,12.2rem)] font-semibold leading-[0.82] tracking-[-0.075em] text-white drop-shadow-[0_8px_28px_rgba(10,31,44,0.28)]">
                 Travelholic
               </h1>
-              <p className="mx-auto mt-5 max-w-[22ch] font-serif text-[clamp(1.65rem,4.6vw,4.65rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white drop-shadow-[0_6px_20px_rgba(10,31,44,0.24)] sm:mt-6">
+              <p className="mx-auto mt-4 max-w-[22ch] font-serif text-[clamp(1.5rem,4.15vw,4.2rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white drop-shadow-[0_6px_20px_rgba(10,31,44,0.24)] sm:mt-5">
                 Someone who travels{" "}
                 <span className="relative inline-block whitespace-nowrap font-script text-[1.08em] font-semibold tracking-normal text-coral">
                   between trips.
@@ -75,7 +75,7 @@ export const Hero = () => {
               transition={{ duration: 0.65, delay: 0.12 }}
               className="absolute inset-x-5 bottom-6 mx-auto max-w-[92rem] sm:inset-x-8 sm:bottom-8 lg:inset-x-10 lg:bottom-10 xl:inset-x-12"
             >
-              <p className="max-w-[42ch] text-left text-[0.98rem] font-medium leading-[1.55] text-white/82 sm:text-[1.05rem] lg:text-[1.08rem]">
+              <p className="max-w-[38ch] text-left text-[0.88rem] font-medium leading-[1.55] text-white/82 sm:text-[0.95rem] lg:text-[0.97rem]">
                 Always planning the next getaway? No cure, just better trips, a crew that gets it, and gear to match.
               </p>
 
