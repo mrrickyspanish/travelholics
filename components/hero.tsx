@@ -2,131 +2,117 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Button } from "@/components/button";
-import { VoyageManifest } from "@/components/stats-strip";
+
+const heroLinks = [
+  { label: "Plan My Cruise", href: "/#contact" },
+  { label: "Meet Yolanda", href: "/#about" },
+  { label: "Shop Gear", href: "/shop-full" },
+];
 
 export const Hero = () => {
   return (
-    <section className="relative overflow-hidden bg-cream pt-16 lg:min-h-[90vh]">
-      {/* Full hero background image */}
-      <div className="absolute inset-0" aria-hidden="true">
-        <Image
-          src="/images/hero_th_background.png"
-          alt=""
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-      </div>
-      <div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_14%_34%,rgba(252,250,245,0.78)_0%,rgba(252,250,245,0.54)_22%,rgba(252,250,245,0.22)_44%,rgba(252,250,245,0.08)_62%,rgba(252,250,245,0)_80%),linear-gradient(110deg,rgba(252,250,245,0.62)_0%,rgba(252,250,245,0.32)_26%,rgba(252,250,245,0.12)_48%,rgba(252,250,245,0)_68%)] lg:bg-[radial-gradient(circle_at_18%_34%,rgba(252,250,245,0.62)_0%,rgba(252,250,245,0.38)_24%,rgba(252,250,245,0.18)_44%,rgba(252,250,245,0.06)_60%,rgba(252,250,245,0)_78%),linear-gradient(110deg,rgba(252,250,245,0.48)_0%,rgba(252,250,245,0.22)_24%,rgba(252,250,245,0.08)_46%,rgba(252,250,245,0)_66%)]"
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 mx-auto w-full max-w-[88rem] px-5 pt-8 pb-44 sm:px-6 sm:pb-48 sm:py-12 lg:flex lg:min-h-[calc(90vh-12rem)] lg:flex-col lg:justify-center lg:py-16 lg:pb-52">
-        <div className="grid items-center gap-12 lg:grid-cols-[56%_44%] lg:gap-8">
-          {/* Left column */}
+    <section className="relative isolate overflow-hidden bg-cream pt-3 text-white sm:pt-4 lg:pt-5">
+      <div className="mx-auto w-full px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5 lg:pb-5">
+        <div className="relative min-h-[calc(100svh-1.5rem)] overflow-hidden rounded-[1rem] bg-ink shadow-[0_30px_90px_rgba(26,58,82,0.18)] sm:rounded-[1.25rem] lg:min-h-[calc(100svh-2rem)] lg:rounded-[1.375rem]">
+          {/* Future video background can replace this media layer without changing the hero structure. */}
           <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="mx-auto flex w-full max-w-[29rem] flex-col items-center pt-4 sm:pt-8 lg:mx-0 lg:max-w-none lg:items-start lg:pt-0"
+            className="absolute inset-0"
+            aria-hidden="true"
+            initial={{ scale: 1.01 }}
+            animate={{ scale: 1.12 }}
+            transition={{ duration: 14, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="mx-auto inline-block w-full max-w-[34rem] rounded-[1.75rem] border border-white/80 bg-[rgba(252,250,245,0.82)] px-5 py-5 text-center shadow-[0_18px_45px_rgba(26,58,82,0.1)] ring-1 ring-white/55 backdrop-blur-0 sm:px-6 sm:py-6 sm:backdrop-blur-[2px] lg:mx-0 lg:max-w-2xl lg:rounded-[2rem] lg:bg-white/84 lg:px-8 lg:py-7 lg:text-left lg:shadow-2xl lg:shadow-ink/20">
-              <div className="mb-5 space-y-3.5 lg:space-y-4">
-                <div className="flex flex-wrap items-end justify-center gap-x-3 gap-y-1 lg:justify-start">
-                  <h1 className="font-serif text-[clamp(2.95rem,10vw,3.35rem)] font-semibold leading-[0.96] tracking-[-0.02em] text-[#0E125C] lg:text-[4.5rem] xl:text-[4.9rem]">
-                    Travelholic.
-                  </h1>
-                  <span className="mb-2 text-[1.35rem] italic leading-none text-[#0E125C] lg:text-[1.9rem]">(noun)</span>
-                </div>
-                <p className="text-eyebrow text-stone/85 lg:text-[13px]">/ˈtra-vəl-hä-lik/</p>
-                <p className="mx-auto max-w-[24ch] text-[1.3rem] leading-[1.12] font-medium text-[#0E125C] lg:mx-0 lg:max-w-none lg:text-[2rem] xl:text-[2.2rem]">
-                  Someone who travels{" "}
-                  <span className="relative inline-block rounded-full bg-cream/92 px-2 pb-1 pt-0.5 font-script text-[1.72rem] font-semibold leading-none text-[#D84E59] shadow-[0_4px_12px_rgba(252,250,245,0.45)] align-baseline lg:bg-cream/80 lg:text-[2.1rem] xl:text-[2.3rem]">
-                    between trips.
-                    <svg
-                      className="absolute -bottom-1 left-0 w-full text-coral"
-                      viewBox="0 0 210 10"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                      preserveAspectRatio="none"
-                    >
-                      <path
-                        d="M3 7 C44 3, 84 8.3, 126 5.4 C159 3.3, 186 6.8, 207 4.8"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </span>
-                </p>
-              </div>
-
-              <p className="mx-auto text-[1.3rem] leading-[1.65] font-medium text-royal-deep [text-shadow:0_1px_2px_rgba(255,255,255,0.18)] lg:mx-0 lg:max-w-[40ch]">
-                Always planning the next getaway. No cure, just better trips, a crew that gets it, and gear to match.
-              </p>
-
-              <p className="mx-auto mt-5 border-t border-stone/15 pt-4 text-[13px] font-medium leading-relaxed text-stone/80 lg:mx-0">
-                Certified Cruise Specialist · No planning fees
-              </p>
-            </div>
-
-            <div className="mt-5 flex w-full max-w-[34rem] flex-col items-center lg:max-w-none lg:items-start">
-              <Button
-                variant="coral"
-                className="w-full sm:w-auto"
-                onClick={() => { window.location.href = "/#contact"; }}
-              >
-                Plan My Cruise
-              </Button>
-            </div>
+            <Image
+              src="/images/Charlotte_Amalie_StThomas.png"
+              alt=""
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="100vw"
+            />
           </motion.div>
 
-          {/* Right column — compact Yolanda polaroid + intro card */}
-          <motion.div
-            initial={{ opacity: 0, x: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="hidden flex-col items-end gap-0 lg:flex lg:pr-3"
-          >
-            <div
-              className="w-[320px] bg-white p-[7px] pb-8 shadow-2xl shadow-ink/15 xl:w-[340px]"
-              style={{ transform: "rotate(-1deg)" }}
+          <div className="absolute left-5 top-20 z-20 rounded-full bg-white/14 px-4 py-2 text-[0.875rem] font-semibold text-white/76 ring-1 ring-white/18 backdrop-blur-sm sm:left-8 sm:top-20 lg:left-10 lg:top-20">
+            Charlotte Amalie · St. Thomas
+          </div>
+
+          <div className="relative z-10 min-h-[calc(100svh-1.5rem)] lg:min-h-[calc(100svh-2rem)]">
+            <motion.div
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="absolute inset-x-5 top-[45%] mx-auto max-w-[66rem] -translate-y-1/2 text-center sm:inset-x-8 lg:inset-x-12"
             >
-              <div className="relative aspect-[3/4] overflow-hidden bg-blush">
-                <Image
-                  src="/images/why-stress-free.jpg"
-                  alt="Yolanda, Your Cruise Curator & Travel Partner"
-                  fill
-                  className="object-cover object-top"
-                  sizes="(min-width: 1280px) 340px, 320px"
-                  priority
-                />
-              </div>
-            </div>
+              <h1 className="font-serif text-[clamp(3.25rem,11.6vw,10.8rem)] font-semibold leading-[0.82] tracking-[-0.075em] text-white drop-shadow-[0_8px_28px_rgba(10,31,44,0.28)]">
+                Travelholic
+              </h1>
+              <p className="mx-auto mt-4 max-w-[22ch] font-serif text-[clamp(1.3rem,3.65vw,3.7rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white drop-shadow-[0_6px_20px_rgba(10,31,44,0.24)] sm:mt-5">
+                Someone who travels{" "}
+                <span className="relative inline-block whitespace-nowrap font-script text-[1.08em] font-semibold tracking-normal text-coral">
+                  between trips.
+                  <svg
+                    className="absolute -bottom-1 left-0 h-3 w-full text-coral"
+                    viewBox="0 0 210 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M3 7 C44 3, 84 8.3, 126 5.4 C159 3.3, 186 6.8, 207 4.8"
+                      stroke="currentColor"
+                      strokeWidth="2.8"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+              </p>
+            </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="w-[320px] rounded-2xl border border-blush/80 bg-white/97 p-6 shadow-xl backdrop-blur xl:w-[340px]"
-              style={{ marginTop: "-2.4rem", marginRight: "1rem" }}
+              transition={{ duration: 0.65, delay: 0.12 }}
+              className="absolute inset-x-5 bottom-3 mx-auto max-w-[92rem] sm:inset-x-8 sm:bottom-4 lg:inset-x-10 lg:bottom-5 xl:inset-x-12 xl:bottom-6"
             >
-              <p className="mb-2 font-script text-[2.2rem] leading-none text-coral">Hi, I&apos;m Yolanda</p>
-              <p className="mb-3 text-[24px] font-semibold leading-snug text-royal-deep">Travelholic in Chief</p>
-              <p className="text-[18px] font-medium leading-relaxed text-royal-deep/90">
-                20+ years addicted to ports, decks, and packing lists.
-              </p>
-              <p className="mt-4 text-right font-script text-[1.55rem] leading-none text-coral">No regrets.</p>
+              <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(16rem,28rem)] sm:items-end">
+                <p className="max-w-[38ch] text-left text-[0.88rem] font-medium leading-[1.55] text-white/82 sm:text-[0.95rem] lg:text-[0.97rem]">
+                  Always planning the next getaway? No cure, just better trips, a crew that gets it, and gear to match.
+                </p>
+                <div className="hidden justify-self-end text-right sm:block">
+                  <p className="text-[0.78rem] font-semibold uppercase tracking-[0.13em] text-white/84">Growing travel crew</p>
+                  <p className="mt-1 max-w-[32ch] text-[0.82rem] font-medium leading-[1.45] text-white/74">
+                    Cruise tips, trip ideas, and real guidance from Yolanda.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-5 border-t border-dashed border-white/38 pt-2 sm:mt-6 sm:pt-2 lg:pt-3">
+                <nav aria-label="Hero quick links" className="grid grid-cols-[1fr_auto_1fr] items-end">
+                  {heroLinks.map((link, index) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      className={[
+                        "inline-flex w-fit flex-col gap-1 rounded-md px-1 py-1 text-[0.68rem] font-medium text-white/82 transition-colors hover:text-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral sm:text-[0.72rem] lg:text-[0.78rem]",
+                        index === 0 ? "justify-self-start text-left" : "",
+                        index === 1 ? "justify-self-center text-center" : "",
+                        index === 2 ? "justify-self-end text-right" : "",
+                      ].join(" ")}
+                    >
+                      <span className="inline-flex items-center gap-1">
+                        <span>{link.label}</span>
+                        <span className="text-[0.75em] leading-none">›</span>
+                      </span>
+                      <span className="h-px w-full bg-white/42" aria-hidden="true" />
+                    </a>
+                  ))}
+                </nav>
+              </div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
-
-      <VoyageManifest />
     </section>
   );
 };

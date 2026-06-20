@@ -1,10 +1,9 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { isAdminEmail } from './lib/admin-auth'
 
 export async function middleware(req: NextRequest) {
-  // Forward pathname as a header so the admin layout can read it
-  // without a second session check — prevents ERR_TOO_MANY_REDIRECTS on /admin/login
   const requestHeaders = new Headers(req.headers)
   requestHeaders.set('x-pathname', req.nextUrl.pathname)
 
@@ -13,7 +12,6 @@ export async function middleware(req: NextRequest) {
   })
 
   if (req.nextUrl.pathname.startsWith('/admin')) {
-    // These pages manage their own auth state — do not intercept
     if (
       req.nextUrl.pathname === '/admin/login' ||
       req.nextUrl.pathname === '/admin/update-password'
@@ -44,7 +42,7 @@ export async function middleware(req: NextRequest) {
       data: { session },
     } = await supabase.auth.getSession()
 
-    if (!session) {
+    if (!session || !isAdminEmail(session.user.email)) {
       const loginUrl = req.nextUrl.clone()
       loginUrl.pathname = '/admin/login'
       loginUrl.searchParams.set('redirectTo', req.nextUrl.pathname)

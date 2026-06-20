@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 const featuredTile = {
   caption: "Amazing Destinations",
@@ -33,116 +34,81 @@ const supportingTiles = [
   },
 ];
 
+const photoLabelClass = "absolute bottom-4 right-4 text-right text-[0.56rem] font-bold uppercase leading-none tracking-[0.14em] text-white/70 lg:bottom-5 lg:right-5";
+
 export const GroupTrips = () => {
   return (
-    <section id="group-trips" className="bg-sand py-10 md:py-12">
-      <div className="mx-auto max-w-[980px] px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto mb-6 max-w-xl text-center"
-        >
-          <p className="text-eyebrow mb-2 text-coral">GROUP CRUISE EXPERIENCES</p>
-          <h2 className="font-serif text-3xl font-semibold tracking-tight text-ink lg:text-5xl">
-            Travel Better Together
-          </h2>
-          <p className="mx-auto mt-4 max-w-[38ch] text-card-body text-stone">
-            Join curated group sailings built around good people, shared moments, and stress-free planning from start to finish.
-          </p>
-        </motion.div>
-
-        {/* Desktop grid */}
-        <div className="hidden lg:grid grid-cols-[44%_1fr] gap-8 mx-auto max-w-[980px] items-stretch" style={{maxHeight:'420px'}}>
-          <article className="group relative overflow-hidden rounded-2xl shadow-[0_12px_32px_rgba(14,34,56,0.13)]" style={{height:'100%'}}>
-            <div className="relative w-full h-full min-h-[380px] max-h-[420px] aspect-[4/5]">
-              <Image
-                src={featuredTile.src}
-                alt={featuredTile.alt}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 1279px) 44vw, 44vw"
-                style={{objectPosition:'center'}}
-              />
-            </div>
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent p-5">
-                  <p className="text-card-body font-semibold tracking-wide text-white/95">{featuredTile.caption}</p>
-            </div>
-          </article>
-
-          <div className="grid grid-cols-2 grid-rows-2 gap-5 h-full">
-            {supportingTiles.map(({ caption, src, alt }) => (
-              <article
-                key={caption}
-                className="group relative overflow-hidden rounded-2xl shadow-[0_8px_20px_rgba(14,34,56,0.10)] flex flex-col justify-end"
-                style={{height:'100%'}}
-              >
-                <div className="relative w-full h-full min-h-[180px] max-h-[200px] aspect-[4/3]">
-                  <Image
-                    src={src}
-                    alt={alt}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 1279px) 22vw, 18vw"
-                  />
-                </div>
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/25 to-transparent p-3">
-                  <p className="text-card-body font-medium text-white/95">{caption}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile layout */}
-        <div className="lg:hidden">
-          <article className="group relative overflow-hidden rounded-2xl shadow-[0_10px_24px_rgba(14,34,56,0.13)] mb-4">
-            <div className="relative w-full aspect-[4/3]">
-              <Image
-                src={featuredTile.src}
-                alt={featuredTile.alt}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="100vw"
-              />
-            </div>
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent p-4">
-              <p className="text-sm font-semibold tracking-wide text-white/95">{featuredTile.caption}</p>
-            </div>
-          </article>
-
-          <div className="-mr-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pr-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden touch-pan-x">
-            {supportingTiles.map(({ caption, src, alt }) => (
-              <article
-                key={caption}
-                className="group relative w-[82vw] max-w-xs flex-none snap-start overflow-hidden rounded-2xl shadow-[0_8px_20px_rgba(14,34,56,0.10)]"
-              >
-                <div className="relative aspect-[4/3] w-full">
-                  <Image
-                    src={src}
-                    alt={alt}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="82vw"
-                  />
-                </div>
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 via-black/25 to-transparent p-3">
-                  <p className="text-sm font-medium text-white/95">{caption}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-7 text-center">
-          <Link
-            href="/#contact"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-coral px-8 py-4 text-base font-semibold text-white shadow-md shadow-coral/15 transition-colors hover:bg-coral-deep sm:w-auto"
-            style={{marginTop:'28px'}}
+    <section id="group-trips" className="relative overflow-hidden bg-sand py-16 sm:py-20 lg:py-28">
+      <div className="pointer-events-none absolute left-[-7rem] top-12 h-56 w-56 rounded-full bg-coral/8 blur-3xl" aria-hidden="true" />
+      <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.36fr_0.64fr] lg:gap-14 xl:gap-18">
+          <motion.div
+            initial={{ opacity: 0, x: -18 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+            className="mx-auto max-w-[34rem] text-center lg:mx-0 lg:text-left"
           >
-            Join the Next Sailing →
-          </Link>
+            <p className="mb-4 text-[0.82rem] font-bold uppercase tracking-[0.16em] text-coral">
+              GROUP CRUISE EXPERIENCES
+            </p>
+            <h2 className="font-serif text-[clamp(2.6rem,5.5vw,5.25rem)] font-semibold leading-[0.94] tracking-[-0.06em] text-ink">
+              Travel Better Together
+            </h2>
+            <p className="mt-5 max-w-[36ch] text-[1.05rem] font-medium leading-[1.72] text-ink/76 sm:text-[1.15rem] lg:mx-0">
+              Curated group sailings built around good people, shared memories, and less planning stress from start to finish.
+            </p>
+            <Link
+              href="/#contact"
+              className="mt-8 inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md shadow-coral/15 transition-colors hover:bg-coral-deep"
+            >
+              Join the Next Sailing
+              <ArrowUpRight size={17} strokeWidth={2.2} />
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.08 }}
+            className="grid gap-4 lg:grid-cols-[1.05fr_1fr] lg:gap-5"
+          >
+            <article className="group relative min-h-[28rem] overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_24px_64px_rgba(26,58,82,0.13)] ring-1 ring-white/70 lg:min-h-[34rem]">
+              <div className="relative h-full overflow-hidden rounded-[1.5rem] bg-cream">
+                <Image
+                  src={featuredTile.src}
+                  alt={featuredTile.alt}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 1024px) 92vw, 38vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/28 via-transparent to-transparent" aria-hidden="true" />
+                <p className={photoLabelClass}>{featuredTile.caption}</p>
+              </div>
+            </article>
+
+            <div className="grid grid-cols-2 gap-4 lg:gap-5">
+              {supportingTiles.map(({ caption, src, alt }, index) => (
+                <article
+                  key={caption}
+                  className={`group relative min-h-[12rem] overflow-hidden rounded-[1.65rem] bg-white p-2 shadow-[0_18px_42px_rgba(26,58,82,0.1)] ring-1 ring-white/70 sm:min-h-[15rem] ${index === 1 ? "lg:translate-y-7" : ""} ${index === 2 ? "lg:-translate-y-2" : ""}`}
+                >
+                  <div className="relative h-full overflow-hidden rounded-[1.2rem] bg-cream">
+                    <Image
+                      src={src}
+                      alt={alt}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 1024px) 45vw, 22vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/28 via-transparent to-transparent" aria-hidden="true" />
+                    <p className={photoLabelClass}>{caption}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

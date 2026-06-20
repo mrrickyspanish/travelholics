@@ -4,8 +4,11 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createBrowserSupabase } from '@/lib/supabase-browser'
+import { isAdminEmail } from '@/lib/admin-auth'
 
 type Mode = 'login' | 'forgot' | 'sent'
+
+const NOT_AUTHORIZED_MESSAGE = 'This email is not approved for Travelholics admin access.'
 
 export default function AdminLoginPage() {
   const router = useRouter()
@@ -15,14 +18,19 @@ export default function AdminLoginPage() {
   const [mode, setMode] = useState<Mode>('login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState(searchParams.get('unauthorized') ? NOT_AUTHORIZED_MESSAGE : '')
   const [loading, setLoading] = useState(false)
 
-  // Redirect authenticated users away from the login page
   useEffect(() => {
     const supabase = createBrowserSupabase()
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) router.replace('/admin')
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!session) return
+      if (!isAdminEmail(session.user.email)) {
+        await supabase.auth.signOut()
+        setError(NOT_AUTHORIZED_MESSAGE)
+        return
+      }
+      router.replace('/admin')
     })
   }, [router])
 
@@ -31,9 +39,15 @@ export default function AdminLoginPage() {
     setError('')
     setLoading(true)
     const supabase = createBrowserSupabase()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
       setError(error.message)
+      setLoading(false)
+      return
+    }
+    if (!isAdminEmail(data.user?.email)) {
+      await supabase.auth.signOut()
+      setError(NOT_AUTHORIZED_MESSAGE)
       setLoading(false)
       return
     }
@@ -59,7 +73,6 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0b1812] px-4">
       <div className="w-full max-w-sm">
-        {/* Logo */}
         <div className="flex justify-center mb-8">
           <Image
             src="/images/Traveholic_logo_wordmark_white.png"
