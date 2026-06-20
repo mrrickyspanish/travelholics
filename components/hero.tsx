@@ -11,9 +11,9 @@ const heroLinks = [
 
 export const Hero = () => {
   return (
-    <section className="relative isolate overflow-hidden bg-cream pt-3 text-white sm:pt-4 lg:pt-5">
-      <div className="mx-auto w-full px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5 lg:pb-5">
-        <div className="relative min-h-[calc(100svh-1.5rem)] overflow-hidden rounded-[1rem] bg-ink shadow-[0_30px_90px_rgba(26,58,82,0.18)] sm:rounded-[1.25rem] lg:min-h-[calc(100svh-2rem)] lg:rounded-[1.375rem]">
+    <section className="relative isolate overflow-hidden bg-cream pt-2 text-white sm:pt-4 lg:pt-5">
+      <div className="mx-auto w-full px-2 pb-2 sm:px-4 sm:pb-4 lg:px-5 lg:pb-5">
+        <div className="relative min-h-[calc(100svh-1rem)] overflow-hidden rounded-[1rem] bg-ink shadow-[0_30px_90px_rgba(26,58,82,0.18)] sm:min-h-[calc(100svh-2rem)] sm:rounded-[1.25rem] lg:rounded-[1.375rem]">
           {/* Future video background can replace this media layer without changing the hero structure. */}
           <motion.div
             className="absolute inset-0"
@@ -32,23 +32,23 @@ export const Hero = () => {
             />
           </motion.div>
 
-          <div className="absolute left-8 top-[4.85rem] z-20 rounded-full bg-white/14 px-3 py-1.5 text-[0.72rem] font-semibold text-white/76 ring-1 ring-white/18 backdrop-blur-sm sm:left-8 sm:top-20 sm:px-4 sm:py-2 sm:text-[0.875rem] lg:left-10 lg:top-20">
+          <div className="absolute left-6 top-[4.35rem] z-20 rounded-full bg-white/12 px-3 py-1.5 text-[0.68rem] font-semibold text-white/72 ring-1 ring-white/16 backdrop-blur-sm sm:left-8 sm:top-20 sm:px-4 sm:py-2 sm:text-[0.875rem] lg:left-10 lg:top-20">
             Charlotte Amalie · St. Thomas
           </div>
 
-          <div className="relative z-10 min-h-[calc(100svh-1.5rem)] lg:min-h-[calc(100svh-2rem)]">
+          <div className="relative z-10 min-h-[calc(100svh-1rem)] sm:min-h-[calc(100svh-2rem)]">
             <motion.div
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="absolute inset-x-5 top-[45%] mx-auto max-w-[20rem] -translate-y-1/2 text-center sm:inset-x-8 sm:max-w-[66rem] lg:inset-x-12"
+              className="absolute inset-x-4 top-[43%] mx-auto max-w-[23.5rem] -translate-y-1/2 text-center sm:inset-x-8 sm:top-[45%] sm:max-w-[66rem] lg:inset-x-12"
             >
-              <h1 className="font-serif text-[clamp(3rem,14vw,4.1rem)] font-semibold leading-[0.86] tracking-[-0.055em] text-white drop-shadow-[0_8px_28px_rgba(10,31,44,0.28)] sm:text-[clamp(3.25rem,11.6vw,10.8rem)] sm:leading-[0.82] sm:tracking-[-0.075em]">
+              <h1 className="font-serif text-[clamp(3.35rem,15.6vw,4.65rem)] font-semibold leading-[0.86] tracking-[-0.06em] text-white drop-shadow-[0_8px_28px_rgba(10,31,44,0.28)] sm:text-[clamp(3.25rem,11.6vw,10.8rem)] sm:leading-[0.82] sm:tracking-[-0.075em]">
                 Travelholic
               </h1>
-              <p className="mx-auto mt-3 max-w-[14rem] font-serif text-[clamp(1.35rem,6.25vw,1.8rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-white drop-shadow-[0_6px_20px_rgba(10,31,44,0.24)] sm:mt-5 sm:max-w-[22ch] sm:text-[clamp(1.3rem,3.65vw,3.7rem)] sm:leading-[0.98] sm:tracking-[-0.05em]">
-                <span className="block sm:inline">Someone who travels</span>{" "}
-                <span className="relative mt-1 inline-block whitespace-nowrap font-script text-[1.08em] font-semibold tracking-normal text-coral sm:mt-0">
+              <p className="mx-auto mt-4 max-w-[23rem] font-serif text-[clamp(1.48rem,7vw,2.12rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-white drop-shadow-[0_6px_20px_rgba(10,31,44,0.24)] sm:mt-5 sm:max-w-[22ch] sm:text-[clamp(1.3rem,3.65vw,3.7rem)] sm:leading-[0.98] sm:tracking-[-0.05em]">
+                <span className="block whitespace-nowrap sm:inline">Someone who travels</span>{" "}
+                <span className="relative mt-1.5 inline-block whitespace-nowrap font-script text-[1.08em] font-semibold tracking-normal text-coral sm:mt-0">
                   between trips.
                   <svg
                     className="absolute -bottom-1 left-0 h-3 w-full text-coral"
