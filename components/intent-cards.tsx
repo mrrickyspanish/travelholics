@@ -39,7 +39,7 @@ export const IntentCards = () => {
   }, [isPaused, prefersReducedMotion]);
 
   return (
-    <section className="relative overflow-hidden bg-cream py-16 sm:py-20 lg:py-28">
+    <section className="relative overflow-hidden bg-cream py-14 sm:py-20 lg:py-28">
       <style>{`
         @keyframes travelholicsDotPulse {
           0%, 100% { transform: scale(1); opacity: 0.78; box-shadow: 0 0 0 0 rgba(16,117,90,0.34), 0 0 10px rgba(16,117,90,0.58); }
@@ -49,13 +49,13 @@ export const IntentCards = () => {
       <div className="pointer-events-none absolute left-1/2 top-8 h-40 w-40 -translate-x-1/2 rounded-full bg-coral/8 blur-3xl" aria-hidden="true" />
 
       <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
-        <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="mx-auto max-w-[64rem] text-center">
-          <h2 className="font-serif text-[clamp(2.2rem,5vw,4.8rem)] font-semibold leading-[0.92] tracking-[-0.065em] text-ink">
+        <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="mx-auto max-w-[22rem] text-center sm:max-w-[64rem]">
+          <h2 className="font-serif text-[clamp(1.8rem,7.8vw,2.2rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-ink sm:text-[clamp(2.4rem,5.6vw,4.8rem)] sm:leading-[0.92] sm:tracking-[-0.065em]">
             Going places, with someone who <span className="whitespace-nowrap">knows the way.</span>
           </h2>
         </motion.div>
 
-        <div className="mt-12 grid items-start gap-10 lg:mt-14 lg:grid-cols-[0.42fr_0.58fr] lg:gap-12 xl:gap-16">
+        <div className="mt-10 grid items-start gap-10 sm:mt-12 lg:mt-14 lg:grid-cols-[0.42fr_0.58fr] lg:gap-12 xl:gap-16">
           <motion.div initial={{ opacity: 0, x: -18 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="relative max-w-[34rem] lg:flex lg:min-h-[35rem] lg:flex-col lg:justify-end lg:pb-[1.25rem]">
             <span className="pointer-events-none absolute left-0 top-[5.5rem] hidden items-center gap-2 rounded-full border border-white/65 bg-white/58 px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-ink shadow-[0_10px_26px_rgba(26,58,82,0.08)] backdrop-blur-md lg:inline-flex">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-mid" style={{ animation: "travelholicsDotPulse 2.1s ease-in-out infinite" }} aria-hidden="true" />
