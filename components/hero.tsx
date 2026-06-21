@@ -17,7 +17,7 @@ export const Hero = () => {
             playsInline
             poster="/images/Charlotte_Amalie_StThomas.jpg"
           >
-            <source src="/videos/Charlotte_Amalie_StThomas_hero.mp4" type="video/mp4" />
+            <source src="https://bnjcpfocmgtmutfbanhs.supabase.co/storage/v1/object/public/Images/travel_updated_hero_vid.mp4" type="video/mp4" />
           </video>
 
           <div
