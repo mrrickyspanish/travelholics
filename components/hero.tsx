@@ -1,31 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown, MapPin } from "lucide-react";
 
-const LOOP_FADE_SECONDS = 0.4;
-
 export const Hero = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isFaded, setIsFaded] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
     video.muted = true;
     video.play().catch(() => {});
-
-    const handleTimeUpdate = () => {
-      if (!video.duration) return;
-      const isNearEnd = video.duration - video.currentTime <= LOOP_FADE_SECONDS;
-      const isPastRestart = video.currentTime > LOOP_FADE_SECONDS;
-      if (isNearEnd) setIsFaded(true);
-      else if (isPastRestart) setIsFaded(false);
-    };
-
-    video.addEventListener("timeupdate", handleTimeUpdate);
-    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
   }, []);
 
   return (
@@ -34,7 +20,7 @@ export const Hero = () => {
         <div className="relative min-h-[calc(100svh-1rem)] overflow-hidden rounded-[1rem] bg-ink shadow-[0_30px_90px_rgba(26,58,82,0.18)] sm:min-h-[calc(100svh-2rem)] sm:rounded-[1.25rem] lg:rounded-[1.375rem]">
           <video
             ref={videoRef}
-            className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-[400ms] ease-in-out ${isFaded ? "opacity-0" : "opacity-100"}`}
+            className="absolute inset-0 h-full w-full object-cover object-center"
             aria-hidden="true"
             autoPlay
             muted
@@ -42,7 +28,7 @@ export const Hero = () => {
             playsInline
             poster="/images/Charlotte_Amalie_StThomas.jpg"
           >
-            <source src="https://bnjcpfocmgtmutfbanhs.supabase.co/storage/v1/object/public/Images/travel_updated_hero_vid.mp4" type="video/mp4" />
+            <source src="https://bnjcpfocmgtmutfbanhs.supabase.co/storage/v1/object/public/Images/travel_updated_hero_vid_2.mp4" type="video/mp4" />
           </video>
 
           <div
