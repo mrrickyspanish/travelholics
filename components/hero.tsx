@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { ChevronDown, MapPin } from "lucide-react";
 
@@ -9,23 +8,17 @@ export const Hero = () => {
     <section className="relative isolate overflow-hidden bg-cream pt-2 text-white sm:pt-4 lg:pt-5">
       <div className="mx-auto w-full px-2 pb-2 sm:px-4 sm:pb-4 lg:px-5 lg:pb-5">
         <div className="relative min-h-[calc(100svh-1rem)] overflow-hidden rounded-[1rem] bg-ink shadow-[0_30px_90px_rgba(26,58,82,0.18)] sm:min-h-[calc(100svh-2rem)] sm:rounded-[1.25rem] lg:rounded-[1.375rem]">
-          {/* Future video background can replace this media layer without changing the hero structure. */}
-          <motion.div
-            className="absolute inset-0"
+          <video
+            className="absolute inset-0 h-full w-full object-cover object-center"
             aria-hidden="true"
-            initial={{ scale: 1.01 }}
-            animate={{ scale: 1.12 }}
-            transition={{ duration: 26, ease: [0.22, 1, 0.36, 1] }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/images/Charlotte_Amalie_StThomas.jpg"
           >
-            <Image
-              src="/images/Charlotte_Amalie_StThomas.jpg"
-              alt=""
-              fill
-              priority
-              className="object-cover object-center"
-              sizes="100vw"
-            />
-          </motion.div>
+            <source src="/videos/Charlotte_Amalie_StThomas_hero.mp4" type="video/mp4" />
+          </video>
 
           <div
             aria-hidden="true"
