@@ -5,10 +5,10 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
 const cards = [
-  { title: "Cruises", location: "At sea", detailLabel: "Cruise Deck, At Sea", description: "Ship views, cabin tips, and easier cruise days.", href: "/cruises/caribbean", image: "/images/hero_th_background.png", imageAlt: "Cruise ship deck at sunset" },
-  { title: "Caribbean", location: "Island routes", detailLabel: "Caribbean Sea, Islands", description: "Warm beaches, quick flights, easy group getaways.", href: "/cruises/caribbean", image: "/images/dest-caribbean.jpg", imageAlt: "Caribbean destination with turquoise water" },
-  { title: "Alaska", location: "Glacier sailings", detailLabel: "Alaska, USA", description: "Glacier views, balcony mornings, cool-weather memories.", href: "/cruises/alaska", image: "/images/dest-alaska-glaciers.jpg", imageAlt: "Alaska glaciers and mountain landscape" },
-  { title: "Mediterranean", location: "European ports", detailLabel: "Mediterranean, Greece", description: "Ancient cities, blue coasts, unforgettable port days.", href: "/cruises/mediterranean", image: "/images/dest-mediterranean.jpg", imageAlt: "Mediterranean travel destination" },
+  { title: "Cruises", location: "At sea", detailLabel: "Cruise Deck, At Sea", href: "/cruises/caribbean", image: "/images/hero_th_background.png", imageAlt: "Cruise ship deck at sunset" },
+  { title: "Caribbean", location: "Island routes", detailLabel: "Caribbean Sea, Islands", href: "/cruises/caribbean", image: "/images/dest-caribbean.jpg", imageAlt: "Caribbean destination with turquoise water" },
+  { title: "Alaska", location: "Glacier sailings", detailLabel: "Alaska, USA", href: "/cruises/alaska", image: "/images/dest-alaska-glaciers.jpg", imageAlt: "Alaska glaciers and mountain landscape" },
+  { title: "Mediterranean", location: "European ports", detailLabel: "Mediterranean, Greece", href: "/cruises/mediterranean", image: "/images/dest-mediterranean.jpg", imageAlt: "Mediterranean travel destination" },
 ];
 
 const desktopSlots = [
@@ -79,7 +79,7 @@ export const IntentCards = () => {
               <AnimatePresence mode="wait">
                 <motion.div key={activeCard.title} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: prefersReducedMotion ? 0 : 0.32, exit: { duration: 0.12 } }}>
                   <p className="text-[0.85rem] font-bold uppercase tracking-[0.12em] text-coral">{activeCard.detailLabel}</p>
-                  <p className="mt-2 max-w-[32rem] text-[1.02rem] font-medium leading-[1.62] text-ink/78">{activeCard.description}</p>
+                  <p className="mt-2 font-script text-[1.7rem] font-semibold leading-none text-coral">{activeCard.location}</p>
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -97,7 +97,7 @@ export const IntentCards = () => {
                     </div>
                   </a>
                   <p className="mt-4 text-[0.85rem] font-bold uppercase tracking-[0.12em] text-coral">{card.detailLabel}</p>
-                  <p className="mt-2 text-[1rem] font-medium leading-[1.6] text-ink/78">{card.description}</p>
+                  <p className="mt-2 font-script text-[1.5rem] font-semibold leading-none text-coral">{card.location}</p>
                 </div>
               ))}
             </div>
