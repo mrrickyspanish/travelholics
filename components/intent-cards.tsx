@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const cards = [
-  { title: "Cruises", location: "At sea", detailLabel: "Cruise Deck, At Sea", href: "/cruises/caribbean", image: "/images/hero_th_background.png", imageAlt: "Cruise ship deck at sunset" },
-  { title: "Caribbean", location: "Island routes", detailLabel: "Caribbean Sea, Islands", href: "/cruises/caribbean", image: "/images/dest-caribbean.jpg", imageAlt: "Caribbean destination with turquoise water" },
-  { title: "Alaska", location: "Glacier sailings", detailLabel: "Alaska, USA", href: "/cruises/alaska", image: "/images/dest-alaska-glaciers.jpg", imageAlt: "Alaska glaciers and mountain landscape" },
-  { title: "Mediterranean", location: "European ports", detailLabel: "Mediterranean, Greece", href: "/cruises/mediterranean", image: "/images/dest-mediterranean.jpg", imageAlt: "Mediterranean travel destination" },
+  { title: "Cruises", location: "At Sea", href: "/cruises/caribbean", image: "/images/hero_th_background.png", imageAlt: "Cruise ship deck at sunset" },
+  { title: "Caribbean", location: "Caribbean", href: "/cruises/caribbean", image: "/images/dest-caribbean.jpg", imageAlt: "Caribbean destination with turquoise water" },
+  { title: "Alaska", location: "Alaska", href: "/cruises/alaska", image: "/images/dest-alaska-glaciers.jpg", imageAlt: "Alaska glaciers and mountain landscape" },
+  { title: "Mediterranean", location: "Mediterranean", href: "/cruises/mediterranean", image: "/images/dest-mediterranean.jpg", imageAlt: "Mediterranean travel destination" },
 ];
 
 const desktopSlots = [
@@ -22,7 +22,6 @@ export const IntentCards = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const activeCard = cards[activeIndex];
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -68,21 +67,12 @@ export const IntentCards = () => {
                 <motion.a key={card.title} href={card.href} className="group absolute block overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_24px_60px_rgba(26,58,82,0.14)] ring-1 ring-stone/10" aria-label={card.title} initial={false} animate={slot} transition={{ duration: prefersReducedMotion ? 0 : 0.78, ease: [0.16, 1, 0.3, 1] }}>
                   <div className="relative h-full overflow-hidden rounded-[1.55rem] bg-sand">
                     <Image src={card.image} alt={card.imageAlt} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes={slotIndex === 0 ? "44vw" : "30vw"} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/26 via-transparent to-transparent" aria-hidden="true" />
-                    <p className="absolute bottom-4 right-4 text-right text-[0.56rem] font-bold uppercase leading-none tracking-[0.14em] text-white/70 lg:bottom-5 lg:right-5">{card.location}</p>
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/84 via-ink/26 to-transparent" aria-hidden="true" />
+                    <p className="absolute bottom-4 right-4 text-right font-script text-[1.6rem] font-semibold leading-none text-coral lg:bottom-5 lg:right-5 lg:text-[1.8rem]">{card.location}</p>
                   </div>
                 </motion.a>
               );
             })}
-
-            <div className="absolute left-0 bottom-[1.25rem] max-w-[34rem]">
-              <AnimatePresence mode="wait">
-                <motion.div key={activeCard.title} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: prefersReducedMotion ? 0 : 0.32, exit: { duration: 0.12 } }}>
-                  <p className="text-[0.85rem] font-bold uppercase tracking-[0.12em] text-coral">{activeCard.detailLabel}</p>
-                  <p className="mt-2 font-script text-[1.7rem] font-semibold leading-none text-coral">{activeCard.location}</p>
-                </motion.div>
-              </AnimatePresence>
-            </div>
           </div>
 
           <div className="-mx-5 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:hidden">
@@ -92,12 +82,10 @@ export const IntentCards = () => {
                   <a href={card.href} className="group relative block h-[24rem] overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_22px_52px_rgba(26,58,82,0.12)] ring-1 ring-stone/10" aria-label={card.title}>
                     <div className="relative h-full overflow-hidden rounded-[1.55rem] bg-sand">
                       <Image src={card.image} alt={card.imageAlt} fill className="object-cover" sizes="82vw" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-ink/26 via-transparent to-transparent" aria-hidden="true" />
-                      <p className="absolute bottom-4 right-4 text-right text-[0.56rem] font-bold uppercase leading-none tracking-[0.14em] text-white/70">{card.location}</p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/84 via-ink/26 to-transparent" aria-hidden="true" />
+                      <p className="absolute bottom-4 right-4 text-right font-script text-[1.6rem] font-semibold leading-none text-coral">{card.location}</p>
                     </div>
                   </a>
-                  <p className="mt-4 text-[0.85rem] font-bold uppercase tracking-[0.12em] text-coral">{card.detailLabel}</p>
-                  <p className="mt-2 font-script text-[1.5rem] font-semibold leading-none text-coral">{card.location}</p>
                 </div>
               ))}
             </div>
