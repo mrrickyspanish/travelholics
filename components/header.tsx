@@ -108,7 +108,7 @@ export const Header = () => {
       <header className={`fixed ${isHeroArrival ? "top-3 sm:top-4 lg:top-5" : "top-0"} inset-x-0 z-50 transition-all duration-300 ${navBg}`}>
         <div className={`${isHeroArrival ? "mx-auto grid h-12 max-w-[calc(100%-1.5rem)] grid-cols-[auto_1fr_auto] items-center gap-3 px-3 sm:h-16 sm:max-w-[calc(100%-2rem)] sm:gap-4 sm:px-4 lg:max-w-[calc(100%-2.5rem)]" : "max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-[auto_1fr_auto] items-center h-16 gap-4"}`}>
           {isHeroArrival ? (
-            <button type="button" onClick={() => setMenuOpen(true)} aria-label="Open navigation menu" aria-expanded={menuOpen} className="inline-flex min-h-9 items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-[0.78rem] font-semibold text-ink shadow-sm transition-colors hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:min-h-10 sm:gap-2 sm:rounded-lg sm:px-4 sm:py-2 sm:text-sm">
+            <button type="button" onClick={() => setMenuOpen(true)} aria-label="Open navigation menu" aria-expanded={menuOpen} className="hidden min-h-9 items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-[0.78rem] font-semibold text-ink shadow-sm transition-colors hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:inline-flex sm:min-h-10 sm:gap-2 sm:rounded-lg sm:px-4 sm:py-2 sm:text-sm">
               <Menu className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
               Menu
             </button>

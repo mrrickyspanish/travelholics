@@ -4,12 +4,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
-const heroLinks = [
-  { label: "Plan My Cruise", href: "/#contact" },
-  { label: "Meet Yolanda", href: "/#about" },
-  { label: "Shop Gear", href: "/shop-full" },
-];
-
 export const Hero = () => {
   return (
     <section className="relative isolate overflow-hidden bg-cream pt-2 text-white sm:pt-4 lg:pt-5">
@@ -35,7 +29,7 @@ export const Hero = () => {
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[58%] bg-gradient-to-t from-ink/85 via-ink/30 to-transparent sm:h-[50%]"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[40%] bg-gradient-to-t from-ink/80 via-ink/20 to-transparent sm:h-[34%]"
           />
 
           <div className="absolute left-6 top-[4.35rem] z-20 rounded-full bg-white/12 px-3 py-1.5 text-[0.68rem] font-semibold text-white/72 ring-1 ring-white/16 backdrop-blur-sm sm:left-8 sm:top-20 sm:px-4 sm:py-2 sm:text-[0.875rem] lg:left-10 lg:top-20">
@@ -76,62 +70,26 @@ export const Hero = () => {
             </motion.div>
 
             <motion.div
-              aria-hidden="true"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="absolute inset-x-0 top-[68%] z-10 flex justify-center sm:hidden"
-            >
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-                className="flex flex-col items-center gap-1.5 text-white/55"
-              >
-                <span className="h-8 w-px bg-white/35" />
-                <ChevronDown className="h-4 w-4" />
-              </motion.div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.12 }}
-              className="absolute inset-x-5 bottom-3 mx-auto max-w-[92rem] sm:inset-x-8 sm:bottom-4 lg:inset-x-10 lg:bottom-5 xl:inset-x-12 xl:bottom-6"
+              transition={{ duration: 0.7, delay: 0.9 }}
+              className="absolute inset-x-0 bottom-8 z-10 flex justify-center sm:bottom-10 lg:bottom-12"
             >
-              <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(16rem,28rem)] sm:items-end">
-                <p className="max-w-[38ch] text-left text-[0.88rem] font-medium leading-[1.55] text-white/82 sm:text-[0.95rem] lg:text-[0.97rem]">
-                  Always planning the next getaway? No cure, just better trips, a crew that gets it, and gear to match.
-                </p>
-                <div className="hidden justify-self-end text-right sm:block">
-                  <p className="text-[0.78rem] font-semibold uppercase tracking-[0.13em] text-white/84">Growing travel crew</p>
-                  <p className="mt-1 max-w-[32ch] text-[0.82rem] font-medium leading-[1.45] text-white/74">
-                    Cruise tips, trip ideas, and real guidance from Yolanda.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-5 border-t border-dashed border-white/38 pt-2 sm:mt-6 sm:pt-2 lg:pt-3">
-                <nav aria-label="Hero quick links" className="grid grid-cols-[1fr_auto_1fr] items-end">
-                  {heroLinks.map((link, index) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      className={[
-                        "inline-flex w-fit flex-col gap-1 rounded-md px-1 py-1 text-[0.68rem] font-medium text-white/82 transition-colors hover:text-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral sm:text-[0.72rem] lg:text-[0.78rem]",
-                        index === 0 ? "justify-self-start text-left" : "",
-                        index === 1 ? "justify-self-center text-center" : "",
-                        index === 2 ? "justify-self-end text-right" : "",
-                      ].join(" ")}
-                    >
-                      <span className="inline-flex items-center gap-1">
-                        <span>{link.label}</span>
-                        <span className="text-[0.75em] leading-none">›</span>
-                      </span>
-                      <span className="h-px w-full bg-white/42" aria-hidden="true" />
-                    </a>
-                  ))}
-                </nav>
-              </div>
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
+                className="group flex flex-col items-center gap-2 rounded-md px-2 py-1 text-white/75 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+              >
+                <span className="text-[0.7rem] font-semibold uppercase tracking-[0.25em] sm:text-[0.78rem]">
+                  Explore
+                </span>
+                <motion.span
+                  animate={{ y: [0, 6, 0] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5" />
+                </motion.span>
+              </button>
             </motion.div>
           </div>
         </div>
