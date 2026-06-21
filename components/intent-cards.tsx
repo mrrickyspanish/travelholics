@@ -49,13 +49,13 @@ export const IntentCards = () => {
       <div className="pointer-events-none absolute left-1/2 top-8 h-40 w-40 -translate-x-1/2 rounded-full bg-coral/8 blur-3xl" aria-hidden="true" />
 
       <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
-        <div className="mt-0 grid items-start gap-10 sm:mt-12 lg:mt-14 lg:grid-cols-[0.42fr_0.58fr] lg:gap-12 xl:gap-16">
-          <motion.div initial={{ opacity: 0, x: -18 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="relative max-w-[34rem] lg:flex lg:min-h-[35rem] lg:flex-col lg:justify-end lg:pb-[1.25rem]">
-            <span className="pointer-events-none absolute left-0 top-[5.5rem] hidden items-center gap-2 rounded-full border border-white/65 bg-white/58 px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-ink shadow-[0_10px_26px_rgba(26,58,82,0.08)] backdrop-blur-md lg:inline-flex">
+        <div className="mt-0 grid items-center gap-10 sm:mt-12 lg:mt-14 lg:grid-cols-[0.42fr_0.58fr] lg:gap-12 xl:gap-16">
+          <motion.div initial={{ opacity: 0, x: -18 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="relative max-w-[34rem] lg:flex lg:min-h-[35rem] lg:flex-col lg:justify-center">
+            <span className="mb-3 hidden items-center gap-2 rounded-full border border-white/65 bg-white/58 px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-ink shadow-[0_10px_26px_rgba(26,58,82,0.08)] backdrop-blur-md lg:inline-flex">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-mid" style={{ animation: "travelholicsDotPulse 2.1s ease-in-out infinite" }} aria-hidden="true" />
               Wander Freely
             </span>
-            <h3 className="mb-4 font-serif text-[clamp(2rem,3vw,3rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-ink">Not Your Boring<br />Travel Agent</h3>
+            <h3 className="mb-4 font-serif text-[clamp(2rem,3vw,3rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-ink lg:text-6xl">Not Your Boring<br />Travel Agent</h3>
             <p className="max-w-[39ch] text-[1.05rem] font-medium leading-[1.75] text-ink/76 sm:text-[1.15rem]">Browse the kind of trips Travelholics is built around, then let Yolanda help you choose the ship, stay, room, and rhythm that actually fits your people.</p>
             <a href="/#contact" className="mt-7 inline-flex min-h-[46px] w-fit items-center justify-center rounded-xl bg-ink px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-emerald-deep">Start planning</a>
           </motion.div>
