@@ -50,7 +50,13 @@ export const Hero = () => {
                 Travelholic
               </h1>
               <p
-                className="mx-auto mt-4 max-w-[23rem] font-serif text-[clamp(1.48rem,7vw,2.12rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-white sm:mt-5 sm:max-w-[22ch] sm:text-[clamp(1.3rem,3.65vw,3.7rem)] sm:leading-[0.98] sm:tracking-[-0.05em]"
+                className="mt-2 text-[0.85rem] italic tracking-wide text-white/70 sm:mt-3 sm:text-[1.1rem]"
+                style={{ filter: "drop-shadow(0 2px 4px rgba(8,20,28,0.5))" }}
+              >
+                /ˈtra-vəl-hä-lik/
+              </p>
+              <p
+                className="mx-auto mt-3 max-w-[23rem] font-serif text-[clamp(1.48rem,7vw,2.12rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-white sm:mt-4 sm:max-w-[22ch] sm:text-[clamp(1.3rem,3.65vw,3.7rem)] sm:leading-[0.98] sm:tracking-[-0.05em]"
                 style={{ filter: "drop-shadow(0 2px 5px rgba(8,20,28,0.5)) drop-shadow(0 10px 28px rgba(8,20,28,0.3))" }}
               >
                 <span className="block whitespace-nowrap sm:inline">Someone who travels</span>{" "}
