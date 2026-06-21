@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 
 const heroLinks = [
   { label: "Plan My Cruise", href: "/#contact" },
@@ -31,6 +32,11 @@ export const Hero = () => {
               sizes="100vw"
             />
           </motion.div>
+
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[58%] bg-gradient-to-t from-ink/85 via-ink/30 to-transparent sm:h-[50%]"
+          />
 
           <div className="absolute left-6 top-[4.35rem] z-20 rounded-full bg-white/12 px-3 py-1.5 text-[0.68rem] font-semibold text-white/72 ring-1 ring-white/16 backdrop-blur-sm sm:left-8 sm:top-20 sm:px-4 sm:py-2 sm:text-[0.875rem] lg:left-10 lg:top-20">
             Charlotte Amalie · St. Thomas
@@ -67,6 +73,23 @@ export const Hero = () => {
                   </svg>
                 </span>
               </p>
+            </motion.div>
+
+            <motion.div
+              aria-hidden="true"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="absolute inset-x-0 top-[68%] z-10 flex justify-center sm:hidden"
+            >
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                className="flex flex-col items-center gap-1.5 text-white/55"
+              >
+                <span className="h-8 w-px bg-white/35" />
+                <ChevronDown className="h-4 w-4" />
+              </motion.div>
             </motion.div>
 
             <motion.div
