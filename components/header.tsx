@@ -23,11 +23,6 @@ const DESKTOP_NAV: NavItem[] = [
   { label: "Our Story", href: "/#about" },
 ];
 
-const HERO_NAV: NavItem[] = [
-  { label: "Open Trip", href: "/cruises/caribbean" },
-  { label: "Private Trip", href: "/#contact" },
-];
-
 const MOBILE_NAV: NavItem[] = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Live", href: "/live" },
@@ -97,8 +92,7 @@ export const Header = () => {
     ? (isShopFull ? "bg-white shadow-sm" : "bg-cream/96 backdrop-blur-sm shadow-sm")
     : "bg-transparent";
   const onDark = isActive || isHeroArrival;
-  const navItems = isHeroArrival ? HERO_NAV : DESKTOP_NAV;
-  const linkBase = isHeroArrival ? "text-sm font-semibold px-3 py-2 rounded-lg transition-colors duration-150" : "text-sm font-medium px-3 py-2 rounded-lg transition-colors duration-150";
+  const linkBase = "text-sm font-medium px-3 py-2 rounded-lg transition-colors duration-150";
   const linkColor = onDark ? "text-white/88 hover:text-white hover:bg-white/10" : "text-ink/70 hover:text-ink hover:bg-sand";
   const linkActive = onDark ? "text-white font-semibold" : "text-ink font-semibold";
   const iconBtn = `relative flex h-10 w-10 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral ${onDark ? "hover:bg-white/15 text-white" : "hover:bg-sand text-ink"}`;
@@ -107,29 +101,25 @@ export const Header = () => {
     <>
       <header className={`fixed ${isHeroArrival ? "top-3 sm:top-4 lg:top-5" : "top-0"} inset-x-0 z-50 transition-all duration-300 ${navBg}`}>
         <div className={`${isHeroArrival ? "mx-auto grid h-12 max-w-[calc(100%-1.5rem)] grid-cols-[auto_1fr_auto] items-center gap-3 px-3 sm:h-16 sm:max-w-[calc(100%-2rem)] sm:gap-4 sm:px-4 lg:max-w-[calc(100%-2.5rem)]" : "max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-[auto_1fr_auto] items-center h-16 gap-4"}`}>
-          {isHeroArrival ? (
-            <button type="button" onClick={() => setMenuOpen(true)} aria-label="Open navigation menu" aria-expanded={menuOpen} className="hidden min-h-9 items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-[0.78rem] font-semibold text-ink shadow-sm transition-colors hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:inline-flex sm:min-h-10 sm:gap-2 sm:rounded-lg sm:px-4 sm:py-2 sm:text-sm">
-              <Menu className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-              Menu
-            </button>
-          ) : (
+          {!isHeroArrival && (
             <Link href="/" className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded-md">
               <Image src="/images/traveholics%20logos%20(1200%20x%20300%20px).svg" alt="Travelholics" width={180} height={44} className={`h-9 lg:h-[54px] w-auto transition-all duration-300 ${onDark ? "brightness-0 invert" : ""}`} priority />
             </Link>
           )}
 
-          <nav className={`${isHeroArrival ? "hidden sm:flex items-center justify-start gap-4" : "hidden lg:flex items-center justify-center gap-0.5"}`}>
-            {navItems.map((link) => {
-              const active = !link.href.includes("#") && (pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href.split("#")[0])));
-              return (
-                <Link key={link.label} href={link.href} className={`${linkBase} ${linkColor} ${active ? linkActive : ""} flex items-center gap-1.5 drop-shadow-[0_2px_10px_rgba(10,31,44,0.22)]`}>
-                  {link.label}
-                  {isHeroArrival && <span className="text-[0.72em] leading-none">⌄</span>}
-                  {link.liveIndicator && isActive && <PulsingDot className={onDark ? "text-white" : "text-coral"} />}
-                </Link>
-              );
-            })}
-          </nav>
+          {!isHeroArrival && (
+            <nav className="hidden lg:flex items-center justify-center gap-0.5">
+              {DESKTOP_NAV.map((link) => {
+                const active = !link.href.includes("#") && (pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href.split("#")[0])));
+                return (
+                  <Link key={link.label} href={link.href} className={`${linkBase} ${linkColor} ${active ? linkActive : ""} flex items-center gap-1.5 drop-shadow-[0_2px_10px_rgba(10,31,44,0.22)]`}>
+                    {link.label}
+                    {link.liveIndicator && isActive && <PulsingDot className={onDark ? "text-white" : "text-coral"} />}
+                  </Link>
+                );
+              })}
+            </nav>
+          )}
 
           <div className={`${isHeroArrival ? "hidden" : "flex items-center gap-1 sm:gap-2 justify-end"}`}>
             <button type="button" onClick={openDrawer} aria-label={`Cart${count > 0 ? `, ${count} items` : ""}`} className={iconBtn}>
