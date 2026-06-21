@@ -75,7 +75,7 @@ export const ShopStrip = () => {
               <p className="font-script text-[2.65rem] font-semibold leading-none text-coral sm:text-[3rem]">
                 Travelholics Originals
               </p>
-              <h2 className="mt-3 font-serif text-[clamp(2.5rem,6.2vw,5rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white">
+              <h2 className="type-homepage-h2 mt-3 font-serif text-white">
                 Gear for people already packing.
               </h2>
               <p className="mt-5 max-w-[36ch] text-[1.05rem] font-medium leading-[1.7] text-white/76 sm:text-[1.14rem]">

@@ -106,6 +106,18 @@ body {
     line-height: 1;
     font-weight: 700;
   }
+
+  /* Homepage marketing-section H2 — the recurring "headline beside a photo
+     block" pattern (Meet Yolanda, Destination Map, Group Trips, Shop Strip,
+     Contact Form). Keeps every instance of that pattern at one size instead
+     of each section inventing its own clamp(). Distinct from .type-section-title
+     above, which belongs to the simpler inner-page register. */
+  .type-homepage-h2 {
+    font-size: clamp(2.25rem, 4vw, 3.75rem);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+    font-weight: 600;
+  }
 }
 
 /* Button ripple */

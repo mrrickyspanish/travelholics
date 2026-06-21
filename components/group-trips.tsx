@@ -52,7 +52,7 @@ export const GroupTrips = () => {
             <p className="mb-4 text-[0.82rem] font-bold uppercase tracking-[0.16em] text-coral">
               GROUP CRUISE EXPERIENCES
             </p>
-            <h2 className="font-serif text-[clamp(2.6rem,5.5vw,5.25rem)] font-semibold leading-[0.94] tracking-[-0.06em] text-ink">
+            <h2 className="type-homepage-h2 font-serif text-ink">
               Travel Better Together
             </h2>
             <p className="mt-5 max-w-[36ch] text-[1.05rem] font-medium leading-[1.72] text-ink/76 sm:text-[1.15rem] lg:mx-0">

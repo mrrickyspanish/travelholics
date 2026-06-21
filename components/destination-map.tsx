@@ -358,7 +358,7 @@ export function DestinationMap() {
               <p className="mb-4 text-[0.82rem] font-bold uppercase tracking-[0.16em] text-coral">
                 THE TRAVELHOLICS ATLAS
               </p>
-              <h2 className="font-serif text-[clamp(2.65rem,4.7vw,5.6rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-ink">
+              <h2 className="type-homepage-h2 font-serif text-ink">
                 Where we&apos;ve sailed. Where we&apos;re sailing next.
               </h2>
               <p className="mt-6 max-w-[43ch] text-[1.06rem] font-medium leading-[1.75] text-ink/76">

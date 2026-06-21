@@ -152,7 +152,7 @@ export const ContactForm = () => {
             <p className="font-script text-[2.7rem] font-semibold leading-none text-coral sm:text-[3.1rem]">
               Let&apos;s make it happen
             </p>
-            <h2 className="mt-4 font-serif text-[clamp(3rem,8vw,6.25rem)] font-semibold leading-[0.9] tracking-[-0.065em] text-white">
+            <h2 className="type-homepage-h2 mt-4 font-serif text-white">
               Plan your next cruise.
             </h2>
             <p className="mt-6 max-w-[31ch] text-[1.08rem] font-medium leading-[1.75] text-white/78 sm:text-[1.18rem]">

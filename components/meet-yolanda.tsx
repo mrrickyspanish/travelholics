@@ -58,7 +58,7 @@ export const MeetYolanda = () => {
             <p className="font-script text-[2.65rem] font-semibold leading-none text-coral sm:text-[3rem]">
               Hi, I&apos;m Yolanda
             </p>
-            <h2 className="mt-3 font-serif text-[clamp(2.45rem,7vw,4.85rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-ink">
+            <h2 className="type-homepage-h2 mt-3 font-serif text-ink">
               Your cruise person before, during, and after booking.
             </h2>
             <div className="mx-auto mt-6 max-w-[45ch] space-y-4 text-[1.05rem] font-medium leading-[1.78] text-ink/78 sm:text-[1.15rem] lg:mx-0">
