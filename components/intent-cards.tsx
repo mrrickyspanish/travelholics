@@ -54,7 +54,7 @@ export const IntentCards = () => {
               Wander Freely
             </span>
             <h2 className="mb-4 font-serif text-[clamp(2rem,3vw,3rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-ink lg:text-6xl">Not Your Boring<br />Travel Agent</h2>
-            <p className="max-w-[39ch] text-[1.05rem] font-medium leading-[1.75] text-ink/76 sm:text-[1.15rem]">These are the trips Yolanda knows best — Caribbean, Alaska, Mediterranean. Pick a direction and she&apos;ll help you choose the ship, timing, and details that actually fit your people.</p>
+            <p className="max-w-[39ch] text-[1.05rem] font-medium leading-[1.75] text-ink/76 sm:text-[1.15rem]">Handpicked starting points for the first-timer, the romantic, and the crew that&apos;s already been once and wants to go bigger. Caribbean, Alaska, Mediterranean, and wherever you&apos;re dreaming next.</p>
             <Link href="/#contact" className="mt-7 inline-flex min-h-[46px] w-fit items-center justify-center rounded-xl bg-ink px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-emerald-deep">Start planning</Link>
           </motion.div>
 

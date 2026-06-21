@@ -67,7 +67,7 @@ export const MeetYolanda = () => {
                 I help travelers pick the ship, cabin, destination, timing, and little details that make a trip feel easy. Booking direct gives you a confirmation number. Booking with me gives you a person who cares how the whole thing actually turns out.
               </p>
               <p>
-                Whether it&apos;s your first cruise or your fifteenth, a family trip or a girls&apos; getaway — there&apos;s a version of this that&apos;s built for you. Yolanda knows the difference, and she&apos;ll help you find it.
+                Whether it&apos;s your first cruise or your fifteenth, a family trip or a girls&apos; getaway, there&apos;s a version of this that&apos;s built for you. I know the difference, and I&apos;ll help you find it.
               </p>
             </div>
 
