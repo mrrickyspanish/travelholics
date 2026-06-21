@@ -118,7 +118,7 @@ export const Hero = () => {
                 className="group flex flex-col items-center gap-2 rounded-md px-2 py-1 text-white/75 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
               >
                 <span className="text-[0.84rem] font-semibold uppercase tracking-[0.25em] sm:text-[0.78rem]">
-                  Explore
+                  Let&apos;s go
                 </span>
                 <motion.span
                   animate={{ y: [0, 6, 0] }}

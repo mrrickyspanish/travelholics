@@ -36,7 +36,7 @@ export const MeetYolanda = () => {
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/84 via-ink/26 to-transparent p-5 text-white sm:p-6">
                   <p className="font-script text-[2.55rem] font-semibold leading-none text-coral">No regrets.</p>
                   <p className="mt-1 max-w-[24ch] text-[1rem] font-semibold leading-snug text-white/90">
-                    Just better trips, better decks, and fewer planning headaches.
+                    Just better trips, better decisions, and a plan you&apos;ll actually enjoy.
                   </p>
                 </div>
               </div>
@@ -66,7 +66,7 @@ export const MeetYolanda = () => {
                 I help travelers pick the ship, cabin, destination, timing, and little details that make a trip feel easy. Booking direct gives you a confirmation number. Booking with me gives you a person who cares how the whole thing actually turns out.
               </p>
               <p>
-                Cruises, group trips, family vacations, romantic getaways, and travel gear for the people already thinking about the next one.
+                Whether it&apos;s your first cruise or your fifteenth, a family trip or a girls&apos; getaway — there&apos;s a version of this that&apos;s built for you. Yolanda knows the difference, and she&apos;ll help you find it.
               </p>
             </div>
 

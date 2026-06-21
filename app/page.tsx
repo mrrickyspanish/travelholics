@@ -32,11 +32,11 @@ export default function Home() {
       <Header />
       <MobileCTA />
       <Hero />
-      <IntentCards />
       <MeetYolanda />
-      <StatsStrip />
-      <DestinationMap />
+      <IntentCards />
       <GroupTrips />
+      <DestinationMap />
+      <StatsStrip />
       <ShopStrip />
       <Testimonials />
       <ContactForm />

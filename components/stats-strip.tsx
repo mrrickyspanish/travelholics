@@ -17,7 +17,7 @@ const stats = [
     icon: Sparkles,
     value: "20+",
     label: "Years of travel experience",
-    note: "A planner who has actually been there",
+    note: "A planner who's actually been there",
   },
   {
     icon: BadgeDollarSign,
