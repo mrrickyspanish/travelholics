@@ -18,7 +18,7 @@ export const Hero = () => {
             transition={{ duration: 26, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
-              src="/images/Charlotte_Amalie_StThomas.png"
+              src="/images/Charlotte_Amalie_StThomas.jpg"
               alt=""
               fill
               priority
