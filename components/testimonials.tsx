@@ -64,7 +64,7 @@ export const Testimonials = () => {
   if (testimonials.length === 0) return null;
 
   return (
-    <section id="testimonials" className="overflow-hidden bg-sand py-14 md:py-16" aria-label="Traveler testimonials">
+    <section id="testimonials" className="overflow-hidden bg-sand pt-12 pb-8 sm:pt-16 sm:pb-10 lg:pb-12 lg:pt-20" aria-label="Traveler testimonials">
       <style>{`
         @keyframes testimonialRiver {
           from { transform: translateX(-50%); }

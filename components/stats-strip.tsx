@@ -29,7 +29,7 @@ const stats = [
 
 export const StatsStrip = () => {
   return (
-    <section className="relative overflow-hidden bg-sand py-10 sm:py-12 lg:py-14">
+    <section className="relative overflow-hidden bg-sand py-8 sm:py-10 lg:py-12">
       <div className="mx-auto w-full max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
         <div className="rounded-[2rem] border border-white/70 bg-cream/82 p-3 shadow-[0_22px_60px_rgba(26,58,82,0.08)] backdrop-blur-sm sm:p-4 lg:rounded-[2.5rem] lg:p-5">
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-stone/16">

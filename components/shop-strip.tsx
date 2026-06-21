@@ -44,7 +44,7 @@ const lazyRiverProducts = [...products, ...products];
 
 export const ShopStrip = () => {
   return (
-    <section className="relative overflow-hidden bg-cream py-16 sm:py-20 lg:py-28">
+    <section className="relative overflow-hidden bg-cream py-12 sm:py-16 lg:py-20">
       <style>{`
         @keyframes shopLazyRiver {
           from { transform: translateX(0); }

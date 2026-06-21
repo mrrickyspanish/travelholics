@@ -36,7 +36,7 @@ export const IntentCards = () => {
   }, [isPaused, prefersReducedMotion]);
 
   return (
-    <section className="relative overflow-hidden bg-cream py-10 sm:py-20 lg:py-28">
+    <section className="relative overflow-hidden bg-cream py-12 sm:py-16 lg:py-20">
       <style>{`
         @keyframes travelholicsDotPulse {
           0%, 100% { transform: scale(1); opacity: 0.78; box-shadow: 0 0 0 0 rgba(16,117,90,0.34), 0 0 10px rgba(16,117,90,0.58); }
@@ -47,7 +47,7 @@ export const IntentCards = () => {
 
       <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
         <div className="mt-0 grid items-center gap-10 sm:mt-12 lg:mt-14 lg:grid-cols-[0.42fr_0.58fr] lg:gap-12 xl:gap-16">
-          <motion.div initial={{ opacity: 0, x: -18 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="relative max-w-[34rem] lg:flex lg:min-h-[35rem] lg:flex-col lg:justify-center">
+          <motion.div initial={{ opacity: 0, x: -18 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="relative max-w-[34rem] lg:flex lg:min-h-[28rem] lg:flex-col lg:justify-center">
             <span className="mb-3 hidden self-start items-center gap-2 rounded-full border border-white/40 bg-white/20 px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-ink shadow-[0_10px_26px_rgba(26,58,82,0.08)] backdrop-blur-md lg:inline-flex">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-mid" style={{ animation: "travelholicsDotPulse 2.1s ease-in-out infinite" }} aria-hidden="true" />
               Wander Freely
@@ -57,7 +57,7 @@ export const IntentCards = () => {
             <a href="/#contact" className="mt-7 inline-flex min-h-[46px] w-fit items-center justify-center rounded-xl bg-ink px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-emerald-deep">Start planning</a>
           </motion.div>
 
-          <div className="relative hidden min-h-[35rem] overflow-visible lg:block" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)} onFocusCapture={() => setIsPaused(true)} onBlurCapture={() => setIsPaused(false)}>
+          <div className="relative hidden min-h-[28rem] overflow-visible lg:block" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)} onFocusCapture={() => setIsPaused(true)} onBlurCapture={() => setIsPaused(false)}>
             {cards.map((card, index) => {
               const slotIndex = (index - activeIndex + cards.length) % cards.length;
               const slot = desktopSlots[slotIndex];
