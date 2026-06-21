@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { createServerSupabase } from '@/lib/supabase-server'
 
-export const maxDuration = 60
+export const maxDuration = 120
 
 const INGEST_SYSTEM_PROMPT = `You are extracting knowledge from a transcript or notes provided by Yolanda Harris of Travelholics.
 

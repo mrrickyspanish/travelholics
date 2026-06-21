@@ -3,7 +3,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { createServerSupabase } from '@/lib/supabase-server'
 import { buildSystemPrompt, buildUserPrompt, buildFreeWriteUserPrompt } from '@/lib/encyclopedia'
 
-export const maxDuration = 60
+export const maxDuration = 120
 
 export async function POST(req: NextRequest) {
   const supabase = await createServerSupabase()

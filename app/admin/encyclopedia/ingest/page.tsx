@@ -37,8 +37,17 @@ export default function IngestPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ transcript, source }),
       })
-      const data = await res.json()
-      if (data.error) throw new Error(data.error)
+      let data: { entries?: ExtractedEntry[]; error?: string }
+      try {
+        data = await res.json()
+      } catch {
+        throw new Error(
+          res.ok
+            ? 'Unexpected response from server.'
+            : `Request failed (${res.status}). The transcript may be too long — try a shorter one or split it up.`
+        )
+      }
+      if (!res.ok || data.error) throw new Error(data.error ?? `Request failed (${res.status})`)
       setEntries(
         (data.entries as ExtractedEntry[]).map((e) => ({ ...e, approved: true }))
       )
