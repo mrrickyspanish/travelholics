@@ -41,12 +41,14 @@ export const Hero = () => {
             }}
           />
 
-          <div className="relative z-10 min-h-[calc(100svh-1rem)] sm:min-h-[calc(100svh-2rem)]">
+          <div className="relative z-10 flex min-h-[calc(100svh-1rem)] flex-col items-center px-4 sm:min-h-[calc(100svh-2rem)] sm:px-8 lg:px-12">
+            <div className="flex-[1.3]" aria-hidden="true" />
+
             <motion.div
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="absolute inset-x-4 top-[43%] mx-auto max-w-[23.5rem] -translate-y-1/2 text-center sm:inset-x-8 sm:top-[45%] sm:max-w-[66rem] lg:inset-x-12"
+              className="mx-auto max-w-[23.5rem] text-center sm:max-w-[66rem]"
             >
               <h1
                 className="font-serif text-[clamp(3.35rem,15.6vw,4.65rem)] font-semibold leading-[0.86] tracking-[-0.06em] text-white sm:text-[clamp(3.25rem,11.6vw,10.8rem)] sm:leading-[0.82] sm:tracking-[-0.075em]"
@@ -78,18 +80,27 @@ export const Hero = () => {
                   </svg>
                 </span>
               </p>
-
-              <div className="mt-9 flex items-center justify-center gap-1.5 text-[0.72rem] font-medium tracking-wide text-white/58 drop-shadow-[0_4px_14px_rgba(10,31,44,0.22)] sm:mt-12 sm:gap-2 sm:text-[0.82rem]">
-                <MapPin className="h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5" />
-                <span>Charlotte Amalie · St. Thomas</span>
-              </div>
             </motion.div>
+
+            <div className="flex-1" aria-hidden="true" />
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="flex items-center justify-center gap-1.5 text-[0.72rem] font-medium tracking-wide text-white/58 drop-shadow-[0_4px_14px_rgba(10,31,44,0.22)] sm:gap-2 sm:text-[0.82rem]"
+            >
+              <MapPin className="h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5" />
+              <span>Charlotte Amalie · St. Thomas</span>
+            </motion.div>
+
+            <div className="flex-1" aria-hidden="true" />
 
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 1.4 }}
-              className="absolute inset-x-0 bottom-8 z-10 flex justify-center sm:bottom-10 lg:bottom-12"
+              transition={{ duration: 0.9, delay: 2.6 }}
+              className="pb-8 sm:pb-10 lg:pb-12"
             >
               <button
                 type="button"
