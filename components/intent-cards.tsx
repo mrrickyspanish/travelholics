@@ -81,7 +81,7 @@ export const IntentCards = () => {
               );
             })}
 
-            <div className="absolute left-0 top-[28.25rem] max-w-[34rem]">
+            <div className="absolute left-0 bottom-[1.25rem] max-w-[34rem]">
               <AnimatePresence mode="wait">
                 <motion.div key={activeCard.title} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: prefersReducedMotion ? 0 : 0.32, exit: { duration: 0.12 } }}>
                   <p className="text-[0.85rem] font-bold uppercase tracking-[0.12em] text-coral">{activeCard.detailLabel}</p>
