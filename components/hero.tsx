@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, MapPin } from "lucide-react";
 
 export const Hero = () => {
   return (
@@ -31,10 +31,6 @@ export const Hero = () => {
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[40%] bg-gradient-to-t from-ink/80 via-ink/20 to-transparent sm:h-[34%]"
           />
-
-          <div className="absolute left-6 top-[4.35rem] z-20 rounded-full bg-white/12 px-3 py-1.5 text-[0.68rem] font-semibold text-white/72 ring-1 ring-white/16 backdrop-blur-sm sm:left-8 sm:top-20 sm:px-4 sm:py-2 sm:text-[0.875rem] lg:left-10 lg:top-20">
-            Charlotte Amalie · St. Thomas
-          </div>
 
           <div className="relative z-10 min-h-[calc(100svh-1rem)] sm:min-h-[calc(100svh-2rem)]">
             <motion.div
@@ -67,6 +63,11 @@ export const Hero = () => {
                   </svg>
                 </span>
               </p>
+
+              <div className="mt-5 flex items-center justify-center gap-1.5 text-[0.72rem] font-medium tracking-wide text-white/58 drop-shadow-[0_4px_14px_rgba(10,31,44,0.22)] sm:mt-7 sm:gap-2 sm:text-[0.82rem]">
+                <MapPin className="h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5" />
+                <span>Charlotte Amalie · St. Thomas</span>
+              </div>
             </motion.div>
 
             <motion.div
