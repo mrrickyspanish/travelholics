@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { CheckCircle, MessageCircle, Plane } from "lucide-react";
 
@@ -82,12 +83,12 @@ export const MeetYolanda = () => {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
-              <a
+              <Link
                 href="/#contact"
                 className="inline-flex min-h-[46px] items-center justify-center rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
               >
                 Book With Yolanda
-              </a>
+              </Link>
               <a
                 href="https://www.tiktok.com/@rjsmom1"
                 target="_blank"
