@@ -15,7 +15,7 @@ export const Hero = () => {
             aria-hidden="true"
             initial={{ scale: 1.01 }}
             animate={{ scale: 1.12 }}
-            transition={{ duration: 14, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 26, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
               src="/images/Charlotte_Amalie_StThomas.png"
@@ -64,7 +64,7 @@ export const Hero = () => {
                 </span>
               </p>
 
-              <div className="mt-5 flex items-center justify-center gap-1.5 text-[0.72rem] font-medium tracking-wide text-white/58 drop-shadow-[0_4px_14px_rgba(10,31,44,0.22)] sm:mt-7 sm:gap-2 sm:text-[0.82rem]">
+              <div className="mt-9 flex items-center justify-center gap-1.5 text-[0.72rem] font-medium tracking-wide text-white/58 drop-shadow-[0_4px_14px_rgba(10,31,44,0.22)] sm:mt-12 sm:gap-2 sm:text-[0.82rem]">
                 <MapPin className="h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5" />
                 <span>Charlotte Amalie · St. Thomas</span>
               </div>
@@ -73,7 +73,7 @@ export const Hero = () => {
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.9 }}
+              transition={{ duration: 0.7, delay: 1.4 }}
               className="absolute inset-x-0 bottom-8 z-10 flex justify-center sm:bottom-10 lg:bottom-12"
             >
               <button
