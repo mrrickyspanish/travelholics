@@ -44,7 +44,7 @@ const lazyRiverProducts = [...products, ...products];
 
 export const ShopStrip = () => {
   return (
-    <section className="relative overflow-hidden bg-cream py-12 sm:py-16 lg:py-20">
+    <section className="relative overflow-hidden bg-sand py-12 sm:py-16 lg:py-20">
       <style>{`
         @keyframes shopLazyRiver {
           from { transform: translateX(0); }
@@ -61,7 +61,6 @@ export const ShopStrip = () => {
           .shop-lazy-river { animation: none; }
         }
       `}</style>
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-sand" aria-hidden="true" />
       <motion.div
         className="relative z-10 mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12"
         initial={{ opacity: 0, y: 20 }}
@@ -79,7 +78,7 @@ export const ShopStrip = () => {
                 Gear for people already packing.
               </h2>
               <p className="mt-5 max-w-[36ch] text-[1.05rem] font-medium leading-[1.7] text-white/76 sm:text-[1.14rem]">
-                Cruise-tested pieces, cabin-door personality, and travel lifestyle goods made for the crew that is already thinking about the next one.
+                Cruise-tested pieces, cabin-door personality, and travel lifestyle goods made for the crew that&apos;s already thinking about the next one.
               </p>
               <Link
                 href="/shop-full"

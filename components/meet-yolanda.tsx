@@ -14,8 +14,8 @@ const credentials = [
 
 export const MeetYolanda = () => {
   return (
-    <section id="about" className="relative overflow-hidden bg-sand py-12 sm:py-16 lg:py-20">
-      <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-cream to-transparent" aria-hidden="true" />
+    <section id="about" className="relative overflow-hidden bg-cream py-12 sm:py-16 lg:py-20">
+      <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-sand/40 to-transparent" aria-hidden="true" />
       <div className="relative z-10 mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
         <div className="grid items-center gap-9 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
           <motion.div

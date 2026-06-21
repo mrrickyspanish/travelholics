@@ -37,7 +37,7 @@ export const IntentCards = () => {
   }, [isPaused, prefersReducedMotion]);
 
   return (
-    <section className="relative overflow-hidden bg-cream py-12 sm:py-16 lg:py-20">
+    <section className="relative overflow-hidden bg-cream pt-4 pb-12 sm:pt-6 sm:pb-16 lg:pt-8 lg:pb-20">
       <style>{`
         @keyframes travelholicsDotPulse {
           0%, 100% { transform: scale(1); opacity: 0.78; box-shadow: 0 0 0 0 rgba(16,117,90,0.34), 0 0 10px rgba(16,117,90,0.58); }

@@ -37,8 +37,8 @@ const photoLabelClass = "absolute bottom-4 right-4 text-right text-[0.56rem] fon
 
 export const GroupTrips = () => {
   return (
-    <section id="group-trips" className="relative overflow-hidden bg-sand py-12 sm:py-16 lg:py-20">
-      <div className="pointer-events-none absolute left-[-7rem] top-12 h-56 w-56 rounded-full bg-coral/8 blur-3xl" aria-hidden="true" />
+    <section id="group-trips" className="relative overflow-hidden bg-emerald-deep py-12 sm:py-16 lg:py-20">
+      <div className="pointer-events-none absolute left-[-7rem] top-12 h-56 w-56 rounded-full bg-coral/12 blur-3xl" aria-hidden="true" />
       <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
         <div className="grid items-center gap-10 lg:grid-cols-[0.36fr_0.64fr] lg:gap-14 xl:gap-18">
           <motion.div
@@ -51,10 +51,10 @@ export const GroupTrips = () => {
             <p className="mb-4 text-[0.82rem] font-bold uppercase tracking-[0.16em] text-coral">
               GROUP CRUISE EXPERIENCES
             </p>
-            <h2 className="type-homepage-h2 font-serif text-ink">
+            <h2 className="type-homepage-h2 font-serif text-white">
               Your people. Your ship. Your sailing.
             </h2>
-            <p className="mt-5 max-w-[36ch] text-[1.05rem] font-medium leading-[1.72] text-ink/76 sm:text-[1.15rem] lg:mx-0">
+            <p className="mt-5 max-w-[36ch] text-[1.05rem] font-medium leading-[1.72] text-white/72 sm:text-[1.15rem] lg:mx-0">
               Group trips with Travelholics aren&apos;t just coordinated bookings — they&apos;re the kind of trip people talk about for years. Yolanda handles the logistics so your crew just shows up and goes.
             </p>
             <Link

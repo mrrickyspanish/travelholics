@@ -322,7 +322,7 @@ export function DestinationMap() {
   const showDestinationLabels = view.zoom >= DESTINATION_LABEL_ZOOM_THRESHOLD;
 
   return (
-    <section id="map" className="relative overflow-hidden bg-cream py-12 sm:py-16 lg:py-20">
+    <section id="map" className="relative overflow-hidden bg-sand py-12 sm:py-16 lg:py-20">
       <style>{`
         @keyframes destinationPinPulse {
           0%, 100% { transform: scale(1); opacity: 0.95; }
