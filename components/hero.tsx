@@ -32,6 +32,15 @@ export const Hero = () => {
             className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[40%] bg-gradient-to-t from-ink/80 via-ink/20 to-transparent sm:h-[34%]"
           />
 
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-[6]"
+            style={{
+              background:
+                "radial-gradient(ellipse 68% 44% at 50% 46%, rgba(8,20,28,0.5) 0%, rgba(8,20,28,0.22) 50%, rgba(8,20,28,0) 78%)",
+            }}
+          />
+
           <div className="relative z-10 min-h-[calc(100svh-1rem)] sm:min-h-[calc(100svh-2rem)]">
             <motion.div
               initial={{ opacity: 0, y: 22 }}
@@ -39,10 +48,16 @@ export const Hero = () => {
               transition={{ duration: 0.7 }}
               className="absolute inset-x-4 top-[43%] mx-auto max-w-[23.5rem] -translate-y-1/2 text-center sm:inset-x-8 sm:top-[45%] sm:max-w-[66rem] lg:inset-x-12"
             >
-              <h1 className="font-serif text-[clamp(3.35rem,15.6vw,4.65rem)] font-semibold leading-[0.86] tracking-[-0.06em] text-white drop-shadow-[0_8px_28px_rgba(10,31,44,0.28)] sm:text-[clamp(3.25rem,11.6vw,10.8rem)] sm:leading-[0.82] sm:tracking-[-0.075em]">
+              <h1
+                className="font-serif text-[clamp(3.35rem,15.6vw,4.65rem)] font-semibold leading-[0.86] tracking-[-0.06em] text-white sm:text-[clamp(3.25rem,11.6vw,10.8rem)] sm:leading-[0.82] sm:tracking-[-0.075em]"
+                style={{ filter: "drop-shadow(0 2px 6px rgba(8,20,28,0.55)) drop-shadow(0 16px 38px rgba(8,20,28,0.34))" }}
+              >
                 Travelholic
               </h1>
-              <p className="mx-auto mt-4 max-w-[23rem] font-serif text-[clamp(1.48rem,7vw,2.12rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-white drop-shadow-[0_6px_20px_rgba(10,31,44,0.24)] sm:mt-5 sm:max-w-[22ch] sm:text-[clamp(1.3rem,3.65vw,3.7rem)] sm:leading-[0.98] sm:tracking-[-0.05em]">
+              <p
+                className="mx-auto mt-4 max-w-[23rem] font-serif text-[clamp(1.48rem,7vw,2.12rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-white sm:mt-5 sm:max-w-[22ch] sm:text-[clamp(1.3rem,3.65vw,3.7rem)] sm:leading-[0.98] sm:tracking-[-0.05em]"
+                style={{ filter: "drop-shadow(0 2px 5px rgba(8,20,28,0.5)) drop-shadow(0 10px 28px rgba(8,20,28,0.3))" }}
+              >
                 <span className="block whitespace-nowrap sm:inline">Someone who travels</span>{" "}
                 <span className="relative mt-1.5 inline-block whitespace-nowrap font-script text-[1.08em] font-semibold tracking-normal text-coral sm:mt-0">
                   between trips.
