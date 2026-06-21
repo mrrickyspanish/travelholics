@@ -1,14 +1,25 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown, MapPin } from "lucide-react";
 
 export const Hero = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.play().catch(() => {});
+  }, []);
+
   return (
     <section className="relative isolate overflow-hidden bg-cream pt-2 text-white sm:pt-4 lg:pt-5">
       <div className="mx-auto w-full px-2 pb-2 sm:px-4 sm:pb-4 lg:px-5 lg:pb-5">
         <div className="relative min-h-[calc(100svh-1rem)] overflow-hidden rounded-[1rem] bg-ink shadow-[0_30px_90px_rgba(26,58,82,0.18)] sm:min-h-[calc(100svh-2rem)] sm:rounded-[1.25rem] lg:rounded-[1.375rem]">
           <video
+            ref={videoRef}
             className="absolute inset-0 h-full w-full object-cover object-center"
             aria-hidden="true"
             autoPlay
