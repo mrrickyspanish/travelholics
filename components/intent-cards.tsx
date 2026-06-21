@@ -5,7 +5,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const cards = [
-  { title: "Cruises", location: "At Sea", href: "/cruises/caribbean", image: "/images/hero_th_background.png", imageAlt: "Cruise ship deck at sunset" },
   { title: "Caribbean", location: "Caribbean", href: "/cruises/caribbean", image: "/images/dest-caribbean.jpg", imageAlt: "Caribbean destination with turquoise water" },
   { title: "Alaska", location: "Alaska", href: "/cruises/alaska", image: "/images/dest-alaska-glaciers.jpg", imageAlt: "Alaska glaciers and mountain landscape" },
   { title: "Mediterranean", location: "Mediterranean", href: "/cruises/mediterranean", image: "/images/dest-mediterranean.jpg", imageAlt: "Mediterranean travel destination" },
@@ -15,7 +14,6 @@ const desktopSlots = [
   { left: "0%", top: "2rem", width: "52%", height: "25rem", zIndex: 30, opacity: 1, scale: 1, rotate: 0 },
   { left: "47%", top: "5.2rem", width: "35%", height: "22rem", zIndex: 20, opacity: 0.98, scale: 1, rotate: -1.2 },
   { left: "76%", top: "8rem", width: "24%", height: "17rem", zIndex: 10, opacity: 0.92, scale: 1, rotate: 1.5 },
-  { left: "104%", top: "9.5rem", width: "19%", height: "14rem", zIndex: 0, opacity: 0, scale: 0.92, rotate: 3 },
 ];
 
 export const IntentCards = () => {
