@@ -106,14 +106,14 @@ export const Hero = () => {
                 onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
                 className="group flex flex-col items-center gap-2 rounded-md px-2 py-1 text-white/75 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
               >
-                <span className="text-[0.7rem] font-semibold uppercase tracking-[0.25em] sm:text-[0.78rem]">
+                <span className="text-[0.84rem] font-semibold uppercase tracking-[0.25em] sm:text-[0.78rem]">
                   Explore
                 </span>
                 <motion.span
                   animate={{ y: [0, 6, 0] }}
                   transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <ChevronDown className="h-[1.2rem] w-[1.2rem] sm:h-5 sm:w-5" />
                 </motion.span>
               </button>
             </motion.div>
