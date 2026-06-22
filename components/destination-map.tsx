@@ -611,7 +611,7 @@ export function DestinationMap() {
               </p>
             </div>
 
-            <div className="mx-auto mt-7 max-w-[28rem] rounded-[2rem] bg-cream/86 p-3 shadow-[0_22px_60px_rgba(26,58,82,0.1)] ring-1 ring-white/80">
+            <div className="-mx-9 mt-7 rounded-none bg-cream/86 p-3 shadow-[0_22px_60px_rgba(26,58,82,0.1)] ring-1 ring-white/80 sm:mx-auto sm:max-w-[28rem] sm:rounded-[2rem]">
               <div className="mb-3 flex items-center justify-center gap-4 rounded-full bg-white/76 px-4 py-2 shadow-sm ring-1 ring-stone/10">
                 <span className="inline-flex items-center gap-2 text-[0.76rem] font-bold text-stone">
                   <svg width="10" height="14" viewBox="0 0 14 20" fill="none"><path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#10755A" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" /></svg>
