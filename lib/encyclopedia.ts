@@ -105,7 +105,7 @@ Follow this flow:
 You MUST return your response in this exact format:
 1. A JSON object with article metadata
 2. The separator: <<<CONTENT>>>
-3. The article body as plain text (no markdown headers with #, use bold **text** for emphasis)
+3. The article body as plain text (no markdown headers with #, use bold **text** for emphasis). When you reference a specific page on yotravelholic.com (the shop, a destination page, etc.) or an external source, write it as a real link: \`[anchor text](url)\` — a relative path like \`/shop\` for internal pages, a full \`https://\` URL for external ones. Plain mentions of "yotravelholic.com" in a CTA also become clickable automatically, so plain text is fine there.
 
 Do NOT wrap the JSON in code fences or backticks. The very first character of your response must be the opening curly brace {
 

@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { Block } from '@/lib/articles';
+import { renderInline } from '@/lib/inline-markdown';
 
 interface Props {
   blocks: Block[];
@@ -14,21 +14,21 @@ export function ArticleBody({ blocks }: Props) {
           case 'p':
             return (
               <p key={i} className="text-base sm:text-lg leading-relaxed text-ink/90">
-                {block.text}
+                {renderInline(block.text)}
               </p>
             );
 
           case 'h2':
             return (
               <h2 key={i} className="font-serif text-2xl sm:text-3xl font-semibold text-ink mt-10 mb-2 first:mt-0">
-                {block.text}
+                {renderInline(block.text)}
               </h2>
             );
 
           case 'h3':
             return (
               <h3 key={i} className="font-serif text-xl sm:text-2xl font-semibold text-ink mt-8 mb-1">
-                {block.text}
+                {renderInline(block.text)}
               </h3>
             );
 
@@ -36,7 +36,7 @@ export function ArticleBody({ blocks }: Props) {
             return (
               <blockquote key={i} className="border-l-4 border-[#10755A] pl-5 py-1 my-8">
                 <p className="font-serif text-xl sm:text-2xl italic text-ink/80 leading-snug mb-2">
-                  &ldquo;{block.text}&rdquo;
+                  &ldquo;{renderInline(block.text)}&rdquo;
                 </p>
                 {block.attribution && (
                   <cite className="text-sm text-stone not-italic font-semibold">
@@ -52,7 +52,7 @@ export function ArticleBody({ blocks }: Props) {
                 {block.items.map((item, j) => (
                   <li key={j} className="flex items-start gap-3 text-base sm:text-lg text-ink/90">
                     <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#10755A]" aria-hidden="true" />
-                    {item}
+                    {renderInline(item)}
                   </li>
                 ))}
               </ul>

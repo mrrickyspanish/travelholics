@@ -133,13 +133,19 @@ export function formatDate(dateStr: string | null): string {
 
 // Converts the AI generator's plain-text output (paragraphs separated by
 // blank lines — see lib/encyclopedia.ts's OUTPUT FORMAT instructions) into
-// the structured Block[] the public renderer expects.
+// the structured Block[] the public renderer expects. The generator is told
+// to fake section headers as a standalone **bold** line (no # allowed), so a
+// paragraph that's bold start-to-finish is promoted to an actual h2 here.
 export function contentToBlocks(content: string): Block[] {
   return content
     .split(/\n\s*\n/)
     .map((p) => p.trim())
     .filter(Boolean)
-    .map((text) => ({ type: 'p', text }));
+    .map((text) => {
+      const headingMatch = text.match(/^\*\*(.+)\*\*$/);
+      if (headingMatch) return { type: 'h2', text: headingMatch[1] };
+      return { type: 'p', text };
+    });
 }
 
 export function estimateReadTime(body: Block[]): number {
