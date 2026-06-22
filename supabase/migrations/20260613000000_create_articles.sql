@@ -77,7 +77,8 @@ CREATE POLICY "Authenticated can manage articles"
 INSERT INTO public.articles (
   slug, title, subtitle, excerpt, body, category, author,
   tags, featured, published, published_at,
-  meta_title, meta_description, cta_label, cta_url
+  meta_title, meta_description, cta_label, cta_url,
+  deal_expires_at, deal_original_price, deal_sale_price
 ) VALUES
 
 (
@@ -102,7 +103,8 @@ INSERT INTO public.articles (
   true, true, '2026-05-18 10:00:00+00',
   'Our First Alaskan Cruise — What No One Told Us | Travelholics',
   'Yolanda shares the honest story of her first Alaskan cruise — packing tips, Glacier Bay, and wildlife that changed everything.',
-  'Plan Your Alaska Cruise', '/cruises/alaska'
+  'Plan Your Alaska Cruise', '/cruises/alaska',
+  NULL, NULL, NULL
 ),
 
 (
@@ -127,7 +129,8 @@ INSERT INTO public.articles (
   false, true, '2026-05-28 09:00:00+00',
   '48 Hours in Cozumel: A Cruise Port Insider''s Guide | Travelholics',
   'After six visits to Cozumel, Yolanda shares what to skip, where locals eat, and why the reef changes everything.',
-  'Plan a Caribbean Cruise', '/cruises/caribbean'
+  'Plan a Caribbean Cruise', '/cruises/caribbean',
+  NULL, NULL, NULL
 ),
 
 (
@@ -151,7 +154,8 @@ INSERT INTO public.articles (
   true, true, '2026-06-03 11:00:00+00',
   'Royal Caribbean Icon Class 2026: Everything That''s Changed | Travelholics',
   'Yolanda''s full breakdown of Royal Caribbean''s Icon-class ships — what''s new, what''s worth it, and what to book first.',
-  'Plan Your Royal Caribbean Cruise', '/#contact'
+  'Plan Your Royal Caribbean Cruise', '/#contact',
+  NULL, NULL, NULL
 ),
 
 (
@@ -175,7 +179,8 @@ INSERT INTO public.articles (
   false, true, '2026-06-08 09:00:00+00',
   'Carnival Jubilee in Galveston: What Texas Cruisers Need to Know | Travelholics',
   'Carnival''s newest Excel-class ship is homeported in Galveston. What Texas cruisers need to know about sailings, features, and booking.',
-  'Book a Galveston Cruise', '/#contact'
+  'Book a Galveston Cruise', '/#contact',
+  NULL, NULL, NULL
 ),
 
 (
@@ -248,7 +253,8 @@ INSERT INTO public.articles (
   false, true, '2026-06-05 10:00:00+00',
   'New Cruise Door Magnets — 6 New Designs | Travelholics Shop',
   'Travelholics just dropped 6 new cruise door magnet designs. Available now in the shop.',
-  'Shop Door Magnets', '/shop'
+  'Shop Door Magnets', '/shop',
+  NULL, NULL, NULL
 ),
 
 (
@@ -272,5 +278,6 @@ INSERT INTO public.articles (
   true, true, '2026-06-11 09:00:00+00',
   'Travelholics Hoodie Summer 2026 Edition | Travelholics Shop',
   'The Travelholics Hoodie is back in three new summer colorways. Limited run, heavyweight quality. Perfect for sea days and cool dining rooms.',
-  'Shop Hoodies', '/shop'
+  'Shop Hoodies', '/shop',
+  NULL, NULL, NULL
 );
