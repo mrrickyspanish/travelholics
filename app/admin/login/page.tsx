@@ -173,14 +173,13 @@ export default function AdminLoginPage() {
                 <div className="text-3xl mb-4">📬</div>
                 <h1 className="text-lg font-semibold text-white mb-2">Check your email</h1>
                 <p className="text-sm text-white/50 mb-6">
-                  We sent a reset link and numeric code to <strong className="text-white/80">{email}</strong>.
-                  You can use either — the code works even if your email client opens the link first.
+                  We sent a reset code to <strong className="text-white/80">{email}</strong>.
                 </p>
                 <a
-                  href="/admin/update-password"
+                  href={`/admin/update-password?email=${encodeURIComponent(email)}`}
                   className="block w-full rounded-lg border border-white/10 py-2.5 text-sm font-medium text-white/70 hover:text-white hover:border-white/20 transition-colors mb-3"
                 >
-                  Enter code manually →
+                  Enter code →
                 </a>
                 <button
                   onClick={handleForgot}
