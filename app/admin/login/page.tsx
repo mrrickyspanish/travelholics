@@ -122,12 +122,21 @@ export default function AdminLoginPage() {
                   {loading ? 'Signing in…' : 'Sign In'}
                 </button>
               </form>
-              <button
-                onClick={() => { setMode('forgot'); setError('') }}
-                className="mt-4 text-xs text-white/40 hover:text-white/70 transition-colors"
-              >
-                Forgot password?
-              </button>
+              <div className="mt-4 flex items-center justify-center gap-3 text-xs text-white/40">
+                <button
+                  onClick={() => { setMode('forgot'); setError('') }}
+                  className="hover:text-white/70 transition-colors"
+                >
+                  Forgot password?
+                </button>
+                <span className="text-white/15">·</span>
+                <a
+                  href={`/admin/update-password${email ? `?email=${encodeURIComponent(email)}` : ''}`}
+                  className="hover:text-white/70 transition-colors"
+                >
+                  Have a code?
+                </a>
+              </div>
             </>
           )}
 
@@ -135,7 +144,7 @@ export default function AdminLoginPage() {
             <>
               <h1 className="text-lg font-semibold text-white mb-2">Reset Password</h1>
               <p className="text-sm text-white/50 mb-6">
-                Enter your email and we&apos;ll send a reset link and code.
+                Enter your email and we&apos;ll send you a reset code.
               </p>
               <form onSubmit={handleForgot} className="space-y-4">
                 <div>
