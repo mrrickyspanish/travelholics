@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 
   const client = new Anthropic()
 
-  const message = await client.messages.create({
+  const stream = client.messages.stream({
     model: 'claude-sonnet-4-6',
     max_tokens: 8192,
     system: INGEST_SYSTEM_PROMPT,
@@ -53,16 +53,28 @@ export async function POST(req: NextRequest) {
     ],
   })
 
-  const raw = message.content[0].type === 'text' ? message.content[0].text.trim() : '[]'
+  const readable = new ReadableStream({
+    async start(controller) {
+      for await (const chunk of stream) {
+        if (
+          chunk.type === 'content_block_delta' &&
+          chunk.delta.type === 'text_delta'
+        ) {
+          controller.enqueue(new TextEncoder().encode(chunk.delta.text))
+        }
+      }
+      controller.close()
+    },
+    cancel() {
+      stream.abort()
+    },
+  })
 
-  let entries: unknown[]
-  try {
-    // Strip code fences defensively
-    const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim()
-    entries = JSON.parse(cleaned)
-  } catch {
-    return NextResponse.json({ error: 'Failed to parse AI response', raw }, { status: 500 })
-  }
-
-  return NextResponse.json({ entries })
+  return new NextResponse(readable, {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-cache',
+      'X-Accel-Buffering': 'no',
+    },
+  })
 }

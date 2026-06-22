@@ -37,20 +37,34 @@ export default function IngestPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ transcript, source }),
       })
-      let data: { entries?: ExtractedEntry[]; error?: string }
-      try {
-        data = await res.json()
-      } catch {
-        throw new Error(
-          res.ok
-            ? 'Unexpected response from server.'
-            : `Request failed (${res.status}). The transcript may be too long — try a shorter one or split it up.`
-        )
+      if (!res.ok) {
+        let message = `Request failed (${res.status}).`
+        try {
+          const body = await res.json()
+          if (body.error) message = body.error
+        } catch {
+          // non-JSON error body, fall back to the generic message above
+        }
+        throw new Error(message)
       }
-      if (!res.ok || data.error) throw new Error(data.error ?? `Request failed (${res.status})`)
-      setEntries(
-        (data.entries as ExtractedEntry[]).map((e) => ({ ...e, approved: true }))
-      )
+
+      const reader = res.body!.getReader()
+      const decoder = new TextDecoder()
+      let raw = ''
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        raw += decoder.decode(value, { stream: true })
+      }
+
+      const cleaned = raw.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim()
+      let entries: ExtractedEntry[]
+      try {
+        entries = JSON.parse(cleaned)
+      } catch {
+        throw new Error('Could not read the AI response. Try a shorter transcript or try again.')
+      }
+      setEntries(entries.map((e) => ({ ...e, approved: true })))
       setPhase('review')
     } catch (err) {
       setError((err as Error).message)
