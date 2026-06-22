@@ -45,6 +45,12 @@ const lazyRiverProducts = [...products, ...products];
 export const ShopStrip = () => {
   return (
     <section className="relative overflow-hidden bg-sand py-12 sm:py-16 lg:py-20">
+      {/* Diagonal — cream (Testimonials) lifts over sand */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 w-full overflow-hidden leading-none" aria-hidden="true">
+        <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block h-10 w-full sm:h-14 fill-cream">
+          <path d="M0,56 L1440,0 L1440,56 Z" />
+        </svg>
+      </div>
       <style>{`
         @keyframes shopLazyRiver {
           from { transform: translateX(0); }

@@ -323,7 +323,6 @@ export function DestinationMap() {
 
   return (
     <section id="map" className="relative overflow-hidden bg-sand py-12 sm:py-16 lg:py-20">
-      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-emerald-deep/10 to-transparent pointer-events-none" aria-hidden="true" />
       <style>{`
         @keyframes destinationPinPulse {
           0%, 100% { transform: scale(1); opacity: 0.95; }

@@ -64,7 +64,7 @@ export const Testimonials = () => {
   if (testimonials.length === 0) return null;
 
   return (
-    <section id="testimonials" className="overflow-hidden bg-cream pt-12 pb-8 sm:pt-16 sm:pb-10 lg:pb-12 lg:pt-20" aria-label="Traveler testimonials">
+    <section id="testimonials" className="relative overflow-hidden bg-cream pt-12 pb-14 sm:pt-16 sm:pb-18 lg:pt-20 lg:pb-24" aria-label="Traveler testimonials">
       <style>{`
         @keyframes testimonialRiver {
           from { transform: translateX(-50%); }
@@ -112,6 +112,13 @@ export const Testimonials = () => {
         >
           Start Planning My Trip
         </a>
+      </div>
+
+      {/* Wave — dark emerald (Contact) rises into cream */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 w-full overflow-hidden leading-none" aria-hidden="true">
+        <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block h-14 w-full sm:h-18 lg:h-24 fill-emerald-deep">
+          <path d="M0,48 C360,0 720,80 1080,24 C1260,0 1380,48 1440,32 L1440,80 L0,80 Z" />
+        </svg>
       </div>
     </section>
   );

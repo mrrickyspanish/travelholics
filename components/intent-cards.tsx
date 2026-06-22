@@ -37,7 +37,13 @@ export const IntentCards = () => {
   }, [isPaused, prefersReducedMotion]);
 
   return (
-    <section className="relative overflow-hidden bg-cream pt-4 pb-12 sm:pt-6 sm:pb-16 lg:pt-8 lg:pb-20">
+    <section className="relative overflow-hidden bg-cream pt-4 pb-14 sm:pt-6 sm:pb-18 lg:pt-8 lg:pb-24">
+      {/* Wave — dark emerald (Group Trips) crashes up into cream */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 w-full overflow-hidden leading-none" aria-hidden="true">
+        <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block h-14 w-full sm:h-18 lg:h-24 fill-emerald-deep">
+          <path d="M0,32 C180,80 360,0 540,48 C720,80 900,16 1080,48 C1260,80 1380,24 1440,48 L1440,80 L0,80 Z" />
+        </svg>
+      </div>
       <style>{`
         @keyframes travelholicsDotPulse {
           0%, 100% { transform: scale(1); opacity: 0.78; box-shadow: 0 0 0 0 rgba(16,117,90,0.34), 0 0 10px rgba(16,117,90,0.58); }
