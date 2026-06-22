@@ -71,7 +71,7 @@ export const Hero = () => {
                 style={{ filter: "drop-shadow(0 2px 5px rgba(8,20,28,0.5)) drop-shadow(0 10px 28px rgba(8,20,28,0.3))" }}
               >
                 <span className="block whitespace-nowrap sm:inline">Someone who travels</span>{" "}
-                <span className="relative mt-1.5 inline-block whitespace-nowrap font-script text-[1.08em] font-semibold tracking-normal text-coral sm:mt-0">
+                <span className="relative mt-3 inline-block whitespace-nowrap font-script text-[1.24em] font-semibold tracking-normal text-coral sm:mt-0 sm:text-[1.08em]">
                   between trips.
                   <svg
                     className="absolute -bottom-1 left-0 h-3 w-full text-coral"
