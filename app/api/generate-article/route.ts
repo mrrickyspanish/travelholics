@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { createServerSupabase } from '@/lib/supabase-server'
-import { buildSystemPrompt, buildUserPrompt, buildFreeWriteUserPrompt } from '@/lib/encyclopedia'
+import { buildSystemPrompt, buildUserPrompt, buildFreeWriteUserPrompt, selectEncyclopediaEntries } from '@/lib/encyclopedia'
 
 export const maxDuration = 120
 
@@ -33,7 +33,8 @@ export async function POST(req: NextRequest) {
     .eq('is_voice_example', true)
     .limit(3)
 
-  const systemPrompt = buildSystemPrompt(encyclopediaEntries ?? [], voiceExamples ?? [])
+  const blogEntries = selectEncyclopediaEntries(encyclopediaEntries ?? [], { intent: 'blog' })
+  const systemPrompt = buildSystemPrompt(blogEntries, voiceExamples ?? [])
   const userPrompt = brief
     ? buildFreeWriteUserPrompt(brief, targetLength ?? '750-950')
     : buildUserPrompt(topicCluster, keyword ?? '', scenario ?? '', targetLength ?? '750-950')

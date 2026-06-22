@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { CATEGORY_CONFIG } from '@/types/encyclopedia'
-import type { EncyclopediaCategory } from '@/types/encyclopedia'
+import { CATEGORY_CONFIG, INTENT_CONFIG, SUGGESTED_REGIONS } from '@/types/encyclopedia'
+import type { EncyclopediaCategory, EncyclopediaIntent } from '@/types/encyclopedia'
 
 export default function NewEncyclopediaEntryPage() {
   const router = useRouter()
@@ -13,8 +13,22 @@ export default function NewEncyclopediaEntryPage() {
   const [excerpt, setExcerpt] = useState('')
   const [source, setSource] = useState('')
   const [confidence, setConfidence] = useState<'high' | 'medium' | 'low'>('high')
+  const [intent, setIntent] = useState<EncyclopediaIntent>('both')
+  const [regions, setRegions] = useState<string[]>([])
+  const [regionInput, setRegionInput] = useState('')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+
+  function addRegion(value: string) {
+    const trimmed = value.trim()
+    if (!trimmed || regions.includes(trimmed)) return
+    setRegions((prev) => [...prev, trimmed])
+    setRegionInput('')
+  }
+
+  function removeRegion(value: string) {
+    setRegions((prev) => prev.filter((r) => r !== value))
+  }
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault()
@@ -24,7 +38,16 @@ export default function NewEncyclopediaEntryPage() {
       const res = await fetch('/api/encyclopedia', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ category, title, content, excerpt: excerpt || null, source: source || null, confidence }),
+        body: JSON.stringify({
+          category,
+          title,
+          content,
+          excerpt: excerpt || null,
+          source: source || null,
+          confidence,
+          intent,
+          regions,
+        }),
       })
       const { id, error: err } = await res.json()
       if (err) throw new Error(err)
@@ -101,6 +124,71 @@ export default function NewEncyclopediaEntryPage() {
             type="text"
             value={excerpt}
             onChange={(e) => setExcerpt(e.target.value)}
+            className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+          />
+        </div>
+
+        {/* Intent */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Used for</label>
+          <div className="grid grid-cols-3 gap-2">
+            {Object.entries(INTENT_CONFIG).map(([key, config]) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setIntent(key as EncyclopediaIntent)}
+                className={`text-left rounded-xl border p-3 transition-colors ${
+                  intent === key ? 'border-[#10755A] bg-emerald-50' : 'border-gray-200 hover:border-gray-300'
+                }`}
+              >
+                <p className={`text-sm font-medium ${intent === key ? 'text-[#10755A]' : 'text-gray-800'}`}>
+                  {config.label}
+                </p>
+                <p className="text-xs text-gray-500 leading-snug mt-0.5">{config.description}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Regions */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+            Regions <span className="text-gray-400 font-normal">(optional — leave empty to apply everywhere)</span>
+          </label>
+          <div className="flex flex-wrap gap-1.5 mb-2">
+            {SUGGESTED_REGIONS.map((r) => (
+              <button
+                key={r}
+                type="button"
+                onClick={() => addRegion(r)}
+                disabled={regions.includes(r)}
+                className="rounded-full px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-40 disabled:hover:bg-gray-100 transition-colors"
+              >
+                + {r}
+              </button>
+            ))}
+          </div>
+          {regions.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              {regions.map((r) => (
+                <span key={r} className="flex items-center gap-1.5 rounded-full bg-emerald-50 text-[#10755A] px-3 py-1 text-xs font-medium">
+                  {r}
+                  <button type="button" onClick={() => removeRegion(r)} className="text-[#10755A]/60 hover:text-[#10755A]">×</button>
+                </span>
+              ))}
+            </div>
+          )}
+          <input
+            type="text"
+            value={regionInput}
+            onChange={(e) => setRegionInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ',') {
+                e.preventDefault()
+                addRegion(regionInput)
+              }
+            }}
+            placeholder="Type a region and press Enter"
             className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
           />
         </div>

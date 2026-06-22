@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   FileText,
   BookOpen,
+  Map,
   ShoppingBag,
   ExternalLink,
   LogOut,
@@ -18,6 +19,7 @@ const NAV_ITEMS = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
   { href: '/admin/articles', label: 'Articles', icon: FileText },
   { href: '/admin/encyclopedia', label: 'Encyclopedia', icon: BookOpen },
+  { href: '/admin/trip-pages', label: 'Trip Pages', icon: Map },
   { href: '/admin/shop', label: 'Shop', icon: ShoppingBag },
 ]
 

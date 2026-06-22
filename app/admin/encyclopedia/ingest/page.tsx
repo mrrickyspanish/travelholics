@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { CATEGORY_CONFIG } from '@/types/encyclopedia'
-import type { EncyclopediaCategory } from '@/types/encyclopedia'
+import { CATEGORY_CONFIG, INTENT_CONFIG, SUGGESTED_REGIONS } from '@/types/encyclopedia'
+import type { EncyclopediaCategory, EncyclopediaIntent } from '@/types/encyclopedia'
 import { CheckCircle, XCircle, Upload, Save } from 'lucide-react'
 
 type Phase = 'input' | 'analyzing' | 'review' | 'saving' | 'done'
@@ -14,6 +14,8 @@ interface ExtractedEntry {
   content: string
   excerpt: string
   confidence: 'high' | 'medium' | 'low'
+  intent: EncyclopediaIntent
+  regions: string[]
   approved?: boolean
   edited?: boolean
 }
@@ -64,7 +66,7 @@ export default function IngestPage() {
       } catch {
         throw new Error('Could not read the AI response. Try a shorter transcript or try again.')
       }
-      setEntries(entries.map((e) => ({ ...e, approved: true })))
+      setEntries(entries.map((e) => ({ ...e, intent: e.intent ?? 'both', regions: e.regions ?? [], approved: true })))
       setPhase('review')
     } catch (err) {
       setError((err as Error).message)
@@ -79,6 +81,22 @@ export default function IngestPage() {
   function updateEntry(i: number, field: keyof ExtractedEntry, value: string) {
     setEntries((prev) =>
       prev.map((e, idx) => (idx === i ? { ...e, [field]: value, edited: true } : e))
+    )
+  }
+
+  function addRegionToEntry(i: number, value: string) {
+    const trimmed = value.trim()
+    if (!trimmed) return
+    setEntries((prev) =>
+      prev.map((e, idx) =>
+        idx === i && !e.regions.includes(trimmed) ? { ...e, regions: [...e.regions, trimmed], edited: true } : e
+      )
+    )
+  }
+
+  function removeRegionFromEntry(i: number, value: string) {
+    setEntries((prev) =>
+      prev.map((e, idx) => (idx === i ? { ...e, regions: e.regions.filter((r) => r !== value), edited: true } : e))
     )
   }
 
@@ -97,6 +115,8 @@ export default function IngestPage() {
           excerpt: entry.excerpt || null,
           confidence: entry.confidence,
           source: source || null,
+          intent: entry.intent,
+          regions: entry.regions,
         }),
       })
       if (res.ok) count++
@@ -223,6 +243,32 @@ export default function IngestPage() {
                         onChange={(e) => updateEntry(i, 'content', e.target.value)}
                         className="w-full text-sm text-gray-700 border border-gray-100 rounded-lg px-3 py-2 resize-y focus:outline-none focus:ring-2 focus:ring-[#10755A] bg-gray-50"
                       />
+                      <div className="flex items-center gap-2 mt-3 flex-wrap">
+                        <select
+                          value={entry.intent}
+                          onChange={(e) => updateEntry(i, 'intent', e.target.value)}
+                          className="rounded-lg border border-gray-200 px-2.5 py-1.5 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+                        >
+                          {Object.entries(INTENT_CONFIG).map(([key, c]) => (
+                            <option key={key} value={key}>{c.label}</option>
+                          ))}
+                        </select>
+                        {entry.regions.map((r) => (
+                          <span key={r} className="flex items-center gap-1 rounded-full bg-emerald-50 text-[#10755A] px-2.5 py-1 text-xs font-medium">
+                            {r}
+                            <button onClick={() => removeRegionFromEntry(i, r)} className="text-[#10755A]/60 hover:text-[#10755A]">×</button>
+                          </span>
+                        ))}
+                        {SUGGESTED_REGIONS.filter((r) => !entry.regions.includes(r)).slice(0, 3).map((r) => (
+                          <button
+                            key={r}
+                            onClick={() => addRegionToEntry(i, r)}
+                            className="rounded-full px-2.5 py-1 text-xs font-medium bg-gray-100 text-gray-500 hover:bg-gray-200 transition-colors"
+                          >
+                            + {r}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>

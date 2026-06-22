@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { createServerSupabase } from '@/lib/supabase-server'
-import { CATEGORY_CONFIG } from '@/types/encyclopedia'
-import type { EncyclopediaCategory } from '@/types/encyclopedia'
+import { CATEGORY_CONFIG, INTENT_CONFIG } from '@/types/encyclopedia'
+import type { EncyclopediaCategory, EncyclopediaIntent } from '@/types/encyclopedia'
 import { Upload, PlusCircle } from 'lucide-react'
 
 export default async function EncyclopediaPage({
@@ -124,6 +124,16 @@ export default async function EncyclopediaPage({
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${config?.bg ?? 'bg-gray-50'} ${config?.color ?? 'text-gray-600'}`}>
                       {config?.label ?? entry.category}
                     </span>
+                    {entry.intent && entry.intent !== 'both' && (
+                      <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600">
+                        {INTENT_CONFIG[entry.intent as EncyclopediaIntent]?.label}
+                      </span>
+                    )}
+                    {(entry.regions ?? []).map((r: string) => (
+                      <span key={r} className="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
+                        {r}
+                      </span>
+                    ))}
                     {!entry.active && (
                       <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">inactive</span>
                     )}

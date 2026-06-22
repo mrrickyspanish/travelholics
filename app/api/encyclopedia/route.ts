@@ -21,6 +21,8 @@ export async function POST(req: NextRequest) {
       source: body.source ?? null,
       sort_order: body.sort_order ?? 0,
       active: body.active ?? true,
+      intent: body.intent ?? 'both',
+      regions: body.regions ?? [],
     })
     .select('id')
     .single()

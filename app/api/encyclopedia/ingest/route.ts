@@ -17,6 +17,12 @@ For each entry, determine the best category:
 - compliance_note: Any legal, regulatory, or disclosure information
 - topic_guidance: Guidance on how to approach a specific topic
 
+Also determine where this knowledge should be used:
+- intent "trip_page": factual, decision-useful info about a destination (port logistics, timing, what to book/skip) — belongs on the destination overview page, not a blog post
+- intent "blog": personal narrative, opinion, or moment-specific story — belongs in a trip-blog post, not the factual overview page
+- intent "both": generic enough to support either
+- regions: array of region/sub-region tags this applies to (e.g. "Eastern Caribbean", "Alaska"). Leave empty if not destination-specific (e.g. compliance notes, general vocabulary).
+
 Return ONLY a valid JSON array. No markdown. No code fences. Start with [
 
 Each entry must have:
@@ -24,7 +30,9 @@ Each entry must have:
 - title: short descriptive title (5-10 words)
 - content: the full entry text (50-300 words)
 - confidence: "high", "medium", or "low" based on how clearly it was stated
-- excerpt: 1-sentence summary`
+- excerpt: 1-sentence summary
+- intent: "trip_page", "blog", or "both"
+- regions: array of strings, can be empty`
 
 export async function POST(req: NextRequest) {
   const supabase = await createServerSupabase()

@@ -1,6 +1,24 @@
 import type { EncyclopediaEntry, EncyclopediaCategory } from '@/types/encyclopedia'
 import type { Article } from '@/types/article'
 
+// ─── Intent/region filtering ──────────────────────────────────────────────────
+
+/**
+ * Same encyclopedia fact can be tagged for the blog, the trip pages, or both.
+ * Region tags (e.g. "Eastern Caribbean") are only enforced when a target
+ * region is given — untagged entries are treated as globally applicable.
+ */
+export function selectEncyclopediaEntries(
+  entries: EncyclopediaEntry[],
+  opts: { intent: 'blog' | 'trip_page'; region?: string }
+): EncyclopediaEntry[] {
+  return entries.filter((e) => {
+    if (e.intent !== 'both' && e.intent !== opts.intent) return false
+    if (opts.region && e.regions.length > 0 && !e.regions.includes(opts.region)) return false
+    return true
+  })
+}
+
 // ─── Base system prompt ───────────────────────────────────────────────────────
 
 export const BRAND_ENCYCLOPEDIA_SYSTEM_PROMPT = `
@@ -210,4 +228,53 @@ Pick the most appropriate topic cluster (trip-blog, cruise-news, deals, or shop-
 Target length: ${targetLength} words
 
 Remember: Do NOT wrap the JSON in code fences. The very first character of your response must be {`
+}
+
+// ─── Trip page drafter ─────────────────────────────────────────────────────────
+// Same brand voice and compliance rules as the blog, but the output is a
+// factual destination rundown (the /cruises overview pages), not a personal
+// story. Drafts are reviewed by a human and pasted into lib/destinations/*.ts
+// — nothing here writes to those files directly.
+
+export const TRIP_PAGE_SYSTEM_PROMPT = `
+You are drafting content for a Travelholics destination overview page (the /cruises pages), writing in the voice of Yolanda Harris.
+
+## WHAT THIS PAGE IS FOR
+Unlike a blog post, this page is a reference someone reads while comparing destinations or deciding whether to book. It needs to be a clear, factual rundown: which ports are worth it, what to actually book, what to skip, when to go. Still Yolanda's voice and still first person where natural ("I tell my travelers...") — but the job is to inform a decision, not tell a story. No narrative arc, no scene-setting, no "here's what happened to me." Just her real, specific opinion on the place.
+
+## VOICE — SAME RULES AS ALWAYS
+- Direct, specific, real talk. If something's overrated, say so.
+- Banned: "breathtaking," "once in a lifetime," "hidden gems," "bucket list," travel-brochure language, listicle-bait.
+- Specific details (which excursion, which beach, which side of the island) make it credible.
+
+## COMPLIANCE
+- Never guarantee availability or specific pricing. Use "From $X" style anchors only when given a real number.
+- Do not invent affiliate URLs — leave the \`url\` field as an empty string if one isn't supplied in the knowledge base.
+
+## OUTPUT FORMAT — CRITICAL
+Return ONLY a valid JSON object. No markdown, no code fences. The first character must be {
+
+{
+  "portNoteUpdates": [
+    { "port": "exact port name as given", "verdict": "short tag, 3-6 words", "note": "Yolanda's real take, first person, 1-3 sentences" }
+  ],
+  "excursionSuggestions": [
+    { "name": "excursion name", "port": "port name", "blurb": "one line on why it beats the ship-sold version", "priceFrom": "From $X or empty string if unknown" }
+  ],
+  "faqAdditions": [
+    { "question": "...", "answer": "..." }
+  ],
+  "notes": "Anything the human reviewer should know — gaps in the knowledge base, ports with no matching info, affiliate links still needed"
+}
+
+Only include a portNoteUpdates entry for a port if the knowledge base actually gives you something specific to say about it. Do not pad with generic travel-brochure filler for ports you have no real information on — list them in "notes" instead.
+`.trim()
+
+export function buildTripPageUserPrompt(destinationName: string, region: string | undefined, currentPorts: string[]): string {
+  return `Destination page: ${destinationName}
+${region ? `Focus region: ${region}` : 'No specific region filter — draft for any port below the knowledge base covers.'}
+
+Current ports on this page: ${currentPorts.join(', ')}
+
+Draft updates using only the knowledge base provided. Remember: only the JSON object, first character {`
 }

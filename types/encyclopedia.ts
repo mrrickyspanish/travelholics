@@ -7,6 +7,8 @@ export type EncyclopediaCategory =
   | 'compliance_note'
   | 'topic_guidance'
 
+export type EncyclopediaIntent = 'trip_page' | 'blog' | 'both'
+
 export interface EncyclopediaEntry {
   id: string
   category: EncyclopediaCategory
@@ -18,7 +20,37 @@ export interface EncyclopediaEntry {
   sort_order: number
   active: boolean
   created_at: string
+  /** Where this knowledge applies. Same fact can read very differently in each. */
+  intent: EncyclopediaIntent
+  /** Free-text region/sub-region tags, e.g. "Eastern Caribbean". Empty = applies everywhere. */
+  regions: string[]
 }
+
+export const INTENT_CONFIG: Record<EncyclopediaIntent, { label: string; description: string }> = {
+  trip_page: {
+    label: 'Trip Pages',
+    description: 'Factual destination info — ports, timing, excursions. Feeds the /cruises overview pages, not blog voice.',
+  },
+  blog: {
+    label: 'Blog',
+    description: "Personal, opinionated. Feeds Yolanda's first-person trip-blog stories, not the destination overview pages.",
+  },
+  both: {
+    label: 'Both',
+    description: "Generic enough to support either — the factual rundown and the personal story.",
+  },
+}
+
+// Suggestions only — entries can carry any free-text region tag, including
+// ones not listed here yet (e.g. a future destination like Japan).
+export const SUGGESTED_REGIONS = [
+  'Eastern Caribbean',
+  'Western Caribbean',
+  'Southern Caribbean',
+  'Bahamas',
+  'Alaska',
+  'Mediterranean',
+] as const
 
 export const CATEGORY_CONFIG: Record<
   EncyclopediaCategory,
