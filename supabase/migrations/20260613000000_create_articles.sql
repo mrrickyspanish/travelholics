@@ -10,10 +10,10 @@ CREATE TABLE IF NOT EXISTS public.articles (
   slug                TEXT                     NOT NULL UNIQUE,
   title               TEXT                     NOT NULL,
   subtitle            TEXT,
-  excerpt             TEXT                     NOT NULL,
+  excerpt             TEXT,
   body                JSONB                    NOT NULL DEFAULT '[]'::jsonb,
-  category            TEXT                     NOT NULL
-                          CHECK (category IN ('trip-blog', 'cruise-news', 'deal', 'shop-announcement')),
+  category            TEXT
+                          CHECK (category IS NULL OR category IN ('trip-blog', 'cruise-news', 'deal', 'shop-announcement')),
   author              TEXT                     NOT NULL DEFAULT 'Yolanda',
   cover_image         TEXT,
   cover_alt           TEXT,
@@ -27,7 +27,19 @@ CREATE TABLE IF NOT EXISTS public.articles (
   deal_original_price TEXT,
   deal_sale_price     TEXT,
   cta_label           TEXT,
-  cta_url             TEXT
+  cta_url             TEXT,
+  -- AI article-generator admin workflow (drafts, pre-publish)
+  content             TEXT,
+  seo_title           TEXT,
+  seo_description     TEXT,
+  topic_cluster       TEXT,
+  keyword             TEXT,
+  scenario            TEXT,
+  status              TEXT                     NOT NULL DEFAULT 'draft'
+                          CHECK (status IN ('draft', 'published', 'archived')),
+  word_count          INTEGER,
+  compliance_flags    TEXT[]                   NOT NULL DEFAULT '{}'::TEXT[],
+  is_voice_example    BOOLEAN                  NOT NULL DEFAULT false
 );
 
 DROP TRIGGER IF EXISTS set_articles_updated_at ON public.articles;
@@ -39,6 +51,7 @@ CREATE TRIGGER set_articles_updated_at
 CREATE INDEX IF NOT EXISTS articles_category_idx     ON public.articles (category);
 CREATE INDEX IF NOT EXISTS articles_published_idx    ON public.articles (published, published_at DESC);
 CREATE INDEX IF NOT EXISTS articles_slug_idx         ON public.articles (slug);
+CREATE INDEX IF NOT EXISTS articles_status_idx       ON public.articles (status);
 CREATE INDEX IF NOT EXISTS articles_featured_idx     ON public.articles (featured);
 CREATE INDEX IF NOT EXISTS articles_tags_idx         ON public.articles USING GIN (tags);
 
