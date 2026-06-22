@@ -1,3 +1,5 @@
+import type { ArticleCategory } from '@/lib/articles'
+
 export interface TopicCluster {
   id: string
   label: string
@@ -39,3 +41,17 @@ export const AUDIENCE_SCENARIOS: AudienceScenario[] = [
   { id: 'tiktok-follower', label: 'TikTok Follower Curious to Book' },
   { id: 'deal-hunter', label: 'Deal Hunter Watching for the Right Price' },
 ]
+
+// Topic cluster ids (admin/AI-generator side) map almost 1:1 onto the public
+// site's ArticleCategory values — only "deals" and "shop-announcements" differ.
+const TOPIC_CLUSTER_TO_CATEGORY: Record<string, ArticleCategory> = {
+  'trip-blog': 'trip-blog',
+  'cruise-news': 'cruise-news',
+  deals: 'deal',
+  'shop-announcements': 'shop-announcement',
+}
+
+export function categoryFromTopicCluster(topicCluster: string | null): ArticleCategory | null {
+  if (!topicCluster) return null
+  return TOPIC_CLUSTER_TO_CATEGORY[topicCluster] ?? null
+}

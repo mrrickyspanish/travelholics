@@ -131,6 +131,17 @@ export function formatDate(dateStr: string | null): string {
   });
 }
 
+// Converts the AI generator's plain-text output (paragraphs separated by
+// blank lines — see lib/encyclopedia.ts's OUTPUT FORMAT instructions) into
+// the structured Block[] the public renderer expects.
+export function contentToBlocks(content: string): Block[] {
+  return content
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .map((text) => ({ type: 'p', text }));
+}
+
 export function estimateReadTime(body: Block[]): number {
   const words = body.reduce((acc, block) => {
     if ('text' in block) return acc + block.text.split(/\s+/).length;

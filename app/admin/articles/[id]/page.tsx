@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { createBrowserSupabase } from '@/lib/supabase-browser'
 import type { Article } from '@/types/article'
+import { categoryFromTopicCluster } from '@/lib/article-clusters'
+import { contentToBlocks } from '@/lib/articles'
 import { ExternalLink, Save, Trash2 } from 'lucide-react'
 
 export default function ArticleDetailPage() {
@@ -67,6 +69,9 @@ export default function ArticleDetailPage() {
         status,
         is_voice_example: isVoiceExample,
         word_count: wordCount(),
+        published: status === 'published',
+        category: categoryFromTopicCluster(article?.topic_cluster ?? null),
+        body: contentToBlocks(content),
         published_at: status === 'published' && !article?.published_at ? new Date().toISOString() : article?.published_at,
         updated_at: new Date().toISOString(),
       })
