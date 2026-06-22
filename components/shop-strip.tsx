@@ -82,10 +82,9 @@ export const ShopStrip = () => {
               </p>
               <Link
                 href="/shop-full"
-                className="mt-7 inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
+                className="mt-7 inline-flex min-h-[46px] items-center justify-center rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
               >
                 Shop the collection
-                <ArrowUpRight size={18} strokeWidth={2.2} />
               </Link>
             </div>
 

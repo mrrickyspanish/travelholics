@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, MapPinned, X } from "lucide-react";
+import { MapPinned, X } from "lucide-react";
 import {
   ComposableMap,
   Geographies,
@@ -323,6 +323,7 @@ export function DestinationMap() {
 
   return (
     <section id="map" className="relative overflow-hidden bg-sand py-12 sm:py-16 lg:py-20">
+      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-emerald-deep/10 to-transparent pointer-events-none" aria-hidden="true" />
       <style>{`
         @keyframes destinationPinPulse {
           0%, 100% { transform: scale(1); opacity: 0.95; }
@@ -366,10 +367,9 @@ export function DestinationMap() {
               </p>
               <a
                 href="/#contact"
-                className="mt-8 inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
+                className="mt-8 inline-flex min-h-[46px] items-center justify-center rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
               >
                 Plan My Cruise
-                <ArrowRight className="h-4 w-4" />
               </a>
             </motion.div>
 
@@ -582,9 +582,9 @@ export function DestinationMap() {
                         <p className="mt-1 text-[0.86rem] font-medium leading-snug text-stone">{activeDestination.sub}</p>
                         <a
                           href={DESTINATION_CTA_HREF}
-                          className="mt-4 inline-flex items-center gap-2 rounded-xl bg-coral px-4 py-2 text-[0.82rem] font-semibold text-white transition-colors hover:bg-coral-deep"
+                          className="mt-4 inline-flex items-center rounded-xl bg-coral px-4 py-2 text-[0.82rem] font-semibold text-white transition-colors hover:bg-coral-deep"
                         >
-                          Plan My Cruise <ArrowRight className="h-3.5 w-3.5" />
+                          Plan My Cruise
                         </a>
                       </div>
                     </motion.div>
@@ -676,10 +676,9 @@ export function DestinationMap() {
             <div className="mt-6 text-center">
               <a
                 href="/#contact"
-                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-coral px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-coral-deep sm:w-auto"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-coral px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-coral-deep sm:w-auto"
               >
                 Plan My Cruise
-                <ArrowRight className="h-4 w-4" />
               </a>
             </div>
           </motion.div>

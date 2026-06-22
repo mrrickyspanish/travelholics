@@ -73,11 +73,11 @@ export const MeetYolanda = () => {
 
             <div className="mt-7 grid gap-3 sm:grid-cols-2">
               {credentials.map((item) => (
-                <div key={item} className="flex items-start gap-3 rounded-[1.25rem] bg-cream/85 p-4 text-left shadow-sm ring-1 ring-white/70">
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-coral/12 text-coral">
-                    <CheckCircle size={15} strokeWidth={2.4} />
+                <div key={item} className="flex items-start gap-2.5 rounded-[1.25rem] bg-cream/85 p-3 text-left shadow-sm ring-1 ring-white/70 sm:p-4">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-coral/12 text-coral sm:h-6 sm:w-6">
+                    <CheckCircle size={13} strokeWidth={2.4} />
                   </span>
-                  <p className="text-[0.98rem] font-semibold leading-snug text-ink/82">{item}</p>
+                  <p className="text-[0.88rem] font-semibold leading-snug text-ink/82 sm:text-[0.98rem]">{item}</p>
                 </div>
               ))}
             </div>
