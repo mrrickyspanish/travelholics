@@ -25,6 +25,16 @@ jobs:
           SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
 
+      - name: Repair history for migrations already applied manually
+        run: |
+          supabase migration repair 20260421 --status applied
+          supabase migration repair 20260525 --status applied
+          supabase migration repair 20260602 --status applied
+          supabase migration repair 20260613000000 --status applied
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+
       - name: Push pending migrations
         run: supabase db push
         env:
