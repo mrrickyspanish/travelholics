@@ -14,6 +14,14 @@ const testimonials = [
     photo: "/images/testimonials/barnes_cruise_travelholic.JPG",
     rating: 5,
   },
+  {
+    quote:
+      "For years, Yolanda has planned my cruise vacations, and every trip has been exceptional. She matches the sailing, stateroom, and details to exactly what I love, taking all the stress out of planning. I recommend Travelholics wholeheartedly.",
+    name: "Tijuana Willis",
+    trip: "Mediterranean Cruise · Repeat Guest",
+    photo: "/images/testimonials/willis_cruise_travelholic.jpg",
+    rating: 5,
+  },
 ];
 
 const visualTestimonials = Array.from(
