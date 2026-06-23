@@ -38,6 +38,8 @@ export default function NewArticlePage() {
   const [meta, setMeta] = useState<Partial<ArticleGenerateMeta>>({})
   const [articleContent, setArticleContent] = useState('')
   const [complianceFlags, setComplianceFlags] = useState<string[]>([])
+  const [coverImage, setCoverImage] = useState('')
+  const [coverAlt, setCoverAlt] = useState('')
 
   // Save state
   const [saving, setSaving] = useState(false)
@@ -54,6 +56,8 @@ export default function NewArticlePage() {
     setMeta({})
     setArticleContent('')
     setComplianceFlags([])
+    setCoverImage('')
+    setCoverAlt('')
 
     const body =
       genMode === 'freewrite'
@@ -106,6 +110,7 @@ export default function NewArticlePage() {
       const parsed: ArticleGenerateMeta = JSON.parse(cleaned)
       setMeta(parsed)
       setComplianceFlags(parsed.compliance_flags ?? [])
+      setCoverAlt(parsed.cover_image_alt ?? '')
     } catch {
       // If JSON parse fails, set title from first line
       setMeta({ title: metaRaw.split('\n')[0].replace(/^[#\s]+/, '') })
@@ -137,6 +142,8 @@ export default function NewArticlePage() {
           status: 'draft',
           word_count: countWords(articleContent),
           compliance_flags: complianceFlags,
+          cover_image: coverImage || null,
+          cover_alt: coverAlt || null,
         }),
       })
       const { id, error } = await res.json()
@@ -360,6 +367,32 @@ export default function NewArticlePage() {
                 value={meta.excerpt ?? ''}
                 onChange={(e) => setMeta((m) => ({ ...m, excerpt: e.target.value }))}
                 className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-sm resize-y focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1">Cover Image URL</label>
+              {meta.cover_image_query && (
+                <p className="text-xs text-gray-400 mb-1.5">
+                  Suggested search: &ldquo;{meta.cover_image_query}&rdquo;
+                </p>
+              )}
+              <input
+                type="text"
+                value={coverImage}
+                onChange={(e) => setCoverImage(e.target.value)}
+                placeholder="https://..."
+                className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1">Cover Image Alt Text</label>
+              <input
+                type="text"
+                value={coverAlt}
+                onChange={(e) => setCoverAlt(e.target.value)}
+                className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
               />
             </div>
           </div>

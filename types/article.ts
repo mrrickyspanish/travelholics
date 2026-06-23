@@ -9,6 +9,8 @@ export interface ArticleGenerateMeta {
   compliance_flags: string[]
   topic_cluster: string
   keyword: string
+  cover_image_alt: string
+  cover_image_query: string
 }
 
 export interface Article {
@@ -26,6 +28,8 @@ export interface Article {
   word_count: number | null
   compliance_flags: string[]
   is_voice_example: boolean
+  cover_image: string | null
+  cover_alt: string | null
   published_at: string | null
   created_at: string
   updated_at: string

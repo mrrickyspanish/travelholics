@@ -26,6 +26,8 @@ export default function ArticleDetailPage() {
   const [seoDescription, setSeoDescription] = useState('')
   const [status, setStatus] = useState<Article['status']>('draft')
   const [isVoiceExample, setIsVoiceExample] = useState(false)
+  const [coverImage, setCoverImage] = useState('')
+  const [coverAlt, setCoverAlt] = useState('')
 
   useEffect(() => {
     const supabase = createBrowserSupabase()
@@ -45,6 +47,8 @@ export default function ArticleDetailPage() {
           setSeoDescription(data.seo_description ?? '')
           setStatus(data.status)
           setIsVoiceExample(data.is_voice_example)
+          setCoverImage(data.cover_image ?? '')
+          setCoverAlt(data.cover_alt ?? '')
         }
         setLoading(false)
       })
@@ -68,6 +72,8 @@ export default function ArticleDetailPage() {
         seo_description: seoDescription || null,
         status,
         is_voice_example: isVoiceExample,
+        cover_image: coverImage || null,
+        cover_alt: coverAlt || null,
         word_count: wordCount(),
         published: status === 'published',
         category: categoryFromTopicCluster(article?.topic_cluster ?? null),
@@ -228,6 +234,39 @@ export default function ArticleDetailPage() {
             onChange={(e) => setExcerpt(e.target.value)}
             className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm resize-y focus:outline-none focus:ring-2 focus:ring-[#10755A]"
           />
+        </div>
+
+        {/* Cover image */}
+        <div className="grid grid-cols-[1fr_auto] gap-4">
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1">Cover Image URL</label>
+              <input
+                type="text"
+                value={coverImage}
+                onChange={(e) => setCoverImage(e.target.value)}
+                placeholder="https://..."
+                className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1">Cover Image Alt Text</label>
+              <input
+                type="text"
+                value={coverAlt}
+                onChange={(e) => setCoverAlt(e.target.value)}
+                className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+              />
+            </div>
+          </div>
+          {coverImage && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={coverImage}
+              alt={coverAlt || 'Cover preview'}
+              className="h-24 w-36 rounded-lg object-cover border border-gray-200"
+            />
+          )}
         </div>
 
         {/* Content */}

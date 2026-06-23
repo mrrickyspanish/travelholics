@@ -25,6 +25,8 @@ export async function POST(req: NextRequest) {
       status: body.status ?? 'draft',
       word_count: body.word_count ?? null,
       compliance_flags: body.compliance_flags ?? [],
+      cover_image: body.cover_image ?? null,
+      cover_alt: body.cover_alt ?? null,
     })
     .select('id')
     .single()

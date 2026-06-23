@@ -118,7 +118,9 @@ The JSON schema:
   "excerpt": "2-3 sentence teaser for article cards",
   "compliance_flags": ["list any compliance items triggered, empty array if none"],
   "topic_cluster": "trip-blog | cruise-news | deals | shop-announcements",
-  "keyword": "primary SEO keyword phrase"
+  "keyword": "primary SEO keyword phrase",
+  "cover_image_alt": "Descriptive alt text for the cover image once one is chosen — specific to the ship/port/subject of this article, not generic",
+  "cover_image_query": "A short, specific stock-photo search phrase a human could paste into Unsplash or Google Images to find a real cover photo for this article (e.g. 'Royal Caribbean Wonder of the Seas exterior sunset')"
 }
 <<<CONTENT>>>
 Article body here...
