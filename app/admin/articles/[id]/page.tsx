@@ -6,6 +6,7 @@ import { createBrowserSupabase } from '@/lib/supabase-browser'
 import type { Article } from '@/types/article'
 import { categoryFromTopicCluster } from '@/lib/article-clusters'
 import { contentToBlocks } from '@/lib/articles'
+import { CoverImageUploader } from '@/components/cover-image-uploader'
 import { ExternalLink, Save, Trash2 } from 'lucide-react'
 
 export default function ArticleDetailPage() {
@@ -237,36 +238,20 @@ export default function ArticleDetailPage() {
         </div>
 
         {/* Cover image */}
-        <div className="grid grid-cols-[1fr_auto] gap-4">
-          <div className="space-y-4">
-            <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">Cover Image URL</label>
-              <input
-                type="text"
-                value={coverImage}
-                onChange={(e) => setCoverImage(e.target.value)}
-                placeholder="https://..."
-                className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">Cover Image Alt Text</label>
-              <input
-                type="text"
-                value={coverAlt}
-                onChange={(e) => setCoverAlt(e.target.value)}
-                className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
-              />
-            </div>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-xs font-medium text-gray-500 mb-1.5">Cover Image</label>
+            <CoverImageUploader value={coverImage} onChange={setCoverImage} alt={coverAlt} />
           </div>
-          {coverImage && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={coverImage}
-              alt={coverAlt || 'Cover preview'}
-              className="h-24 w-36 rounded-lg object-cover border border-gray-200"
+          <div>
+            <label className="block text-xs font-medium text-gray-500 mb-1">Cover Image Alt Text</label>
+            <input
+              type="text"
+              value={coverAlt}
+              onChange={(e) => setCoverAlt(e.target.value)}
+              className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
             />
-          )}
+          </div>
         </div>
 
         {/* Content */}

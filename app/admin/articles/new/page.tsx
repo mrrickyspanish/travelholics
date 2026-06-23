@@ -4,6 +4,7 @@ import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { TOPIC_CLUSTERS, AUDIENCE_SCENARIOS } from '@/lib/article-clusters'
 import type { ArticleGenerateMeta } from '@/types/article'
+import { CoverImageUploader } from '@/components/cover-image-uploader'
 import { RotateCcw, Save, Zap } from 'lucide-react'
 
 type GenMode = 'structured' | 'freewrite'
@@ -371,19 +372,13 @@ export default function NewArticlePage() {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">Cover Image URL</label>
+              <label className="block text-xs font-medium text-gray-500 mb-1.5">Cover Image</label>
               {meta.cover_image_query && (
-                <p className="text-xs text-gray-400 mb-1.5">
+                <p className="text-xs text-gray-400 mb-2">
                   Suggested search: &ldquo;{meta.cover_image_query}&rdquo;
                 </p>
               )}
-              <input
-                type="text"
-                value={coverImage}
-                onChange={(e) => setCoverImage(e.target.value)}
-                placeholder="https://..."
-                className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
-              />
+              <CoverImageUploader value={coverImage} onChange={setCoverImage} alt={coverAlt} />
             </div>
 
             <div>
