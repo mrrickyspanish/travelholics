@@ -7,6 +7,7 @@ import { NewsletterSignup } from "@/components/newsletter-signup";
 
 const quickLinks = [
   { label: "About",        href: "/#about"        },
+  { label: "Blog",         href: "/blog"          },
   { label: "Group Trips",  href: "/#group-trips"  },
   { label: "Travel Picks", href: "/shop"           },
   { label: "Testimonials", href: "/#testimonials"  },
