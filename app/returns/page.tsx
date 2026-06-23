@@ -21,7 +21,7 @@ export default function ReturnsPage() {
           />
           <h1 className="mt-6 font-serif text-4xl text-ink">Returns &amp; Exchanges</h1>
           <p className="mt-3 text-[17px] leading-relaxed text-stone">
-            Not the right fit? We'll make it right. Here's how.
+            Not the right fit? We&apos;ll make it right. Here&apos;s how.
           </p>
 
           {/* Return window */}
@@ -73,7 +73,7 @@ export default function ReturnsPage() {
                 <XCircle className="h-5 w-5 text-white" aria-hidden="true" />
               </div>
               <div>
-                <h2 className="font-serif text-xl text-ink">What we don't accept</h2>
+                <h2 className="font-serif text-xl text-ink">What we don&apos;t accept</h2>
                 <ul className="mt-3 space-y-2 text-[15px] leading-relaxed text-ink/80">
                   {[
                     "Worn, washed, or damaged items",
@@ -122,9 +122,9 @@ export default function ReturnsPage() {
           <div className="mt-8 rounded-2xl border-2 border-coral/30 bg-cream p-7">
             <h2 className="font-serif text-xl text-ink">Exchanges</h2>
             <p className="mt-2 text-[15px] leading-relaxed text-ink/80">
-              Need a different size or color? We're happy to exchange eligible apparel items for
+              Need a different size or color? We&apos;re happy to exchange eligible apparel items for
               another size or colorway within the same product. Just mention it when you email us
-              to start the process and we'll hold the replacement until your return arrives.
+              to start the process and we&apos;ll hold the replacement until your return arrives.
             </p>
           </div>
 

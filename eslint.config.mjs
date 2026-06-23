@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Superseded components kept for reference, not imported anywhere.
+    "components/_archive/**",
   ]),
 ]);
 

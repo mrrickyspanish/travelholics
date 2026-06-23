@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { MapPinned, X } from "lucide-react";
 import {
@@ -27,7 +28,6 @@ const MAP_HEIGHT = 430;
 const PROJECTION_SCALE = 140;
 const PROJECTION_CENTER: [number, number] = [0, 20];
 const DESTINATION_LABEL_ZOOM_THRESHOLD = 1.75;
-const MOBILE_FEATURED_FALLBACK_IMAGE = "/images/dest-caribbean.jpg";
 
 type RegionLabelLayout = {
   coordinates: [number, number];
@@ -152,10 +152,6 @@ export function DestinationMap() {
     () => DESTINATIONS.filter((destination) => destination.active),
     [],
   );
-  const mobileDestinations = useMemo(
-    () => destinations.filter((destination) => destination.photo),
-    [destinations],
-  );
   const groupedDestinations = useMemo(() => {
     const groups = new Map<string, Destination[]>();
 
@@ -184,8 +180,6 @@ export function DestinationMap() {
       .filter((label): label is { region: string } & RegionLabelLayout => Boolean(label)),
     [groupedDestinations],
   );
-  const [featuredMobileDestination, ...secondaryMobileDestinations] = mobileDestinations;
-
   const [activeId, setActiveId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [view, setView] = useState<MapView>(DEFAULT_MAP_VIEW);
@@ -364,12 +358,12 @@ export function DestinationMap() {
               <p className="mt-6 max-w-[43ch] text-[1.06rem] font-medium leading-[1.75] text-ink/76">
                 Every pin is a port Yolanda has actually been to, or a trip the Crew is already eyeing. Click around. Some become group sailings. All of them get a real opinion when you book.
               </p>
-              <a
+              <Link
                 href="/#contact"
                 className="mt-8 inline-flex min-h-[46px] items-center justify-center rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
               >
                 Plan My Cruise
-              </a>
+              </Link>
             </motion.div>
 
             <motion.div
@@ -579,12 +573,12 @@ export function DestinationMap() {
                       <div className="p-4">
                         <p className="font-serif text-[1.2rem] font-semibold leading-tight tracking-[-0.03em] text-ink">{activeDestination.label}</p>
                         <p className="mt-1 text-[0.86rem] font-medium leading-snug text-stone">{activeDestination.sub}</p>
-                        <a
+                        <Link
                           href={DESTINATION_CTA_HREF}
                           className="mt-4 inline-flex items-center rounded-xl bg-coral px-4 py-2 text-[0.82rem] font-semibold text-white transition-colors hover:bg-coral-deep"
                         >
                           Plan My Cruise
-                        </a>
+                        </Link>
                       </div>
                     </motion.div>
                   ) : null}
@@ -635,8 +629,8 @@ export function DestinationMap() {
                     <ZoomableGroup center={[-60, 20]} zoom={1} minZoom={1} maxZoom={6}>
                       <Sphere id="map-ocean" fill="#F5EFE4" stroke="rgba(180,155,120,0.2)" strokeWidth={0.5} />
                       <Geographies geography={DESTINATION_MAP_GEOGRAPHY}>
-                        {({ geographies }: { geographies: any[] }) =>
-                          geographies.map((geo) => (
+                        {({ geographies }: { geographies: Array<{ rsmKey: string }> }) =>
+                          geographies.map((geo: { rsmKey: string }) => (
                             <Geography
                               key={geo.rsmKey}
                               geography={geo}
@@ -673,12 +667,12 @@ export function DestinationMap() {
             </div>
 
             <div className="mt-6 text-center">
-              <a
+              <Link
                 href="/#contact"
                 className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-coral px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-coral-deep sm:w-auto"
               >
                 Plan My Cruise
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>

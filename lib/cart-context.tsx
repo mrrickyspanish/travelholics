@@ -34,10 +34,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Hydrate from localStorage on mount
+  // Hydrate from localStorage on mount. Can't read localStorage during SSR/render,
+  // so this has to be an effect — a lazy useState initializer would mismatch hydration.
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (stored) setItems(JSON.parse(stored) as CartItem[]);
     } catch {}
   }, []);

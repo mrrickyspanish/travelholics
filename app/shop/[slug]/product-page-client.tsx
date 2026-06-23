@@ -18,7 +18,7 @@ import {
 
 import { Footer } from "@/components/footer";
 import { RippleButton } from "@/components/ripple-button";
-import { MERCH_PRODUCTS, formatMerchPrice, type MerchProduct } from "@/lib/shop-catalog";
+import { MERCH_PRODUCTS, formatMerchPrice } from "@/lib/shop-catalog";
 import { useCart } from "@/lib/cart-context";
 
 /* ─── Product image data per slug ──────────────────────────── */
@@ -224,17 +224,17 @@ const PRODUCT_VIDEOS: Record<string, string> = {
 export default function ProductPageClient({ slug }: { slug: string }) {
   const product = MERCH_PRODUCTS.find((p) => p.id === slug);
 
-  if (!product) return <div className="flex min-h-screen items-center justify-center text-stone-400">Product not found.</div>;
-
-  const images = PRODUCT_IMAGES[product.id];
-  const gallery = images?.gallery ?? (product.imageSrc ? [product.imageSrc] : []);
-  const hero = images?.hero ?? product.imageSrc ?? "";
-
   const { addItem, openDrawer } = useCart();
   const [activeImage, setActiveImage] = useState(0);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+
+  if (!product) return <div className="flex min-h-screen items-center justify-center text-stone-400">Product not found.</div>;
+
+  const images = PRODUCT_IMAGES[product.id];
+  const gallery = images?.gallery ?? (product.imageSrc ? [product.imageSrc] : []);
+  const hero = images?.hero ?? product.imageSrc ?? "";
 
   const handleAddToCart = () => {
     addItem({

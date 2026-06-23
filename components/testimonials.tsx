@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 const VISUAL_TESTIMONIAL_COUNT = 10;
@@ -114,12 +115,12 @@ export const Testimonials = () => {
       </div>
 
       <div className="mt-10 px-6 text-center">
-        <a
+        <Link
           href="/#contact"
           className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-coral px-8 py-4 text-base font-semibold text-white shadow-md shadow-coral/15 transition-colors hover:bg-coral-deep sm:w-auto"
         >
           Start Planning My Trip
-        </a>
+        </Link>
       </div>
 
       {/* Wave — dark emerald (Contact) rises into cream */}

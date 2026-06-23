@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
@@ -85,7 +85,7 @@ export default function DuckHuntPage() {
     setShipLabel(formatShipName(queryParams.get("ship")));
   }, []);
 
-  async function fireConfetti() {
+  const fireConfetti = useCallback(async () => {
     if (typeof window === "undefined" || prefersReducedMotion) return;
     const { default: confetti } = await import("canvas-confetti");
     confetti({
@@ -138,7 +138,7 @@ export default function DuckHuntPage() {
         scalar: 0.9,
       });
     }, 350);
-  }
+  }, [prefersReducedMotion]);
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -171,7 +171,7 @@ export default function DuckHuntPage() {
     const t6 = setTimeout(() => setD3Visible(true), 3250);
     const t7 = setTimeout(() => setDuckFloat(true), 3600);
     return () => [t1, t2, t3, t4, t5, t6, t7].forEach(clearTimeout);
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, fireConfetti]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

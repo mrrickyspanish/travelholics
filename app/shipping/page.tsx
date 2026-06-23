@@ -66,7 +66,7 @@ export default function ShippingPage() {
           <div className="mt-10 rounded-2xl border-2 border-coral/30 bg-cream p-7">
             <h2 className="font-serif text-xl text-ink">Lost or delayed orders</h2>
             <p className="mt-2 text-[15px] leading-relaxed text-ink/80">
-              If your tracking shows delivered but your order hasn't arrived, or if it's been more than
+              If your tracking shows delivered but your order hasn&apos;t arrived, or if it&apos;s been more than
               15 business days with no update, email us at{" "}
               <a
                 href="mailto:hello@yotravelholic.com"
@@ -74,7 +74,7 @@ export default function ShippingPage() {
               >
                 hello@yotravelholic.com
               </a>{" "}
-              with your order number and we'll sort it out.
+              with your order number and we&apos;ll sort it out.
             </p>
           </div>
 

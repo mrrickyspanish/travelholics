@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import BroadcastDay from "@/components/live/BroadcastDay";
 import { useLiveStatus } from "@/hooks/useLiveStatus";
 import {
@@ -178,12 +179,12 @@ export default function LivePageClient() {
                 stream lives here.
               </p>
             </div>
-            <a
+            <Link
               href="/shop"
               className="mt-8 inline-flex min-h-[52px] w-fit items-center justify-center rounded-full bg-[#D04444] px-8 text-lg font-bold text-white transition-colors hover:bg-[#b83939]"
             >
               Shop the goods
-            </a>
+            </Link>
           </div>
 
           {/* Duck hunt */}

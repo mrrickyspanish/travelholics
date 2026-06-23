@@ -58,7 +58,7 @@ export const Header = () => {
   const liveHref = isLive ? TIKTOK_LIVE_URL : TIKTOK_PROFILE_URL;
 
   useEffect(() => {
-    if (!isLive) { setShowAlt(false); return; }
+    if (!isLive) return;
     const id = setInterval(() => setShowAlt((v) => !v), 3000);
     return () => clearInterval(id);
   }, [isLive]);
@@ -143,9 +143,9 @@ export const Header = () => {
                 </AnimatePresence>
               </a>
             ) : (
-              <a href="/#contact" className="hidden sm:inline-flex items-center rounded-xl bg-coral px-5 py-2 text-sm font-semibold text-white hover:bg-coral-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2">
+              <Link href="/#contact" className="hidden sm:inline-flex items-center rounded-xl bg-coral px-5 py-2 text-sm font-semibold text-white hover:bg-coral-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2">
                 Join the Crew
-              </a>
+              </Link>
             )}
 
             <button type="button" onClick={() => setMenuOpen(true)} aria-label="Open navigation menu" aria-expanded={menuOpen} className={iconBtn}>
@@ -178,9 +178,9 @@ export const Header = () => {
             </nav>
 
             <div className="px-8 sm:px-16 pb-10 space-y-4">
-              <a href="/#contact" onClick={() => setMenuOpen(false)} className="inline-flex items-center rounded-xl bg-coral px-6 py-3 text-sm font-semibold text-white hover:bg-coral-deep transition-colors">
+              <Link href="/#contact" onClick={() => setMenuOpen(false)} className="inline-flex items-center rounded-xl bg-coral px-6 py-3 text-sm font-semibold text-white hover:bg-coral-deep transition-colors">
                 Join the Crew
-              </a>
+              </Link>
               <div className="flex gap-5">
                 <a href={TIKTOK_PROFILE_URL} target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">TikTok</a>
                 <a href="https://www.instagram.com/rjsmom1/" target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">Instagram</a>

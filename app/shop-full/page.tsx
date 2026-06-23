@@ -895,17 +895,6 @@ export default function ShopFullPage() {
     return () => observer.disconnect();
   }, []);
 
-  const goTo = (i: number) => {
-    const track = trackRef.current;
-    if (!track) return;
-    (track.children[i] as HTMLElement)?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center",
-    });
-    setActiveIndex(i);
-  };
-
   const handleCheckout = async (product: MerchProduct) => {
     setCheckoutError((e) => ({ ...e, [product.id]: "" }));
     setPendingCheckoutId(product.id);

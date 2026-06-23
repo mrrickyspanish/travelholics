@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Ship, ShoppingBag, Handshake } from "lucide-react";
 
@@ -39,20 +40,20 @@ export const MobileCTA = () => {
                 <Ship size={16} />
                 Plan
               </button>
-              <a
+              <Link
                 href="/shop"
                 className="min-h-12 bg-emerald-mid hover:bg-emerald-deep text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-deep/20 flex flex-col items-center justify-center gap-1 transition-all text-sm"
               >
                 <ShoppingBag size={16} />
                 Shop
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/collaborate"
                 className="min-h-12 bg-navy hover:bg-ink text-white font-bold py-3 rounded-xl shadow-lg shadow-navy/20 flex flex-col items-center justify-center gap-1 transition-all text-sm"
               >
                 <Handshake size={16} />
                 Collab
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>
