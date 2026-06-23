@@ -17,6 +17,11 @@ export const alaska: DestinationConfig = {
     "Alaska is the one itinerary where the ship is genuinely the best way to see the destination. The Inside Passage, the glaciers, the whales, most of it is only reachable by water. But Alaska punishes a lazy booking more than any other route. The wrong cabin side, the wrong week, or the wrong glacier itinerary and you miss the entire reason you came.",
     "This is where having a specialist actually shows. I know which lines run Glacier Bay versus Hubbard, which side of the ship faces the scenery on each route, and which excursions justify Alaska prices. Same cost as booking direct. Very different trip.",
   ],
+  personalPhoto: {
+    src: "/images/dest-alaska.jpg",
+    alt: "Yolanda smiling on a cruise balcony with Glacier Bay mountains behind her",
+    caption: "Me, on the back deck during Glacier Bay scenic cruising — exactly the cabin side I tell my travelers to book.",
+  },
   bestTime: {
     headline: "When to sail Alaska",
     body: "Alaska is a short season, roughly May through September, and every month sails differently. This is the destination where timing changes what you see, not just what you pay.",

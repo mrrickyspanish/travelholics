@@ -32,6 +32,13 @@ export type DestinationTestimonial = {
   trip: string;
 };
 
+export type PersonalPhoto = {
+  /** Path under /public to a real photo of Yolanda at this destination */
+  src: string;
+  alt: string;
+  caption: string;
+};
+
 export type DestinationConfig = {
   /** URL segment: /cruises/[slug] */
   slug: string;
@@ -50,6 +57,8 @@ export type DestinationConfig = {
   heroImageAlt: string;
   /** Why [destination]: 2-3 short paragraphs, Yolanda's voice */
   whyParagraphs: string[];
+  /** Optional real photo of Yolanda at this destination, shown alongside whyParagraphs */
+  personalPhoto?: PersonalPhoto;
   /** Best time to sail + who it's for */
   bestTime: {
     headline: string;

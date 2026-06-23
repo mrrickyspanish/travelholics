@@ -17,6 +17,11 @@ export const mediterranean: DestinationConfig = {
     "The Mediterranean is the best value in European travel that almost nobody frames that way. Hotels in three countries, trains between them, restaurants every night, that adds up fast. A Med cruise gives you Barcelona, Rome, and the Greek islands with one unpack and your meals already handled.",
     "The catch is that Med ports are not beach days. They are big, historic cities where the port is sometimes an hour from the sights, and a badly planned day means spending Rome in a bus line. This is the itinerary where port strategy is everything, and where I earn my keep. Same price as booking direct, with a plan for every port before you board.",
   ],
+  personalPhoto: {
+    src: "/images/dest-mediterranean.jpg",
+    alt: "Yolanda and a travel companion standing in front of the Parthenon in Athens",
+    caption: "Me, in Athens — proof the Mediterranean lives up to the postcards.",
+  },
   bestTime: {
     headline: "When to sail the Mediterranean",
     body: "The Med season runs April through November, and the difference between months is crowds and heat more than weather risk.",

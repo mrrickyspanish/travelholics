@@ -6,9 +6,9 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 const cards = [
-  { title: "Caribbean", location: "Caribbean", href: "/cruises/caribbean", image: "/images/dest-caribbean.jpg", imageAlt: "Caribbean destination with turquoise water" },
-  { title: "Alaska", location: "Alaska", href: "/cruises/alaska", image: "/images/dest-alaska-glaciers.jpg", imageAlt: "Alaska glaciers and mountain landscape" },
-  { title: "Mediterranean", location: "Mediterranean", href: "/cruises/mediterranean", image: "/images/dest-mediterranean.jpg", imageAlt: "Mediterranean travel destination" },
+  { title: "Caribbean", location: "Caribbean", href: "/cruises/caribbean", image: "/images/destinations/caribbean-hero.png", imageAlt: "Cruise ship docked at a Caribbean port with turquoise water" },
+  { title: "Alaska", location: "Alaska", href: "/cruises/alaska", image: "/images/destinations/alaska-hero.png", imageAlt: "Glacier and mountain landscape on an Alaska cruise route" },
+  { title: "Mediterranean", location: "Mediterranean", href: "/cruises/mediterranean", image: "/images/destinations/mediterranean-hero.png", imageAlt: "Mediterranean coastal town seen from a cruise ship" },
 ];
 
 const desktopSlots = [

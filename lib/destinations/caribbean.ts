@@ -19,6 +19,11 @@ export const caribbean: DestinationConfig = {
     "The Caribbean is where most people fall in love with cruising, and it is where most people get oversold. Every itinerary looks the same in the brochure. They are not the same. The difference between a trip you repeat and a trip you tolerate comes down to the ship, the cabin side, and which ports you actually get off at.",
     "I have sailed these waters across every major line. I know which private islands are worth the hype, which ports you can do yourself for a third of the excursion price, and which sea days you will actually want. When you plan with me, you pay the same as booking direct. You just stop guessing.",
   ],
+  personalPhoto: {
+    src: "/images/dest-caribbean.jpg",
+    alt: "Yolanda and a travel companion watching the sunset from a Caribbean cruise deck",
+    caption: "Me, on the balcony I keep booking myself for this exact itinerary.",
+  },
   bestTime: {
     headline: "When to sail the Caribbean",
     body: "The Caribbean runs year round, but the experience does not. Pricing, weather, and crowds move in patterns, and knowing them is half the value of a specialist.",

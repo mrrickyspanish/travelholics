@@ -124,16 +124,36 @@ export default async function DestinationPage({ params }: PageProps) {
         </section>
 
         {/* ── Why this destination ─────────────────────────────── */}
-        <section className="mx-auto max-w-3xl px-5 py-14 sm:px-8 sm:py-20">
-          <h2 className="font-serif text-3xl text-ink sm:text-4xl">
-            Why the {config.name}?
-          </h2>
-          <div className="mt-6 space-y-5">
-            {config.whyParagraphs.map((p, i) => (
-              <p key={i} className="text-[17px] leading-relaxed text-ink/85">
-                {p}
-              </p>
-            ))}
+        <section className="mx-auto max-w-5xl px-5 py-14 sm:px-8 sm:py-20">
+          <div className={config.personalPhoto ? "grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-start" : undefined}>
+            <div>
+              <h2 className="font-serif text-3xl text-ink sm:text-4xl">
+                Why the {config.name}?
+              </h2>
+              <div className="mt-6 space-y-5">
+                {config.whyParagraphs.map((p, i) => (
+                  <p key={i} className="text-[17px] leading-relaxed text-ink/85">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </div>
+            {config.personalPhoto && (
+              <figure className="mt-8 lg:mt-2">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-md">
+                  <Image
+                    src={config.personalPhoto.src}
+                    alt={config.personalPhoto.alt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="mt-3 text-sm italic text-stone">
+                  {config.personalPhoto.caption}
+                </figcaption>
+              </figure>
+            )}
           </div>
         </section>
 
