@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+import { sendAlert } from "@/lib/alerts";
+
 export async function POST(request: Request) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -28,6 +30,8 @@ export async function POST(request: Request) {
     if (error.code === "23505") {
       return NextResponse.json({ success: true, already: true });
     }
+    console.error("Shop waitlist insert failed:", error);
+    await sendAlert("Shop waitlist signup failed to save", { email, error: error.message });
     return NextResponse.json({ error: "Unable to save your signup." }, { status: 500 });
   }
 

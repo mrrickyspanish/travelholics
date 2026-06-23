@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 import { FORM_EMAIL_BCC, FORM_EMAIL_TO } from "@/lib/form-email";
+import { sendAlert } from "@/lib/alerts";
 
 type SubmitFormRequest = {
   subject?: string;
@@ -39,12 +40,18 @@ export async function POST(request: Request) {
     });
 
     if (error) {
+      console.error("Form email send error:", error);
+      await sendAlert("Form email failed to send", { subject, error: error.message });
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Form email send error:", error);
+    await sendAlert("Form email route threw an exception", {
+      subject,
+      error: error instanceof Error ? error.message : String(error),
+    });
     return NextResponse.json({ error: "Unable to send form email." }, { status: 500 });
   }
 }

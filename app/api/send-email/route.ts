@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+import { sendAlert } from "@/lib/alerts";
+
 const TO_EMAIL = "rjsmom1_68@yahoo.com";
 const BCC_EMAIL = "ricky@creativeeyestudios.com";
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
@@ -94,12 +96,20 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("Resend error:", error);
+      await sendAlert("Form notification email failed to send", {
+        formType: payload.formType,
+        error: error.message,
+      });
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, id: data?.id });
   } catch (error) {
     console.error("Send email route error:", error);
+    await sendAlert("Form notification route threw an exception", {
+      formType: payload.formType,
+      error: error instanceof Error ? error.message : String(error),
+    });
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

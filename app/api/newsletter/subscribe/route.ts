@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 
+import { sendAlert } from "@/lib/alerts";
+
 const DEFAULT_CONSENT_TEXT =
   "Yes, sign me up for the Travelholics Cruise Life list so I can receive cruise deals, shop drops, travel tips, and Travelholics updates. I understand I can unsubscribe anytime.";
 
@@ -96,9 +98,14 @@ async function sendNewsletterSignupNotification({
 
     if (error) {
       console.error("Newsletter signup notification failed:", error);
+      await sendAlert("Newsletter signup notification email failed", { email, error: error.message });
     }
   } catch (error) {
     console.error("Newsletter signup notification exception:", error);
+    await sendAlert("Newsletter signup notification threw an exception", {
+      email,
+      error: error instanceof Error ? error.message : String(error),
+    });
   }
 }
 
@@ -223,6 +230,7 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("Newsletter signup failed:", JSON.stringify(error, null, 2));
+      await sendAlert("Newsletter signup failed to save", { email, source, error: error.message });
       return NextResponse.json(
         { error: "Unable to save your signup.", detail: error.message, code: error.code },
         { status: 500 },
@@ -283,6 +291,7 @@ export async function POST(request: Request) {
     }
 
     console.error("Newsletter signup failed:", JSON.stringify(error, null, 2));
+    await sendAlert("Newsletter signup failed to save", { email, source, error: error.message });
     return NextResponse.json(
       { error: "Unable to save your signup.", detail: error.message, code: error.code },
       { status: 500 },

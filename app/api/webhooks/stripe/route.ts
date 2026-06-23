@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { Resend } from "resend";
 
+import { sendAlert } from "@/lib/alerts";
+
 const OWNER_EMAIL = "rjsmom1_68@yahoo.com";
 const BCC_EMAIL = "ricky@creativeeyestudios.com";
 
@@ -28,6 +30,7 @@ export async function POST(request: Request) {
   } catch (err) {
     const message = err instanceof Error ? err.message : "Webhook verification failed.";
     console.error("Stripe webhook verification error:", message);
+    await sendAlert("Stripe webhook signature verification failed", { message });
     return NextResponse.json({ error: message }, { status: 400 });
   }
 
@@ -71,7 +74,14 @@ export async function POST(request: Request) {
           subject: "Your Travelholics order is confirmed ✓",
           html: buyerEmailHtml({ customerName, itemRows, totalFormatted, sessionId: session.id }),
         })
-        .catch((err) => console.error("Buyer confirmation email failed:", err));
+        .catch((err) => {
+          console.error("Buyer confirmation email failed:", err);
+          return sendAlert("Buyer order confirmation email failed", {
+            sessionId: session.id,
+            customerEmail,
+            error: err instanceof Error ? err.message : String(err),
+          });
+        });
     }
 
     // Owner sale notification
@@ -83,7 +93,15 @@ export async function POST(request: Request) {
         subject: `New shop order — ${totalFormatted} from ${customerName}`,
         html: ownerEmailHtml({ customerName, customerEmail, itemRows, totalFormatted, sessionId: session.id }),
       })
-      .catch((err) => console.error("Owner notification email failed:", err));
+      .catch((err) => {
+        console.error("Owner notification email failed:", err);
+        return sendAlert("Owner sale notification email failed", {
+          sessionId: session.id,
+          totalFormatted,
+          customerName,
+          error: err instanceof Error ? err.message : String(err),
+        });
+      });
   }
 
   return NextResponse.json({ received: true });

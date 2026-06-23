@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
 import { MERCH_PRODUCTS } from "@/lib/shop-catalog";
+import { sendAlert } from "@/lib/alerts";
 
 interface SingleCheckoutRequest {
   productId: string;
@@ -79,14 +80,24 @@ export async function POST(request: Request) {
       });
     }
 
-    const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      billing_address_collection: "auto",
-      success_url: `${siteOrigin}/shop?checkout=success`,
-      cancel_url: `${siteOrigin}/shop-full`,
-      line_items: lineItems,
-      metadata: { source: "travelholics-cart" },
-    });
+    let session: Stripe.Checkout.Session;
+    try {
+      session = await stripe.checkout.sessions.create({
+        mode: "payment",
+        billing_address_collection: "auto",
+        success_url: `${siteOrigin}/shop?checkout=success`,
+        cancel_url: `${siteOrigin}/shop-full`,
+        line_items: lineItems,
+        metadata: { source: "travelholics-cart" },
+      });
+    } catch (err) {
+      console.error("Stripe cart checkout session creation failed:", err);
+      await sendAlert("Stripe checkout session creation failed (cart)", {
+        itemCount: body.items.length,
+        error: err instanceof Error ? err.message : String(err),
+      });
+      return NextResponse.json({ error: "Unable to start checkout. Please try again." }, { status: 500 });
+    }
 
     return NextResponse.json({ url: session.url });
   }
@@ -112,35 +123,45 @@ export async function POST(request: Request) {
       ? Math.round(product.bundlePrice / product.bundleQuantity)
       : product.price;
 
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    billing_address_collection: "auto",
-    success_url: `${siteOrigin}/shop?checkout=success`,
-    cancel_url: `${siteOrigin}/shop-full`,
-    line_items: [
-      {
-        quantity,
-        price_data: {
-          currency: product.currency,
-          unit_amount: unitAmount,
-          product_data: {
-            name: product.stripeLabel,
-            description: color && size ? `${color} · ${size}` : undefined,
-            metadata: { product_id: product.id, color, size },
+  let session: Stripe.Checkout.Session;
+  try {
+    session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      billing_address_collection: "auto",
+      success_url: `${siteOrigin}/shop?checkout=success`,
+      cancel_url: `${siteOrigin}/shop-full`,
+      line_items: [
+        {
+          quantity,
+          price_data: {
+            currency: product.currency,
+            unit_amount: unitAmount,
+            product_data: {
+              name: product.stripeLabel,
+              description: color && size ? `${color} · ${size}` : undefined,
+              metadata: { product_id: product.id, color, size },
+            },
           },
         },
+      ],
+      metadata: {
+        product_id: product.id,
+        product_name: product.name,
+        color,
+        size,
+        quantity: String(quantity),
+        unit_amount: String(unitAmount),
+        source: "travelholics-shop",
       },
-    ],
-    metadata: {
-      product_id: product.id,
-      product_name: product.name,
-      color,
-      size,
-      quantity: String(quantity),
-      unit_amount: String(unitAmount),
-      source: "travelholics-shop",
-    },
-  });
+    });
+  } catch (err) {
+    console.error("Stripe checkout session creation failed:", err);
+    await sendAlert("Stripe checkout session creation failed", {
+      productId: product.id,
+      error: err instanceof Error ? err.message : String(err),
+    });
+    return NextResponse.json({ error: "Unable to start checkout. Please try again." }, { status: 500 });
+  }
 
   return NextResponse.json({ url: session.url });
 }

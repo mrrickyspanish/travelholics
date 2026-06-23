@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+import { sendAlert } from "@/lib/alerts";
+
 const DUCK_HUNT_CONSENT_TEXT =
   "Yes, sign me up for the Travelholics Cruise Life list so I can receive cruise deals, shop drops, travel tips, and updates connected to my Duck Hunt reward. I understand I can unsubscribe anytime.";
 
@@ -88,6 +90,7 @@ export async function POST(request: Request) {
 
     if (leadError) {
       console.error("Duck Hunt lead insert failed:", leadError);
+      await sendAlert("Duck Hunt lead insert failed", { email, error: leadError.message });
       return NextResponse.json({ error: "Unable to save your Duck Hunt claim." }, { status: 500 });
     }
 
@@ -131,6 +134,7 @@ export async function POST(request: Request) {
 
     if (subscriberError) {
       console.error("Duck Hunt newsletter signup failed:", subscriberError);
+      await sendAlert("Duck Hunt newsletter signup failed", { email, error: subscriberError.message });
       return NextResponse.json({ error: "Unable to save your newsletter signup." }, { status: 500 });
     }
 
@@ -148,6 +152,7 @@ export async function POST(request: Request) {
 
   if (leadError) {
     console.error("Duck Hunt lead insert failed:", leadError);
+    await sendAlert("Duck Hunt lead insert failed", { email, error: leadError.message });
     return NextResponse.json({ error: "Unable to save your Duck Hunt claim." }, { status: 500 });
   }
 
@@ -171,6 +176,7 @@ export async function POST(request: Request) {
 
   if (subscriberError && subscriberError.code !== "23505") {
     console.error("Duck Hunt newsletter signup failed:", subscriberError);
+    await sendAlert("Duck Hunt newsletter signup failed", { email, error: subscriberError.message });
     return NextResponse.json({ error: "Unable to save your newsletter signup." }, { status: 500 });
   }
 
