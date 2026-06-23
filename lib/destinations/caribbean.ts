@@ -41,8 +41,8 @@ export const caribbean: DestinationConfig = {
   portNotes: [
     {
       port: "Cozumel, Mexico",
-      verdict: "Skip the terminal shops",
-      note: "TODO: Yolanda's real take. Draft: The cruise terminal is a mall. Get past it. A short cab gets you to beach clubs the locals actually rate, and the snorkeling on the west side is some of the best on any Caribbean route.",
+      verdict: "Hot, crowded, well-developed",
+      note: "I've said it before — Cozumel is one of the hottest places I've ever set foot on. Nine times out of ten, you're sharing that port with ships from multiple cruise lines because those piers can hold four to six ships each. It's the most accessible Western Caribbean stop for travelers with mobility concerns, but go in knowing it will be busy.",
     },
     {
       port: "Nassau, Bahamas",
@@ -51,8 +51,8 @@ export const caribbean: DestinationConfig = {
     },
     {
       port: "Grand Cayman",
-      verdict: "Worth the tender wait",
-      note: "TODO: Yolanda's real take. Draft: Stingray City is the rare famous excursion that lives up to it. Book the early slot before the sandbar gets crowded.",
+      verdict: "Tender port — plan accordingly",
+      note: "Grand Cayman is a tender port, meaning the ship anchors offshore and you take a smaller boat in. That extra step matters if you have mobility concerns, and it adds time to your day. Factor that in before you commit to a full excursion schedule here.",
     },
     {
       port: "St. Thomas, USVI",
@@ -63,6 +63,11 @@ export const caribbean: DestinationConfig = {
       port: "Labadee / Private Islands",
       verdict: "Lean in",
       note: "TODO: Yolanda's real take. Draft: People roll their eyes at private islands until they have a full beach day with no logistics. This is the day you book nothing and enjoy everything.",
+    },
+    {
+      port: "Costa Maya, Mexico",
+      verdict: "Extremely hot — dress smart",
+      note: "I walked off the ship in Costa Maya and immediately started sweating without feeling hot — that's how intense it is. I tell my travelers this upfront so they're not caught off guard. Decent accessibility at the pier, but that heat is no joke.",
     },
   ],
   excursions: [
@@ -86,6 +91,13 @@ export const caribbean: DestinationConfig = {
       blurb: "TODO: One line on why Yolanda recommends it.",
       url: "https://TODO-affiliate-link.example.com",
       priceFrom: "From $TODO",
+    },
+    {
+      name: "Dunn's River Falls Climb",
+      port: "Ocho Rios, Jamaica",
+      blurb: "Book this one through the cruise line, not an independent vendor — the accountability matters on a physically demanding excursion where you're signing a waiver and climbing a live waterfall linked hand-to-hand with strangers. Worth every dollar.",
+      url: "https://TODO-affiliate-link.example.com",
+      priceFrom: "From $100",
     },
   ],
   testimonial: {
@@ -124,6 +136,36 @@ export const caribbean: DestinationConfig = {
       question: "How far in advance should I book a Caribbean cruise?",
       answer:
         "For the best cabin selection, 9 to 18 months out, especially for school break weeks. Last-minute deals exist, but they are a gamble on cabin location, and cabin location matters more than people think.",
+    },
+    {
+      question: "Is the Western Caribbean a good choice for first-time cruisers?",
+      answer:
+        "It's what I call the starter pack. Most ports are ported — meaning the ship pulls right up to a pier — so you're not dealing with tender boats at most stops. Things to do are right there when you walk off. Five-night sailings are available. Cost is the lowest of any Caribbean itinerary. If you've never cruised before and you want an easy, low-stress introduction, this is the one.",
+    },
+    {
+      question: "Do I have to get off at every port?",
+      answer:
+        "No — and I want to say that clearly because a regular booking site won't. It is completely fine to stay on the ship at any stop. The Western Caribbean especially is a trip you can book when you just want to get away and don't care where you're going. The ship itself has plenty to do on days you'd rather not deal with the heat or the crowds.",
+    },
+    {
+      question: "What happens if the ship changes the itinerary?",
+      answer:
+        "It happens, and the ship's first priority is always passenger safety, not hitting a specific destination. Weather is the most common reason. I tell every one of my travelers before they board: do not get emotionally locked into any single port. If you've been dreaming about snorkeling in Cozumel specifically, understand that port could change. Being prepared for that possibility makes the whole trip better.",
+    },
+    {
+      question: "When is the best time to book a Western Caribbean cruise?",
+      answer:
+        "At least six months out for a standard booking. Prices drop when school is in session because family travel demand falls — that's your sweet spot. Avoid holidays like Christmas and New Year's if budget matters to you; deals essentially disappear. Hurricane season runs June 1 through November 30, which I always tell clients about, but I don't tell them to automatically avoid it either — just go in informed.",
+    },
+    {
+      question: "What should I expect from the landscape at Western Caribbean ports?",
+      answer:
+        "Flat terrain at most stops — Mexico, Belize, Honduras. Don't book expecting mountains in those areas. Jamaica is the exception, where you get lush, dramatic scenery. Setting that expectation before you book prevents a lot of disappointment.",
+    },
+    {
+      question: "Should I book excursions through the cruise line or independently?",
+      answer:
+        "For physically demanding or higher-risk activities, go through the cruise line. They're accountable, they know the conditions, and if something goes wrong they're better positioned to respond. For general port exploration and shopping you have more flexibility, but I caution against random vendors in port — especially in Jamaica, where the sales pressure can be aggressive. If you're not going through the ship, use a reputable third-party source.",
     },
   ],
   relatedSlugs: ["alaska", "mediterranean"],
