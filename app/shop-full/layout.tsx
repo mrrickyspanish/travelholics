@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cruise Travel Shop — Full",
+  title: "Shop | Travelholics Originals",
   description:
-    "Browse Yolanda's travel picks, affiliate finds, and official Travelholics merchandise.",
+    "Official Travelholics gear — cruise lanyards, stateroom door magnets, and travel-ready pieces made for cruise days and vacation countdowns.",
   robots: { index: false, follow: false },
 };
 

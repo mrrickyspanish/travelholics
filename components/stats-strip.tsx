@@ -1,4 +1,4 @@
-import { BadgeDollarSign, Globe, Ship, Sparkles } from "lucide-react";
+import { BadgeDollarSign, Ship, Sparkles, Users } from "lucide-react";
 
 const stats = [
   {
@@ -8,10 +8,10 @@ const stats = [
     note: "Real ship experience, not brochure guesses",
   },
   {
-    icon: Globe,
-    value: "15+",
-    label: "Countries visited",
-    note: "Ports, resorts, excursions, and local finds",
+    icon: Users,
+    value: "20K+",
+    label: "Travelers following along",
+    note: "Daily cruise advice from Yolanda on TikTok",
   },
   {
     icon: Sparkles,

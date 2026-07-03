@@ -11,7 +11,7 @@ import { ArrowUpRight } from "lucide-react";
 
 const products = [
   {
-    name: "Premium Atlantis Lanyard",
+    name: "Atlantis Lanyard",
     price: "$12.00",
     image: "/images/travelholics_lanyard_transparent.png",
     href: "/shop-full",
@@ -25,7 +25,7 @@ const products = [
     imageAlt: "Cruise Life ticket-style door magnet",
   },
   {
-    name: "Pacific Mexican Door Magnet",
+    name: "Pacific Coast Magnet",
     price: "$19.99",
     image: "/images/travelholics_product_pacific-mexican-door-magnet.png",
     href: "/shop-full",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronDown, MapPin } from "lucide-react";
 
@@ -90,6 +91,17 @@ export const Hero = () => {
                   </svg>
                 </span>
               </p>
+              <Link
+                href="/live"
+                className="mt-5 inline-flex items-center gap-2 rounded-md px-2 py-1 text-[0.9rem] font-semibold tracking-wide text-white/85 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:mt-6 sm:text-[0.95rem]"
+                style={{ filter: "drop-shadow(0 2px 5px rgba(8,20,28,0.55))" }}
+              >
+                <span className="relative flex h-1.5 w-1.5 shrink-0" aria-hidden="true">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-coral opacity-75 motion-safe:animate-ping" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-coral" />
+                </span>
+                Daily cruise advice from Yolanda
+              </Link>
             </motion.div>
 
             <div className="flex-1" aria-hidden="true" />

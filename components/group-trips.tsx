@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 const featuredTile = {
-  caption: "Amazing Destinations",
+  caption: "Sail-Away Days",
   src: "/images/dest-caribbean.jpg",
   alt: "Cruise ship at a beautiful Caribbean destination",
 };
@@ -17,17 +17,17 @@ const supportingTiles = [
     alt: "Group of travelers enjoying their cruise together",
   },
   {
-    caption: "Unforgettable Moments",
+    caption: "Glacier Season",
     src: "/images/dest-alaska.jpg",
     alt: "Stunning Alaska glacial landscape",
   },
   {
-    caption: "Epic Adventures",
+    caption: "Port Days",
     src: "/images/dest-mediterranean.jpg",
     alt: "Mediterranean coastal adventure",
   },
   {
-    caption: "Lifelong Memories",
+    caption: "The Whole Crew",
     src: "/images/about-port-of-call.jpg",
     alt: "Travelers at a scenic port of call",
   },

@@ -69,6 +69,9 @@ export const MeetYolanda = () => {
               <p>
                 Whether it&apos;s your first cruise or your fifteenth, a family trip or a girls&apos; getaway, there&apos;s a version of this that&apos;s built for you. I know the difference, and I&apos;ll help you find it.
               </p>
+              <p>
+                And every day, I go live on TikTok with cruise tips and real travel advice for a community of 20K+ travelers — so you can learn before you ever book, pack, or board.
+              </p>
             </div>
 
             <div className="mt-7 grid gap-3 sm:grid-cols-2">
@@ -89,15 +92,13 @@ export const MeetYolanda = () => {
               >
                 Book With Yolanda
               </Link>
-              <a
-                href="https://www.tiktok.com/@rjsmom1"
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                href="/live"
                 className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-[1rem] font-semibold text-emerald-mid shadow-md ring-1 ring-emerald-mid/12 transition-colors hover:bg-cream"
               >
                 <MessageCircle size={18} strokeWidth={2.2} />
-                Follow the lifestyle
-              </a>
+                Get Daily Cruise Tips
+              </Link>
             </div>
           </motion.div>
         </div>

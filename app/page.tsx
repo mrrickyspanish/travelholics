@@ -15,12 +15,12 @@ import { MobileCTA } from "@/components/mobile-cta";
 export const metadata: Metadata = {
   title: "Travelholics | Certified Cruise Specialist — Yolanda Harris",
   description:
-    "Book your cruise through Yolanda — Certified Cruise Specialist, 20+ years, every major line. Same price as booking direct. Zero fees.",
+    "Plan your cruise with Yolanda — Certified Cruise Specialist, 20+ years, every major line. Same price as booking direct, zero fees, plus daily cruise advice on TikTok.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Travelholics | Certified Cruise Specialist — Yolanda Harris",
     description:
-      "Book your cruise through Yolanda — Certified Cruise Specialist, 20+ years, every major line. Same price as booking direct. Zero fees.",
+      "Plan your cruise with Yolanda — Certified Cruise Specialist, 20+ years, every major line. Same price as booking direct, zero fees, plus daily cruise advice on TikTok.",
     url: "/",
     type: "website",
   },

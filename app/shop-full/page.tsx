@@ -516,13 +516,13 @@ function ProductSlide({
               className="block transition-transform duration-100 active:scale-[0.96] active:opacity-70"
               style={{ transformOrigin: "left center" }}
             >
-              <h2 style={{ margin: 0, fontSize: "clamp(28px, 7vw, 38px)", lineHeight: 1.05, fontWeight: 800, letterSpacing: "-0.03em", color: "#0c2238", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              <h2 style={{ margin: 0, fontSize: "clamp(26px, 6.6vw, 36px)", lineHeight: 1.08, fontWeight: 800, letterSpacing: "-0.03em", color: "#0c2238", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                 {product.displayName ?? product.name}
               </h2>
             </Link>
 
             {/* Description */}
-            <p className="line-clamp-2" style={{ marginTop: 14, fontSize: 15, lineHeight: 1.45, color: "rgba(12,34,56,0.76)" }}>
+            <p className="line-clamp-2" style={{ marginTop: 14, fontSize: 16, lineHeight: 1.5, color: "rgba(12,34,56,0.78)" }}>
               {meta.description}
             </p>
 
@@ -712,7 +712,7 @@ function CommunityVideoCard({
               Travelholics Original
             </p>
             <p className="truncate text-[0.88rem] font-extrabold leading-tight text-[#0a1a2e]">
-              {product.name}
+              {product.displayName ?? product.name}
             </p>
             <div className="mt-0.5 flex items-baseline gap-1.5">
               <span className="text-[0.95rem] font-black text-[#1e3a8a]">
@@ -822,13 +822,14 @@ function DesktopProductCard({
       {/* Info panel — compact, lets image breathe */}
       <div className="flex flex-1 flex-col" style={{ padding: "22px 24px 24px" }}>
 
-        {/* Product name — dominant */}
-        <h3 className="mb-1.5 text-[1.31rem] font-extrabold leading-[1.15] text-[#0a1a2e]">
-          {product.name}
+        {/* Product name — dominant. Line-clamped with a reserved two-line
+            height so wrapping names never push price rows out of alignment. */}
+        <h3 className="mb-1.5 line-clamp-2 min-h-[3.05rem] text-[1.31rem] font-extrabold leading-[1.15] text-[#0a1a2e]">
+          {product.displayName ?? product.name}
         </h3>
 
         {/* Short description — 2 lines max */}
-        <p className="mb-4 line-clamp-2 text-[0.83rem] leading-[1.45] text-[#0a2234]/70">
+        <p className="mb-4 line-clamp-2 text-[0.875rem] leading-[1.5] text-[#0a2234]/75">
           {meta.description}
         </p>
 
@@ -1190,8 +1191,8 @@ export default function ShopFullPage() {
               <h1 className="mb-3 text-[2.6rem] font-black leading-tight text-white">
                 The Travelholics Shop
               </h1>
-              <p className="mx-auto mb-5 max-w-md text-[0.95rem] font-medium leading-relaxed text-white/70">
-                Original pieces for cruise days, cabin doors, and travel memories.
+              <p className="mx-auto mb-5 max-w-md text-[1rem] font-medium leading-relaxed text-white/75">
+                Original pieces made for cruise days, cabin doors, beach bags, and vacation countdowns.
               </p>
               <button
                 onClick={() => setTrustOpen(true)}
@@ -1235,7 +1236,7 @@ export default function ShopFullPage() {
               <h2 className="text-[1.9rem] font-black text-[#0a1a2e]">
                 Products Our Community Loves 🤍
               </h2>
-              <p className="mx-auto mt-2 max-w-sm text-[0.88rem] leading-relaxed text-[#4a5568]">
+              <p className="mx-auto mt-2 max-w-sm text-[0.95rem] leading-relaxed text-[#4a5568]">
                 Real creators. Real trips. See the Travelholics collection in action.
               </p>
             </div>
@@ -1285,20 +1286,20 @@ export default function ShopFullPage() {
                 >
                   Travelholics
                 </h2>
-                <p className="mb-3 max-w-lg text-[0.92rem] leading-[1.7] text-[#4a5568]">
-                  Travelholics was built by real cruisers for real cruisers. What started as a
-                  passion for documenting every sail-away, port stop, and cabin moment turned into
-                  a community of travelers who love the journey as much as the destination.
+                <p className="mb-3 max-w-lg text-[1rem] leading-[1.7] text-[#4a5568]">
+                  Travelholics was built by real cruisers, for real cruisers. What started as
+                  Yolanda sharing daily cruise advice on TikTok grew into a community of 20K+
+                  travelers who love the journey as much as the destination.
                 </p>
-                <p className="mb-7 max-w-lg text-[0.92rem] leading-[1.7] text-[#4a5568]">
+                <p className="mb-7 max-w-lg text-[1rem] leading-[1.7] text-[#4a5568]">
                   Every product in the Travelholics shop is designed with that same spirit —
                   cruise-tested, community-approved, and made to travel with you.
                 </p>
                 <Link
-                  href="/#contact"
+                  href="/#about"
                   className="inline-flex items-center gap-2 rounded-xl bg-[#059669] px-7 py-3.5 text-[0.82rem] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#047857]"
                 >
-                  Our Story
+                  Meet Yolanda
                 </Link>
               </div>
 
@@ -1320,7 +1321,7 @@ export default function ShopFullPage() {
             {/* Trust / value tiles — prominent, full-width */}
             <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
               {[
-                { icon: <Heart className="h-7 w-7" />, label: "20K+", sub: "Community Members" },
+                { icon: <Heart className="h-7 w-7" />, label: "20K+", sub: "TikTok Travelers" },
                 { icon: <Star className="h-7 w-7" />, label: "Cruise-Tested", sub: "Every Pick" },
                 { icon: <ShieldCheck className="h-7 w-7" />, label: "Original", sub: "Designs" },
                 { icon: <Users className="h-7 w-7" />, label: "Real Travelers", sub: "Real Reviews" },
@@ -1376,8 +1377,8 @@ export default function ShopFullPage() {
                   Need help planning{" "}
                   <em className="font-serif font-light italic text-[#f59e0b]">the trip too?</em>
                 </h2>
-                <p className="mx-auto mb-6 max-w-xs text-sm leading-relaxed text-white/70">
-                  Shop the gear, then let Travelholics help plan the experience.
+                <p className="mx-auto mb-6 max-w-xs text-[0.95rem] leading-relaxed text-white/75">
+                  Shop the gear, then let Yolanda help plan the trip it&apos;s made for.
                 </p>
                 <Link
                   href="/#contact"

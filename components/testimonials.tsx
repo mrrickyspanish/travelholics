@@ -60,10 +60,10 @@ const TestimonialCard = ({ testimonial, index }: { testimonial: typeof testimoni
         <Stars count={testimonial.rating} />
         <span className="truncate text-eyebrow leading-none text-coral">{testimonial.trip}</span>
       </div>
-      <p className="mb-1.5 line-clamp-2 text-[12.5px] italic leading-snug text-ink/80">
+      <p className="mb-1.5 line-clamp-3 text-[0.875rem] italic leading-snug text-ink/80">
         &ldquo;{testimonial.quote}&rdquo;
       </p>
-      <p className="font-serif text-[13px] font-semibold leading-none text-ink">— {testimonial.name}</p>
+      <p className="font-serif text-[0.875rem] font-semibold leading-none text-ink">— {testimonial.name}</p>
     </div>
   </article>
 );
