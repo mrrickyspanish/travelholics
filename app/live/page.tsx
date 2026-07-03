@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import LivePageClient from "./LivePageClient";
 
 export const metadata: Metadata = {
-  title: "Live Schedule | Travelholics",
+  title: "Daily Cruise Advice, Live",
   description:
-    "Yo Travelholic goes live on TikTok three times a day — morning worship at 8 AM, cruise talk at noon, and night battles at 7:30 PM CT. See the full schedule and catch the next one.",
+    "Yolanda goes live on TikTok three times a day — cruise tips, packing help, ship talk, and real Q&A for a community of 20K+ travelers. See the schedule and catch the next one.",
 };
 
 export default function LivePage() {

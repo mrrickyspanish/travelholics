@@ -1295,12 +1295,20 @@ export default function ShopFullPage() {
                   Every product in the Travelholics shop is designed with that same spirit —
                   cruise-tested, community-approved, and made to travel with you.
                 </p>
-                <Link
-                  href="/#about"
-                  className="inline-flex items-center gap-2 rounded-xl bg-[#059669] px-7 py-3.5 text-[0.82rem] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#047857]"
-                >
-                  Meet Yolanda
-                </Link>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                  <Link
+                    href="/#about"
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#059669] px-7 py-3.5 text-[0.82rem] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#047857]"
+                  >
+                    Meet Yolanda
+                  </Link>
+                  <Link
+                    href="/live"
+                    className="text-[0.9rem] font-bold text-[#059669] underline underline-offset-4 transition-colors hover:text-[#047857]"
+                  >
+                    Catch her daily cruise tips →
+                  </Link>
+                </div>
               </div>
 
               {/* Right — lifestyle image, shorter 16:9 */}

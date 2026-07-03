@@ -42,7 +42,7 @@ export default function BroadcastDay({ status }: { status: LiveStatus | null }) 
             <div
               key={show.key}
               className={`absolute top-0 flex h-full items-center justify-center rounded-full transition-colors ${
-                isLiveNow ? "bg-navy" : "bg-coral"
+                isLiveNow ? "bg-ink" : "bg-coral"
               }`}
               style={{ left: `${left}%`, width: `${width}%` }}
               title={`${show.name} · ${show.timeLabel}`}
@@ -57,11 +57,11 @@ export default function BroadcastDay({ status }: { status: LiveStatus | null }) 
         {/* NOW marker */}
         {nowInWindow && (
           <div
-            className="absolute -top-2 -bottom-2 z-10 w-[3px] rounded-full bg-navy"
+            className="absolute -top-2 -bottom-2 z-10 w-[3px] rounded-full bg-ink"
             style={{ left: `${pct(nowMin)}%` }}
             aria-hidden="true"
           >
-            <span className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-bold uppercase tracking-widest text-navy">
+            <span className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-bold uppercase tracking-widest text-ink">
               Now
             </span>
           </div>
