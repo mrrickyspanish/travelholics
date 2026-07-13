@@ -4,17 +4,15 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Youtube } from "lucide-react";
 import { VideoEmbed } from "@/components/video-embed";
-import {
-  getFeaturedLongForm,
-  getShorts,
-  SUBSCRIBE_URL,
-} from "@/lib/youtube";
+import { SUBSCRIBE_URL, type Video } from "@/lib/youtube";
 
-export const LatestVideos = () => {
-  const featured = getFeaturedLongForm();
-  const shorts = getShorts(3);
+type LatestVideosProps = {
+  featured: Video | null;
+  shorts: Video[];
+};
 
-  // Nothing to show yet — keep the homepage clean until videos are added.
+export const LatestVideos = ({ featured, shorts }: LatestVideosProps) => {
+  // Nothing to show (e.g. feed unreachable) — keep the homepage clean.
   if (!featured && shorts.length === 0) return null;
 
   return (

@@ -3,15 +3,8 @@ import { Youtube } from "lucide-react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { VideoEmbed } from "@/components/video-embed";
-import {
-  getFeaturedLongForm,
-  getLongForm,
-  getShorts,
-  watchUrl,
-  SUBSCRIBE_URL,
-  CHANNEL_HANDLE,
-  type Video,
-} from "@/lib/youtube";
+import { watchUrl, SUBSCRIBE_URL, CHANNEL_HANDLE, type Video } from "@/lib/youtube";
+import { getFeaturedLongForm, getLongForm, getShorts } from "@/lib/youtube-feed";
 
 export const metadata: Metadata = {
   title: "Videos | Travelholics — Cruise Tips & Trip Guides on YouTube",
@@ -27,8 +20,8 @@ export const metadata: Metadata = {
   },
 };
 
-// Curated data file; refresh often enough that new uploads appear promptly.
-export const revalidate = 300;
+// Feed data is cached inside the loader; keep the page fresh too.
+export const revalidate = 1800;
 
 function LongCard({ video }: { video: Video }) {
   return (
@@ -67,10 +60,13 @@ function ShortCard({ video }: { video: Video }) {
   );
 }
 
-export default function VideosPage() {
-  const featured = getFeaturedLongForm();
-  const longForm = getLongForm().filter((v) => v.id !== featured?.id);
-  const shorts = getShorts();
+export default async function VideosPage() {
+  const [featured, allLongForm, shorts] = await Promise.all([
+    getFeaturedLongForm(),
+    getLongForm(),
+    getShorts(),
+  ]);
+  const longForm = allLongForm.filter((v) => v.id !== featured?.id);
   const isEmpty = !featured && longForm.length === 0 && shorts.length === 0;
 
   return (

@@ -1,93 +1,44 @@
 /**
- * Travelholics YouTube — single source of truth for featured videos.
+ * Travelholics YouTube — shared constants, types, and pure helpers.
  *
- * Cadence goal: 1 long-form + 3 Shorts per week.
+ * This file is import-safe on both the client and the server (no network).
+ * The automatic feed fetch + Short/long classification lives in
+ * `lib/youtube-feed.ts` (server-only). Videos are pulled live from the
+ * channel's public RSS feed, so new uploads appear with no code edits.
  *
- * ─── HOW TO ADD THIS WEEK'S VIDEOS ───────────────────────────────────────────
- * 1. Open the video on YouTube and copy its ID:
- *      • Long-form: youtube.com/watch?v=XXXXXXXXXXX  → the part after `v=`
- *      • Short:     youtube.com/shorts/XXXXXXXXXXX   → the part after `/shorts/`
- * 2. Add one entry to the VIDEOS array below. Newest `published` date sorts first.
- * 3. Mark the week's headline long-form with `featured: true` (optional — if you
- *    skip it, the newest long-form is featured automatically).
- * 4. Commit + deploy. The homepage "Watch" section and /videos update instantly.
- *
- * Keep the list tidy — 8–12 recent videos is plenty. Older ones can be trimmed.
- *
- * Upgrade path (ask Creative Eye): this curated list can be swapped for an
- * automatic feed (YouTube RSS or Data API) or a Supabase-backed admin panel so
- * new uploads appear with zero code edits. The component layer already reads
- * through the selector functions below, so only this file would change.
+ * ─── OPTIONAL MANUAL CONTROLS (edit only when you want to override the feed) ──
+ * Everything below is optional. Leave them empty for fully-automatic behaviour.
+ *   • PINNED_FEATURED_ID — force a specific long-form video as the homepage hero
+ *   • HIDDEN_IDS         — hide specific videos from the site
+ *   • FORCE_FORMAT       — correct a mis-classified video ("long" | "short")
+ * A video ID is the part after `watch?v=` or `/shorts/` in its URL.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 export const CHANNEL_ID = "UCJ5E_Q26FDQxiQaA8jd8Itg";
 export const CHANNEL_URL = `https://www.youtube.com/channel/${CHANNEL_ID}`;
 export const CHANNEL_HANDLE = "@yotravelholic";
+/** Public RSS feed — latest ~15 uploads, no API key required. */
+export const FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
 /** Deep link that opens YouTube with the subscribe confirmation prompt. */
 export const SUBSCRIBE_URL = `${CHANNEL_URL}?sub_confirmation=1`;
+
+// ── Optional manual overrides (see header) ───────────────────────────────────
+export const PINNED_FEATURED_ID = "";
+export const HIDDEN_IDS: string[] = [];
+export const FORCE_FORMAT: Record<string, VideoFormat> = {};
 
 export type VideoFormat = "long" | "short";
 
 export interface Video {
-  /** 11-character YouTube video ID (the part after `v=` or `/shorts/`). */
+  /** 11-character YouTube video ID. */
   id: string;
   format: VideoFormat;
   title: string;
   /** Optional one-line description shown on the /videos page. */
   blurb?: string;
-  /** ISO date the video went live, e.g. "2026-07-11". Drives newest-first order. */
+  /** ISO timestamp the video was published. Drives newest-first order. */
   published: string;
-  /** Pin as the homepage/hero long-form. If unset, newest long-form is used. */
-  featured?: boolean;
-}
-
-/**
- * ⚠️ Add real Travelholics video IDs here (see instructions at top of file).
- * Until this array has entries, the homepage "Watch" section hides itself and
- * /videos shows a "subscribe — episodes dropping weekly" state, so nothing
- * placeholder or broken ever ships. Example shape (uncomment + edit):
- *
- *   {
- *     id: "dQw4w9WgXcQ",
- *     format: "long",
- *     title: "7-Day Western Caribbean — Everything You Need to Know",
- *     blurb: "Ports, excursions, and what I'd book again.",
- *     published: "2026-07-11",
- *     featured: true,
- *   },
- *   { id: "abcdEFGH123", format: "short", title: "Packing hack for embarkation day", published: "2026-07-12" },
- */
-export const VIDEOS: Video[] = [];
-
-/** All videos, newest first. */
-export function getAllVideos(): Video[] {
-  return [...VIDEOS].sort(
-    (a, b) => new Date(b.published).getTime() - new Date(a.published).getTime(),
-  );
-}
-
-/** Long-form videos, newest first. */
-export function getLongForm(limit?: number): Video[] {
-  const items = getAllVideos().filter((v) => v.format === "long");
-  return typeof limit === "number" ? items.slice(0, limit) : items;
-}
-
-/** Shorts, newest first. */
-export function getShorts(limit?: number): Video[] {
-  const items = getAllVideos().filter((v) => v.format === "short");
-  return typeof limit === "number" ? items.slice(0, limit) : items;
-}
-
-/** The pinned `featured` long-form, or the newest long-form, or null. */
-export function getFeaturedLongForm(): Video | null {
-  const longs = getLongForm();
-  return longs.find((v) => v.featured) ?? longs[0] ?? null;
-}
-
-/** True when there is at least one video to show. */
-export function hasVideos(): boolean {
-  return VIDEOS.length > 0;
 }
 
 /** Privacy-friendly embed URL (no cookies until playback). */
@@ -105,4 +56,58 @@ export function watchUrl(video: Video): string {
   return video.format === "short"
     ? `https://www.youtube.com/shorts/${video.id}`
     : `https://www.youtube.com/watch?v=${video.id}`;
+}
+
+/** Decode the handful of XML entities YouTube's feed uses. */
+export function decodeXml(input: string): string {
+  return input
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, "&");
+}
+
+/** A Short if the creator tagged it #short(s) in the title or description. */
+export function looksLikeShortFromText(...parts: string[]): boolean {
+  return /#shorts?\b/i.test(parts.join(" "));
+}
+
+interface RawFeedEntry {
+  id: string;
+  title: string;
+  published: string;
+  description: string;
+}
+
+/**
+ * Parse the YouTube channel RSS/Atom feed into raw entries. Pure and
+ * dependency-free (regex over the stable feed shape) so it runs anywhere.
+ */
+export function parseFeed(xml: string): RawFeedEntry[] {
+  const entries: RawFeedEntry[] = [];
+  const entryBlocks = xml.match(/<entry>[\s\S]*?<\/entry>/g) ?? [];
+
+  for (const block of entryBlocks) {
+    const id = block.match(/<yt:videoId>([^<]+)<\/yt:videoId>/)?.[1]?.trim();
+    if (!id) continue;
+
+    const title = decodeXml(block.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim() ?? "");
+    const published = block.match(/<published>([^<]+)<\/published>/)?.[1]?.trim() ?? "";
+    const description = decodeXml(
+      block.match(/<media:description>([\s\S]*?)<\/media:description>/)?.[1]?.trim() ?? "",
+    );
+
+    entries.push({ id, title, published, description });
+  }
+
+  return entries;
+}
+
+/** First non-empty line of a video description, trimmed for a card blurb. */
+export function firstLine(description: string, max = 140): string | undefined {
+  const line = description.split("\n").map((l) => l.trim()).find(Boolean);
+  if (!line) return undefined;
+  return line.length > max ? `${line.slice(0, max - 1).trimEnd()}…` : line;
 }

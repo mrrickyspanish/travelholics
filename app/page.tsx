@@ -12,6 +12,7 @@ import { Testimonials } from "@/components/testimonials";
 import { ContactForm } from "@/components/contact-form";
 import { Footer } from "@/components/footer";
 import { MobileCTA } from "@/components/mobile-cta";
+import { getFeaturedLongForm, getShorts } from "@/lib/youtube-feed";
 
 export const metadata: Metadata = {
   title: "Travelholics | Certified Cruise Specialist — Yolanda Harris",
@@ -27,7 +28,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const [featuredVideo, shorts] = await Promise.all([
+    getFeaturedLongForm(),
+    getShorts(3),
+  ]);
+
   return (
     <>
       <Header />
@@ -38,7 +44,7 @@ export default function Home() {
       <GroupTrips />
       <DestinationMap />
       <StatsStrip />
-      <LatestVideos />
+      <LatestVideos featured={featuredVideo} shorts={shorts} />
       <ShopStrip />
       <Testimonials />
       <ContactForm />
