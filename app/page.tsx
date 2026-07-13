@@ -4,6 +4,7 @@ import { Hero } from "@/components/hero";
 import { IntentCards } from "@/components/intent-cards";
 import { MeetYolanda } from "@/components/meet-yolanda";
 import { StatsStrip } from "@/components/stats-strip";
+import { LatestVideos } from "@/components/latest-videos";
 import { DestinationMap } from "@/components/destination-map";
 import { GroupTrips } from "@/components/group-trips";
 import { ShopStrip } from "@/components/shop-strip";
@@ -37,6 +38,7 @@ export default function Home() {
       <GroupTrips />
       <DestinationMap />
       <StatsStrip />
+      <LatestVideos />
       <ShopStrip />
       <Testimonials />
       <ContactForm />
