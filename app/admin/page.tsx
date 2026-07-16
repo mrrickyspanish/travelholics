@@ -1,28 +1,49 @@
 import Link from 'next/link'
 import { createServerSupabase } from '@/lib/supabase-server'
-import { FileText, BookOpen, PlusCircle, Upload } from 'lucide-react'
+import { BookOpen, ClipboardList, FileText, ListTodo, PlusCircle, Upload } from 'lucide-react'
 
 export default async function AdminDashboard() {
   const supabase = await createServerSupabase()
 
-  const [{ count: articleCount }, { count: encyclopediaCount }, { data: recentArticles }] =
-    await Promise.all([
-      supabase.from('articles').select('*', { count: 'exact', head: true }),
-      supabase.from('encyclopedia_entries').select('*', { count: 'exact', head: true }).eq('active', true),
-      supabase
-        .from('articles')
-        .select('id, title, status, topic_cluster, created_at')
-        .order('created_at', { ascending: false })
-        .limit(5),
-    ])
+  const [
+    { count: articleCount },
+    { count: encyclopediaCount },
+    { count: activeProjectCount },
+    { count: openTaskCount },
+    { data: recentArticles },
+  ] = await Promise.all([
+    supabase.from('articles').select('*', { count: 'exact', head: true }),
+    supabase.from('encyclopedia_entries').select('*', { count: 'exact', head: true }).eq('active', true),
+    supabase.from('content_projects').select('*', { count: 'exact', head: true }).neq('status', 'complete'),
+    supabase.from('content_tasks').select('*', { count: 'exact', head: true }).neq('status', 'complete'),
+    supabase
+      .from('articles')
+      .select('id, title, status, topic_cluster, created_at')
+      .order('created_at', { ascending: false })
+      .limit(5),
+  ])
 
   return (
-    <div className="p-8 max-w-4xl">
+    <div className="p-8 max-w-5xl">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Dashboard</h1>
-      <p className="text-gray-500 text-sm mb-8">Travelholics Article Engine</p>
+      <p className="text-gray-500 text-sm mb-8">Travelholics operations and content engine</p>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="rounded-xl border border-gray-100 bg-gray-50 p-5">
+          <div className="flex items-center gap-3 mb-1">
+            <ClipboardList size={18} className="text-[#10755A]" />
+            <span className="text-sm font-medium text-gray-600">Active Projects</span>
+          </div>
+          <p className="text-3xl font-bold text-gray-900">{activeProjectCount ?? 0}</p>
+        </div>
+        <div className="rounded-xl border border-gray-100 bg-gray-50 p-5">
+          <div className="flex items-center gap-3 mb-1">
+            <ListTodo size={18} className="text-[#10755A]" />
+            <span className="text-sm font-medium text-gray-600">Open Tasks</span>
+          </div>
+          <p className="text-3xl font-bold text-gray-900">{openTaskCount ?? 0}</p>
+        </div>
         <div className="rounded-xl border border-gray-100 bg-gray-50 p-5">
           <div className="flex items-center gap-3 mb-1">
             <FileText size={18} className="text-[#10755A]" />
@@ -33,17 +54,24 @@ export default async function AdminDashboard() {
         <div className="rounded-xl border border-gray-100 bg-gray-50 p-5">
           <div className="flex items-center gap-3 mb-1">
             <BookOpen size={18} className="text-[#10755A]" />
-            <span className="text-sm font-medium text-gray-600">Encyclopedia Entries</span>
+            <span className="text-sm font-medium text-gray-600">Encyclopedia</span>
           </div>
           <p className="text-3xl font-bold text-gray-900">{encyclopediaCount ?? 0}</p>
         </div>
       </div>
 
       {/* Quick actions */}
-      <div className="flex gap-3 mb-8">
+      <div className="flex flex-wrap gap-3 mb-8">
+        <Link
+          href="/admin/planner"
+          className="flex items-center gap-2 rounded-lg bg-[#10755A] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#0d6a51] transition-colors"
+        >
+          <PlusCircle size={16} />
+          Add Project or Topic
+        </Link>
         <Link
           href="/admin/articles/new"
-          className="flex items-center gap-2 rounded-lg bg-[#10755A] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#0d6a51] transition-colors"
+          className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
         >
           <PlusCircle size={16} />
           Generate Article
