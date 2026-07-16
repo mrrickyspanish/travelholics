@@ -1,6 +1,6 @@
 import { createServerSupabase } from '@/lib/supabase-server'
 import type { ContentProject, ContentTask } from '@/types/content-planner'
-import ContentPlanner from './ContentPlanner'
+import PlannerClient from './PlannerClient'
 
 export default async function ContentPlannerPage() {
   const supabase = await createServerSupabase()
@@ -21,5 +21,5 @@ export default async function ContentPlannerPage() {
     tasks: taskRows.filter((task) => task.project_id === project.id),
   }))
 
-  return <ContentPlanner initialProjects={projectsWithTasks} />
+  return <PlannerClient initialProjects={projectsWithTasks} />
 }
