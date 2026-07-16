@@ -7,6 +7,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { createBrowserSupabase } from '@/lib/supabase-browser'
 import {
   LayoutDashboard,
+  ClipboardList,
   FileText,
   BookOpen,
   Map,
@@ -17,6 +18,7 @@ import {
 
 const NAV_ITEMS = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
+  { href: '/admin/planner', label: 'Content Planner', icon: ClipboardList },
   { href: '/admin/articles', label: 'Articles', icon: FileText },
   { href: '/admin/encyclopedia', label: 'Encyclopedia', icon: BookOpen },
   { href: '/admin/trip-pages', label: 'Trip Pages', icon: Map },
