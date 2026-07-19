@@ -372,7 +372,7 @@ export default function PlannerClient({ initialProjects }: { initialProjects: Co
   }
 
   return (
-    <div className="p-5 md:p-8 max-w-7xl">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl">
       <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Content Planner</h1>
@@ -398,8 +398,8 @@ export default function PlannerClient({ initialProjects }: { initialProjects: Co
       </div>
 
       <div className="mb-5 rounded-xl border border-gray-100 bg-gray-50 p-3">
-        <div className="grid gap-3 md:grid-cols-[minmax(220px,1fr)_repeat(3,minmax(130px,auto))]">
-          <label className="relative block">
+        <div className="grid grid-cols-2 gap-2.5 md:gap-3 md:grid-cols-[minmax(220px,1fr)_repeat(3,minmax(130px,auto))]">
+          <label className="relative col-span-2 block md:col-span-1">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search projects, topics, or tasks" className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]" />
           </label>
@@ -410,7 +410,7 @@ export default function PlannerClient({ initialProjects }: { initialProjects: Co
           <select value={ownerFilter} onChange={(e) => setOwnerFilter(e.target.value as typeof ownerFilter)} className="rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]">
             <option value="all">All owners</option>{OWNERS.map((owner) => <option key={owner} value={owner}>{owner}</option>)}
           </select>
-          <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value as typeof categoryFilter)} className="rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]">
+          <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value as typeof categoryFilter)} className="col-span-2 rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A] md:col-span-1">
             <option value="all">All categories</option>{CATEGORIES.map((category) => <option key={category} value={category}>{CATEGORY_LABELS[category]}</option>)}
           </select>
         </div>
@@ -431,8 +431,8 @@ export default function PlannerClient({ initialProjects }: { initialProjects: Co
 
             return (
               <section key={project.id} className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
-                <div className="p-5">
-                  <div className="flex items-start justify-between gap-4">
+                <div className="p-4 sm:p-5">
+                  <div className="flex items-start justify-between gap-3 sm:gap-4">
                     <div className="min-w-0">
                       <div className="mb-1.5 flex flex-wrap items-center gap-2">
                         <span className="rounded-full bg-gray-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-gray-600">{CATEGORY_LABELS[project.category]}</span>
@@ -445,7 +445,7 @@ export default function PlannerClient({ initialProjects }: { initialProjects: Co
                     <button onClick={() => openEditProject(project)} className="shrink-0 rounded-lg border border-gray-200 p-2 text-gray-500 hover:bg-gray-50 hover:text-gray-800" aria-label={`Edit ${project.title}`}><Pencil size={15} /></button>
                   </div>
 
-                  <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="mt-4 grid grid-cols-2 gap-2.5 sm:mt-5 sm:gap-3 lg:grid-cols-4">
                     <Quick label="Status"><select value={project.status} onChange={(e) => updateProject(project.id, { status: e.target.value as ProjectStatus })} className={`w-full rounded-lg border-0 px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#10755A] ${STATUS_STYLES[project.status]}`}>{PROJECT_STATUSES.map((status) => <option key={status} value={status}>{PROJECT_STATUS_LABELS[status]}</option>)}</select></Quick>
                     <Quick label="Owner"><select value={project.owner} onChange={(e) => updateProject(project.id, { owner: e.target.value as PlannerOwner })} className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]">{OWNERS.map((owner) => <option key={owner} value={owner}>{owner}</option>)}</select></Quick>
                     <Quick label="Priority"><select value={project.priority} onChange={(e) => updateProject(project.id, { priority: e.target.value as ProjectPriority })} className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]">{PRIORITIES.map((priority) => <option key={priority} value={priority}>{priority}</option>)}</select></Quick>
@@ -460,20 +460,20 @@ export default function PlannerClient({ initialProjects }: { initialProjects: Co
                 </div>
 
                 {isOpen && (
-                  <div className="border-t border-gray-100 bg-gray-50/60 p-5">
+                  <div className="border-t border-gray-100 bg-gray-50/60 p-4 sm:p-5">
                     {project.notes && <div className="mb-5 rounded-lg border border-gray-100 bg-white px-4 py-3"><p className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">Notes</p><p className="whitespace-pre-wrap text-sm text-gray-600">{project.notes}</p></div>}
-                    <div className="mb-3 flex items-center justify-between"><h3 className="text-sm font-semibold text-gray-800">Production tasks</h3>{project.target_date && <span className={`flex items-center gap-1 text-xs ${targetOverdue ? 'text-red-600' : 'text-gray-400'}`}><CalendarDays size={13} /> Project target {formatDate(project.target_date)}</span>}</div>
+                    <div className="mb-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-1"><h3 className="text-sm font-semibold text-gray-800">Production tasks</h3>{project.target_date && <span className={`flex items-center gap-1 text-xs ${targetOverdue ? 'text-red-600' : 'text-gray-400'}`}><CalendarDays size={13} /> Project target {formatDate(project.target_date)}</span>}</div>
 
                     <div className="mb-4 space-y-2">
                       {project.tasks.length === 0 && <div className="rounded-lg border border-dashed border-gray-200 bg-white px-4 py-5 text-center text-xs text-gray-400">No tasks yet. Add the first production step below.</div>}
                       {project.tasks.map((task) => <TaskRow key={task.id} task={task} busy={busyId === task.id} onUpdate={(patch) => updateTask(project.id, task.id, patch)} onDelete={() => deleteTask(project.id, task.id)} />)}
                     </div>
 
-                    <div className="grid gap-2 rounded-lg border border-gray-100 bg-white p-3 md:grid-cols-[minmax(220px,1fr)_150px_155px_auto]">
-                      <input value={taskDraft(project.id).title} onChange={(e) => patchTaskDraft(project.id, { title: e.target.value })} onKeyDown={(e) => { if (e.key === 'Enter') addTask(project) }} placeholder="Add a task, footage need, or next step" className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]" />
-                      <select value={taskDraft(project.id).assignee} onChange={(e) => patchTaskDraft(project.id, { assignee: e.target.value as PlannerOwner })} className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]">{OWNERS.map((owner) => <option key={owner} value={owner}>{owner}</option>)}</select>
-                      <input type="date" value={taskDraft(project.id).due_date} onChange={(e) => patchTaskDraft(project.id, { due_date: e.target.value })} className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]" />
-                      <button onClick={() => addTask(project)} disabled={!taskDraft(project.id).title.trim() || busyId === `new-${project.id}`} className="flex items-center justify-center gap-1.5 rounded-lg bg-[#10755A] px-3 py-2 text-sm font-semibold text-white hover:bg-[#0d6a51] disabled:opacity-40"><Plus size={15} /> Add</button>
+                    <div className="grid grid-cols-2 gap-2 rounded-lg border border-gray-100 bg-white p-3 md:grid-cols-[minmax(220px,1fr)_150px_155px_auto]">
+                      <input value={taskDraft(project.id).title} onChange={(e) => patchTaskDraft(project.id, { title: e.target.value })} onKeyDown={(e) => { if (e.key === 'Enter') addTask(project) }} placeholder="Add a task, footage need, or next step" className="col-span-2 rounded-lg border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A] md:col-span-1 md:py-2" />
+                      <select value={taskDraft(project.id).assignee} onChange={(e) => patchTaskDraft(project.id, { assignee: e.target.value as PlannerOwner })} className="rounded-lg border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A] md:py-2">{OWNERS.map((owner) => <option key={owner} value={owner}>{owner}</option>)}</select>
+                      <input type="date" value={taskDraft(project.id).due_date} onChange={(e) => patchTaskDraft(project.id, { due_date: e.target.value })} className="rounded-lg border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A] md:py-2" />
+                      <button onClick={() => addTask(project)} disabled={!taskDraft(project.id).title.trim() || busyId === `new-${project.id}`} className="col-span-2 flex items-center justify-center gap-1.5 rounded-lg bg-[#10755A] px-3 py-2.5 text-sm font-semibold text-white hover:bg-[#0d6a51] disabled:opacity-40 md:col-span-1 md:py-2"><Plus size={15} /> Add</button>
                     </div>
                   </div>
                 )}
@@ -484,13 +484,13 @@ export default function PlannerClient({ initialProjects }: { initialProjects: Co
       )}
 
       {formOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onMouseDown={() => { if (!saving) closeForm() }}>
-          <div className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl" onMouseDown={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4"><div><h2 className="text-lg font-semibold text-gray-900">{editingId ? 'Edit project or topic' : 'New project or topic'}</h2><p className="mt-0.5 text-xs text-gray-400">Use Idea status for topics that are not ready for production.</p></div><button onClick={closeForm} disabled={saving} className="rounded-lg p-2 text-gray-400 hover:bg-gray-100"><X size={18} /></button></div>
-            <div className="space-y-4 p-6">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 sm:items-center sm:p-4" onMouseDown={() => { if (!saving) closeForm() }}>
+          <div className="max-h-[94dvh] w-full max-w-2xl overflow-y-auto rounded-t-2xl bg-white shadow-2xl sm:max-h-[92vh] sm:rounded-2xl" onMouseDown={(e) => e.stopPropagation()}>
+            <div className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-gray-100 bg-white px-4 py-3.5 sm:px-6 sm:py-4"><div className="min-w-0"><h2 className="text-base sm:text-lg font-semibold text-gray-900">{editingId ? 'Edit project or topic' : 'New project or topic'}</h2><p className="mt-0.5 text-xs text-gray-400">Use Idea status for topics that are not ready for production.</p></div><button onClick={closeForm} disabled={saving} className="shrink-0 rounded-lg p-2 text-gray-400 hover:bg-gray-100"><X size={18} /></button></div>
+            <div className="space-y-4 p-4 sm:p-6">
               <Field label="Title"><input autoFocus value={projectDraft.title} onChange={(e) => setProjectDraft((draft) => ({ ...draft, title: e.target.value }))} placeholder="Example: Ranking Carnival ships for first-time cruisers" className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]" /></Field>
               <Field label="Description"><textarea rows={3} value={projectDraft.description} onChange={(e) => setProjectDraft((draft) => ({ ...draft, description: e.target.value }))} placeholder="What is the idea, audience, or desired outcome?" className="w-full resize-y rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]" /></Field>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
                 <Field label="Category"><select value={projectDraft.category} onChange={(e) => setProjectDraft((draft) => ({ ...draft, category: e.target.value as ProjectCategory }))} className="w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm">{CATEGORIES.map((category) => <option key={category} value={category}>{CATEGORY_LABELS[category]}</option>)}</select></Field>
                 <Field label="Status"><select value={projectDraft.status} onChange={(e) => setProjectDraft((draft) => ({ ...draft, status: e.target.value as ProjectStatus }))} className="w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm">{PROJECT_STATUSES.map((status) => <option key={status} value={status}>{PROJECT_STATUS_LABELS[status]}</option>)}</select></Field>
                 <Field label="Owner"><select value={projectDraft.owner} onChange={(e) => setProjectDraft((draft) => ({ ...draft, owner: e.target.value as PlannerOwner }))} className="w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm">{OWNERS.map((owner) => <option key={owner} value={owner}>{owner}</option>)}</select></Field>
@@ -500,7 +500,7 @@ export default function PlannerClient({ initialProjects }: { initialProjects: Co
               <Field label="Notes"><textarea rows={5} value={projectDraft.notes} onChange={(e) => setProjectDraft((draft) => ({ ...draft, notes: e.target.value }))} placeholder="Talking points, footage already captured, links, strategic decisions, or anything you do not want to lose." className="w-full resize-y rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]" /></Field>
               {error && <p className="text-sm text-red-600">{error}</p>}
             </div>
-            <div className="flex items-center justify-between border-t border-gray-100 px-6 py-4"><div>{editingId && <button onClick={() => deleteProject(editingId)} disabled={busyId === editingId} className="flex items-center gap-1.5 text-sm font-medium text-red-500 hover:text-red-700 disabled:opacity-50"><Trash2 size={15} /> Delete project</button>}</div><div className="flex items-center gap-2"><button onClick={closeForm} disabled={saving} className="rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 disabled:opacity-50">Cancel</button><button onClick={saveProject} disabled={saving} className="rounded-lg bg-[#10755A] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0d6a51] disabled:opacity-50">{saving ? 'Saving…' : editingId ? 'Save changes' : 'Create project'}</button></div></div>
+            <div className="sticky bottom-0 flex flex-wrap items-center justify-between gap-2 border-t border-gray-100 bg-white px-4 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-4"><div>{editingId && <button onClick={() => deleteProject(editingId)} disabled={busyId === editingId} className="flex items-center gap-1.5 rounded-lg py-2 text-sm font-medium text-red-500 hover:text-red-700 disabled:opacity-50"><Trash2 size={15} /> Delete project</button>}</div><div className="flex items-center gap-2"><button onClick={closeForm} disabled={saving} className="rounded-lg px-4 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 disabled:opacity-50">Cancel</button><button onClick={saveProject} disabled={saving} className="rounded-lg bg-[#10755A] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0d6a51] disabled:opacity-50">{saving ? 'Saving…' : editingId ? 'Save changes' : 'Create project'}</button></div></div>
           </div>
         </div>
       )}
@@ -523,13 +523,17 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 function TaskRow({ task, busy, onUpdate, onDelete }: { task: ContentTask; busy: boolean; onUpdate: (patch: Partial<Pick<ContentTask, 'status' | 'assignee' | 'due_date'>>) => void; onDelete: () => void }) {
   const overdue = isTaskOverdue(task)
   return (
-    <div className={`grid items-center gap-2 rounded-lg border bg-white p-3 md:grid-cols-[auto_minmax(220px,1fr)_135px_150px_155px_auto] ${overdue ? 'border-red-200' : 'border-gray-100'}`}>
-      <button onClick={() => onUpdate({ status: task.status === 'complete' ? 'todo' : 'complete' })} className={task.status === 'complete' ? 'text-[#10755A]' : 'text-gray-300 hover:text-[#10755A]'} aria-label={task.status === 'complete' ? 'Mark task incomplete' : 'Mark task complete'}>{task.status === 'complete' ? <CheckCircle2 size={20} /> : <Circle size={20} />}</button>
-      <div className="min-w-0"><p className={`text-sm font-medium ${task.status === 'complete' ? 'text-gray-400 line-through' : 'text-gray-800'}`}>{task.title}</p>{overdue && <p className="mt-0.5 flex items-center gap-1 text-[11px] font-medium text-red-600"><AlertTriangle size={11} /> Due {formatDate(task.due_date)}</p>}</div>
-      <select value={task.status} onChange={(e) => onUpdate({ status: e.target.value as TaskStatus })} className="rounded-md border border-gray-200 px-2 py-1.5 text-xs">{TASK_STATUSES.map((status) => <option key={status} value={status}>{TASK_STATUS_LABELS[status]}</option>)}</select>
-      <select value={task.assignee} onChange={(e) => onUpdate({ assignee: e.target.value as PlannerOwner })} className="rounded-md border border-gray-200 px-2 py-1.5 text-xs">{OWNERS.map((owner) => <option key={owner} value={owner}>{owner}</option>)}</select>
-      <input type="date" value={task.due_date ?? ''} onChange={(e) => onUpdate({ due_date: e.target.value || null })} className={`rounded-md border px-2 py-1.5 text-xs ${overdue ? 'border-red-200 text-red-700' : 'border-gray-200'}`} />
-      <button onClick={onDelete} disabled={busy} className="rounded-md p-1.5 text-gray-300 hover:bg-red-50 hover:text-red-500 disabled:opacity-40" aria-label={`Delete ${task.title}`}><Trash2 size={14} /></button>
+    <div className={`rounded-lg border bg-white p-3 md:grid md:grid-cols-[auto_minmax(220px,1fr)_135px_150px_155px_auto] md:items-center md:gap-2 ${overdue ? 'border-red-200' : 'border-gray-100'}`}>
+      <div className="flex flex-wrap items-start gap-2.5 md:contents">
+        <button onClick={() => onUpdate({ status: task.status === 'complete' ? 'todo' : 'complete' })} className={`mt-0.5 shrink-0 md:mt-0 ${task.status === 'complete' ? 'text-[#10755A]' : 'text-gray-300 hover:text-[#10755A]'}`} aria-label={task.status === 'complete' ? 'Mark task incomplete' : 'Mark task complete'}>{task.status === 'complete' ? <CheckCircle2 size={20} /> : <Circle size={20} />}</button>
+        <div className="min-w-0 flex-1"><p className={`text-sm font-medium ${task.status === 'complete' ? 'text-gray-400 line-through' : 'text-gray-800'}`}>{task.title}</p>{overdue && <p className="mt-0.5 flex items-center gap-1 text-[11px] font-medium text-red-600"><AlertTriangle size={11} /> Due {formatDate(task.due_date)}</p>}</div>
+        <button onClick={onDelete} disabled={busy} className="-mr-1 -mt-1 shrink-0 rounded-md p-1.5 text-gray-300 hover:bg-red-50 hover:text-red-500 disabled:opacity-40 md:order-last md:m-0" aria-label={`Delete ${task.title}`}><Trash2 size={14} /></button>
+        <div className="grid w-full grid-cols-2 gap-2 pl-[30px] md:contents">
+          <select value={task.status} onChange={(e) => onUpdate({ status: e.target.value as TaskStatus })} className="rounded-md border border-gray-200 px-2 py-2 text-xs md:py-1.5">{TASK_STATUSES.map((status) => <option key={status} value={status}>{TASK_STATUS_LABELS[status]}</option>)}</select>
+          <select value={task.assignee} onChange={(e) => onUpdate({ assignee: e.target.value as PlannerOwner })} className="rounded-md border border-gray-200 px-2 py-2 text-xs md:py-1.5">{OWNERS.map((owner) => <option key={owner} value={owner}>{owner}</option>)}</select>
+          <input type="date" value={task.due_date ?? ''} onChange={(e) => onUpdate({ due_date: e.target.value || null })} className={`col-span-2 rounded-md border px-2 py-2 text-xs md:col-span-1 md:py-1.5 ${overdue ? 'border-red-200 text-red-700' : 'border-gray-200'}`} />
+        </div>
+      </div>
     </div>
   )
 }

@@ -92,7 +92,7 @@ export default function TripPagesPage() {
   const selected = destinations.find((d) => d.slug === slug)
 
   return (
-    <div className="p-8 max-w-3xl">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-3xl">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Trip Page Drafter</h1>
       <p className="text-gray-500 text-sm mb-6">
         Turns encyclopedia entries tagged &quot;Trip Pages&quot; or &quot;Both&quot; into draft updates for the /cruises

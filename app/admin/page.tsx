@@ -24,70 +24,70 @@ export default async function AdminDashboard() {
   ])
 
   return (
-    <div className="p-8 max-w-5xl">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-5xl">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Dashboard</h1>
-      <p className="text-gray-500 text-sm mb-8">Travelholics operations and content engine</p>
+      <p className="text-gray-500 text-sm mb-6 lg:mb-8">Travelholics operations and content engine</p>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="rounded-xl border border-gray-100 bg-gray-50 p-5">
-          <div className="flex items-center gap-3 mb-1">
-            <ClipboardList size={18} className="text-[#10755A]" />
-            <span className="text-sm font-medium text-gray-600">Active Projects</span>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 lg:mb-8">
+        <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 sm:p-5">
+          <div className="flex items-center gap-2 mb-1">
+            <ClipboardList size={16} className="shrink-0 text-[#10755A]" />
+            <span className="text-xs sm:text-sm font-medium text-gray-600">Active Projects</span>
           </div>
-          <p className="text-3xl font-bold text-gray-900">{activeProjectCount ?? 0}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900">{activeProjectCount ?? 0}</p>
         </div>
-        <div className="rounded-xl border border-gray-100 bg-gray-50 p-5">
-          <div className="flex items-center gap-3 mb-1">
-            <ListTodo size={18} className="text-[#10755A]" />
-            <span className="text-sm font-medium text-gray-600">Open Tasks</span>
+        <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 sm:p-5">
+          <div className="flex items-center gap-2 mb-1">
+            <ListTodo size={16} className="shrink-0 text-[#10755A]" />
+            <span className="text-xs sm:text-sm font-medium text-gray-600">Open Tasks</span>
           </div>
-          <p className="text-3xl font-bold text-gray-900">{openTaskCount ?? 0}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900">{openTaskCount ?? 0}</p>
         </div>
-        <div className="rounded-xl border border-gray-100 bg-gray-50 p-5">
-          <div className="flex items-center gap-3 mb-1">
-            <FileText size={18} className="text-[#10755A]" />
-            <span className="text-sm font-medium text-gray-600">Total Articles</span>
+        <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 sm:p-5">
+          <div className="flex items-center gap-2 mb-1">
+            <FileText size={16} className="shrink-0 text-[#10755A]" />
+            <span className="text-xs sm:text-sm font-medium text-gray-600">Total Articles</span>
           </div>
-          <p className="text-3xl font-bold text-gray-900">{articleCount ?? 0}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900">{articleCount ?? 0}</p>
         </div>
-        <div className="rounded-xl border border-gray-100 bg-gray-50 p-5">
-          <div className="flex items-center gap-3 mb-1">
-            <BookOpen size={18} className="text-[#10755A]" />
-            <span className="text-sm font-medium text-gray-600">Encyclopedia</span>
+        <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 sm:p-5">
+          <div className="flex items-center gap-2 mb-1">
+            <BookOpen size={16} className="shrink-0 text-[#10755A]" />
+            <span className="text-xs sm:text-sm font-medium text-gray-600">Encyclopedia</span>
           </div>
-          <p className="text-3xl font-bold text-gray-900">{encyclopediaCount ?? 0}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900">{encyclopediaCount ?? 0}</p>
         </div>
       </div>
 
       {/* Quick actions */}
-      <div className="flex flex-wrap gap-3 mb-8">
+      <div className="grid grid-cols-1 gap-2.5 sm:flex sm:flex-wrap sm:gap-3 mb-6 lg:mb-8">
         <Link
           href="/admin/planner"
-          className="flex items-center gap-2 rounded-lg bg-[#10755A] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#0d6a51] transition-colors"
+          className="flex items-center justify-center sm:justify-start gap-2 rounded-lg bg-[#10755A] px-4 py-3 sm:py-2.5 text-sm font-semibold text-white hover:bg-[#0d6a51] transition-colors"
         >
-          <PlusCircle size={16} />
+          <PlusCircle size={16} className="shrink-0" />
           Add Project or Topic
         </Link>
         <Link
           href="/admin/articles/new"
-          className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+          className="flex items-center justify-center sm:justify-start gap-2 rounded-lg border border-gray-200 px-4 py-3 sm:py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
         >
-          <PlusCircle size={16} />
+          <PlusCircle size={16} className="shrink-0" />
           Generate Article
         </Link>
         <Link
           href="/admin/encyclopedia/ingest"
-          className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+          className="flex items-center justify-center sm:justify-start gap-2 rounded-lg border border-gray-200 px-4 py-3 sm:py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
         >
-          <Upload size={16} />
+          <Upload size={16} className="shrink-0" />
           Import Transcript
         </Link>
         <Link
           href="/admin/encyclopedia/new"
-          className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+          className="flex items-center justify-center sm:justify-start gap-2 rounded-lg border border-gray-200 px-4 py-3 sm:py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
         >
-          <PlusCircle size={16} />
+          <PlusCircle size={16} className="shrink-0" />
           Add Encyclopedia Entry
         </Link>
       </div>
@@ -101,16 +101,16 @@ export default async function AdminDashboard() {
               <Link
                 key={a.id}
                 href={`/admin/articles/${a.id}`}
-                className="flex items-center justify-between px-5 py-3.5 hover:bg-gray-50 transition-colors"
+                className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3.5 hover:bg-gray-50 transition-colors"
               >
-                <div>
-                  <p className="text-sm font-medium text-gray-900">{a.title}</p>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium text-gray-900">{a.title}</p>
                   <p className="text-xs text-gray-400 mt-0.5">
                     {a.topic_cluster} · {new Date(a.created_at).toLocaleDateString()}
                   </p>
                 </div>
                 <span
-                  className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                  className={`shrink-0 text-xs font-medium px-2 py-0.5 rounded-full ${
                     a.status === 'published'
                       ? 'bg-emerald-50 text-emerald-700'
                       : a.status === 'archived'

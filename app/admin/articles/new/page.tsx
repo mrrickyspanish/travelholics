@@ -157,7 +157,7 @@ export default function NewArticlePage() {
   }
 
   return (
-    <div className="p-8 max-w-4xl">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-4xl">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Generate Article</h1>
       <p className="text-gray-500 text-sm mb-6">AI-powered, written in Yolanda&apos;s voice</p>
 

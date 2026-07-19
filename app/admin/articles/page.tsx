@@ -16,7 +16,7 @@ export default async function ArticlesPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <div className="p-8 max-w-5xl">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-5xl">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Articles</h1>

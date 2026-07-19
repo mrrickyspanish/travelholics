@@ -103,7 +103,7 @@ export default function EncyclopediaEntryPage() {
   const config = CATEGORY_CONFIG[category]
 
   return (
-    <div className="p-8 max-w-2xl">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-2xl">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Edit Entry</h1>
         <button

@@ -132,7 +132,7 @@ export default function IngestPage() {
   }
 
   return (
-    <div className="p-8 max-w-3xl">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-3xl">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Import Transcript</h1>
       <p className="text-gray-500 text-sm mb-6">
         Paste a TikTok transcript, interview, voice note, or any Yolanda content. AI will extract knowledge entries.
