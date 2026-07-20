@@ -34,6 +34,20 @@ body {
   font-family: var(--font-geist-sans, Arial, Helvetica, sans-serif);
 }
 
+/* Admin on phones: 16px form controls stop iOS Safari from auto-zooming on
+   focus (the zoom leaves the page horizontally scrollable). */
+@media (max-width: 1023px) {
+  .admin-shell input,
+  .admin-shell select,
+  .admin-shell textarea {
+    font-size: 16px;
+  }
+}
+
+.admin-shell {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Font utilities */
 @layer utilities {
   /* Serif display — headlines, stat numbers, card titles */

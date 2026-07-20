@@ -2,6 +2,31 @@ import Link from 'next/link'
 import { createServerSupabase } from '@/lib/supabase-server'
 import { BookOpen, ClipboardList, FileText, ListTodo, PlusCircle, Upload } from 'lucide-react'
 
+function StatCard({
+  href,
+  icon,
+  label,
+  value,
+}: {
+  href: string
+  icon: React.ReactNode
+  label: string
+  value: number
+}) {
+  return (
+    <Link
+      href={href}
+      className="rounded-xl border border-gray-100 bg-gray-50 p-4 sm:p-5 transition-colors hover:border-gray-200 hover:bg-gray-100 active:bg-gray-100"
+    >
+      <div className="flex items-center gap-2 mb-1">
+        {icon}
+        <span className="text-xs sm:text-sm font-medium text-gray-600">{label}</span>
+      </div>
+      <p className="text-2xl sm:text-3xl font-bold text-gray-900">{value}</p>
+    </Link>
+  )
+}
+
 export default async function AdminDashboard() {
   const supabase = await createServerSupabase()
 
@@ -30,34 +55,10 @@ export default async function AdminDashboard() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 lg:mb-8">
-        <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 sm:p-5">
-          <div className="flex items-center gap-2 mb-1">
-            <ClipboardList size={16} className="shrink-0 text-[#10755A]" />
-            <span className="text-xs sm:text-sm font-medium text-gray-600">Active Projects</span>
-          </div>
-          <p className="text-2xl sm:text-3xl font-bold text-gray-900">{activeProjectCount ?? 0}</p>
-        </div>
-        <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 sm:p-5">
-          <div className="flex items-center gap-2 mb-1">
-            <ListTodo size={16} className="shrink-0 text-[#10755A]" />
-            <span className="text-xs sm:text-sm font-medium text-gray-600">Open Tasks</span>
-          </div>
-          <p className="text-2xl sm:text-3xl font-bold text-gray-900">{openTaskCount ?? 0}</p>
-        </div>
-        <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 sm:p-5">
-          <div className="flex items-center gap-2 mb-1">
-            <FileText size={16} className="shrink-0 text-[#10755A]" />
-            <span className="text-xs sm:text-sm font-medium text-gray-600">Total Articles</span>
-          </div>
-          <p className="text-2xl sm:text-3xl font-bold text-gray-900">{articleCount ?? 0}</p>
-        </div>
-        <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 sm:p-5">
-          <div className="flex items-center gap-2 mb-1">
-            <BookOpen size={16} className="shrink-0 text-[#10755A]" />
-            <span className="text-xs sm:text-sm font-medium text-gray-600">Encyclopedia</span>
-          </div>
-          <p className="text-2xl sm:text-3xl font-bold text-gray-900">{encyclopediaCount ?? 0}</p>
-        </div>
+        <StatCard href="/admin/planner" icon={<ClipboardList size={16} className="shrink-0 text-[#10755A]" />} label="Active Projects" value={activeProjectCount ?? 0} />
+        <StatCard href="/admin/planner" icon={<ListTodo size={16} className="shrink-0 text-[#10755A]" />} label="Open Tasks" value={openTaskCount ?? 0} />
+        <StatCard href="/admin/articles" icon={<FileText size={16} className="shrink-0 text-[#10755A]" />} label="Total Articles" value={articleCount ?? 0} />
+        <StatCard href="/admin/encyclopedia" icon={<BookOpen size={16} className="shrink-0 text-[#10755A]" />} label="Encyclopedia" value={encyclopediaCount ?? 0} />
       </div>
 
       {/* Quick actions */}

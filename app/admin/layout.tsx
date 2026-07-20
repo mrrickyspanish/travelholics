@@ -5,6 +5,7 @@ import { isAdminEmail } from '@/lib/admin-auth'
 import AdminShell from './AdminShell'
 
 export const metadata = { title: 'Admin — Travelholics' }
+export const viewport = { themeColor: '#0b1812' }
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const headerStore = await headers()

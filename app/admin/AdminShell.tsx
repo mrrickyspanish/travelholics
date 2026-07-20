@@ -85,6 +85,9 @@ export default function AdminShell({
     return pathname.startsWith(href)
   }
 
+  const currentSection =
+    NAV_ITEMS.find(({ href, exact }) => isActive(href, exact))?.label ?? 'Admin'
+
   const sidebarContent = (
     <>
       {/* Nav */}
@@ -148,17 +151,28 @@ export default function AdminShell({
   )
 
   return (
-    <div className="flex h-dvh flex-col overflow-hidden bg-[#0f1f1b] lg:flex-row">
+    <div className="admin-shell flex h-dvh flex-col overflow-hidden bg-[#0f1f1b] lg:flex-row">
       {/* Mobile top bar */}
-      <header className="flex h-14 shrink-0 items-center justify-between border-b border-white/5 bg-[#0b1812] px-4 pt-[env(safe-area-inset-top)] lg:hidden">
-        <Logo />
+      <header className="relative flex h-14 shrink-0 items-center justify-between border-b border-white/5 bg-[#0b1812] px-2 pt-[env(safe-area-inset-top)] lg:hidden">
         <button
           onClick={() => setDrawerOpen(true)}
-          className="-mr-2 rounded-lg p-2 text-white/70 hover:bg-white/5 hover:text-white active:bg-white/10 transition-colors"
+          className="rounded-lg p-2.5 text-white/70 hover:bg-white/5 hover:text-white active:bg-white/10 transition-colors"
           aria-label="Open menu"
         >
           <Menu size={22} />
         </button>
+        <div className="pointer-events-none absolute inset-x-14 top-[env(safe-area-inset-top)] flex h-14 items-center justify-center">
+          <span className="truncate text-[15px] font-semibold text-white">{currentSection}</span>
+        </div>
+        <a
+          href="https://yotravelholic.com"
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-lg p-2.5 text-white/50 hover:bg-white/5 hover:text-white active:bg-white/10 transition-colors"
+          aria-label="View site"
+        >
+          <ExternalLink size={19} />
+        </a>
       </header>
 
       {/* Desktop sidebar */}
@@ -194,7 +208,9 @@ export default function AdminShell({
       )}
 
       {/* Main content */}
-      <main className="flex-1 overflow-y-auto bg-white">{children}</main>
+      <main className="flex-1 overflow-y-auto overflow-x-hidden overscroll-y-contain bg-white">
+        {children}
+      </main>
     </div>
   )
 }

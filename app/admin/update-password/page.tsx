@@ -79,7 +79,7 @@ function UpdatePasswordForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0b1812] px-4">
+    <div className="admin-shell min-h-dvh flex items-center justify-center bg-[#0b1812] px-4 py-8">
       <div className="w-full max-w-sm">
         <div className="flex justify-center mb-8">
           <Image
@@ -94,7 +94,7 @@ function UpdatePasswordForm() {
           />
         </div>
 
-        <div className="rounded-2xl bg-[#0f1f1b] border border-white/5 p-8">
+        <div className="rounded-2xl bg-[#0f1f1b] border border-white/5 p-6 sm:p-8">
           <h1 className="text-lg font-semibold text-white mb-2">Reset Your Password</h1>
           {info && <p className="text-sm text-amber-400 mb-4">{info}</p>}
           <p className="text-sm text-white/50 mb-6">
