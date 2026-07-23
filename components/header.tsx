@@ -19,6 +19,7 @@ type NavItem = {
 const DESKTOP_NAV: NavItem[] = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Live", href: "/live", liveIndicator: true },
+  { label: "Videos", href: "/videos" },
   { label: "Shop", href: "/shop" },
   { label: "Blog", href: "/blog" },
   { label: "Our Story", href: "/#about" },
@@ -27,6 +28,7 @@ const DESKTOP_NAV: NavItem[] = [
 const MOBILE_NAV: NavItem[] = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Live", href: "/live" },
+  { label: "Videos", href: "/videos" },
   { label: "Shop", href: "/shop" },
   { label: "Blog", href: "/blog" },
   { label: "Our Story", href: "/#about" },
