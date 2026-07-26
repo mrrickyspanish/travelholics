@@ -21,6 +21,7 @@ const DESKTOP_NAV: NavItem[] = [
   { label: "Live", href: "/live", liveIndicator: true },
   { label: "Videos", href: "/videos" },
   { label: "Shop", href: "/shop" },
+  { label: "Guides", href: "/guides" },
   { label: "Blog", href: "/blog" },
   { label: "Our Story", href: "/#about" },
 ];
@@ -30,6 +31,7 @@ const MOBILE_NAV: NavItem[] = [
   { label: "Live", href: "/live" },
   { label: "Videos", href: "/videos" },
   { label: "Shop", href: "/shop" },
+  { label: "Guides", href: "/guides" },
   { label: "Blog", href: "/blog" },
   { label: "Our Story", href: "/#about" },
   { label: "Contact", href: "/#contact" },

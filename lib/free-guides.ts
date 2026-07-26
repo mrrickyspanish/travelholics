@@ -1,10 +1,10 @@
 /**
- * Travelholics free guides ("freebies") — source of truth for the Shop page
- * free-download section.
+ * Travelholics free guides ("freebies") — source of truth for the /guides page.
  *
- * Files live in /public/guides. Original filenames from the delivered asset
- * pack were renamed to clean, public-safe slugs (the Hawaii one-pager shipped
- * with a raw export UUID in its filename).
+ * The files live in private/guides, deliberately OUTSIDE public/, so the only
+ * way to reach one is a signed link issued by /api/guides/unlock after a name
+ * and email are captured. Original filenames from the delivered asset pack were
+ * renamed to clean slugs (the Hawaii one-pager shipped with a raw export UUID).
  */
 
 export type GuideFormat = "pdf" | "xlsx" | "png";
@@ -16,8 +16,8 @@ export interface FreeGuide {
   shortTitle: string;
   category: "Packing" | "Booking" | "Onboard" | "Cruise Chat";
   format: GuideFormat;
-  /** Path under /public. */
-  file: string;
+  /** Filename inside private/guides — never served directly. */
+  fileName: string;
   /** Filename suggested to the browser on download. */
   downloadName: string;
   pages?: number;
@@ -38,7 +38,7 @@ export const FREE_GUIDES: FreeGuide[] = [
     shortTitle: "Alaska Packing List",
     category: "Packing",
     format: "pdf",
-    file: "/guides/travelholics-alaska-cruise-packing-checklist.pdf",
+    fileName: "travelholics-alaska-cruise-packing-checklist.pdf",
     downloadName: "Travelholics-Alaska-Cruise-Packing-Checklist.pdf",
     pages: 1,
     fileSizeKb: 58,
@@ -57,7 +57,7 @@ export const FREE_GUIDES: FreeGuide[] = [
     shortTitle: "Hawaii Packing List",
     category: "Packing",
     format: "pdf",
-    file: "/guides/travelholics-hawaii-cruise-packing-checklist.pdf",
+    fileName: "travelholics-hawaii-cruise-packing-checklist.pdf",
     downloadName: "Travelholics-Hawaii-Cruise-Packing-Checklist.pdf",
     pages: 1,
     fileSizeKb: 46,
@@ -79,7 +79,7 @@ export const FREE_GUIDES: FreeGuide[] = [
     shortTitle: "What NOT to Bring",
     category: "Packing",
     format: "pdf",
-    file: "/guides/travelholics-cruise-what-not-to-bring.pdf",
+    fileName: "travelholics-cruise-what-not-to-bring.pdf",
     downloadName: "Travelholics-Cruise-What-Not-To-Bring.pdf",
     pages: 1,
     fileSizeKb: 4,
@@ -101,7 +101,7 @@ export const FREE_GUIDES: FreeGuide[] = [
     shortTitle: "Stop Overpacking",
     category: "Packing",
     format: "png",
-    file: "/guides/travelholics-what-you-dont-need-to-pack.png",
+    fileName: "travelholics-what-you-dont-need-to-pack.png",
     downloadName: "Travelholics-What-You-Dont-Need-To-Pack.png",
     fileSizeKb: 1137,
     blurb:
@@ -123,7 +123,7 @@ export const FREE_GUIDES: FreeGuide[] = [
     shortTitle: "Best Time to Book",
     category: "Booking",
     format: "pdf",
-    file: "/guides/travelholics-best-time-to-book-a-cruise.pdf",
+    fileName: "travelholics-best-time-to-book-a-cruise.pdf",
     downloadName: "Travelholics-Best-Time-To-Book-A-Cruise.pdf",
     pages: 3,
     fileSizeKb: 68,
@@ -145,7 +145,7 @@ export const FREE_GUIDES: FreeGuide[] = [
     shortTitle: "Drink Package Calculator",
     category: "Onboard",
     format: "xlsx",
-    file: "/guides/travelholics-drink-package-calculator.xlsx",
+    fileName: "travelholics-drink-package-calculator.xlsx",
     downloadName: "Travelholics-Drink-Package-Calculator.xlsx",
     fileSizeKb: 14,
     blurb:
@@ -166,7 +166,7 @@ export const FREE_GUIDES: FreeGuide[] = [
     shortTitle: "THEO Theory",
     category: "Onboard",
     format: "pdf",
-    file: "/guides/travelholics-theo-theory-casino-guide.pdf",
+    fileName: "travelholics-theo-theory-casino-guide.pdf",
     downloadName: "Travelholics-THEO-Theory-Cruise-Casino-Guide.pdf",
     pages: 1,
     fileSizeKb: 3,
@@ -189,7 +189,7 @@ export const FREE_GUIDES: FreeGuide[] = [
     shortTitle: "First Time Princess",
     category: "Cruise Chat",
     format: "pdf",
-    file: "/guides/travelholics-first-time-princess-part-1.pdf",
+    fileName: "travelholics-first-time-princess-part-1.pdf",
     downloadName: "Travelholics-First-Time-Princess-Part-1.pdf",
     pages: 1,
     fileSizeKb: 53,
@@ -207,9 +207,36 @@ export const FREE_GUIDES: FreeGuide[] = [
   },
 ];
 
-/** Guides cleared for the Shop page today. */
+/** Guides cleared to appear on /guides today. */
 export const PUBLISHABLE_GUIDES = FREE_GUIDES.filter((g) => g.readyToPublish);
 
 export function getGuide(id: string) {
   return FREE_GUIDES.find((g) => g.id === id);
 }
+
+/** Only ready guides are unlockable — the rest are not addressable at all. */
+export function getUnlockableGuide(id: string) {
+  return PUBLISHABLE_GUIDES.find((g) => g.id === id);
+}
+
+const MIME_BY_FORMAT: Record<GuideFormat, string> = {
+  pdf: "application/pdf",
+  xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  png: "image/png",
+};
+
+export function guideContentType(guide: FreeGuide) {
+  return MIME_BY_FORMAT[guide.format];
+}
+
+/** Human-readable size for card copy, e.g. "1.1 MB" or "58 KB". */
+export function formatGuideSize(guide: FreeGuide) {
+  return guide.fileSizeKb >= 1024
+    ? `${(guide.fileSizeKb / 1024).toFixed(1)} MB`
+    : `${guide.fileSizeKb} KB`;
+}
+
+export const GUIDE_CATEGORIES = ["Packing", "Booking", "Onboard"] as const;
+
+export const GUIDE_CONSENT_TEXT =
+  "Yes, send me my free Travelholics guide and add me to the Cruise Life list for cruise deals, new guides, and travel tips. I understand I can unsubscribe anytime.";

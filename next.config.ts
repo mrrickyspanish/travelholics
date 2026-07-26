@@ -4,6 +4,11 @@ const nextConfig: NextConfig = {
   experimental: {
     turbopackUseSystemTlsCerts: true,
   },
+  // The free guides live outside public/ so they can only be reached through a
+  // signed link. They are read at runtime, so tracing can't infer them.
+  outputFileTracingIncludes: {
+    "/api/guides/download": ["./private/guides/**"],
+  },
   images: {
     remotePatterns: [
       {
