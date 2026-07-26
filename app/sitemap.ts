@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { destinations } from "@/lib/destinations";
 import { getAllPublishedSlugs } from "@/lib/articles";
+import { PUBLISHABLE_GUIDES } from "@/lib/free-guides";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yotravelholic.com";
 
@@ -22,9 +23,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  const guidePages: MetadataRoute.Sitemap = PUBLISHABLE_GUIDES.map((guide) => ({
+    url: `${siteUrl}/guides/${guide.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
   return [
     ...destinationPages,
     ...articlePages,
+    ...guidePages,
+    {
+      url: `${siteUrl}/guides`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
     {
       url: `${siteUrl}/blog`,
       lastModified: now,

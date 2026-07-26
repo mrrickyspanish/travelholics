@@ -1,7 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Check, Download, FileSpreadsheet, FileText, Image as ImageIcon } from "lucide-react";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Check,
+  Download,
+  FileSpreadsheet,
+  FileText,
+  Image as ImageIcon,
+} from "lucide-react";
 
 import {
   GUIDE_CATEGORIES,
@@ -43,7 +51,12 @@ function GuideCard({
       </div>
 
       <h3 className="mt-3 font-serif text-[1.4rem] font-semibold leading-tight tracking-[-0.02em] text-ink">
-        {guide.title}
+        <Link
+          href={`/guides/${guide.slug}`}
+          className="transition-colors hover:text-emerald-mid focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
+        >
+          {guide.title}
+        </Link>
       </h3>
 
       <p className="mt-2 text-[0.95rem] leading-relaxed text-stone">{guide.blurb}</p>
@@ -57,14 +70,26 @@ function GuideCard({
         ))}
       </ul>
 
-      <button
-        type="button"
-        onClick={() => onUnlock(guide)}
-        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-coral px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2"
-      >
-        <Download className="h-4 w-4" aria-hidden />
-        Get the guide
-      </button>
+      {/* Reading the guide is the primary path — it needs no email and it is
+          the page that ranks. Downloading is the secondary upgrade. */}
+      <div className="mt-auto pt-6">
+        <Link
+          href={`/guides/${guide.slug}`}
+          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-coral px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2"
+        >
+          Read the guide
+          <ArrowRight className="h-4 w-4" aria-hidden />
+        </Link>
+
+        <button
+          type="button"
+          onClick={() => onUnlock(guide)}
+          className="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-[0.85rem] font-semibold text-stone transition-colors hover:bg-ink/5 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
+        >
+          <Download className="h-3.5 w-3.5" aria-hidden />
+          Or download the {FORMAT_LABEL[guide.format]}
+        </button>
+      </div>
     </article>
   );
 }
