@@ -12,6 +12,15 @@ export interface AffiliateProduct {
   visualLabel: string;
   accentFrom: string;
   accentTo: string;
+  /** Amazon ASIN, for building clean destination URLs. */
+  asin?: string;
+  /** Full product title exactly as listed on Amazon. */
+  listingTitle?: string;
+  /**
+   * The Linktree Shop click-tracking URL. Kept for reference only — see
+   * AMAZON_ASSOCIATE_TAG below before choosing which URL the site links to.
+   */
+  linktreeHref?: string;
 }
 
 export interface MerchOptionSet {
@@ -53,179 +62,135 @@ export const SHOP_TABS = [
   { id: "travelholics-finds", label: "Finds" },
 ] as const;
 
-export const TIKTOK_PRODUCTS: AffiliateProduct[] = [
+/**
+ * Amazon Associates tag carried by every delivered affiliate URL.
+ *
+ * NOTE: `113088-…` is Linktree's Associates store ID and `travelholic_68` is
+ * the sub-tag inside it — these links earn through Linktree's account, not
+ * through a Travelholics-owned Associates account. Swap this constant once a
+ * first-party tag is approved.
+ */
+export const AMAZON_ASSOCIATE_TAG = "113088-travelholic_68-20";
+
+/** Build a clean tagged Amazon URL from an ASIN. */
+export function amazonUrl(asin: string) {
+  return `https://www.amazon.com/dp/${asin}?tag=${AMAZON_ASSOCIATE_TAG}&linkCode=ogi&th=1&psc=1`;
+}
+
+/**
+ * Live affiliate inventory, from travelholic_shop_affiliate_inventory.xlsx
+ * (Linktree Shop tab, captured 2026-07-26). Prices are the listed prices on
+ * that date and will drift — treat them as indicative, not guaranteed.
+ *
+ * `caption` copy below is descriptive placeholder text. It deliberately avoids
+ * first-person claims ("I use these every sailing") because that voice has to
+ * come from Yolanda, not from us.
+ */
+export const AMAZON_PRODUCTS: AffiliateProduct[] = [
   {
-    id: "tiktok-luggage-tags",
-    zone: "tiktok",
-    name: "Cruise Luggage Tag Holders",
-    category: "In my videos",
+    id: "amazon-cruise-rubber-ducks",
+    zone: "amazon",
+    name: "Cruise Ship Rubber Ducks — 110 Piece Hiding Kit",
+    listingTitle:
+      "110 Pieces Rubber Ducks for Cruise Ships Hiding with Tags Kits",
+    category: "Cruise Traditions",
+    price: "$20.99",
+    badge: "Fan Favorite",
+    href: "https://www.amazon.com/dp/B0F43VD9C8?tag=113088-travelholic_68-20&linkCode=ogi&th=1&psc=1",
+    asin: "B0F43VD9C8",
+    caption:
+      "Duck hiding is one of the best traditions at sea. This kit comes with tags so you're ready on day one.",
+    visualLabel: "Cruising duck life",
+    accentFrom: "#ca8a04",
+    accentTo: "#f59e0b",
+    linktreeHref:
+      "https://earn.linktr.ee/clicks/v2?b64=eyJ1c2VybmFtZSI6InRyYXZlbGhvbGljXzY4IiwibmV0d29yayI6IkFtYXpvbiIsInVybCI6Imh0dHBzOi8vci5hbXpsaW5rLnRvLz9idG5fdXJsPWh0dHBzJTNBJTJGJTJGd3d3LmFtYXpvbi5jb20lMkZkcCUyRkIwRjQzVkQ5QzglM0Z0YWclM0QxMTMwODgtdHJhdmVsaG9saWNfNjgtMjAlMjZsaW5rQ29kZSUzRG9naSUyNnRoJTNEMSUyNnBzYyUzRDEmYnRuX3JlZj1vcmctNDMzYmIzOTNlMWI4YjUwMyIsInZlcnNpb24iOiJ2MiIsInNpZ25hdHVyZSI6ImMzMWJkODEzZmRiZTBmMWU2N2E1N2NhN2ExZTI1ZmMwNWE1ZTJlZjBjYmJlODI1NGIwNDU1ODA2M2NmZjE5YjUifQ%253D%253D",
+  },
+  {
+    id: "amazon-travel-power-converter",
+    zone: "amazon",
+    name: "220V to 110V Travel Adapter & Power Converter",
+    listingTitle:
+      "DAILYLIFE 220V to 110V Converter, Travel Adapter US to Europe - Power Converter Adapter Combo with 3 USB C and 1 USB A for US/UK/EU/AU, (1 Pack) - Black",
+    category: "Airport & Transit",
+    price: "$19.99",
+    badge: "Trip Essential",
+    href: "https://www.amazon.com/dp/B0D95QMZJ2?tag=113088-travelholic_68-20&linkCode=ogi&th=1&psc=1",
+    asin: "B0D95QMZJ2",
+    caption:
+      "Covers US, UK, EU, and AU outlets with three USB-C ports and one USB-A, so the whole cabin charges off one plug.",
+    visualLabel: "Charge anywhere",
+    accentFrom: "#334155",
+    accentTo: "#475569",
+    linktreeHref:
+      "https://earn.linktr.ee/clicks/v2?b64=eyJ1c2VybmFtZSI6InRyYXZlbGhvbGljXzY4IiwibmV0d29yayI6IkFtYXpvbiIsInVybCI6Imh0dHBzOi8vci5hbXpsaW5rLnRvLz9idG5fdXJsPWh0dHBzJTNBJTJGJTJGd3d3LmFtYXpvbi5jb20lMkZkcCUyRkIwRDk1UU1aSjIlMkZyZWYlM0Rhc2NfZGZfQjBEOTVRTVpKMjE3Njg5OTMyMDAwMDAlM0Z0YWclM0QxMTMwODgtdHJhdmVsaG9saWNfNjgtMjAlMjZjcmVhdGl2ZSUzRDM5NTI2MSUyNmNyZWF0aXZlQVNJTiUzREIwRDk1UU1aSjIlMjZsaW5rQ29kZSUzRGFzbiZidG5fcmVmPW9yZy00MzNiYjM5M2UxYjhiNTAzIiwidmVyc2lvbiI6InYyIiwic2lnbmF0dXJlIjoiYzhkNDEzOGI1YmExMTIwMzQyNzE0YTE5N2Y4MjBmZjFmZDkzNjZjYzQyNGE5ODE4OWFlMmU0NWFhMDVhNjY3YiJ9",
+  },
+  {
+    id: "amazon-luggage-tags-royal-caribbean",
+    zone: "amazon",
+    name: "Royal Caribbean Luggage Tag Holders (4 Pack)",
+    listingTitle:
+      "Cruise On Royal Caribbean Cruise Luggage Tag Holder (4 Pack) – Fits All Royal Caribbean Ships, Durable Travel ID Holders for 2026-2027 Cruises, Clear Waterproof Cruise Essentials",
+    category: "Cruise Essentials",
     price: "$12.99",
-    badge: "As seen on TikTok",
-    href: "https://www.tiktok.com/@rjsmom1",
+    badge: "Royal Caribbean",
+    href: "https://www.amazon.com/dp/B074TRRXCS?tag=113088-travelholic_68-20&linkCode=ogi&th=1&psc=1",
+    asin: "B074TRRXCS",
     caption:
-      "I keep these in my carry-on because they save me from the paper-tag mess every single time.",
-    visualLabel: "Port-day essential",
-    accentFrom: "#0f172a",
-    accentTo: "#111827",
+      "Clear, waterproof holders sized for Royal Caribbean tags so they survive the walk from the terminal to your cabin.",
+    visualLabel: "Embarkation day",
+    accentFrom: "#1e3a8a",
+    accentTo: "#2563eb",
+    linktreeHref:
+      "https://earn.linktr.ee/clicks/v2?b64=eyJ1c2VybmFtZSI6InRyYXZlbGhvbGljXzY4IiwibmV0d29yayI6IkFtYXpvbiIsInVybCI6Imh0dHBzOi8vci5hbXpsaW5rLnRvLz9idG5fdXJsPWh0dHBzJTNBJTJGJTJGd3d3LmFtYXpvbi5jb20lMkZkcCUyRkIwNzRUUlJYQ1MlMkZyZWYlM0Rhc2NfZGZfQjA3NFRSUlhDUzE3ODQ5NzcyMDAwMDAlM0Z0YWclM0QxMTMwODgtdHJhdmVsaG9saWNfNjgtMjAlMjZjcmVhdGl2ZSUzRDM5NTI2MSUyNmNyZWF0aXZlQVNJTiUzREIwNzRUUlJYQ1MlMjZsaW5rQ29kZSUzRGFzbiZidG5fcmVmPW9yZy00MzNiYjM5M2UxYjhiNTAzIiwidmVyc2lvbiI6InYyIiwic2lnbmF0dXJlIjoiZDgxY2M5Y2M2N2IzMWZlYjU2ZGYwNzAzZjQ1YjBlMzZhMTVjNWZhMzQ5Njc2MTE4ZGU1ODRjNmQwZDFlZDg4OCJ9",
   },
   {
-    id: "tiktok-toiletry-organizer",
-    zone: "tiktok",
-    name: "Hanging Toiletry Organizer",
-    category: "Shop the videos",
-    price: "$24.99",
-    badge: "TikTok Fave",
-    href: "https://www.tiktok.com/@rjsmom1",
-    caption:
-      "Cruise bathrooms are tiny. This is one of those buys you appreciate the second you unpack.",
-    visualLabel: "Cabin upgrade",
-    accentFrom: "#1f2937",
-    accentTo: "#0f766e",
-  },
-  {
-    id: "tiktok-packing-cubes",
-    zone: "tiktok",
-    name: "Packing Cubes Set",
-    category: "In my videos",
-    price: "$29.99",
-    badge: "Best Seller",
-    href: "https://www.tiktok.com/@rjsmom1",
-    caption:
-      "This is how I keep family packing from turning into chaos. One set per person and you're good.",
-    visualLabel: "Cruise reset",
-    accentFrom: "#164e63",
-    accentTo: "#1e3a8a",
-  },
-  {
-    id: "tiktok-magnetic-hooks",
-    zone: "tiktok",
-    name: "Magnetic Hooks Set",
-    category: "Shop the videos",
-    price: "$9.99",
+    id: "amazon-luggage-tags-multi-line",
+    zone: "amazon",
+    name: "Cruise Luggage Tag Holders — Carnival, Princess, NCL, MSC",
+    listingTitle:
+      "Cruise Ship Essentials for Carnival, Princess, NCL, MSC by JOLLYANTS, Cruise Luggage Tag Holders, Cruise Must Haves Waterproof & Reusable",
+    category: "Cruise Essentials",
+    price: "$5.99",
     badge: "Under $10",
-    href: "https://www.tiktok.com/@rjsmom1",
+    href: "https://www.amazon.com/dp/B07MX2WFB8?tag=113088-travelholic_68-20&linkCode=ogi&th=1&psc=1",
+    asin: "B07MX2WFB8",
     caption:
-      "If you know cruise cabins, you know these hooks earn their spot every trip.",
-    visualLabel: "Small but clutch",
-    accentFrom: "#14532d",
-    accentTo: "#065f46",
+      "Waterproof and reusable holders that fit Carnival, Princess, NCL, and MSC tags — the cheapest cruise upgrade on this list.",
+    visualLabel: "Multi-line fit",
+    accentFrom: "#0f766e",
+    accentTo: "#14b8a6",
+    linktreeHref:
+      "https://earn.linktr.ee/clicks/v2?b64=eyJ1c2VybmFtZSI6InRyYXZlbGhvbGljXzY4IiwibmV0d29yayI6IkFtYXpvbiIsInVybCI6Imh0dHBzOi8vci5hbXpsaW5rLnRvLz9idG5fdXJsPWh0dHBzJTNBJTJGJTJGd3d3LmFtYXpvbi5jb20lMkZkcCUyRkIwN01YMldGQjglMkZyZWYlM0Rhc2NfZGZfQjA3TVgyV0ZCODE3ODQ5NzcyMDAwMDAlM0Z0YWclM0QxMTMwODgtdHJhdmVsaG9saWNfNjgtMjAlMjZjcmVhdGl2ZSUzRDM5NTI2MSUyNmNyZWF0aXZlQVNJTiUzREIwN01YMldGQjglMjZsaW5rQ29kZSUzRGFzbiZidG5fcmVmPW9yZy00MzNiYjM5M2UxYjhiNTAzIiwidmVyc2lvbiI6InYyIiwic2lnbmF0dXJlIjoiOTg5MzI1NzUzMjVlNDIwOTljODdiZWU1MTA3M2FmM2FlZGU5MjIzNDgzM2I0ODhiYjcxNjk4ODAyMGIzNTliMiJ9",
+  },
+  {
+    id: "amazon-luggage-tags-disney",
+    zone: "amazon",
+    name: "Disney Cruise Line Luggage Tag Holders (8 Pack)",
+    listingTitle:
+      "DCL Cruise Luggage Tag Holders, 8 Pack Zip Seal Clear Cruise Luggage Tag Holder with Steel Loops Fits for Dream, Fantasy, Magic, Wonder, Wish & Treasure 2025-2026 (8 Pcs with 7 Colors)",
+    category: "Cruise Essentials",
+    price: "$7.99",
+    badge: "Disney Cruise Line",
+    href: "https://www.amazon.com/dp/B0D46J7JPC?tag=113088-travelholic_68-20&linkCode=ogi&th=1&psc=1",
+    asin: "B0D46J7JPC",
+    caption:
+      "Zip-seal holders with steel loops in seven colors, sized for Dream, Fantasy, Magic, Wonder, Wish, and Treasure.",
+    visualLabel: "DCL ready",
+    accentFrom: "#5b21b6",
+    accentTo: "#7c3aed",
+    linktreeHref:
+      "https://earn.linktr.ee/clicks/v2?b64=eyJ1c2VybmFtZSI6InRyYXZlbGhvbGljXzY4IiwibmV0d29yayI6IkFtYXpvbiIsInVybCI6Imh0dHBzOi8vci5hbXpsaW5rLnRvLz9idG5fdXJsPWh0dHBzJTNBJTJGJTJGd3d3LmFtYXpvbi5jb20lMkZkcCUyRkIwRDQ2SjdKUEMlM0Z0YWclM0QxMTMwODgtdHJhdmVsaG9saWNfNjgtMjAlMjZsaW5rQ29kZSUzRG9naSUyNnRoJTNEMSUyNnBzYyUzRDEmYnRuX3JlZj1vcmctNDMzYmIzOTNlMWI4YjUwMyIsInZlcnNpb24iOiJ2MiIsInNpZ25hdHVyZSI6IjQxOTUyMmJiMzUwMzMxNDFkYjgwZmRkZWJlZGJmZTk2YmY0NDIzYmIxZTViMGE0MWM5NjNhMWM0NWNjYTZhOWMifQ%253D%253D",
   },
 ];
 
-export const AMAZON_PRODUCTS: AffiliateProduct[] = [
-  {
-    id: "amazon-dry-bag",
-    zone: "amazon",
-    name: "Waterproof Dry Bag",
-    category: "Beach & Excursion Gear",
-    price: "$19.99",
-    badge: "Amazon's Choice",
-    href: "https://www.amazon.com/s?k=waterproof+dry+bag",
-    caption:
-      "I always keep one of these for beach days and rainy excursions. It keeps the important stuff safe.",
-    visualLabel: "Beach day",
-    accentFrom: "#f59e0b",
-    accentTo: "#fb923c",
-  },
-  {
-    id: "amazon-water-shoes",
-    zone: "amazon",
-    name: "Water Shoes",
-    category: "Beach & Excursion Gear",
-    price: "$26.00",
-    badge: "Travel Day Pick",
-    href: "https://www.amazon.com/s?k=water+shoes+women+travel",
-    caption:
-      "Rocky beaches will humble you fast. These make excursion days way easier.",
-    visualLabel: "Shore day",
-    accentFrom: "#2563eb",
-    accentTo: "#0ea5e9",
-  },
-  {
-    id: "amazon-neck-pillow",
-    zone: "amazon",
-    name: "Memory Foam Neck Pillow",
-    category: "Airport & Transit",
-    price: "$32.00",
-    badge: "Carry-On Staple",
-    href: "https://www.amazon.com/s?k=memory+foam+neck+pillow+travel",
-    caption:
-      "Long airport days feel shorter when your neck isn't fighting for its life.",
-    visualLabel: "Airport mode",
-    accentFrom: "#334155",
-    accentTo: "#475569",
-  },
-  {
-    id: "amazon-carry-on-organizer",
-    zone: "amazon",
-    name: "Carry-On Organizer",
-    category: "Airport & Transit",
-    price: "$21.99",
-    badge: "Get the look",
-    href: "https://www.amazon.com/s?k=carry+on+organizer+travel",
-    caption:
-      "This is what keeps my tech, snacks, and documents from disappearing in the middle of the trip.",
-    visualLabel: "Seat pocket energy",
-    accentFrom: "#0f766e",
-    accentTo: "#14b8a6",
-  },
-  {
-    id: "amazon-wrinkle-free-set",
-    zone: "amazon",
-    name: "Wrinkle-Free Travel Set",
-    category: "Style on the Go",
-    price: "$44.00",
-    badge: "Style Pick",
-    href: "https://www.amazon.com/s?k=wrinkle+free+travel+outfit+women",
-    caption:
-      "I love pieces that still look polished after a full day of travel. This is that vibe.",
-    visualLabel: "Dinner-ready",
-    accentFrom: "#7c3aed",
-    accentTo: "#a855f7",
-  },
-  {
-    id: "amazon-packable-flats",
-    zone: "amazon",
-    name: "Packable Flats",
-    category: "Style on the Go",
-    price: "$29.50",
-    badge: "Closet Hero",
-    href: "https://www.amazon.com/s?k=packable+flats+for+travel",
-    caption:
-      "These save my suitcase space and still work when I want to look put together.",
-    visualLabel: "Easy glam",
-    accentFrom: "#be185d",
-    accentTo: "#ec4899",
-  },
-  {
-    id: "amazon-reef-safe-sunscreen",
-    zone: "amazon",
-    name: "Reef-Safe Sunscreen",
-    category: "Everyday Must-Haves",
-    price: "$15.99",
-    badge: "Daily Use",
-    href: "https://www.amazon.com/s?k=reef+safe+sunscreen",
-    caption:
-      "This stays in my bag because I want sun protection that travels well and feels good on skin.",
-    visualLabel: "Everyday carry",
-    accentFrom: "#ca8a04",
-    accentTo: "#f59e0b",
-  },
-  {
-    id: "amazon-compression-cubes",
-    zone: "amazon",
-    name: "Compression Cubes",
-    category: "Cruise Essentials",
-    price: "$34.99",
-    badge: "Space Saver",
-    href: "https://www.amazon.com/s?k=compression+packing+cubes",
-    caption:
-      "If you pack heavy but still want order, these are the move. They buy you real suitcase space.",
-    visualLabel: "Packed right",
-    accentFrom: "#166534",
-    accentTo: "#059669",
-  },
-];
+/**
+ * No TikTok Shop inventory was included in the delivered link pack — the
+ * spreadsheet covers the five Linktree Shop cards only. Populate this once
+ * TikTok Shop links exist; until then the Shop page should not advertise a
+ * TikTok zone.
+ */
+export const TIKTOK_PRODUCTS: AffiliateProduct[] = [];
 
 export const MERCH_PRODUCTS: MerchProduct[] = [
   {
