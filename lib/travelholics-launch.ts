@@ -26,12 +26,12 @@ export const travelholicsLaunch: LaunchConfig = {
   gatewayAccentHeadline: "Experience more.",
   gatewayDescription:
     "Move from social content into the right Travelholics experience without losing the brand, context, or momentum that brought you here.",
-  // Bright shoreline palette: clear water, sea glass, warm sand, and daylight.
+  // Shop-inspired shoreline palette: emerald water, ivory sand, and sun-warmed neutrals.
   accentColor: "#087F83",
   accentRgb: "8,127,131",
   secondaryColor: "#32C7C0",
-  backgroundColor: "#EAF9F7",
-  surfaceColor: "#F8FEFD",
+  backgroundColor: "#F4E8D5",
+  surfaceColor: "#FDFCF9",
   // Same hero footage and poster frame the homepage uses, so /go and / open
   // on the identical shot.
   backgroundVideoSrc:
