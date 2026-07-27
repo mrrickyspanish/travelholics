@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowLeft, ArrowRight, ArrowUpRight, BriefcaseBusiness, CalendarCheck,
@@ -65,6 +65,13 @@ export type LaunchConfig = {
   secondaryColor: string;
   backgroundColor: string;
   surfaceColor: string;
+  /**
+   * Optional looping background video. When set it replaces the drifting
+   * colour wash; when omitted the ambient gradient layer is used instead.
+   */
+  backgroundVideoSrc?: string;
+  /** Poster frame shown while the video buffers, and wherever it can't play. */
+  backgroundPosterSrc?: string;
   actions: LaunchAction[];
   socials: LaunchSocial[];
   gatewayItems: LaunchGatewayItem[];
@@ -114,7 +121,10 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[var(--launch-bg)] text-white" style={variables}>
-      <AmbientBackground />
+      <AmbientBackground
+        videoSrc={config.backgroundVideoSrc}
+        posterSrc={config.backgroundPosterSrc}
+      />
       <AnimatePresence>
         {!introComplete && (
           <motion.div className="fixed inset-0 z-[80] flex items-center justify-center bg-[var(--launch-bg)]" exit={{ opacity: 0 }}>
@@ -132,7 +142,13 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, filter: 'blur(10px)' }}>
             <motion.button layoutId="launch-gateway" type="button" onClick={() => setSiteMode(true)}
-              className="relative mb-4 overflow-hidden rounded-[30px] border border-white/10 bg-[var(--launch-surface)] px-6 py-7 text-left shadow-2xl backdrop-blur-2xl"
+              className="relative mb-4 overflow-hidden rounded-[30px] border border-white/10 px-6 py-7 text-left shadow-2xl backdrop-blur-2xl"
+              // Translucent so a background video reads through the card; the
+              // blur above only does anything once the fill lets light past.
+              style={{
+                backgroundColor:
+                  'color-mix(in srgb, var(--launch-surface) 76%, transparent)',
+              }}
               whileTap={{ scale: 0.985 }}>
               <motion.div className="absolute inset-y-0 left-[-32%] w-[32%] bg-gradient-to-r from-transparent via-white/15 to-transparent"
                 animate={{ x: ['0%', '420%'] }} transition={{ duration: 4.2, repeat: Infinity, repeatDelay: 1.5 }} />
@@ -140,13 +156,13 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
                 <Image src={config.logoSrc} alt={config.logoAlt} fill priority className="object-contain" sizes="280px" />
               </div>
               <div className="relative mt-5 text-center">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--launch-accent)]">{config.eyebrow}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--launch-secondary)]">{config.eyebrow}</p>
                 <h1 className="mt-3 text-[2.05rem] font-semibold leading-[1.02] tracking-[-0.045em] sm:text-[2.3rem]">
                   {config.headline}
                   <span className="block font-normal text-[var(--launch-accent)]">{config.accentHeadline}</span>
                 </h1>
                 <p className="mx-auto mt-4 max-w-[35ch] text-sm leading-6 text-white/60">{config.description}</p>
-                <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.17em] text-[var(--launch-accent)]">
+                <span className="mt-6 inline-flex items-center gap-2 rounded-full bg-[var(--launch-accent)] px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.17em] text-black shadow-lg">
                   {config.enterLabel}
                   <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
                     <ArrowRight size={15} />
@@ -231,7 +247,7 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
                   <ArrowLeft size={15} /> Back to Launch
                 </button>
                 <div className="mt-14 max-w-3xl">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[var(--launch-accent)]">{config.gatewayEyebrow}</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[var(--launch-secondary)]">{config.gatewayEyebrow}</p>
                   <h2 className="mt-4 text-5xl font-semibold leading-[0.95] tracking-[-0.055em] sm:text-7xl">
                     {config.gatewayHeadline}
                     <span className="block font-normal text-[var(--launch-accent)]">{config.gatewayAccentHeadline}</span>
@@ -272,15 +288,84 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
   );
 }
 
-function AmbientBackground() {
+/**
+ * Background layer. With a video source it plays the brand's hero footage under
+ * a scrim heavy enough to keep the UI legible; without one it falls back to a
+ * drifting colour wash driven by the config's accent and secondary colours —
+ * previously declared as CSS variables but never consumed, which left every
+ * brand's ambient layer the same neutral grey.
+ */
+function AmbientBackground({
+  videoSrc,
+  posterSrc,
+}: {
+  videoSrc?: string;
+  posterSrc?: string;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    // Safari needs muted set in JS as well as markup before it will autoplay.
+    video.muted = true;
+    video.play().catch(() => {});
+  }, [videoSrc]);
+
+  if (videoSrc) {
+    return (
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden">
+        <video
+          ref={videoRef}
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={posterSrc}
+        >
+          <source src={videoSrc} type="video/mp4" />
+        </video>
+
+        {/* Brand tint — sinks the footage far enough back to read over. */}
+        <div
+          className="absolute inset-0"
+          style={{ backgroundColor: 'var(--launch-bg)', opacity: 0.6 }} />
+
+        {/* Depth toward the bottom, so the lower cards sit on solid colour. */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 38%, var(--launch-bg) 100%)',
+          }} />
+      </div>
+    );
+  }
+
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden">
-      <motion.div className="absolute -left-[35%] top-[-10%] h-[58rem] w-[58rem] rounded-full bg-white/10 blur-[105px]"
+      {/* Surface light, moving the way sun moves across open water. */}
+      <motion.div
+        className="absolute -left-[35%] top-[-10%] h-[58rem] w-[58rem] rounded-full blur-[105px]"
+        style={{
+          background:
+            'radial-gradient(circle, rgba(var(--launch-accent-rgb), 0.32) 0%, rgba(var(--launch-accent-rgb), 0) 70%)',
+        }}
         animate={{ x: ['0%', '38%', '5%'], y: ['0%', '22%', '4%'], scale: [1, 1.18, 1] }}
         transition={{ duration: 14, repeat: Infinity }} />
-      <motion.div className="absolute -right-[45%] bottom-[-22%] h-[52rem] w-[52rem] rounded-full bg-white/5 blur-[115px]"
+
+      {/* Low sun sitting warm on the horizon. */}
+      <motion.div
+        className="absolute -right-[45%] bottom-[-22%] h-[52rem] w-[52rem] rounded-full opacity-[0.16] blur-[115px]"
+        style={{
+          background: 'radial-gradient(circle, var(--launch-secondary) 0%, transparent 70%)',
+        }}
         animate={{ x: ['0%', '-35%', '-8%'], y: ['0%', '-28%', '-4%'] }}
         transition={{ duration: 17, repeat: Infinity }} />
+
+      {/* Depth — the water darkens the further down the page you go. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30" />
     </div>
   );
 }
