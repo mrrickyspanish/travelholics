@@ -167,8 +167,8 @@ export const Footer = () => {
             </a>
           </div>
 
-          {/* Newsletter */}
-          <div className="md:col-span-2 lg:col-span-1">
+          {/* Newsletter — id is the target for /#newsletter links (e.g. /go) */}
+          <div id="newsletter" className="scroll-mt-24 md:col-span-2 lg:col-span-1">
             <NewsletterSignup compact />
           </div>
         </div>
