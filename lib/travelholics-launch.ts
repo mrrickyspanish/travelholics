@@ -26,13 +26,12 @@ export const travelholicsLaunch: LaunchConfig = {
   gatewayAccentHeadline: "Experience more.",
   gatewayDescription:
     "Move from social content into the right Travelholics experience without losing the brand, context, or momentum that brought you here.",
-  // The hero video supplies the ocean, so the chrome stays out of its way:
-  // deep navy glass over the footage, warm sun tones for type and CTAs.
-  accentColor: "#F59E0B", // gold — low sun
-  accentRgb: "245,158,11",
-  secondaryColor: "#FCE8DC", // hero-sky — warm light on the horizon
-  backgroundColor: "#0B2A3A", // navy, deepened — open water
-  surfaceColor: "#14384E", // navy — glass sitting on the water
+  // Bright shoreline palette: clear water, sea glass, warm sand, and daylight.
+  accentColor: "#087F83",
+  accentRgb: "8,127,131",
+  secondaryColor: "#32C7C0",
+  backgroundColor: "#EAF9F7",
+  surfaceColor: "#F8FEFD",
   // Same hero footage and poster frame the homepage uses, so /go and / open
   // on the identical shot.
   backgroundVideoSrc:
