@@ -142,13 +142,13 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, filter: 'blur(10px)' }}>
             <motion.button layoutId="launch-gateway" type="button" onClick={() => setSiteMode(true)}
-              className="relative mb-4 overflow-hidden rounded-[30px] border border-[#E5D2B3]/75 px-6 py-7 text-left shadow-[0_24px_60px_rgba(74,53,28,0.16)] backdrop-blur-2xl"
+              className="relative mb-4 overflow-hidden rounded-[30px] border border-[#E5D2B3]/70 px-6 py-7 text-left shadow-[0_24px_60px_rgba(74,53,28,0.14)] backdrop-blur-2xl"
               style={{
                 backgroundColor:
-                  'color-mix(in srgb, var(--launch-surface) 88%, transparent)',
+                  'color-mix(in srgb, var(--launch-surface) 90%, transparent)',
               }}
               whileTap={{ scale: 0.985 }}>
-              <motion.div className="absolute inset-y-0 left-[-32%] w-[32%] bg-gradient-to-r from-transparent via-[#FFF8EA]/50 to-transparent"
+              <motion.div className="absolute inset-y-0 left-[-32%] w-[32%] bg-gradient-to-r from-transparent via-[#FFF8EA]/45 to-transparent"
                 animate={{ x: ['0%', '420%'] }} transition={{ duration: 4.2, repeat: Infinity, repeatDelay: 1.5 }} />
               <div className="relative mx-auto h-[66px] w-[280px] max-w-full rounded-2xl bg-[#087F83] px-4 py-2 shadow-sm">
                 <Image src={config.logoSrc} alt={config.logoAlt} fill priority className="object-contain p-2" sizes="280px" />
@@ -176,9 +176,9 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
                 if (!action.previewItems?.length) {
                   return (
                     <motion.button key={action.id} type="button" onClick={() => action.href && transitionTo(action.href)}
-                      className={`flex min-h-[78px] w-full items-center gap-4 rounded-2xl border px-4 py-3.5 text-left shadow-[0_12px_34px_rgba(74,53,28,0.10)] backdrop-blur-xl ${action.featured ? 'border-[var(--launch-accent)] bg-[var(--launch-accent)] text-white' : 'border-[#E5D2B3]/75 bg-[#FDFCF9]/90 text-[#123B45]'}`}
+                      className={`flex min-h-[78px] w-full items-center gap-4 rounded-2xl border px-4 py-3.5 text-left shadow-[0_12px_34px_rgba(74,53,28,0.09)] backdrop-blur-xl ${action.featured ? 'border-[var(--launch-accent)] bg-[var(--launch-accent)] text-white' : 'border-[#E5D2B3]/65 bg-[#F4E8D5]/84 text-[#123B45]'}`}
                       whileTap={{ scale: 0.975 }}>
-                      <span className={`flex h-11 w-11 items-center justify-center rounded-xl ${action.featured ? 'bg-white/15' : 'bg-[#F2E4CD] text-[var(--launch-accent)]'}`}><Icon size={21} /></span>
+                      <span className={`flex h-11 w-11 items-center justify-center rounded-xl ${action.featured ? 'bg-white/15' : 'bg-[#FDFCF9]/85 text-[var(--launch-accent)]'}`}><Icon size={21} /></span>
                       <span className="flex-1">
                         <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] opacity-60">{action.eyebrow}</span>
                         <span className="mt-1 block text-[15px] font-semibold">{action.label}</span>
@@ -188,9 +188,9 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
                   );
                 }
                 return (
-                  <motion.div key={action.id} layout className="overflow-hidden rounded-2xl border border-[#E5D2B3]/75 bg-[#FDFCF9]/90 text-[#123B45] shadow-[0_12px_34px_rgba(74,53,28,0.10)] backdrop-blur-xl">
+                  <motion.div key={action.id} layout className="overflow-hidden rounded-2xl border border-[#E5D2B3]/65 bg-[#F4E8D5]/84 text-[#123B45] shadow-[0_12px_34px_rgba(74,53,28,0.09)] backdrop-blur-xl">
                     <button type="button" onClick={() => setPanel(open ? null : action.id)} className="flex min-h-[78px] w-full items-center gap-4 px-4 py-3.5 text-left">
-                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#F2E4CD] text-[var(--launch-accent)]"><Icon size={21} /></span>
+                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#FDFCF9]/85 text-[var(--launch-accent)]"><Icon size={21} /></span>
                       <span className="flex-1">
                         <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-[#55737A]">{action.eyebrow}</span>
                         <span className="mt-1 block text-[15px] font-semibold">{action.label}</span>
@@ -203,7 +203,7 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
                           <div className={action.previewStyle === 'cards' ? 'grid gap-2 p-3 pt-0 sm:grid-cols-3' : 'grid gap-2 p-3 pt-0'}>
                             {action.previewItems.map((item, index) => (
                               <motion.button key={item.title} type="button" onClick={() => transitionTo(item.href)}
-                                className="relative rounded-xl border border-[#DCC5A2]/45 bg-[#F7EBD9] p-3 text-left"
+                                className="relative rounded-xl border border-[#DCC5A2]/40 bg-[#FDFCF9]/90 p-3 text-left"
                                 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.08 }}>
                                 <span className="block text-sm font-semibold">{item.title}</span>
                                 <span className="mt-1 block text-xs leading-5 text-[#55737A]">{item.description}</span>
@@ -226,7 +226,7 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
                   <motion.a key={item.label} href={item.href}
                     target={item.href.startsWith('http') ? '_blank' : undefined}
                     rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
-                    className="flex min-h-[66px] flex-col items-center justify-center gap-1.5 rounded-2xl border border-[#E5D2B3]/75 bg-[#FDFCF9]/88 text-xs text-[#315862] shadow-[0_10px_28px_rgba(74,53,28,0.08)] backdrop-blur-xl"
+                    className="flex min-h-[66px] flex-col items-center justify-center gap-1.5 rounded-2xl border border-[#E5D2B3]/65 bg-[#F4E8D5]/82 text-xs text-[#315862] shadow-[0_10px_28px_rgba(74,53,28,0.07)] backdrop-blur-xl"
                     whileHover={{ y: -4 }} whileTap={{ scale: 0.95 }}>
                     <Icon size={18} />{item.label}
                   </motion.a>
@@ -238,10 +238,10 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
         ) : (
           <motion.section key="site" className="relative z-20 flex min-h-screen flex-col bg-[var(--launch-bg)] text-[#123B45]"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <motion.header layoutId="launch-gateway" className="border-b border-[#DCC5A2]/45 bg-[var(--launch-surface)] px-5 pb-10 pt-6 sm:px-10 sm:pb-14">
+            <motion.header layoutId="launch-gateway" className="border-b border-[#DCC5A2]/40 bg-[var(--launch-surface)] px-5 pb-10 pt-6 sm:px-10 sm:pb-14">
               <div className="mx-auto max-w-6xl">
                 <button type="button" onClick={() => setSiteMode(false)}
-                  className="inline-flex h-11 items-center gap-2 rounded-full border border-[#DCC5A2]/60 bg-[#F7EBD9] px-4 text-xs font-semibold uppercase tracking-[0.14em] text-[#315862] shadow-sm">
+                  className="inline-flex h-11 items-center gap-2 rounded-full border border-[#DCC5A2]/55 bg-[#FDFCF9] px-4 text-xs font-semibold uppercase tracking-[0.14em] text-[#315862] shadow-sm">
                   <ArrowLeft size={15} /> Back to Launch
                 </button>
                 <div className="mt-14 max-w-3xl">
@@ -257,7 +257,7 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
             <div className="mx-auto grid w-full max-w-6xl flex-1 gap-4 px-4 py-5 sm:grid-cols-2 sm:px-8 sm:py-8">
               {config.gatewayItems.map((item) => (
                 <motion.button key={item.number} type="button" onClick={() => transitionTo(item.href)}
-                  className="relative min-h-60 rounded-[26px] border border-[#E5D2B3]/75 bg-[#FDFCF9]/92 p-6 text-left shadow-[0_18px_50px_rgba(74,53,28,0.10)] backdrop-blur-xl"
+                  className="relative min-h-60 rounded-[26px] border border-[#E5D2B3]/65 bg-[#F4E8D5]/88 p-6 text-left shadow-[0_18px_50px_rgba(74,53,28,0.09)] backdrop-blur-xl"
                   whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }}>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[var(--launch-accent)]">{item.number}</span>
                   <h3 className="mt-8 text-3xl font-semibold leading-none">{item.title}</h3>
@@ -288,8 +288,8 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
 
 /**
  * Background layer. With a video source it plays the brand's hero footage under
- * a shoreline scrim that protects type without suppressing the water. Without
- * video it falls back to a warm sand-and-sea ambient wash.
+ * a minimal shoreline scrim that preserves the water and only settles into the
+ * page neutral near the bottom. Without video it falls back to a warm ambient wash.
  */
 function AmbientBackground({
   videoSrc,
@@ -312,7 +312,7 @@ function AmbientBackground({
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden">
         <video
           ref={videoRef}
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          className="absolute inset-0 h-full w-full scale-[1.02] object-cover object-center"
           autoPlay
           muted
           loop
@@ -326,7 +326,7 @@ function AmbientBackground({
           className="absolute inset-0"
           style={{
             backgroundImage:
-              'linear-gradient(to bottom, rgba(8,79,88,0.16) 0%, rgba(39,170,172,0.06) 30%, rgba(244,232,213,0.72) 72%, var(--launch-bg) 100%)',
+              'linear-gradient(to bottom, rgba(8,79,88,0.06) 0%, rgba(39,170,172,0.02) 24%, transparent 58%, rgba(253,252,249,0.30) 84%, var(--launch-bg) 100%)',
           }} />
       </div>
     );
@@ -351,7 +351,7 @@ function AmbientBackground({
         animate={{ x: ['0%', '-30%', '-8%'], y: ['0%', '-24%', '-4%'] }}
         transition={{ duration: 17, repeat: Infinity }} />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#FFF8EA]/35 via-transparent to-[#E8D4B5]/70" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#FFF8EA]/20 via-transparent to-[#F4E8D5]/55" />
     </div>
   );
 }
