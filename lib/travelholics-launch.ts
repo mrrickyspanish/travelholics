@@ -26,16 +26,15 @@ export const travelholicsLaunch: LaunchConfig = {
   gatewayAccentHeadline: "Experience more.",
   gatewayDescription:
     "Move from social content into the right Travelholics experience without losing the brand, context, or momentum that brought you here.",
-  // Shop-inspired shoreline palette: emerald water, ivory sand, and sun-warmed neutrals.
+  // Ivory shoreline canvas with sand-toned surfaces and clear-water accents.
   accentColor: "#087F83",
   accentRgb: "8,127,131",
   secondaryColor: "#32C7C0",
-  backgroundColor: "#F4E8D5",
-  surfaceColor: "#FDFCF9",
-  // Same hero footage and poster frame the homepage uses, so /go and / open
-  // on the identical shot.
+  backgroundColor: "#FDFCF9",
+  surfaceColor: "#F4E8D5",
+  // Top-down shoreline footage supplied specifically for the /go experience.
   backgroundVideoSrc:
-    "https://bnjcpfocmgtmutfbanhs.supabase.co/storage/v1/object/public/Images/travel_updated_hero_vid_2.mp4",
+    "https://bnjcpfocmgtmutfbanhs.supabase.co/storage/v1/object/public/Images/higgsfield-05ce1958-13eb-4a2f-b070-109c2c7a9516.mp4",
   backgroundPosterSrc: "/images/Charlotte_Amalie_StThomas.jpg",
   actions: [
     {
