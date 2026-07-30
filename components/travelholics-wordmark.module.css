@@ -28,18 +28,30 @@
 }
 
 /*
- * /go keeps its existing 280 × 66 teal pill. The normalized 5:1 crop is
- * rendered at 230 × 46 and centered inside it for deliberate breathing room.
+ * /go uses the same standalone black wordmark treatment as the light homepage
+ * header. The old teal pill is removed entirely and the existing wrapper is
+ * reduced to the logo's true 5:1 footprint.
  */
-.launchScope :global(img[alt="Travelholics"]) {
+.launchScope :global(div:has(> img[alt="Travelholics"])) {
+  width: 230px !important;
+  height: 46px !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.launchScope :global(div:has(> img[alt="Travelholics"]) > img[alt="Travelholics"]) {
   position: absolute !important;
-  left: -8.413% !important;
-  top: -88.103% !important;
-  width: 116.825% !important;
-  height: 278.788% !important;
+  left: -21.1111% !important;
+  top: -148.1481% !important;
+  width: 142.2222% !important;
+  height: 400% !important;
   max-width: none !important;
   object-fit: fill !important;
   object-position: center !important;
   transform: none !important;
   scale: none !important;
+  filter: brightness(0) !important;
 }
