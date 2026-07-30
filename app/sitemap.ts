@@ -76,6 +76,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    // The cruise intake form. Reachable from /go and from campaign links, so
+    // it needs to be crawlable even though no primary nav points at it.
+    {
+      url: `${siteUrl}/cruise-interest`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    // The bio-link landing page. Low priority on purpose — it should never
+    // outrank the homepage for brand queries.
+    {
+      url: `${siteUrl}/go`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
     {
       url: `${siteUrl}/shipping`,
       lastModified: now,

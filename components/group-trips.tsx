@@ -37,7 +37,7 @@ const photoLabelClass = "absolute bottom-4 right-4 text-right text-[0.56rem] fon
 
 export const GroupTrips = () => {
   return (
-    <section id="group-trips" className="relative overflow-hidden bg-emerald-deep pt-12 pb-14 sm:pt-16 sm:pb-18 lg:pt-20 lg:pb-24">
+    <section id="group-trips" className="relative scroll-mt-24 overflow-hidden bg-emerald-deep pt-12 pb-14 sm:pt-16 sm:pb-18 lg:pt-20 lg:pb-24">
       <div className="pointer-events-none absolute left-[-7rem] top-12 h-56 w-56 rounded-full bg-coral/12 blur-3xl" aria-hidden="true" />
       <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
         <div className="grid items-center gap-10 lg:grid-cols-[0.36fr_0.64fr] lg:gap-14 xl:gap-18">
