@@ -142,7 +142,7 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, filter: 'blur(10px)' }}>
             <motion.button layoutId="launch-gateway" type="button" onClick={() => setSiteMode(true)}
-              className="relative mb-4 overflow-hidden rounded-[30px] border border-[#E5D2B3]/70 px-6 py-7 text-left shadow-[0_24px_60px_rgba(74,53,28,0.14)] backdrop-blur-2xl"
+              className="relative mb-4 overflow-hidden rounded-[30px] border border-[#E5D2B3]/70 px-6 py-7 text-left shadow-[0_24px_60px_rgba(74,53,28,0.14)] backdrop-blur-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
               style={{
                 backgroundColor:
                   'color-mix(in srgb, var(--launch-surface) 90%, transparent)',
@@ -150,11 +150,19 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
               whileTap={{ scale: 0.985 }}>
               <motion.div className="absolute inset-y-0 left-[-32%] w-[32%] bg-gradient-to-r from-transparent via-[#FFF8EA]/45 to-transparent"
                 animate={{ x: ['0%', '420%'] }} transition={{ duration: 4.2, repeat: Infinity, repeatDelay: 1.5 }} />
-              <div className="relative mx-auto h-[66px] w-[280px] max-w-full rounded-2xl bg-[#087F83] px-4 py-2 shadow-sm">
-                <Image src={config.logoSrc} alt={config.logoAlt} fill priority className="object-contain p-2" sizes="280px" />
+              <div className="relative mx-auto h-[66px] w-[280px] max-w-full overflow-hidden rounded-2xl bg-[#087F83] shadow-sm">
+                <Image
+                  src={config.logoSrc}
+                  alt={config.logoAlt}
+                  fill
+                  priority
+                  className="scale-[1.7] object-cover object-center"
+                  sizes="280px"
+                />
               </div>
               <div className="relative mt-5 text-center">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--launch-accent)]">{config.eyebrow}</p>
+                <span aria-hidden="true" className="mx-auto mt-3 block h-[3px] w-9 rounded-full bg-coral" />
                 <h1 className="mt-3 text-[2.05rem] font-semibold leading-[1.02] tracking-[-0.045em] text-[#123B45] sm:text-[2.3rem]">
                   {config.headline}
                   <span className="block font-normal text-[var(--launch-accent)]">{config.accentHeadline}</span>
@@ -162,7 +170,7 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
                 <p className="mx-auto mt-4 max-w-[35ch] text-sm leading-6 text-[#315862]">{config.description}</p>
                 <span className="mt-6 inline-flex items-center gap-2 rounded-full bg-[var(--launch-accent)] px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.17em] text-white shadow-lg">
                   {config.enterLabel}
-                  <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+                  <motion.span className="text-coral" animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
                     <ArrowRight size={15} />
                   </motion.span>
                 </span>
@@ -176,26 +184,26 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
                 if (!action.previewItems?.length) {
                   return (
                     <motion.button key={action.id} type="button" onClick={() => action.href && transitionTo(action.href)}
-                      className={`flex min-h-[78px] w-full items-center gap-4 rounded-2xl border px-4 py-3.5 text-left shadow-[0_12px_34px_rgba(74,53,28,0.09)] backdrop-blur-xl ${action.featured ? 'border-[var(--launch-accent)] bg-[var(--launch-accent)] text-white' : 'border-[#E5D2B3]/65 bg-[#F4E8D5]/84 text-[#123B45]'}`}
+                      className={`flex min-h-[78px] w-full items-center gap-4 rounded-2xl border px-4 py-3.5 text-left shadow-[0_12px_34px_rgba(74,53,28,0.09)] backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral ${action.featured ? 'border-[var(--launch-accent)] bg-[var(--launch-accent)] text-white' : 'border-[#E5D2B3]/65 bg-[#F4E8D5]/84 text-[#123B45]'}`}
                       whileTap={{ scale: 0.975 }}>
                       <span className={`flex h-11 w-11 items-center justify-center rounded-xl ${action.featured ? 'bg-white/15' : 'bg-[#FDFCF9]/85 text-[var(--launch-accent)]'}`}><Icon size={21} /></span>
                       <span className="flex-1">
                         <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] opacity-60">{action.eyebrow}</span>
                         <span className="mt-1 block text-[15px] font-semibold">{action.label}</span>
                       </span>
-                      <ArrowUpRight size={19} />
+                      <ArrowUpRight className={action.featured ? undefined : 'text-coral'} size={19} />
                     </motion.button>
                   );
                 }
                 return (
                   <motion.div key={action.id} layout className="overflow-hidden rounded-2xl border border-[#E5D2B3]/65 bg-[#F4E8D5]/84 text-[#123B45] shadow-[0_12px_34px_rgba(74,53,28,0.09)] backdrop-blur-xl">
-                    <button type="button" onClick={() => setPanel(open ? null : action.id)} className="flex min-h-[78px] w-full items-center gap-4 px-4 py-3.5 text-left">
+                    <button type="button" onClick={() => setPanel(open ? null : action.id)} className="flex min-h-[78px] w-full items-center gap-4 px-4 py-3.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-coral">
                       <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#FDFCF9]/85 text-[var(--launch-accent)]"><Icon size={21} /></span>
                       <span className="flex-1">
                         <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-[#55737A]">{action.eyebrow}</span>
                         <span className="mt-1 block text-[15px] font-semibold">{action.label}</span>
                       </span>
-                      <motion.span animate={{ rotate: open ? 180 : 0 }}><ChevronDown size={19} /></motion.span>
+                      <motion.span className={open ? 'text-coral' : 'text-[#315862]'} animate={{ rotate: open ? 180 : 0 }}><ChevronDown size={19} /></motion.span>
                     </button>
                     <AnimatePresence initial={false}>
                       {open && (
@@ -203,11 +211,11 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
                           <div className={action.previewStyle === 'cards' ? 'grid gap-2 p-3 pt-0 sm:grid-cols-3' : 'grid gap-2 p-3 pt-0'}>
                             {action.previewItems.map((item, index) => (
                               <motion.button key={item.title} type="button" onClick={() => transitionTo(item.href)}
-                                className="relative rounded-xl border border-[#DCC5A2]/40 bg-[#FDFCF9]/90 p-3 text-left"
+                                className="relative rounded-xl border border-[#DCC5A2]/40 bg-[#FDFCF9]/90 p-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
                                 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.08 }}>
                                 <span className="block text-sm font-semibold">{item.title}</span>
                                 <span className="mt-1 block text-xs leading-5 text-[#55737A]">{item.description}</span>
-                                <ArrowUpRight className="absolute bottom-3 right-3 text-[var(--launch-accent)]" size={16} />
+                                <ArrowUpRight className="absolute bottom-3 right-3 text-coral" size={16} />
                               </motion.button>
                             ))}
                           </div>
@@ -226,7 +234,7 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
                   <motion.a key={item.label} href={item.href}
                     target={item.href.startsWith('http') ? '_blank' : undefined}
                     rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
-                    className="flex min-h-[66px] flex-col items-center justify-center gap-1.5 rounded-2xl border border-[#E5D2B3]/65 bg-[#F4E8D5]/82 text-xs text-[#315862] shadow-[0_10px_28px_rgba(74,53,28,0.07)] backdrop-blur-xl"
+                    className="flex min-h-[66px] flex-col items-center justify-center gap-1.5 rounded-2xl border border-[#E5D2B3]/65 bg-[#F4E8D5]/82 text-xs text-[#315862] shadow-[0_10px_28px_rgba(74,53,28,0.07)] backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
                     whileHover={{ y: -4 }} whileTap={{ scale: 0.95 }}>
                     <Icon size={18} />{item.label}
                   </motion.a>
@@ -241,8 +249,8 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
             <motion.header layoutId="launch-gateway" className="border-b border-[#DCC5A2]/40 bg-[var(--launch-surface)] px-5 pb-10 pt-6 sm:px-10 sm:pb-14">
               <div className="mx-auto max-w-6xl">
                 <button type="button" onClick={() => setSiteMode(false)}
-                  className="inline-flex h-11 items-center gap-2 rounded-full border border-[#DCC5A2]/55 bg-[#FDFCF9] px-4 text-xs font-semibold uppercase tracking-[0.14em] text-[#315862] shadow-sm">
-                  <ArrowLeft size={15} /> Back to Launch
+                  className="inline-flex h-11 items-center gap-2 rounded-full border border-[#DCC5A2]/55 bg-[#FDFCF9] px-4 text-xs font-semibold uppercase tracking-[0.14em] text-[#315862] shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral">
+                  <ArrowLeft className="text-coral" size={15} /> Back to Launch
                 </button>
                 <div className="mt-14 max-w-3xl">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[var(--launch-accent)]">{config.gatewayEyebrow}</p>
@@ -257,12 +265,12 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
             <div className="mx-auto grid w-full max-w-6xl flex-1 gap-4 px-4 py-5 sm:grid-cols-2 sm:px-8 sm:py-8">
               {config.gatewayItems.map((item) => (
                 <motion.button key={item.number} type="button" onClick={() => transitionTo(item.href)}
-                  className="relative min-h-60 rounded-[26px] border border-[#E5D2B3]/65 bg-[#F4E8D5]/88 p-6 text-left shadow-[0_18px_50px_rgba(74,53,28,0.09)] backdrop-blur-xl"
+                  className="relative min-h-60 rounded-[26px] border border-[#E5D2B3]/65 bg-[#F4E8D5]/88 p-6 text-left shadow-[0_18px_50px_rgba(74,53,28,0.09)] backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
                   whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }}>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[var(--launch-accent)]">{item.number}</span>
                   <h3 className="mt-8 text-3xl font-semibold leading-none">{item.title}</h3>
                   <p className="mt-4 text-sm leading-6 text-[#55737A]">{item.description}</p>
-                  <span className="mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-[var(--launch-accent)]">Continue <ArrowRight size={15} /></span>
+                  <span className="mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-[var(--launch-accent)]">Continue <ArrowRight className="text-coral" size={15} /></span>
                 </motion.button>
               ))}
             </div>
@@ -276,7 +284,7 @@ export default function LaunchExperience({ config }: { config: LaunchConfig }) {
             initial={{ clipPath: 'inset(100% 0 0 0)' }} animate={{ clipPath: 'inset(0% 0 0 0)' }}
             transition={{ duration: 0.62 }}>
             <div className="text-center">
-              <motion.div className="mx-auto h-3 w-3 rounded-full bg-[var(--launch-accent)]" animate={{ scale: [1, 5, 1] }} />
+              <motion.div className="mx-auto h-3 w-3 rounded-full bg-coral" animate={{ scale: [1, 5, 1] }} />
               <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--launch-accent)]">{config.transitionLabel}</p>
             </div>
           </motion.div>
