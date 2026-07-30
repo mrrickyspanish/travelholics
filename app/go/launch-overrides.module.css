@@ -1,6 +1,0 @@
-.scope :global(img[alt="Travelholics"]) {
-  object-fit: contain !important;
-  object-position: center !important;
-  transform: scale(2.2) !important;
-  transform-origin: center !important;
-}
