@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/lib/cart-context";
 import { useLiveStatus } from "@/hooks/useLiveStatus";
 import { TIKTOK_LIVE_URL, TIKTOK_PROFILE_URL } from "@/lib/liveSchedule";
+import wordmarkStyles from "@/components/travelholics-wordmark.module.css";
 
 type NavItem = {
   label: string;
@@ -109,13 +110,13 @@ export const Header = () => {
         <div className={`${isHeroArrival ? "mx-auto grid h-12 max-w-[calc(100%-1.5rem)] grid-cols-[auto_1fr_auto] items-center gap-3 px-3 sm:h-16 sm:max-w-[calc(100%-2rem)] sm:gap-4 sm:px-4 lg:max-w-[calc(100%-2.5rem)]" : "max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-[auto_1fr_auto] items-center h-16 gap-4"}`}>
           {!isHeroArrival && (
             <Link href="/" className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded-md">
-              <span className="relative block h-9 w-[190px] overflow-hidden lg:h-[54px] lg:w-[230px]">
+              <span className={`${wordmarkStyles.frame} w-[170px] lg:w-[205px]`}>
                 <Image
                   src="/images/Traveholic_logo_wordmark_white.png"
                   alt="Travelholics"
                   fill
-                  className={`scale-[1.7] object-cover object-center transition-all duration-300 ${onDark ? "" : "brightness-0"}`}
-                  sizes="(min-width: 1024px) 230px, 190px"
+                  className={`${wordmarkStyles.source} transition-all duration-300 ${onDark ? "" : "brightness-0"}`}
+                  sizes="(min-width: 1024px) 205px, 170px"
                   priority
                 />
               </span>
@@ -173,12 +174,12 @@ export const Header = () => {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="fixed inset-0 z-[100] flex flex-col" style={{ background: "#0E125C" }} aria-modal="true" role="dialog">
             <div className="flex items-center justify-between px-5 sm:px-8 h-16 border-b border-white/10">
               <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-md">
-                <span className="relative block h-9 w-[180px] overflow-hidden">
+                <span className={`${wordmarkStyles.frame} w-[180px]`}>
                   <Image
                     src="/images/Traveholic_logo_wordmark_white.png"
                     alt="Travelholics"
                     fill
-                    className="scale-[1.7] object-cover object-center"
+                    className={wordmarkStyles.source}
                     sizes="180px"
                   />
                 </span>
