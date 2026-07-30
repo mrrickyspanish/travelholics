@@ -1,3 +1,41 @@
 .scope :global(main > div[aria-hidden="true"] > video + div) {
   opacity: 0.72;
 }
+
+/* Hero card: reveal more shoreline while keeping the strongest blur and border. */
+.scope :global(main > section > button:first-of-type) {
+  background-color: color-mix(
+    in srgb,
+    var(--launch-surface) 76%,
+    transparent
+  ) !important;
+}
+
+/* Featured booking card stays the most opaque action card for white-text contrast. */
+.scope :global(main > section > button:first-of-type + div > button:first-child) {
+  background-color: color-mix(
+    in srgb,
+    var(--launch-accent) 84%,
+    transparent
+  ) !important;
+}
+
+/* Standard action card. */
+.scope :global(main > section > button:first-of-type + div > button:not(:first-child)) {
+  background-color: rgb(244 232 213 / 70%) !important;
+}
+
+/* Accordion cards. */
+.scope :global(main > section > button:first-of-type + div > div) {
+  background-color: rgb(244 232 213 / 72%) !important;
+}
+
+/* Small social cards use the lightest glass treatment. */
+.scope :global(main > section > button:first-of-type + div + div > a) {
+  background-color: rgb(244 232 213 / 68%) !important;
+}
+
+/* Gateway cards retain enough opacity for longer copy. */
+.scope :global(main > section > header + div > button) {
+  background-color: rgb(244 232 213 / 72%) !important;
+}
