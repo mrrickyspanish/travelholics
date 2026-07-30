@@ -1,0 +1,3 @@
+.scope :global(main > div[aria-hidden="true"] > video + div) {
+  opacity: 0.72;
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import LaunchExperience from "@/components/launch/LaunchExperience";
 import { travelholicsLaunch } from "@/lib/travelholics-launch";
+import styles from "./go-visibility.module.css";
 
 export const metadata: Metadata = {
   title: "Start Here | Travelholics",
@@ -10,5 +11,9 @@ export const metadata: Metadata = {
 };
 
 export default function GoPage() {
-  return <LaunchExperience config={travelholicsLaunch} />;
+  return (
+    <div className={styles.scope}>
+      <LaunchExperience config={travelholicsLaunch} />
+    </div>
+  );
 }
