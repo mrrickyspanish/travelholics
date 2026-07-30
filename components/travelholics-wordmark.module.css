@@ -24,6 +24,7 @@
   object-fit: fill !important;
   object-position: center !important;
   transform: none !important;
+  scale: none !important;
 }
 
 /*
@@ -40,4 +41,5 @@
   object-fit: fill !important;
   object-position: center !important;
   transform: none !important;
+  scale: none !important;
 }
