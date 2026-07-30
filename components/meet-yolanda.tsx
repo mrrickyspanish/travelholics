@@ -64,30 +64,30 @@ export const MeetYolanda = () => {
               </h2>
             </div>
 
-            <div className="mt-6 space-y-5 text-left">
-              <p className="text-[1.05rem] font-medium leading-[1.72] text-ink/78 sm:text-[1.15rem]">
-                I help you choose the right ship, cabin, destination, and timing—then handle the details that make the whole trip feel easier.
+            <div className="mt-6 space-y-4 text-left">
+              <p className="text-[1.05rem] font-medium leading-[1.7] text-ink/78 sm:text-[1.15rem]">
+                I help you choose the right ship, cabin, destination, and timing. Then I handle the details that make the whole trip feel easier.
               </p>
 
-              <div className="rounded-[1.5rem] border border-coral/15 bg-sand px-5 py-5 shadow-[0_12px_30px_rgba(26,46,42,0.06)] sm:px-6">
-                <p className="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-coral">The difference</p>
-                <p className="mt-2 font-serif text-[1.35rem] font-semibold leading-[1.35] text-ink sm:text-[1.55rem]">
-                  Booking direct gives you a confirmation number. Booking with me gives you a person who cares how the trip actually turns out.
+              <div className="rounded-[1.4rem] border border-coral/15 bg-sand px-5 py-4 shadow-[0_10px_26px_rgba(26,46,42,0.05)] sm:px-6 sm:py-5">
+                <p className="text-[0.7rem] font-bold uppercase tracking-[0.18em] text-coral">The difference</p>
+                <p className="mt-2 font-serif text-[1.2rem] font-semibold leading-[1.34] text-ink sm:text-[1.4rem]">
+                  Booking direct gives you a confirmation number. Booking with me gives you someone who cares how the trip turns out.
                 </p>
               </div>
 
-              <p className="text-[1rem] font-medium leading-[1.7] text-ink/72 sm:text-[1.08rem]">
-                First cruise or fifteenth, family trip or girls&apos; getaway—I&apos;ll help you find the version built for you.
+              <p className="text-[1rem] font-medium leading-[1.65] text-ink/72 sm:text-[1.06rem]">
+                First cruise or fifteenth, family trip or girls&apos; getaway. I&apos;ll help you find the right fit.
               </p>
 
-              <div className="flex items-start gap-3 rounded-[1.5rem] bg-emerald-deep px-5 py-5 text-white shadow-[0_14px_34px_rgba(13,74,58,0.18)] sm:px-6">
+              <div className="flex items-start gap-3 rounded-[1.4rem] bg-emerald-deep px-5 py-4 text-white shadow-[0_12px_30px_rgba(13,74,58,0.16)] sm:px-6 sm:py-5">
                 <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/12 text-coral">
                   <MessageCircle size={20} strokeWidth={2.2} />
                 </span>
                 <div>
                   <p className="text-[1rem] font-bold leading-tight sm:text-[1.08rem]">20K+ travelers learn with Yolanda every day</p>
                   <p className="mt-1 text-[0.9rem] leading-relaxed text-white/72 sm:text-[0.96rem]">
-                    Daily TikTok cruise tips, real travel advice, and firsthand ship experience before you ever book, pack, or board.
+                    Daily TikTok cruise tips, real travel advice, and firsthand ship experience.
                   </p>
                 </div>
               </div>
