@@ -26,17 +26,15 @@ export const travelholicsLaunch: LaunchConfig = {
   gatewayAccentHeadline: "Experience more.",
   gatewayDescription:
     "Move from social content into the right Travelholics experience without losing the brand, context, or momentum that brought you here.",
-  // The hero video supplies the ocean, so the chrome stays out of its way:
-  // deep navy glass over the footage, warm sun tones for type and CTAs.
-  accentColor: "#F59E0B", // gold — low sun
-  accentRgb: "245,158,11",
-  secondaryColor: "#FCE8DC", // hero-sky — warm light on the horizon
-  backgroundColor: "#0B2A3A", // navy, deepened — open water
-  surfaceColor: "#14384E", // navy — glass sitting on the water
-  // Same hero footage and poster frame the homepage uses, so /go and / open
-  // on the identical shot.
+  // Ivory shoreline canvas with sand-toned surfaces and clear-water accents.
+  accentColor: "#087F83",
+  accentRgb: "8,127,131",
+  secondaryColor: "#32C7C0",
+  backgroundColor: "#FDFCF9",
+  surfaceColor: "#F4E8D5",
+  // Top-down shoreline footage supplied specifically for the /go experience.
   backgroundVideoSrc:
-    "https://bnjcpfocmgtmutfbanhs.supabase.co/storage/v1/object/public/Images/travel_updated_hero_vid_2.mp4",
+    "https://bnjcpfocmgtmutfbanhs.supabase.co/storage/v1/object/public/Images/higgsfield-05ce1958-13eb-4a2f-b070-109c2c7a9516.mp4",
   backgroundPosterSrc: "/images/Charlotte_Amalie_StThomas.jpg",
   actions: [
     {

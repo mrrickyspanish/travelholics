@@ -6,10 +6,9 @@ import { motion } from "framer-motion";
 import { CheckCircle, MessageCircle, Plane } from "lucide-react";
 
 const credentials = [
-  "Certified Cruise Specialist with real ship and port experience",
-  "No planning fees, same price as booking direct",
-  "Cruises, family trips, romantic getaways, groups, and all-inclusive stays",
-  "A real person to call when the details get confusing",
+  "Certified Cruise Specialist",
+  "Real ship and port experience",
+  "No planning fees",
 ];
 
 export const MeetYolanda = () => {
@@ -54,33 +53,53 @@ export const MeetYolanda = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.08 }}
-            className="mx-auto max-w-[45rem] text-center lg:mx-0 lg:text-left"
+            className="mx-auto max-w-[45rem] lg:mx-0"
           >
-            <p className="font-script text-[2.65rem] font-semibold leading-none text-coral sm:text-[3rem]">
-              Hi, I&apos;m Yolanda
-            </p>
-            <h2 className="type-homepage-h2 mt-3 font-serif text-ink">
-              Your cruise person before, during, and after booking.
-            </h2>
-            <div className="mx-auto mt-6 max-w-[45ch] space-y-4 text-[1.05rem] font-medium leading-[1.78] text-ink/78 sm:text-[1.15rem] lg:mx-0">
-              <p>
-                I help travelers pick the ship, cabin, destination, timing, and little details that make a trip feel easy. Booking direct gives you a confirmation number. Booking with me gives you a person who cares how the whole thing actually turns out.
+            <div className="text-center lg:text-left">
+              <p className="font-script text-[2.65rem] font-semibold leading-none text-coral sm:text-[3rem]">
+                Hi, I&apos;m Yolanda
               </p>
-              <p>
-                Whether it&apos;s your first cruise or your fifteenth, a family trip or a girls&apos; getaway, there&apos;s a version of this that&apos;s built for you. I know the difference, and I&apos;ll help you find it.
-              </p>
-              <p>
-                And every day, I go live on TikTok with cruise tips and real travel advice for a community of 20K+ travelers — so you can learn before you ever book, pack, or board.
-              </p>
+              <h2 className="type-homepage-h2 mt-3 font-serif text-ink">
+                Your cruise person before, during, and after booking.
+              </h2>
             </div>
 
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+            <div className="mt-6 space-y-4 text-left">
+              <p className="text-[1.05rem] font-medium leading-[1.7] text-ink/78 sm:text-[1.15rem]">
+                I help you choose the right ship, cabin, destination, and timing. Then I handle the details that make the whole trip feel easier.
+              </p>
+
+              <div className="rounded-[1.4rem] border border-coral/15 bg-sand px-5 py-4 shadow-[0_10px_26px_rgba(26,46,42,0.05)] sm:px-6 sm:py-5">
+                <p className="text-[0.7rem] font-bold uppercase tracking-[0.18em] text-coral">The difference</p>
+                <p className="mt-2 font-serif text-[1.2rem] font-semibold leading-[1.34] text-ink sm:text-[1.4rem]">
+                  Booking direct gives you a confirmation number. Booking with me gives you someone who cares how the trip turns out.
+                </p>
+              </div>
+
+              <p className="text-[1rem] font-medium leading-[1.65] text-ink/72 sm:text-[1.06rem]">
+                First cruise or fifteenth, family trip or girls&apos; getaway. I&apos;ll help you find the right fit.
+              </p>
+
+              <div className="flex items-start gap-3 rounded-[1.4rem] bg-emerald-deep px-5 py-4 text-white shadow-[0_12px_30px_rgba(13,74,58,0.16)] sm:px-6 sm:py-5">
+                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/12 text-coral">
+                  <MessageCircle size={20} strokeWidth={2.2} />
+                </span>
+                <div>
+                  <p className="text-[1rem] font-bold leading-tight sm:text-[1.08rem]">20K+ travelers learn with Yolanda every day</p>
+                  <p className="mt-1 text-[0.9rem] leading-relaxed text-white/72 sm:text-[0.96rem]">
+                    Daily TikTok cruise tips, real travel advice, and firsthand ship experience.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
               {credentials.map((item) => (
-                <div key={item} className="flex items-start gap-2.5 rounded-[1.25rem] bg-cream/85 p-3 text-left shadow-sm ring-1 ring-white/70 sm:p-4">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-coral/12 text-coral sm:h-6 sm:w-6">
+                <div key={item} className="flex items-center gap-2 rounded-[1.1rem] bg-cream/88 px-3.5 py-3 text-left shadow-sm ring-1 ring-white/70">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-coral/12 text-coral">
                     <CheckCircle size={13} strokeWidth={2.4} />
                   </span>
-                  <p className="text-[0.88rem] font-semibold leading-snug text-ink/82 sm:text-[0.98rem]">{item}</p>
+                  <p className="text-[0.82rem] font-semibold leading-snug text-ink/82 sm:text-[0.86rem]">{item}</p>
                 </div>
               ))}
             </div>
