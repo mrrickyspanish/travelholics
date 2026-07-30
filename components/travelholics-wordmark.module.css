@@ -1,0 +1,43 @@
+/*
+ * The source wordmark is a 1920 × 1080 Canva export with a large transparent
+ * canvas. These rules normalize the usable logo area once so every placement
+ * renders the full wordmark without object-cover or transform guesswork.
+ *
+ * Normalized crop on the source canvas:
+ * x: 285, y: 400, width: 1350, height: 270 (5:1)
+ */
+
+.frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 5 / 1;
+  overflow: hidden;
+}
+
+.source {
+  position: absolute !important;
+  left: -21.1111% !important;
+  top: -148.1481% !important;
+  width: 142.2222% !important;
+  height: 400% !important;
+  max-width: none !important;
+  object-fit: fill !important;
+  object-position: center !important;
+  transform: none !important;
+}
+
+/*
+ * /go keeps its existing 280 × 66 teal pill. The normalized 5:1 crop is
+ * rendered at 230 × 46 and centered inside it for deliberate breathing room.
+ */
+.launchScope :global(img[alt="Travelholics"]) {
+  position: absolute !important;
+  left: -8.413% !important;
+  top: -88.103% !important;
+  width: 116.825% !important;
+  height: 278.788% !important;
+  max-width: none !important;
+  object-fit: fill !important;
+  object-position: center !important;
+  transform: none !important;
+}
