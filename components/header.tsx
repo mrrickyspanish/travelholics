@@ -205,7 +205,7 @@ export const Header = () => {
               </a>
               <div className="flex gap-5">
                 <a href={TIKTOK_PROFILE_URL} target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">TikTok</a>
-                <a href="https://www.instagram.com/rjsmom1/" target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">Instagram</a>
+                <a href="https://www.instagram.com/yotravelholic" target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">Instagram</a>
               </div>
               <p className="text-xs text-white/25">© {new Date().getFullYear()} Travelholics</p>
             </div>

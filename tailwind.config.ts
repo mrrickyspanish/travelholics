@@ -1,5 +1,13 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Not read by the build. Tailwind v4 (@tailwindcss/postcss) sources theme
+ * and content from the `@theme` block in app/globals.css — this file has no
+ * `@config` directive pulling it in anywhere. It stays only because the
+ * Tailwind IntelliSense editor extension still reads it for autocomplete;
+ * keep its values mirrored to globals.css by hand, or class names will
+ * autocomplete correctly but the CSS behind them won't match this comment.
+ */
 export default {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,7 +22,7 @@ export default {
         // Brand tokens — use these everywhere; do NOT inline hex values in components
         "emerald-deep":  "#0d4a3a", // dark sections, headlines
         "emerald-mid":   "#10755A", // secondary CTA, hover states
-        coral:           "#E85D5D", // PRIMARY CTA — use sparingly, accent only
+        coral:           "#F26A75", // PRIMARY CTA — use sparingly, accent only
         "coral-deep":    "#D9505C", // coral hover
         blush:           "#F4C4CC", // soft pink dividers, tags
         sand:            "#F5EFE4", // PAGE BACKGROUND

@@ -137,10 +137,12 @@ export const travelholicsLaunch: LaunchConfig = {
         {
           title: "Cruise Finds on Amazon",
           description: "Luggage tag holders, power converters, and duck kits.",
-          href: "/shop",
+          // /shop is a 307 redirect shim to /shop-full — link the real
+          // catalog directly so this tap doesn't cost an extra round trip.
+          href: "/shop-full",
         },
       ],
-      previewFooter: { label: "Everything in the shop", href: "/shop" },
+      previewFooter: { label: "Everything in the shop", href: "/shop-full" },
       note: "Amazon links are affiliate links — Travelholics may earn a commission at no extra cost to you.",
     },
   ],
