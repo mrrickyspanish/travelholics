@@ -1,3 +1,8 @@
+// Importing this module from a Client Component fails the build. Without it,
+// a stray client import compiles clean and ships MANAGED_ADMIN_ACCOUNT.id to
+// the browser — the service-role key is safe either way (no NEXT_PUBLIC_
+// prefix means Next never inlines it), but the account data is not.
+import 'server-only'
 import { createClient } from '@supabase/supabase-js'
 
 /**
@@ -14,10 +19,8 @@ export const MANAGED_ADMIN_ACCOUNT = {
 /**
  * Service-role Supabase client for privileged auth operations.
  *
- * Server-only. `SUPABASE_SERVICE_ROLE_KEY` has no `NEXT_PUBLIC_` prefix, so
- * Next never inlines it into a client bundle; the guard below turns an
- * accidental client-side import into a loud failure instead of a silently
- * keyless client.
+ * The `server-only` import above is the real guard; the runtime check below
+ * is a backstop for any path that reaches this function in a browser anyway.
  */
 export function createSupabaseAdmin() {
   if (typeof window !== 'undefined') {
