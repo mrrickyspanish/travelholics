@@ -128,7 +128,7 @@ For production on Vercel, confirm these environment variables are set:
 |---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Connecting the site and API routes to Supabase |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public Supabase inserts and browser-safe access |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server-side upserts, duplicate subscriber handling, and Duck Hunt lead-to-subscriber linking |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server-side upserts, duplicate subscriber handling, Duck Hunt lead-to-subscriber linking, and owner-only admin password resets at `/admin/access` |
 | `RESEND_API_KEY` | Email notifications for forms and newsletter signups |
 | `RESEND_FROM_EMAIL` | Branded sender address once the sending domain is verified in Resend |
 | `NEWSLETTER_AUTOREPLY_ENABLED` | Optional. Set to `false` to disable subscriber confirmation emails |

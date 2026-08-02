@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { createBrowserSupabase } from '@/lib/supabase-browser'
+import { isOwnerEmail } from '@/lib/admin-auth'
 import {
   LayoutDashboard,
   ClipboardList,
@@ -12,19 +13,32 @@ import {
   BookOpen,
   Map,
   ShoppingBag,
+  KeyRound,
   ExternalLink,
   LogOut,
   Menu,
   X,
 } from 'lucide-react'
 
-const NAV_ITEMS = [
+type NavItem = {
+  href: string
+  label: string
+  icon: typeof LayoutDashboard
+  exact?: boolean
+}
+
+const NAV_ITEMS: NavItem[] = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
   { href: '/admin/planner', label: 'Content Planner', icon: ClipboardList },
   { href: '/admin/articles', label: 'Articles', icon: FileText },
   { href: '/admin/encyclopedia', label: 'Encyclopedia', icon: BookOpen },
   { href: '/admin/trip-pages', label: 'Trip Pages', icon: Map },
   { href: '/admin/shop', label: 'Shop', icon: ShoppingBag },
+]
+
+// Owner-only. The page and its API endpoint re-check this on the server.
+const OWNER_NAV_ITEMS: NavItem[] = [
+  { href: '/admin/access', label: 'Admin Access', icon: KeyRound },
 ]
 
 function Logo() {
@@ -60,6 +74,11 @@ export default function AdminShell({
   const [confirmSignOut, setConfirmSignOut] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
 
+  const navItems = useMemo(
+    () => (isOwnerEmail(userEmail) ? [...NAV_ITEMS, ...OWNER_NAV_ITEMS] : NAV_ITEMS),
+    [userEmail]
+  )
+
   // Close the drawer whenever navigation happens
   useEffect(() => {
     setDrawerOpen(false)
@@ -86,13 +105,13 @@ export default function AdminShell({
   }
 
   const currentSection =
-    NAV_ITEMS.find(({ href, exact }) => isActive(href, exact))?.label ?? 'Admin'
+    navItems.find(({ href, exact }) => isActive(href, exact))?.label ?? 'Admin'
 
   const sidebarContent = (
     <>
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
-        {NAV_ITEMS.map(({ href, label, icon: Icon, exact }) => (
+        {navItems.map(({ href, label, icon: Icon, exact }) => (
           <Link
             key={href}
             href={href}
