@@ -2,11 +2,10 @@
 
 import { useState, useCallback, Suspense } from 'react'
 import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { createBrowserSupabase } from '@/lib/supabase-browser'
 
 function UpdatePasswordForm() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const [email, setEmail] = useState(searchParams.get('email') ?? '')
   const [code, setCode] = useState('')
@@ -55,7 +54,9 @@ function UpdatePasswordForm() {
       setLoading(false)
       return
     }
-    router.push('/admin')
+    // Full document load — verifyOtp established a new session, and a
+    // client-side push would render the /admin layout from the cached payload.
+    window.location.assign('/admin')
   }
 
   async function resendCode() {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { createBrowserSupabase } from '@/lib/supabase-browser'
 import { isAdminEmail } from '@/lib/admin-auth'
 
@@ -10,10 +10,25 @@ type Mode = 'login' | 'forgot' | 'sent'
 
 const NOT_AUTHORIZED_MESSAGE = 'This email is not approved for Travelholics admin access.'
 
+/**
+ * Sign-in and sign-out navigate with a full document load so the browser
+ * discards Next's cached RSC payload for the /admin layout — otherwise the
+ * previous admin's email and nav items render for the next person to sign in.
+ *
+ * Because that means handing a query-string value to window.location, only
+ * same-origin admin paths are honored. A leading `//` or a `https://` prefix
+ * would otherwise redirect off-site after a successful login.
+ */
+function safeRedirect(target: string | null) {
+  if (!target) return '/admin'
+  if (!target.startsWith('/admin')) return '/admin'
+  if (target.startsWith('//')) return '/admin'
+  return target
+}
+
 export default function AdminLoginPage() {
-  const router = useRouter()
   const searchParams = useSearchParams()
-  const redirectTo = searchParams.get('redirectTo') ?? '/admin'
+  const redirectTo = safeRedirect(searchParams.get('redirectTo'))
 
   const [mode, setMode] = useState<Mode>('login')
   const [email, setEmail] = useState('')
@@ -30,9 +45,9 @@ export default function AdminLoginPage() {
         setError(NOT_AUTHORIZED_MESSAGE)
         return
       }
-      router.replace('/admin')
+      window.location.assign('/admin')
     })
-  }, [router])
+  }, [])
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
@@ -51,7 +66,7 @@ export default function AdminLoginPage() {
       setLoading(false)
       return
     }
-    router.replace(redirectTo)
+    window.location.assign(redirectTo)
   }
 
   async function handleForgot(e: React.FormEvent) {

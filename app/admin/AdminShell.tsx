@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { createBrowserSupabase } from '@/lib/supabase-browser'
 import { isOwnerEmail } from '@/lib/admin-auth'
 import {
@@ -69,7 +69,6 @@ export default function AdminShell({
   children: React.ReactNode
   userEmail: string
 }) {
-  const router = useRouter()
   const pathname = usePathname()
   const [confirmSignOut, setConfirmSignOut] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -96,7 +95,10 @@ export default function AdminShell({
   async function handleSignOut() {
     const supabase = createBrowserSupabase()
     await supabase.auth.signOut()
-    router.push('/admin/login')
+    // Full document load, not router.push. Client-side navigation reuses the
+    // cached RSC payload for this shared layout, so the previous admin's email
+    // and nav items survive into the next session.
+    window.location.assign('/admin/login')
   }
 
   function isActive(href: string, exact?: boolean) {
