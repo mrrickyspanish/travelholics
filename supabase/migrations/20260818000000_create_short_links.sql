@@ -4,6 +4,16 @@
 -- with click tracking. Public redirects are served from /s/[slug].
 -- ============================================================
 
+-- Defined with CREATE OR REPLACE so this migration is self-contained even if
+-- an earlier migration that also declares it hasn't run yet.
+CREATE OR REPLACE FUNCTION public.set_updated_at()
+RETURNS trigger AS $$
+BEGIN
+  NEW.updated_at = timezone('utc', now());
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 CREATE TABLE IF NOT EXISTS public.short_links (
   id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   created_at       TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT timezone('utc', now()),
