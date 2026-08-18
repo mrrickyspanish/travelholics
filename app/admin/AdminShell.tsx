@@ -13,6 +13,7 @@ import {
   BookOpen,
   Map,
   ShoppingBag,
+  QrCode,
   KeyRound,
   ExternalLink,
   LogOut,
@@ -34,6 +35,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/admin/encyclopedia', label: 'Encyclopedia', icon: BookOpen },
   { href: '/admin/trip-pages', label: 'Trip Pages', icon: Map },
   { href: '/admin/shop', label: 'Shop', icon: ShoppingBag },
+  { href: '/admin/short-links', label: 'Short Links', icon: QrCode },
 ]
 
 // Owner-only. The page and its API endpoint re-check this on the server.
