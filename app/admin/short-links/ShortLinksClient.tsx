@@ -169,7 +169,7 @@ export default function ShortLinksClient({
   const [customLabel, setCustomLabel] = useState('')
 
   const duckPreview =
-    mode === 'duck' && ship && sailDate && duckNumber
+    mode === 'duck' && ship && sailDate
       ? buildDuckHuntLink({ ship, sailDate, duckNumber, batch }, SITE_URL)
       : null
 
@@ -277,8 +277,8 @@ export default function ShortLinksClient({
         {mode === 'duck' ? (
           <div className="space-y-4">
             <p className="text-xs text-gray-400 -mt-1">
-              One QR per duck per sailing — so a scan tells you exactly which ship, which
-              cruise, and which duck it came from.
+              Leave duck number blank to print one QR for every duck on this sailing — fill it
+              in only if you want to track a specific duck&apos;s hiding spot separately.
             </p>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
@@ -301,12 +301,14 @@ export default function ShortLinksClient({
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Duck number</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  Duck number <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
                 <input
                   type="text"
                   value={duckNumber}
                   onChange={(e) => setDuckNumber(e.target.value)}
-                  placeholder="e.g. 014"
+                  placeholder="Blank = shared by all ducks this sailing"
                   className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
                 />
               </div>

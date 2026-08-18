@@ -6,7 +6,9 @@
 export interface DuckHuntQrInput {
   ship: string
   sailDate: string // YYYY-MM-DD
-  duckNumber: string
+  // Leave blank to share one QR across every duck hidden on this sailing —
+  // fill in only when a specific duck's hiding spot needs its own tracking.
+  duckNumber?: string
   batch?: string
 }
 
@@ -22,7 +24,7 @@ export function slugify(value: string, maxLength = 40) {
 
 export function buildDuckHuntLink(input: DuckHuntQrInput, siteUrl: string) {
   const shipSlug = slugify(input.ship, 30)
-  const duckSlug = slugify(input.duckNumber, 12)
+  const duckSlug = input.duckNumber ? slugify(input.duckNumber, 12) : ''
   const dateCompact = input.sailDate.replace(/-/g, '').slice(2) // YYMMDD
 
   const slug = ['duck', shipSlug, dateCompact, duckSlug].filter(Boolean).join('-')
