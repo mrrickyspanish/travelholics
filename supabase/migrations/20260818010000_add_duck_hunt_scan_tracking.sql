@@ -39,7 +39,11 @@ CREATE INDEX IF NOT EXISTS duck_hunt_leads_scan_id_idx ON public.duck_hunt_leads
 
 -- Replaces the previous single-column version: also returns the short
 -- link's id so the redirect route can log a scan event against it.
-CREATE OR REPLACE FUNCTION public.register_short_link_click(link_slug TEXT)
+-- CREATE OR REPLACE can't change a function's return type, so the old
+-- signature has to be dropped first.
+DROP FUNCTION IF EXISTS public.register_short_link_click(TEXT);
+
+CREATE FUNCTION public.register_short_link_click(link_slug TEXT)
 RETURNS TABLE (id UUID, destination_url TEXT) AS $$
   UPDATE public.short_links
   SET click_count = click_count + 1,
