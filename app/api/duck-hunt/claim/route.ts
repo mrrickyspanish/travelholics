@@ -16,6 +16,8 @@ type DuckHuntClaimRequest = {
   batch?: string | null;
   ship?: string | null;
   source?: string | null;
+  cruise?: string | null;
+  scanId?: string | null;
   newsletterOptIn?: boolean;
   consentText?: string;
 };
@@ -26,6 +28,12 @@ function normalizeEmail(email: string) {
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function isValidUuid(value: string) {
+  return UUID_PATTERN.test(value);
 }
 
 function uniqueInterests(interests: string[]) {
@@ -49,6 +57,8 @@ export async function POST(request: Request) {
   const consentText = body.consentText?.trim() || DUCK_HUNT_CONSENT_TEXT;
   const source = body.source?.trim() || "duck-hunt";
   const insertedShip = body.shipName?.trim() || body.ship?.trim() || null;
+  const cruise = body.cruise?.trim() || null;
+  const scanId = body.scanId?.trim() && isValidUuid(body.scanId.trim()) ? body.scanId.trim() : null;
 
   if (!firstName || !rawEmail || !isValidEmail(rawEmail)) {
     return NextResponse.json({ error: "First name and a valid email are required." }, { status: 400 });
@@ -74,6 +84,8 @@ export async function POST(request: Request) {
     batch: body.batch?.trim() || null,
     ship: insertedShip,
     source,
+    cruise,
+    scan_id: scanId,
     newsletter_opt_in: true,
     consent_text: consentText,
     consented_at: new Date().toISOString(),

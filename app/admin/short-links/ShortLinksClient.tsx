@@ -13,11 +13,31 @@ import {
   X,
 } from 'lucide-react'
 import type { ShortLink } from '@/types/short-links'
+import { buildDuckHuntLink } from '@/lib/duck-hunt-links'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://yotravelholic.com'
 
 function shortUrlFor(slug: string) {
   return `${SITE_URL}/s/${slug}`
+}
+
+function formatSailDate(sailDate: string) {
+  const [year, month, day] = sailDate.split('-').map(Number)
+  if (!year || !month || !day) return sailDate
+  return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
+function formatTimestamp(value: string) {
+  return new Date(value).toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  })
 }
 
 function CopyButton({ text }: { text: string }) {
@@ -37,14 +57,20 @@ function CopyButton({ text }: { text: string }) {
   )
 }
 
+// Ducks live outdoors on a ship — sun-faded, salt-sprayed, handled by
+// hundreds of guests. High error correction (~30% tolerance) plus a real
+// quiet zone keeps the code scannable well after it's taken a beating, and
+// the 640px source stays crisp printed a few inches across.
+const QR_OPTIONS = { errorCorrectionLevel: 'H' as const, width: 640, margin: 4 }
+
 function QrModal({ link, onClose }: { link: ShortLink; onClose: () => void }) {
   const [pngUrl, setPngUrl] = useState('')
   const [svgMarkup, setSvgMarkup] = useState('')
   const url = shortUrlFor(link.slug)
 
   useEffect(() => {
-    QRCode.toDataURL(url, { width: 512, margin: 1 }).then(setPngUrl)
-    QRCode.toString(url, { type: 'svg', margin: 1 }).then(setSvgMarkup)
+    QRCode.toDataURL(url, QR_OPTIONS).then(setPngUrl)
+    QRCode.toString(url, { ...QR_OPTIONS, type: 'svg' }).then(setSvgMarkup)
   }, [url])
 
   function downloadPng() {
@@ -88,7 +114,7 @@ function QrModal({ link, onClose }: { link: ShortLink; onClose: () => void }) {
 
         <p className="text-xs text-gray-400 break-all text-center mb-4">{url}</p>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 mb-3">
           <button
             onClick={downloadPng}
             disabled={!pngUrl}
@@ -106,43 +132,99 @@ function QrModal({ link, onClose }: { link: ShortLink; onClose: () => void }) {
             SVG
           </button>
         </div>
+
+        <p className="text-[11px] text-gray-400 text-center leading-relaxed">
+          Print at least 1.5in across. SVG scales cleanest for large signage; PNG is fine for
+          stickers and print shops.
+        </p>
       </div>
     </div>
   )
 }
 
-export default function ShortLinksClient({ initialShortLinks }: { initialShortLinks: ShortLink[] }) {
+type Mode = 'duck' | 'custom'
+
+export default function ShortLinksClient({
+  initialShortLinks,
+  claimCounts,
+}: {
+  initialShortLinks: ShortLink[]
+  claimCounts: Record<string, number>
+}) {
   const [links, setLinks] = useState(initialShortLinks)
-  const [destinationUrl, setDestinationUrl] = useState('')
-  const [slug, setSlug] = useState('')
-  const [label, setLabel] = useState('')
+  const [mode, setMode] = useState<Mode>('duck')
   const [creating, setCreating] = useState(false)
   const [error, setError] = useState('')
   const [qrLink, setQrLink] = useState<ShortLink | null>(null)
 
-  async function handleCreate() {
+  // Duck Hunt mode
+  const [ship, setShip] = useState('')
+  const [sailDate, setSailDate] = useState('')
+  const [duckNumber, setDuckNumber] = useState('')
+  const [batch, setBatch] = useState('')
+
+  // Custom link mode
+  const [destinationUrl, setDestinationUrl] = useState('')
+  const [customSlug, setCustomSlug] = useState('')
+  const [customLabel, setCustomLabel] = useState('')
+
+  const duckPreview =
+    mode === 'duck' && ship && sailDate && duckNumber
+      ? buildDuckHuntLink({ ship, sailDate, duckNumber, batch }, SITE_URL)
+      : null
+
+  async function createShortLink(payload: {
+    destination_url: string
+    slug?: string
+    label?: string
+    metadata?: Record<string, unknown>
+  }) {
     setCreating(true)
     setError('')
     try {
       const res = await fetch('/api/admin/short-links', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          destination_url: destinationUrl,
-          slug: slug || undefined,
-          label: label || undefined,
-        }),
+        body: JSON.stringify(payload),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? 'Something went wrong')
       setLinks((prev) => [data.shortLink, ...prev])
-      setDestinationUrl('')
-      setSlug('')
-      setLabel('')
+      return true
     } catch (err) {
       setError((err as Error).message)
+      return false
     } finally {
       setCreating(false)
+    }
+  }
+
+  async function handleCreateDuck() {
+    if (!duckPreview) return
+    const ok = await createShortLink({
+      destination_url: duckPreview.destinationUrl,
+      slug: duckPreview.slug,
+      label: duckPreview.label,
+      metadata: duckPreview.metadata,
+    })
+    if (ok) {
+      setShip('')
+      setSailDate('')
+      setDuckNumber('')
+      setBatch('')
+    }
+  }
+
+  async function handleCreateCustom() {
+    const ok = await createShortLink({
+      destination_url: destinationUrl,
+      slug: customSlug || undefined,
+      label: customLabel || undefined,
+    })
+    if (ok) {
+      setDestinationUrl('')
+      setCustomSlug('')
+      setCustomLabel('')
     }
   }
 
@@ -168,58 +250,146 @@ export default function ShortLinksClient({ initialShortLinks }: { initialShortLi
     <div className="p-4 sm:p-6 lg:p-8 max-w-4xl">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Short Links & QR Codes</h1>
       <p className="text-gray-500 text-sm mb-6">
-        Create trackable short links for print, signage, or social — each one comes with a
-        downloadable QR code that points at it.
+        Every scan is logged the moment it happens — not just when someone finishes a form — so
+        you can see scan volume per sailing alongside how many actually converted.
       </p>
 
-      <div className="rounded-xl border border-gray-100 p-6 bg-gray-50 space-y-4 mb-8">
-        <div className="grid sm:grid-cols-2 gap-4">
-          <div className="sm:col-span-2">
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Destination URL</label>
-            <input
-              type="text"
-              value={destinationUrl}
-              onChange={(e) => setDestinationUrl(e.target.value)}
-              placeholder="https://yotravelholic.com/cruises/caribbean"
-              className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-              Custom slug <span className="text-gray-400 font-normal">(optional)</span>
-            </label>
-            <input
-              type="text"
-              value={slug}
-              onChange={(e) => setSlug(e.target.value)}
-              placeholder="e.g. navigator-flyer"
-              className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-              Label <span className="text-gray-400 font-normal">(optional)</span>
-            </label>
-            <input
-              type="text"
-              value={label}
-              onChange={(e) => setLabel(e.target.value)}
-              placeholder="e.g. Navigator ship flyer"
-              className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
-            />
-          </div>
+      <div className="rounded-xl border border-gray-100 p-6 bg-gray-50 mb-8">
+        <div className="flex gap-1 mb-5 rounded-lg bg-gray-200/60 p-1 w-fit">
+          <button
+            onClick={() => setMode('duck')}
+            className={`rounded-md px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+              mode === 'duck' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            🦆 Duck Hunt QR
+          </button>
+          <button
+            onClick={() => setMode('custom')}
+            className={`rounded-md px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+              mode === 'custom' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            Custom Link
+          </button>
         </div>
 
-        <button
-          onClick={handleCreate}
-          disabled={!destinationUrl || creating}
-          className="flex items-center gap-2 rounded-lg bg-[#10755A] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0d6a51] disabled:opacity-50 transition-colors"
-        >
-          <Plus size={15} />
-          {creating ? 'Creating…' : 'Create Short Link'}
-        </button>
+        {mode === 'duck' ? (
+          <div className="space-y-4">
+            <p className="text-xs text-gray-400 -mt-1">
+              One QR per duck per sailing — so a scan tells you exactly which ship, which
+              cruise, and which duck it came from.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Ship</label>
+                <input
+                  type="text"
+                  value={ship}
+                  onChange={(e) => setShip(e.target.value)}
+                  placeholder="e.g. Navigator of the Seas"
+                  className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Sail date</label>
+                <input
+                  type="date"
+                  value={sailDate}
+                  onChange={(e) => setSailDate(e.target.value)}
+                  className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Duck number</label>
+                <input
+                  type="text"
+                  value={duckNumber}
+                  onChange={(e) => setDuckNumber(e.target.value)}
+                  placeholder="e.g. 014"
+                  className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  Batch <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  value={batch}
+                  onChange={(e) => setBatch(e.target.value)}
+                  placeholder="e.g. spring-2026"
+                  className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+                />
+              </div>
+            </div>
 
-        {error && <p className="text-sm text-red-500">{error}</p>}
+            {duckPreview && (
+              <p className="text-xs text-gray-400 font-mono break-all">
+                {shortUrlFor(duckPreview.slug)}
+              </p>
+            )}
+
+            <button
+              onClick={handleCreateDuck}
+              disabled={!duckPreview || creating}
+              className="flex items-center gap-2 rounded-lg bg-[#10755A] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0d6a51] disabled:opacity-50 transition-colors"
+            >
+              <Plus size={15} />
+              {creating ? 'Creating…' : 'Create Duck QR'}
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="sm:col-span-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Destination URL</label>
+                <input
+                  type="text"
+                  value={destinationUrl}
+                  onChange={(e) => setDestinationUrl(e.target.value)}
+                  placeholder="https://yotravelholic.com/cruises/caribbean"
+                  className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  Custom slug <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  value={customSlug}
+                  onChange={(e) => setCustomSlug(e.target.value)}
+                  placeholder="e.g. navigator-flyer"
+                  className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  Label <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  value={customLabel}
+                  onChange={(e) => setCustomLabel(e.target.value)}
+                  placeholder="e.g. Navigator ship flyer"
+                  className="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#10755A]"
+                />
+              </div>
+            </div>
+
+            <button
+              onClick={handleCreateCustom}
+              disabled={!destinationUrl || creating}
+              className="flex items-center gap-2 rounded-lg bg-[#10755A] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0d6a51] disabled:opacity-50 transition-colors"
+            >
+              <Plus size={15} />
+              {creating ? 'Creating…' : 'Create Short Link'}
+            </button>
+          </div>
+        )}
+
+        {error && <p className="text-sm text-red-500 mt-3">{error}</p>}
       </div>
 
       {links.length === 0 ? (
@@ -229,54 +399,74 @@ export default function ShortLinksClient({ initialShortLinks }: { initialShortLi
         </div>
       ) : (
         <div className="space-y-3">
-          {links.map((link) => (
-            <div
-              key={link.id}
-              className={`rounded-xl border p-4 flex items-center gap-4 ${
-                link.is_active ? 'border-gray-200' : 'border-gray-100 bg-gray-50 opacity-60'
-              }`}
-            >
-              <button
-                onClick={() => setQrLink(link)}
-                className="shrink-0 rounded-lg border border-gray-200 p-2.5 text-gray-500 hover:bg-gray-50 hover:text-[#10755A] transition-colors"
-                aria-label="Show QR code"
+          {links.map((link) => {
+            const isDuck = link.metadata?.campaign === 'duck-hunt'
+            const claims = claimCounts[link.id] ?? 0
+
+            return (
+              <div
+                key={link.id}
+                className={`rounded-xl border p-4 flex items-center gap-4 ${
+                  link.is_active ? 'border-gray-200' : 'border-gray-100 bg-gray-50 opacity-60'
+                }`}
               >
-                <QrCode size={18} />
-              </button>
+                <button
+                  onClick={() => setQrLink(link)}
+                  className="shrink-0 rounded-lg border border-gray-200 p-2.5 text-gray-500 hover:bg-gray-50 hover:text-[#10755A] transition-colors"
+                  aria-label="Show QR code"
+                >
+                  <QrCode size={18} />
+                </button>
 
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-gray-900 truncate">
-                  {link.label || link.slug}
-                </p>
-                <p className="text-xs text-gray-400 truncate">{shortUrlFor(link.slug)}</p>
-                <p className="text-xs text-gray-400 truncate">→ {link.destination_url}</p>
-              </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold text-gray-900 truncate">
+                    {isDuck ? '🦆 ' : ''}
+                    {link.label || link.slug}
+                  </p>
+                  <p className="text-xs text-gray-400 truncate">{shortUrlFor(link.slug)}</p>
+                  {isDuck ? (
+                    <p className="text-xs text-gray-400 truncate">
+                      Sailing {link.metadata.sail_date ? formatSailDate(link.metadata.sail_date) : '—'}
+                    </p>
+                  ) : (
+                    <p className="text-xs text-gray-400 truncate">→ {link.destination_url}</p>
+                  )}
+                  {link.last_clicked_at && (
+                    <p className="text-[11px] text-gray-300 truncate">
+                      Last scanned {formatTimestamp(link.last_clicked_at)}
+                    </p>
+                  )}
+                </div>
 
-              <div className="shrink-0 text-right">
-                <p className="text-sm font-semibold text-gray-900">{link.click_count}</p>
-                <p className="text-xs text-gray-400">clicks</p>
-              </div>
+                <div className="shrink-0 text-right">
+                  <p className="text-sm font-semibold text-gray-900">
+                    {link.click_count}
+                    {isDuck && <span className="text-gray-400 font-normal"> / {claims}</span>}
+                  </p>
+                  <p className="text-xs text-gray-400">{isDuck ? 'scans / claims' : 'clicks'}</p>
+                </div>
 
-              <div className="shrink-0 flex flex-col items-end gap-2">
-                <CopyButton text={shortUrlFor(link.slug)} />
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => toggleActive(link)}
-                    className="text-xs font-medium text-gray-400 hover:text-gray-700 transition-colors"
-                  >
-                    {link.is_active ? 'Disable' : 'Enable'}
-                  </button>
-                  <button
-                    onClick={() => handleDelete(link)}
-                    className="text-gray-300 hover:text-red-500 transition-colors"
-                    aria-label="Delete short link"
-                  >
-                    <Trash2 size={14} />
-                  </button>
+                <div className="shrink-0 flex flex-col items-end gap-2">
+                  <CopyButton text={shortUrlFor(link.slug)} />
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => toggleActive(link)}
+                      className="text-xs font-medium text-gray-400 hover:text-gray-700 transition-colors"
+                    >
+                      {link.is_active ? 'Disable' : 'Enable'}
+                    </button>
+                    <button
+                      onClick={() => handleDelete(link)}
+                      className="text-gray-300 hover:text-red-500 transition-colors"
+                      aria-label="Delete short link"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       )}
 

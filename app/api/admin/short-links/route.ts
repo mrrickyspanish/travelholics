@@ -49,6 +49,10 @@ export async function POST(req: NextRequest) {
   const destinationUrl = typeof payload.destination_url === 'string' ? payload.destination_url.trim() : ''
   const label = typeof payload.label === 'string' ? payload.label.trim() : ''
   const requestedSlug = typeof payload.slug === 'string' ? normalizeSlug(payload.slug) : ''
+  const metadata =
+    payload.metadata && typeof payload.metadata === 'object' && !Array.isArray(payload.metadata)
+      ? (payload.metadata as Record<string, unknown>)
+      : {}
 
   if (!isValidDestinationUrl(destinationUrl)) {
     return NextResponse.json(
@@ -61,7 +65,10 @@ export async function POST(req: NextRequest) {
   if (slug) {
     if (!isValidSlug(slug)) {
       return NextResponse.json(
-        { error: 'Slugs may only use lowercase letters, numbers, and hyphens.' },
+        {
+          error:
+            'Slugs may only use lowercase letters, numbers, and hyphens, and must be 64 characters or fewer.',
+        },
         { status: 400 }
       )
     }
@@ -75,6 +82,7 @@ export async function POST(req: NextRequest) {
       slug,
       destination_url: destinationUrl,
       label: label || null,
+      metadata,
       created_by: session.user.email ?? null,
     })
     .select('*')
@@ -83,6 +91,15 @@ export async function POST(req: NextRequest) {
   if (error) {
     if (error.code === '23505') {
       return NextResponse.json({ error: 'That slug is already taken.' }, { status: 409 })
+    }
+    if (error.code === '23514') {
+      return NextResponse.json(
+        {
+          error:
+            'That slug isn\'t valid — use lowercase letters, numbers, and hyphens, 64 characters or fewer.',
+        },
+        { status: 400 }
+      )
     }
     return NextResponse.json({ error: error.message }, { status: 500 })
   }

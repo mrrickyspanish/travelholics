@@ -190,6 +190,8 @@ export default function DuckHuntPage() {
     const batch = queryParams?.get("batch")?.trim() || null;
     const ship = queryParams?.get("ship")?.trim() || null;
     const source = queryParams?.get("source")?.trim() || null;
+    const cruise = queryParams?.get("cruise")?.trim() || null;
+    const scanId = queryParams?.get("scan")?.trim() || null;
     const insertedShip = shipName.trim() || ship || null;
 
     if (!newsletterOptIn) {
@@ -211,6 +213,8 @@ export default function DuckHuntPage() {
           batch,
           ship,
           source,
+          cruise,
+          scanId,
           newsletterOptIn,
           consentText: DUCK_HUNT_CONSENT_TEXT,
         }),
