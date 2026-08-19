@@ -69,14 +69,18 @@ export async function POST(request: Request) {
     subject = `Duck Hunt Gift Entry from ${payload.firstName || "Website Visitor"}`;
     htmlContent = `
       <h2>Duck Hunt Gift Entry</h2>
-      <p><strong>First Name:</strong> ${payload.firstName || "N/A"}</p>
+      <p><strong>Name:</strong> ${payload.firstName || "N/A"} ${payload.lastName || ""}</p>
       <p><strong>Email:</strong> ${payload.email || "N/A"}</p>
-      <p><strong>City:</strong> ${payload.city || "N/A"}</p>
+      <p><strong>Hometown:</strong> ${payload.city || "N/A"}</p>
       <p><strong>Ship:</strong> ${payload.shipName || payload.ship || "N/A"}</p>
       <p><strong>Travel Reason:</strong> ${payload.travelReason || "N/A"}</p>
       <p><strong>Duck Number:</strong> ${payload.duckNumber || "N/A"}</p>
       <p><strong>Batch:</strong> ${payload.batch || "N/A"}</p>
       <p><strong>Source:</strong> ${payload.source || "N/A"}</p>
+      <p><strong>Shipping Address:</strong><br/>
+        ${payload.shippingAddress1 || "N/A"}${payload.shippingAddress2 ? `<br/>${payload.shippingAddress2}` : ""}<br/>
+        ${payload.shippingCity || "N/A"}, ${payload.shippingState || "N/A"} ${payload.shippingZip || "N/A"}
+      </p>
       <p><strong>Newsletter Opt-In:</strong> ${payload.newsletterOptIn ? "Yes" : "No"}</p>
       <p><strong>Consent Text:</strong> ${payload.consentText || "N/A"}</p>
     `;

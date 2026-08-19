@@ -8,6 +8,7 @@ const DUCK_HUNT_INTERESTS = ["newsletter", "duck_hunt", "shop_deals", "cruise_de
 
 type DuckHuntClaimRequest = {
   firstName?: string;
+  lastName?: string;
   email?: string;
   city?: string;
   shipName?: string | null;
@@ -18,6 +19,11 @@ type DuckHuntClaimRequest = {
   source?: string | null;
   cruise?: string | null;
   scanId?: string | null;
+  shippingAddress1?: string;
+  shippingAddress2?: string;
+  shippingCity?: string;
+  shippingState?: string;
+  shippingZip?: string;
   newsletterOptIn?: boolean;
   consentText?: string;
 };
@@ -52,6 +58,7 @@ export async function POST(request: Request) {
 
   const body = (await request.json()) as DuckHuntClaimRequest;
   const firstName = body.firstName?.trim() || "";
+  const lastName = body.lastName?.trim() || "";
   const rawEmail = body.email?.trim() || "";
   const email = normalizeEmail(rawEmail);
   const consentText = body.consentText?.trim() || DUCK_HUNT_CONSENT_TEXT;
@@ -59,9 +66,20 @@ export async function POST(request: Request) {
   const insertedShip = body.shipName?.trim() || body.ship?.trim() || null;
   const cruise = body.cruise?.trim() || null;
   const scanId = body.scanId?.trim() && isValidUuid(body.scanId.trim()) ? body.scanId.trim() : null;
+  const shippingAddress1 = body.shippingAddress1?.trim() || "";
+  const shippingCity = body.shippingCity?.trim() || "";
+  const shippingState = body.shippingState?.trim() || "";
+  const shippingZip = body.shippingZip?.trim() || "";
 
   if (!firstName || !rawEmail || !isValidEmail(rawEmail)) {
     return NextResponse.json({ error: "First name and a valid email are required." }, { status: 400 });
+  }
+
+  if (!lastName || !shippingAddress1 || !shippingCity || !shippingState || !shippingZip) {
+    return NextResponse.json(
+      { error: "A full shipping address is required so we can mail your magnet." },
+      { status: 400 },
+    );
   }
 
   if (!body.newsletterOptIn) {
@@ -77,6 +95,7 @@ export async function POST(request: Request) {
 
   const leadPayload = {
     first_name: firstName,
+    last_name: lastName,
     email,
     city: body.city?.trim() || null,
     travel_reason: body.travelReason || null,
@@ -86,6 +105,11 @@ export async function POST(request: Request) {
     source,
     cruise,
     scan_id: scanId,
+    shipping_address1: shippingAddress1,
+    shipping_address2: body.shippingAddress2?.trim() || null,
+    shipping_city: shippingCity,
+    shipping_state: shippingState,
+    shipping_zip: shippingZip,
     newsletter_opt_in: true,
     consent_text: consentText,
     consented_at: new Date().toISOString(),

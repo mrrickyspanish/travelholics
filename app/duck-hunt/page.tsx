@@ -73,9 +73,15 @@ export default function DuckHuntPage() {
   const [travelReason, setTravelReason] = useState<TravelReason>("Vacation");
   const [formState, setFormState] = useState<FormState>("idle");
   const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [shipName, setShipName] = useState("");
+  const [shippingAddress1, setShippingAddress1] = useState("");
+  const [shippingAddress2, setShippingAddress2] = useState("");
+  const [shippingCity, setShippingCity] = useState("");
+  const [shippingState, setShippingState] = useState("");
+  const [shippingZip, setShippingZip] = useState("");
   const [newsletterOptIn, setNewsletterOptIn] = useState(false);
   const [website, setWebsite] = useState("");
   const [shipLabel, setShipLabel] = useState("your ship");
@@ -216,6 +222,12 @@ export default function DuckHuntPage() {
     const scanId = queryParams?.get("scan")?.trim() || null;
     const insertedShip = shipName.trim() || ship || null;
 
+    if (!lastName.trim() || !shippingAddress1.trim() || !shippingCity.trim() || !shippingState.trim() || !shippingZip.trim()) {
+      setErrorMessage("Please fill in your full shipping address so we can mail your magnet.");
+      setFormState("error");
+      return;
+    }
+
     if (!newsletterOptIn) {
       setErrorMessage(
         "Check the box above to opt into the newsletter — it's required to claim your reward."
@@ -224,55 +236,59 @@ export default function DuckHuntPage() {
       return;
     }
 
+    const claimPayload = {
+      firstName,
+      lastName,
+      email,
+      city,
+      shipName: insertedShip,
+      travelReason,
+      duckNumber,
+      batch,
+      ship,
+      source,
+      cruise,
+      scanId,
+      shippingAddress1,
+      shippingAddress2,
+      shippingCity,
+      shippingState,
+      shippingZip,
+      newsletterOptIn,
+      consentText: DUCK_HUNT_CONSENT_TEXT,
+    };
+
     try {
       const claimResponse = await fetch("/api/duck-hunt/claim", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName,
-          email,
-          city,
-          shipName: insertedShip,
-          travelReason,
-          duckNumber,
-          batch,
-          ship,
-          source,
-          cruise,
-          scanId,
-          newsletterOptIn,
-          consentText: DUCK_HUNT_CONSENT_TEXT,
-        }),
+        body: JSON.stringify(claimPayload),
       });
 
       if (!claimResponse.ok) {
         const responseBody = await claimResponse.json().catch(() => null);
         throw new Error(responseBody?.error || "Unable to submit Duck Hunt claim.");
       }
-
-      await sendFormEmail({
-        formType: "duck-hunt",
-        firstName,
-        email,
-        city,
-        shipName: insertedShip,
-        travelReason,
-        duckNumber,
-        batch,
-        source,
-        newsletterOptIn,
-        consentText: DUCK_HUNT_CONSENT_TEXT,
-      });
-
-      setFormState("success");
-      fireConfetti();
     } catch (err) {
-      console.error("Duck hunt submission error:", err);
+      console.error("Duck hunt claim submission error:", err);
       setErrorMessage(
         "Something went wrong submitting your claim. Please try again in a moment."
       );
       setFormState("error");
+      return;
     }
+
+    // The claim is safely saved at this point — the reward is secured
+    // regardless of what happens next. The internal notification email is
+    // a secondary, best-effort side effect: it must never flip the user
+    // back to an "error" state (and risk a confusing duplicate resubmit)
+    // just because Resend hiccupped or ship wifi dropped a request.
+    setFormState("success");
+    fireConfetti();
+
+    sendFormEmail({ formType: "duck-hunt", ...claimPayload }).catch((err) => {
+      console.error("Duck hunt notification email failed (claim already saved):", err);
+    });
   }
 
   return (
@@ -572,6 +588,21 @@ export default function DuckHuntPage() {
 
                 <div>
                   <div className="type-kicker text-[#10553C] mb-2">
+                    Last Name
+                  </div>
+                  <input
+                    required
+                    type="text"
+                    autoComplete="family-name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Your last name"
+                    className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <div className="type-kicker text-[#10553C] mb-2">
                     Email Address
                   </div>
                   <input
@@ -612,6 +643,69 @@ export default function DuckHuntPage() {
                     placeholder="Navigator of the Seas"
                     className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
                   />
+                </div>
+
+                <div className="space-y-6">
+                  <div className="type-kicker text-[#10553C]">
+                    Where Should We Ship Your Magnet?
+                  </div>
+
+                  <div>
+                    <input
+                      required
+                      type="text"
+                      autoComplete="address-line1"
+                      value={shippingAddress1}
+                      onChange={(e) => setShippingAddress1(e.target.value)}
+                      placeholder="Street address"
+                      className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <input
+                      type="text"
+                      autoComplete="address-line2"
+                      value={shippingAddress2}
+                      onChange={(e) => setShippingAddress2(e.target.value)}
+                      placeholder="Apt / suite (optional)"
+                      className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <input
+                      required
+                      type="text"
+                      autoComplete="address-level2"
+                      value={shippingCity}
+                      onChange={(e) => setShippingCity(e.target.value)}
+                      placeholder="City"
+                      className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <input
+                      required
+                      type="text"
+                      autoComplete="address-level1"
+                      value={shippingState}
+                      onChange={(e) => setShippingState(e.target.value)}
+                      placeholder="State"
+                      className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
+                    />
+                    <input
+                      required
+                      type="text"
+                      inputMode="numeric"
+                      autoComplete="postal-code"
+                      value={shippingZip}
+                      onChange={(e) => setShippingZip(e.target.value)}
+                      placeholder="ZIP"
+                      className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -719,13 +813,12 @@ export default function DuckHuntPage() {
                   </div>
                   <div>
                     <div className="text-[#F7F4EF] font-bold text-base mb-1">
-                      Check your inbox
+                      We&apos;re shipping your magnet
                     </div>
                     <div className="type-caption text-[#F7F4EF]/45">
-                      Look for an email at{" "}
-                      <span className="text-[#F7F4EF]">{email}</span> —
-                      we&apos;ll confirm your mailing address and get your
-                      Cruise Life magnet shipped.
+                      It ships within 2–3 weeks to the address you gave us.
+                      We&apos;ll send a confirmation to{" "}
+                      <span className="text-[#F7F4EF]">{email}</span>.
                     </div>
                   </div>
                 </div>
