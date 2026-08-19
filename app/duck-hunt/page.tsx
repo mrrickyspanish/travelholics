@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
 import { useReducedMotion } from "framer-motion";
 import { sendFormEmail } from "@/lib/form-email";
-import { Footer } from "@/components/footer";
+import { DuckHuntFooter } from "@/components/duck-hunt-footer";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -436,8 +436,8 @@ export default function DuckHuntPage() {
                   className="relative mb-9 block w-[220px] h-[220px] mx-auto"
                 >
                   <Image
-                    src="/images/travelholic_ticket_magnent_pacific.png"
-                    alt="Travelholics cruise door magnet"
+                    src="/images/traveholics_duck.svg"
+                    alt="The Travelholics duck you found"
                     fill
                     className="object-contain p-2"
                     priority
@@ -764,7 +764,7 @@ export default function DuckHuntPage() {
           }}
         />
       </div>
-      <Footer />
+      <DuckHuntFooter />
     </>
   );
 }
