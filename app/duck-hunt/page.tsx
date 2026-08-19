@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
@@ -60,6 +60,7 @@ function formatShipName(ship: string | null) {
 
 export default function DuckHuntPage() {
   const prefersReducedMotion = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [animPhase, setAnimPhase] = useState<AnimPhase>("gift");
   const [boxBounce, setBoxBounce] = useState(false);
   const [boxShake, setBoxShake] = useState(false);
@@ -179,6 +180,19 @@ export default function DuckHuntPage() {
     const t7 = setTimeout(() => setDuckFloat(true), 3600);
     return () => [t1, t2, t3, t4, t5, t6, t7].forEach(clearTimeout);
   }, [prefersReducedMotion]);
+
+  // Safari doesn't toggle play/pause on a tap anywhere on the video like
+  // other browsers do — only its own tiny control-bar button does, which
+  // reads as "the video is broken" on an iPhone. Wire the tap explicitly.
+  function handleVideoClick() {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -488,12 +502,14 @@ export default function DuckHuntPage() {
                     </p>
                   </div>
                 <video
-                  src="/videos/traveholic_pacific_door_magnent.mp4"
+                  ref={videoRef}
+                  onClick={handleVideoClick}
+                  src="/videos/travelholics_pacific_mexican_door_magnet.mp4"
                   controls
                   loop
                   playsInline
                   poster="/images/travelholic_ticket_magnent_pacific.png"
-                  className="rounded-2xl w-full max-w-[320px] aspect-video border border-[#D4A853]/20 shadow-lg mb-5 bg-black"
+                  className="rounded-2xl w-full max-w-[320px] aspect-video border border-[#D4A853]/20 shadow-lg mb-5 bg-black cursor-pointer"
                   preload="metadata"
                   aria-label="Watch a Travelholics cruiser show off their magnet!"
                 >
