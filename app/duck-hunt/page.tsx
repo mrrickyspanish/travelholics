@@ -6,7 +6,6 @@ import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
 import { useReducedMotion } from "framer-motion";
 import { sendFormEmail } from "@/lib/form-email";
-import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
 const playfair = Playfair_Display({
@@ -79,10 +78,18 @@ export default function DuckHuntPage() {
   const [newsletterOptIn, setNewsletterOptIn] = useState(false);
   const [website, setWebsite] = useState("");
   const [shipLabel, setShipLabel] = useState("your ship");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    setShipLabel(formatShipName(queryParams.get("ship")));
+    const shipParam = queryParams.get("ship");
+    const formattedShip = formatShipName(shipParam);
+    setShipLabel(formattedShip);
+    // Pre-fill from the QR scan so cruisers aren't asked to retype what we
+    // already know — the field stays editable in case it's wrong.
+    if (shipParam) {
+      setShipName(formattedShip);
+    }
   }, []);
 
   async function fireConfetti() {
@@ -176,6 +183,7 @@ export default function DuckHuntPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setFormState("submitting");
+    setErrorMessage("");
 
     if (website.trim()) {
       setFormState("success");
@@ -195,6 +203,9 @@ export default function DuckHuntPage() {
     const insertedShip = shipName.trim() || ship || null;
 
     if (!newsletterOptIn) {
+      setErrorMessage(
+        "Check the box above to opt into the newsletter — it's required to claim your reward."
+      );
       setFormState("error");
       return;
     }
@@ -243,13 +254,15 @@ export default function DuckHuntPage() {
       fireConfetti();
     } catch (err) {
       console.error("Duck hunt submission error:", err);
+      setErrorMessage(
+        "Something went wrong submitting your claim. Please try again in a moment."
+      );
       setFormState("error");
     }
   }
 
   return (
     <>
-      <Header />
       <style>{`
         @keyframes boxBounce {
           0%,100% { transform: translateY(0) scaleX(1) scaleY(1); }
@@ -285,6 +298,9 @@ export default function DuckHuntPage() {
       `}</style>
 
       <div className="bg-[#FAF9F6] text-gray-900 antialiased overflow-x-hidden min-h-screen">
+        {/* Intentionally not the shared site <Header /> — this is a single-goal
+            claim funnel, so the nav is a minimal brand mark only, no site links
+            to navigate away on. */}
         <nav className="fixed top-0 w-full z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#E2DDD6] flex justify-between items-center px-6 h-16">
           <span
             className={`${playfair.className} text-xl font-black text-[#0D2D4A] tracking-widest uppercase`}
@@ -474,8 +490,6 @@ export default function DuckHuntPage() {
                 <video
                   src="/videos/traveholic_pacific_door_magnent.mp4"
                   controls
-                  autoPlay
-                  muted
                   loop
                   playsInline
                   poster="/images/travelholic_ticket_magnent_pacific.png"
@@ -619,10 +633,8 @@ export default function DuckHuntPage() {
                   </span>
                 </label>
 
-                {formState === "error" && (
-                  <p className="type-body text-red-500 text-center">
-                    Please complete the required newsletter opt-in so we can submit your reward claim.
-                  </p>
+                {formState === "error" && errorMessage && (
+                  <p className="type-body text-red-500 text-center">{errorMessage}</p>
                 )}
                 <button
                   type="submit"
@@ -679,7 +691,7 @@ export default function DuckHuntPage() {
                     {shipLabel} cruise door magnet
                   </p>
                   <p className="mt-1 text-xs leading-relaxed text-[#F7F4EF]/65">
-                    A little keepsake from the Navigator of the Seas duck hunt.
+                    A little keepsake from the {shipLabel} duck hunt.
                   </p>
                 </div>
               </div>
@@ -694,8 +706,10 @@ export default function DuckHuntPage() {
                       Check your inbox
                     </div>
                     <div className="type-caption text-[#F7F4EF]/45">
-                      Look for an email from us — we&apos;ll confirm your
-                      mailing address and get your Cruise Life magnet shipped.
+                      Look for an email at{" "}
+                      <span className="text-[#F7F4EF]">{email}</span> —
+                      we&apos;ll confirm your mailing address and get your
+                      Cruise Life magnet shipped.
                     </div>
                   </div>
                 </div>
@@ -709,8 +723,8 @@ export default function DuckHuntPage() {
                       Follow us on TikTok
                     </div>
                     <div className="type-caption text-[#F7F4EF]/45">
-                      Cruise tips, deals, and trip ideas @rjsmom1 — this is
-                      where the Cruise Life community lives.
+                      Cruise tips, deals, and trip ideas @rjsmom1 — and find
+                      us on Instagram and YouTube below too.
                     </div>
                   </div>
                 </div>
