@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { Resend } from "resend";
 
-const OWNER_EMAIL = "rjsmom1_68@yahoo.com";
+const OWNER_EMAIL = "book@yotravelholic.com";
 const BCC_EMAIL = "ricky@creativeeyestudios.com";
 
 export async function POST(request: Request) {
@@ -154,7 +154,7 @@ function buyerEmailHtml({
 
             <p style="margin:0 0 6px;font-size:14px;color:#333;line-height:1.6;">
               Questions? Reply to this email or reach us at
-              <a href="mailto:hello@yotravelholic.com" style="color:#e05c4b;text-decoration:none;">hello@yotravelholic.com</a>.
+              <a href="mailto:book@yotravelholic.com" style="color:#e05c4b;text-decoration:none;">book@yotravelholic.com</a>.
             </p>
             <p style="margin:20px 0 0;font-size:14px;color:#999;">Order ref: ${sessionId.slice(-12).toUpperCase()}</p>
           </td>

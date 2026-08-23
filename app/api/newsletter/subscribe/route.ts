@@ -6,11 +6,11 @@ const DEFAULT_CONSENT_TEXT =
   "Yes, sign me up for the Travelholics Cruise Life list so I can receive cruise deals, shop drops, travel tips, and Travelholics updates. I understand I can unsubscribe anytime.";
 
 const DEFAULT_INTERESTS = ["newsletter", "shop_deals", "cruise_deals"];
-const TO_EMAIL = "rjsmom1_68@yahoo.com";
+const TO_EMAIL = "news@yotravelholic.com";
 const BCC_EMAIL = "ricky@creativeeyestudios.com";
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 const NEWSLETTER_AUTOREPLY_ENABLED = process.env.NEWSLETTER_AUTOREPLY_ENABLED !== "false";
-const NEWSLETTER_CONTACT_EMAIL = "hello@yotravelholic.com";
+const NEWSLETTER_CONTACT_EMAIL = "news@yotravelholic.com";
 const NEWSLETTER_WEBSITE_URL = "yotravelholic.com";
 
 type NewsletterSubscribeRequest = {
