@@ -140,7 +140,7 @@ Currently using an automatic server-side flow:
 
 1. **User submits form** → Data is saved to Supabase where applicable
 2. **Server route sends email** → `/app/api/submit-form/route.ts` delivers the message through Resend
-3. **You receive:** Form data at rjsmom1_68@yahoo.com with a BCC to ricky@creativeeyestudios.com
+3. **You receive:** Form data at hello@yotravelholic.com with a BCC to ricky@creativeeyestudios.com
 
 ### Fast Follow: Resend API (V2)
 

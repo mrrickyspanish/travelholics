@@ -1,4 +1,4 @@
-export const FORM_EMAIL_TO = "rjsmom1_68@yahoo.com";
+export const FORM_EMAIL_TO = "hello@yotravelholic.com";
 export const FORM_EMAIL_BCC = "ricky@creativeeyestudios.com";
 
 export type FormEmailPayload = {

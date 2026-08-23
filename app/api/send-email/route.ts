@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const TO_EMAIL = "rjsmom1_68@yahoo.com";
+const TO_EMAIL = "hello@yotravelholic.com";
 const BCC_EMAIL = "ricky@creativeeyestudios.com";
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 
