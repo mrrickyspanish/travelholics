@@ -45,6 +45,23 @@ const nextConfig: NextConfig = {
         destination: "/duck-hunt",
         permanent: false,
       },
+      // Short alias for the address-collection email so the link stays
+      // readable in an inbox (and survives being read aloud).
+      {
+        source: "/magnet",
+        destination: "/duck-hunt-address",
+        permanent: false,
+      },
+      {
+        source: "/magnet/",
+        destination: "/duck-hunt-address",
+        permanent: false,
+      },
+      {
+        source: "/duck-hunt-address/",
+        destination: "/duck-hunt-address",
+        permanent: false,
+      },
       {
         source: "/duck/navigator-of-the-seas",
         destination:
