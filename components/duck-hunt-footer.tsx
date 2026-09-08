@@ -10,16 +10,16 @@ import { Instagram, Youtube } from "lucide-react";
 // the legal minimum (copyright, privacy, terms).
 
 const TikTokIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+  <svg viewBox="0 0 24 24" fill="currentColor" className="h-[18px] w-[18px]">
     <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.87a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.3z" />
   </svg>
 );
 
 export const DuckHuntFooter = () => {
   return (
-    <footer className="bg-[#0D2D4A] px-6 py-10">
-      <div className="max-w-[390px] mx-auto flex flex-col items-center text-center">
-        <div className="w-9 h-9 rounded-full bg-[#10553C] p-1.5 flex items-center justify-center overflow-hidden mb-3">
+    <footer className="bg-[#1A2E2A] px-6 py-14 sm:py-16">
+      <div className="mx-auto flex max-w-[560px] flex-col items-center text-center">
+        <div className="mb-5 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-[#0d4a3a] p-2">
           <Image
             src="/images/traveholics_duck.svg"
             alt="Travelholics duck"
@@ -29,21 +29,21 @@ export const DuckHuntFooter = () => {
           />
         </div>
 
-        <div className="flex gap-2.5 mb-5">
+        <div className="mb-7 flex gap-3">
           <a
             href="https://www.instagram.com/yotravelholic"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D4A853] flex items-center justify-center transition-colors"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-[#f59e0b]"
             aria-label="Instagram"
           >
-            <Instagram size={15} className="text-white" />
+            <Instagram size={18} className="text-white" />
           </a>
           <a
             href="https://www.tiktok.com/@rjsmom1"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D4A853] flex items-center justify-center transition-colors"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-[#f59e0b]"
             aria-label="TikTok"
           >
             <TikTokIcon />
@@ -52,21 +52,21 @@ export const DuckHuntFooter = () => {
             href="https://www.youtube.com/@yotravelholic"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D4A853] flex items-center justify-center transition-colors"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-[#f59e0b]"
             aria-label="YouTube"
           >
-            <Youtube size={15} className="text-white" />
+            <Youtube size={18} className="text-white" />
           </a>
         </div>
 
-        <p className="type-caption text-white/40 mb-2">
+        <p className="mb-3 text-[16px] text-white/55">
           &copy; {new Date().getFullYear()} Travelholics. All rights reserved.
         </p>
-        <div className="flex items-center gap-4 type-caption text-white/40">
-          <Link href="/privacy" className="hover:text-white/70 transition-colors">
+        <div className="flex items-center gap-6 text-[16px] text-white/55">
+          <Link href="/privacy" className="underline-offset-2 transition-colors hover:text-white hover:underline">
             Privacy Policy
           </Link>
-          <Link href="/terms" className="hover:text-white/70 transition-colors">
+          <Link href="/terms" className="underline-offset-2 transition-colors hover:text-white hover:underline">
             Terms
           </Link>
         </div>

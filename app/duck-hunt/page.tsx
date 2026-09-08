@@ -1,18 +1,27 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Playfair_Display } from "next/font/google";
 import { useReducedMotion } from "framer-motion";
 import { sendFormEmail } from "@/lib/form-email";
 import { DuckHuntFooter } from "@/components/duck-hunt-footer";
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  weight: ["700", "900"],
-});
+// ------------------------------------------------------------------
+// Duck Hunt claim funnel
+//
+// Reached by scanning a duck's QR code on a ship — so it is phone-first,
+// on bad wifi, from someone standing in a hallway holding a rubber duck.
+// Every decision below serves that: one goal, no exit ramps, no extra
+// font downloads, and a form that reads as three small asks rather than
+// twelve fields.
+//
+// Palette and type are the SITE's tokens (app/globals.css), not a private
+// set: Fraunces via the global `font-serif` utility, emerald-deep #0d4a3a,
+// sand #F5EFE4, cream #FCFAF5, ink #1A2E2A, gold #f59e0b, coral #F26A75.
+// An earlier version forked its own near-miss palette and loaded Playfair
+// on top of the global fonts, which is most of why it read as off-brand.
+// ------------------------------------------------------------------
 
 type TravelReason =
   | "Vacation"
@@ -22,15 +31,15 @@ type TravelReason =
   | "Birthday"
   | "Other";
 type FormState = "idle" | "submitting" | "success" | "error";
-type AnimPhase = "gift" | "revealed";
+type AnimPhase = "sealed" | "revealed";
 
 const CONFETTI_COLORS = [
-  "#10553C",
-  "#0D2D4A",
-  "#D4A853",
-  "#1a7a56",
-  "#0d6e9e",
-  "#2DD4A0",
+  "#0d4a3a",
+  "#10755A",
+  "#f59e0b",
+  "#F26A75",
+  "#F4C4CC",
+  "#FCFAF5",
 ];
 
 const TRAVEL_OPTIONS: TravelReason[] = [
@@ -42,8 +51,56 @@ const TRAVEL_OPTIONS: TravelReason[] = [
   "Other",
 ];
 
+const US_STATES = [
+  "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI",
+  "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN",
+  "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH",
+  "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA",
+  "VI", "WA", "WV", "WI", "WY",
+];
+
+// Must stay byte-identical to the copy in /api/duck-hunt/claim — it is the
+// consent record stored against the subscriber, not decoration.
 const DUCK_HUNT_CONSENT_TEXT =
   "Yes, sign me up for the Travelholics Cruise Life list so I can receive cruise deals, shop drops, travel tips, and updates connected to my Duck Hunt reward. I understand I can unsubscribe anytime.";
+
+type ClaimValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  city: string;
+  shipName: string;
+  shippingAddress1: string;
+  shippingAddress2: string;
+  shippingCity: string;
+  shippingState: string;
+  shippingZip: string;
+};
+
+const INITIAL_VALUES: ClaimValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  city: "",
+  shipName: "",
+  shippingAddress1: "",
+  shippingAddress2: "",
+  shippingCity: "",
+  shippingState: "",
+  shippingZip: "",
+};
+
+// Drives both validation and the progress meter, so the bar can never
+// disagree with what the submit button will actually accept.
+const REQUIRED_FIELDS: (keyof ClaimValues)[] = [
+  "firstName",
+  "lastName",
+  "email",
+  "shippingAddress1",
+  "shippingCity",
+  "shippingState",
+  "shippingZip",
+];
 
 function formatShipName(ship: string | null) {
   if (!ship) return "your ship";
@@ -58,34 +115,225 @@ function formatShipName(ship: string | null) {
     .join(" ");
 }
 
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function validate(values: ClaimValues, newsletterOptIn: boolean) {
+  const errors: Partial<Record<keyof ClaimValues | "consent", string>> = {};
+
+  if (!values.firstName.trim()) errors.firstName = "We need a first name for the package.";
+  if (!values.lastName.trim()) errors.lastName = "We need a last name for the package.";
+  if (!values.email.trim()) {
+    errors.email = "Add an email so we can confirm it shipped.";
+  } else if (!isValidEmail(values.email.trim())) {
+    errors.email = "That email doesn't look quite right.";
+  }
+  if (!values.shippingAddress1.trim()) errors.shippingAddress1 = "Add a street address.";
+  if (!values.shippingCity.trim()) errors.shippingCity = "Add a city.";
+  if (!values.shippingState.trim()) errors.shippingState = "Pick a state.";
+  if (!values.shippingZip.trim()) {
+    errors.shippingZip = "Add a ZIP code.";
+  } else if (!/^\d{5}(-\d{4})?$/.test(values.shippingZip.trim())) {
+    errors.shippingZip = "ZIP should be 5 digits.";
+  }
+  if (!newsletterOptIn) errors.consent = "Check the box so we can send your magnet and updates.";
+
+  return errors;
+}
+
+// ------------------------------------------------------------------
+// Form primitives
+//
+// Defined at module scope so React keeps the input instances mounted
+// between renders (a component defined inside the page body remounts on
+// every keystroke and drops focus). Visible persistent labels, 54px
+// targets and 17px text are deliberate: the old placeholder-as-label
+// underlines vanished the moment someone started typing.
+// ------------------------------------------------------------------
+
+const FIELD_BASE =
+  "w-full min-h-[54px] rounded-2xl border bg-white px-4 py-3.5 text-[17px] leading-snug text-[#1A2E2A] outline-none transition-shadow transition-colors placeholder:text-[#A9B3AC] focus:ring-4";
+
+function fieldClass(hasError?: boolean) {
+  return `${FIELD_BASE} ${
+    hasError
+      ? "border-[#D9505C] focus:border-[#D9505C] focus:ring-[#D9505C]/15"
+      : "border-[#DED6C6] focus:border-[#0d4a3a] focus:ring-[#0d4a3a]/12"
+  }`;
+}
+
+function FieldShell({
+  id,
+  label,
+  optional,
+  error,
+  hint,
+  children,
+}: {
+  id: string;
+  label: string;
+  optional?: boolean;
+  error?: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-2">
+      <label htmlFor={id} className="block text-[16px] font-bold text-[#1A2E2A]">
+        {label}
+        {optional && <span className="ml-1.5 font-medium text-[#6B7B74]">(optional)</span>}
+      </label>
+      {children}
+      {error ? (
+        <p id={`${id}-error`} className="flex items-start gap-1.5 text-[15px] font-medium text-[#C0392B]">
+          <span aria-hidden="true">↑</span>
+          {error}
+        </p>
+      ) : hint ? (
+        <p className="text-[15px] text-[#6B7B74]">{hint}</p>
+      ) : null}
+    </div>
+  );
+}
+
+type TextFieldProps = {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  error?: string;
+  hint?: string;
+  optional?: boolean;
+  type?: string;
+  inputMode?: "text" | "email" | "numeric" | "tel";
+  autoComplete?: string;
+  placeholder?: string;
+};
+
+function TextField({
+  id,
+  label,
+  value,
+  onChange,
+  error,
+  hint,
+  optional,
+  type = "text",
+  inputMode,
+  autoComplete,
+  placeholder,
+}: TextFieldProps) {
+  return (
+    <FieldShell id={id} label={label} optional={optional} error={error} hint={hint}>
+      <input
+        id={id}
+        name={id}
+        type={type}
+        inputMode={inputMode}
+        autoComplete={autoComplete}
+        placeholder={placeholder}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${id}-error` : undefined}
+        className={fieldClass(Boolean(error))}
+      />
+    </FieldShell>
+  );
+}
+
+function StateField({
+  value,
+  onChange,
+  error,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  error?: string;
+}) {
+  return (
+    <FieldShell id="shippingState" label="State" error={error}>
+      <select
+        id="shippingState"
+        name="shippingState"
+        autoComplete="address-level1"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? "shippingState-error" : undefined}
+        className={`${fieldClass(Boolean(error))} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236B7B74%22 stroke-width=%222%22 stroke-linecap=%22round%22><path d=%22M6 9l6 6 6-6%22/></svg>')] bg-[length:22px_22px] bg-[right_1rem_center] bg-no-repeat pr-12`}
+      >
+        <option value="">Select</option>
+        {US_STATES.map((state) => (
+          <option key={state} value={state}>
+            {state}
+          </option>
+        ))}
+      </select>
+    </FieldShell>
+  );
+}
+
+function StepHeading({ step, title, blurb }: { step: number; title: string; blurb: string }) {
+  return (
+    <div className="mb-7 flex items-start gap-4">
+      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#0d4a3a] text-[16px] font-black text-[#FCFAF5]">
+        {step}
+      </span>
+      <div>
+        <h3 className="font-serif text-[26px] leading-tight font-semibold text-[#1A2E2A] sm:text-[30px]">
+          {title}
+        </h3>
+        <p className="mt-1.5 text-[17px] leading-relaxed text-[#4B5B54]">{blurb}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function DuckHuntPage() {
   const prefersReducedMotion = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [animPhase, setAnimPhase] = useState<AnimPhase>("gift");
-  const [boxBounce, setBoxBounce] = useState(false);
-  const [boxShake, setBoxShake] = useState(false);
-  const [lidGone, setLidGone] = useState(false);
-  const [d1Visible, setD1Visible] = useState(false);
-  const [d2Visible, setD2Visible] = useState(false);
-  const [d3Visible, setD3Visible] = useState(false);
-  const [duckFloat, setDuckFloat] = useState(false);
+  const claimRef = useRef<HTMLElement>(null);
 
+  const [animPhase, setAnimPhase] = useState<AnimPhase>("sealed");
+  const [ringsActive, setRingsActive] = useState(false);
+  const [duckVisible, setDuckVisible] = useState(false);
+  const [duckBob, setDuckBob] = useState(false);
+  const [copyVisible, setCopyVisible] = useState(false);
+  const [showStickyCta, setShowStickyCta] = useState(false);
+
+  const [values, setValues] = useState<ClaimValues>(INITIAL_VALUES);
   const [travelReason, setTravelReason] = useState<TravelReason>("Vacation");
-  const [formState, setFormState] = useState<FormState>("idle");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [city, setCity] = useState("");
-  const [shipName, setShipName] = useState("");
-  const [shippingAddress1, setShippingAddress1] = useState("");
-  const [shippingAddress2, setShippingAddress2] = useState("");
-  const [shippingCity, setShippingCity] = useState("");
-  const [shippingState, setShippingState] = useState("");
-  const [shippingZip, setShippingZip] = useState("");
   const [newsletterOptIn, setNewsletterOptIn] = useState(false);
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof ClaimValues | "consent", string>>
+  >({});
+  const [formState, setFormState] = useState<FormState>("idle");
+  const [submitError, setSubmitError] = useState("");
   const [website, setWebsite] = useState("");
   const [shipLabel, setShipLabel] = useState("your ship");
-  const [errorMessage, setErrorMessage] = useState("");
+
+  const setField = useCallback(
+    <K extends keyof ClaimValues>(key: K, value: ClaimValues[K]) => {
+      setValues((current) => ({ ...current, [key]: value }));
+      // Clear a field's error the moment it's being fixed — leaving stale red
+      // under a field someone is actively correcting reads as broken.
+      setErrors((current) => {
+        if (!current[key]) return current;
+        const next = { ...current };
+        delete next[key];
+        return next;
+      });
+    },
+    [],
+  );
+
+  const progress = useMemo(() => {
+    const filled = REQUIRED_FIELDS.filter((key) => values[key].trim()).length;
+    const total = REQUIRED_FIELDS.length + 1; // + the consent checkbox
+    return Math.round(((filled + (newsletterOptIn ? 1 : 0)) / total) * 100);
+  }, [values, newsletterOptIn]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -95,97 +343,88 @@ export default function DuckHuntPage() {
     // Pre-fill from the QR scan so cruisers aren't asked to retype what we
     // already know — the field stays editable in case it's wrong.
     if (shipParam) {
-      setShipName(formattedShip);
+      setValues((current) => ({ ...current, shipName: formattedShip }));
     }
   }, []);
 
-  async function fireConfetti() {
+  const fireConfetti = useCallback(async () => {
     if (typeof window === "undefined" || prefersReducedMotion) return;
     const { default: confetti } = await import("canvas-confetti");
     confetti({
-      particleCount: 300,
+      particleCount: 260,
       spread: 100,
       origin: { x: 0.5, y: 0.45 },
       colors: CONFETTI_COLORS,
-      startVelocity: 55,
-      gravity: 0.8,
-      scalar: 1.2,
-      ticks: 200,
+      startVelocity: 52,
+      gravity: 0.85,
+      scalar: 1.15,
+      ticks: 190,
     });
     setTimeout(() => {
       confetti({
-        particleCount: 150,
+        particleCount: 130,
         spread: 120,
         origin: { x: 0.1, y: 0.5 },
         colors: CONFETTI_COLORS,
-        startVelocity: 45,
+        startVelocity: 44,
         angle: 60,
         gravity: 0.85,
       });
       confetti({
-        particleCount: 150,
+        particleCount: 130,
         spread: 120,
         origin: { x: 0.9, y: 0.5 },
         colors: CONFETTI_COLORS,
-        startVelocity: 45,
+        startVelocity: 44,
         angle: 120,
         gravity: 0.85,
       });
     }, 150);
-    setTimeout(() => {
-      confetti({
-        particleCount: 120,
-        spread: 160,
-        origin: { x: 0.3, y: 0 },
-        colors: CONFETTI_COLORS,
-        startVelocity: 20,
-        gravity: 0.6,
-        scalar: 0.9,
-      });
-      confetti({
-        particleCount: 120,
-        spread: 160,
-        origin: { x: 0.7, y: 0 },
-        colors: CONFETTI_COLORS,
-        startVelocity: 20,
-        gravity: 0.6,
-        scalar: 0.9,
-      });
-    }, 350);
-  }
+  }, [prefersReducedMotion]);
 
+  // The reveal: a porthole on the water, ripples spreading, then the duck
+  // surfaces. Replaces a gift box made of three bare divs that read as an
+  // unfinished placeholder rather than a gift.
   useEffect(() => {
     if (prefersReducedMotion) {
       setAnimPhase("revealed");
-      setBoxBounce(false);
-      setBoxShake(false);
-      setLidGone(false);
-      setD1Visible(true);
-      setD2Visible(true);
-      setD3Visible(true);
-      setDuckFloat(false);
+      setRingsActive(false);
+      setDuckVisible(true);
+      setDuckBob(false);
+      setCopyVisible(true);
       return;
     }
 
-    const t1 = setTimeout(() => setBoxBounce(true), 300);
-    const t2 = setTimeout(() => {
-      setBoxBounce(false);
-      setBoxShake(true);
-    }, 1400);
-    const t3 = setTimeout(() => {
-      setBoxShake(false);
-      setLidGone(true);
-      fireConfetti();
-    }, 1900);
-    const t4 = setTimeout(() => {
-      setAnimPhase("revealed");
-      setD1Visible(true);
-    }, 2700);
-    const t5 = setTimeout(() => setD2Visible(true), 2900);
-    const t6 = setTimeout(() => setD3Visible(true), 3250);
-    const t7 = setTimeout(() => setDuckFloat(true), 3600);
-    return () => [t1, t2, t3, t4, t5, t6, t7].forEach(clearTimeout);
-  }, [prefersReducedMotion]);
+    const timers = [
+      setTimeout(() => setRingsActive(true), 250),
+      setTimeout(() => {
+        setAnimPhase("revealed");
+        setDuckVisible(true);
+        fireConfetti();
+      }, 1500),
+      setTimeout(() => setCopyVisible(true), 1850),
+      setTimeout(() => setDuckBob(true), 2500),
+    ];
+
+    return () => timers.forEach(clearTimeout);
+  }, [prefersReducedMotion, fireConfetti]);
+
+  // Sticky CTA only while the form is off-screen, so it can never sit on top
+  // of the submit button it's pointing at.
+  useEffect(() => {
+    const target = claimRef.current;
+    if (!target || formState === "success") {
+      setShowStickyCta(false);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowStickyCta(!entry.isIntersecting),
+      { threshold: 0.03 },
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [formState]);
 
   // Safari doesn't toggle play/pause on a tap anywhere on the video like
   // other browsers do — only its own tiny control-bar button does, which
@@ -200,48 +439,46 @@ export default function DuckHuntPage() {
     }
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setFormState("submitting");
-    setErrorMessage("");
+  async function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    setSubmitError("");
 
     if (website.trim()) {
       setFormState("success");
       return;
     }
 
+    const nextErrors = validate(values, newsletterOptIn);
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      setFormState("error");
+      // Send focus to the first problem rather than making someone hunt for
+      // the red text on a long mobile form.
+      const firstKey = Object.keys(nextErrors)[0];
+      const target = document.getElementById(firstKey === "consent" ? "newsletterOptIn" : firstKey);
+      target?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "center" });
+      target?.focus({ preventScroll: true });
+      return;
+    }
+
+    setErrors({});
+    setFormState("submitting");
+
     const queryParams =
-      typeof window !== "undefined"
-        ? new URLSearchParams(window.location.search)
-        : null;
+      typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
     const duckNumber = queryParams?.get("duck")?.trim() || null;
     const batch = queryParams?.get("batch")?.trim() || null;
     const ship = queryParams?.get("ship")?.trim() || null;
     const source = queryParams?.get("source")?.trim() || null;
     const cruise = queryParams?.get("cruise")?.trim() || null;
     const scanId = queryParams?.get("scan")?.trim() || null;
-    const insertedShip = shipName.trim() || ship || null;
-
-    if (!lastName.trim() || !shippingAddress1.trim() || !shippingCity.trim() || !shippingState.trim() || !shippingZip.trim()) {
-      setErrorMessage("Please fill in your full shipping address so we can mail your magnet.");
-      setFormState("error");
-      return;
-    }
-
-    if (!newsletterOptIn) {
-      setErrorMessage(
-        "Check the box above to opt into the newsletter — it's required to claim your reward."
-      );
-      setFormState("error");
-      return;
-    }
 
     const claimPayload = {
-      firstName,
-      lastName,
-      email,
-      city,
-      shipName: insertedShip,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      city: values.city,
+      shipName: values.shipName.trim() || ship || null,
       travelReason,
       duckNumber,
       batch,
@@ -249,11 +486,11 @@ export default function DuckHuntPage() {
       source,
       cruise,
       scanId,
-      shippingAddress1,
-      shippingAddress2,
-      shippingCity,
-      shippingState,
-      shippingZip,
+      shippingAddress1: values.shippingAddress1,
+      shippingAddress2: values.shippingAddress2,
+      shippingCity: values.shippingCity,
+      shippingState: values.shippingState,
+      shippingZip: values.shippingZip,
       newsletterOptIn,
       consentText: DUCK_HUNT_CONSENT_TEXT,
     };
@@ -271,8 +508,8 @@ export default function DuckHuntPage() {
       }
     } catch (err) {
       console.error("Duck hunt claim submission error:", err);
-      setErrorMessage(
-        "Something went wrong submitting your claim. Please try again in a moment."
+      setSubmitError(
+        "Something went wrong submitting your claim. Ship wifi can be rough — please try again in a moment.",
       );
       setFormState("error");
       return;
@@ -284,6 +521,7 @@ export default function DuckHuntPage() {
     // back to an "error" state (and risk a confusing duplicate resubmit)
     // just because Resend hiccupped or ship wifi dropped a request.
     setFormState("success");
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
     fireConfetti();
 
     sendFormEmail({ formType: "duck-hunt", ...claimPayload }).catch((err) => {
@@ -294,563 +532,635 @@ export default function DuckHuntPage() {
   return (
     <>
       <style>{`
-        @keyframes boxBounce {
-          0%,100% { transform: translateY(0) scaleX(1) scaleY(1); }
-          20%      { transform: translateY(-50px) scaleX(0.95) scaleY(1.05); }
-          40%      { transform: translateY(0) scaleX(1.05) scaleY(0.95); }
-          60%      { transform: translateY(-28px) scaleX(0.97) scaleY(1.03); }
-          80%      { transform: translateY(0) scaleX(1.02) scaleY(0.98); }
+        @keyframes dhRipple {
+          0%   { transform: scale(0.55); opacity: 0.55; }
+          100% { transform: scale(2.1); opacity: 0; }
         }
-        @keyframes boxShake {
-          0%,100% { transform: rotate(0deg); }
-          20%     { transform: rotate(-5deg) translateX(-4px); }
-          40%     { transform: rotate(5deg) translateX(4px); }
-          60%     { transform: rotate(-4deg) translateX(-3px); }
-          80%     { transform: rotate(4deg) translateX(3px); }
-        }
-        @keyframes lidFly {
-          0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
-          100% { transform: translateY(-300px) rotate(-28deg) scale(0.8); opacity: 0; }
-        }
-        @keyframes duckPop {
-          0%   { transform: translateY(50px) scale(0.4); opacity: 0; }
-          65%  { transform: translateY(-10px) scale(1.1); opacity: 1; }
+        @keyframes dhDuckRise {
+          0%   { transform: translateY(64px) scale(0.55); opacity: 0; }
+          60%  { transform: translateY(-14px) scale(1.06); opacity: 1; }
           100% { transform: translateY(0) scale(1); opacity: 1; }
         }
-        @keyframes duckFloat {
-          0%,100% { transform: translateY(0); }
-          50%     { transform: translateY(-8px); }
+        @keyframes dhDuckBob {
+          0%,100% { transform: translateY(0) rotate(-1.5deg); }
+          50%     { transform: translateY(-11px) rotate(1.5deg); }
         }
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(24px); }
+        @keyframes dhFadeUp {
+          from { opacity: 0; transform: translateY(22px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes dhSheen {
+          0%,100% { opacity: 0.45; }
+          50%     { opacity: 0.9; }
+        }
+        @keyframes dhSlideUp {
+          from { opacity: 0; transform: translateY(100%); }
           to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
 
-      <div className="bg-[#FAF9F6] text-gray-900 antialiased overflow-x-hidden min-h-screen">
+      <div className="min-h-screen overflow-x-hidden bg-[#F5EFE4] text-[#1A2E2A] antialiased">
         {/* Intentionally not the shared site <Header /> — this is a single-goal
             claim funnel, so the nav is a minimal brand mark only, no site links
             to navigate away on. */}
-        <nav className="fixed top-0 w-full z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#E2DDD6] flex justify-between items-center px-6 h-16">
-          <span
-            className={`${playfair.className} text-xl font-black text-[#0D2D4A] tracking-widest uppercase`}
-          >
+        <nav className="fixed top-0 z-50 flex h-[68px] w-full items-center justify-between border-b border-[#E0D8C8] bg-[#F5EFE4]/92 px-5 backdrop-blur-md sm:px-8">
+          <span className="font-serif text-[21px] font-black uppercase tracking-[0.18em] text-[#0d4a3a]">
             Travelholics
           </span>
-          <div className="w-8 h-8 rounded-full bg-[#10553C] p-1 flex items-center justify-center overflow-hidden">
+          <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#0d4a3a] p-1.5">
             <Image
               src="/images/traveholics_duck.svg"
               alt="Travelholics duck"
-              width={24}
-              height={24}
+              width={26}
+              height={26}
               className="h-full w-full object-contain"
               priority
             />
           </div>
         </nav>
 
-        <main className="w-full max-w-[390px] mx-auto bg-[#FAF9F6] overflow-hidden pt-16 pb-16">
-          <section className="relative min-h-[700px] flex flex-col justify-center items-center px-8 py-16 overflow-hidden">
+        <main className="pt-[68px]">
+          {/* ---------------------------------------------------------- */}
+          {/* Reveal                                                      */}
+          {/* ---------------------------------------------------------- */}
+          <section
+            className="relative overflow-hidden px-6 py-20 sm:px-10 sm:py-24 lg:py-32"
+            hidden={formState === "success"}
+          >
             <div
-              className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full pointer-events-none"
-              style={{ background: "rgba(16,85,60,.25)" }}
+              className="pointer-events-none absolute -left-32 -top-24 h-[420px] w-[420px] rounded-full"
+              style={{ background: "radial-gradient(circle, rgba(13,74,58,0.16), transparent 68%)" }}
             />
             <div
-              className="absolute -top-16 -right-16 w-64 h-64 rounded-full pointer-events-none"
-              style={{ background: "rgba(13,100,150,.18)" }}
+              className="pointer-events-none absolute -bottom-32 -right-24 h-[380px] w-[380px] rounded-full"
+              style={{ background: "radial-gradient(circle, rgba(245,158,11,0.18), transparent 68%)" }}
             />
 
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.05]">
-              <svg width="360" height="360" viewBox="0 0 360 360" fill="none">
-                <g stroke="#0D2D4A">
-                  <circle cx="180" cy="180" r="60" strokeWidth=".8" />
-                  <circle cx="180" cy="180" r="110" strokeWidth=".8" />
-                  <circle cx="180" cy="180" r="160" strokeWidth=".6" />
-                  <line x1="180" y1="0" x2="180" y2="360" strokeWidth=".8" />
-                  <line x1="0" y1="180" x2="360" y2="180" strokeWidth=".8" />
-                  <line x1="0" y1="0" x2="360" y2="360" strokeWidth=".6" />
-                  <line x1="360" y1="0" x2="0" y2="360" strokeWidth=".6" />
-                </g>
-              </svg>
-            </div>
-
-            {animPhase === "gift" && (
-              <div className="relative z-10 flex flex-col items-center">
-                <div
-                  style={{
-                    animation: boxBounce
-                      ? "boxBounce 1.1s cubic-bezier(.36,.07,.19,.97)"
-                      : boxShake
-                        ? "boxShake 0.45s ease-in-out"
-                        : "none",
-                  }}
-                  className="relative"
-                >
-                  <div
+            <div className="relative mx-auto max-w-[760px] text-center">
+              {/* Porthole + duck */}
+              <div className="relative mx-auto mb-12 flex h-[240px] w-[240px] items-center justify-center sm:h-[300px] sm:w-[300px]">
+                {[0, 1, 2].map((index) => (
+                  <span
+                    key={index}
+                    aria-hidden="true"
+                    className="absolute h-[150px] w-[150px] rounded-full border-2 border-[#0d4a3a]/35 sm:h-[190px] sm:w-[190px]"
                     style={{
-                      animation: lidGone
-                        ? "lidFly 0.45s cubic-bezier(.17,.67,.35,1.2) forwards"
-                        : "none",
+                      animation:
+                        ringsActive && !prefersReducedMotion
+                          ? `dhRipple 2.6s cubic-bezier(.2,.6,.35,1) ${index * 0.55}s infinite`
+                          : "none",
+                      opacity: prefersReducedMotion ? 0.18 : 0,
                     }}
-                    className="absolute -left-2 -top-8 w-[116px] h-7 bg-[#10553C] rounded-t-md z-10"
-                  >
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full h-[7px] bg-white/10" />
-                    </div>
-                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 flex gap-0.5 items-end">
-                      <div className="w-[22px] h-[18px] border-[5px] border-[#D4A853] rounded-full -rotate-[35deg]" />
-                      <div className="w-3 h-3 bg-[#D4A853] rounded-full mb-0.5 z-10 relative" />
-                      <div className="w-[22px] h-[18px] border-[5px] border-[#D4A853] rounded-full rotate-[35deg]" />
-                    </div>
-                  </div>
+                  />
+                ))}
 
-                  <div
-                    className="w-[100px] h-[86px] bg-white rounded-b-md relative overflow-hidden border border-t-0 border-[#E2DDD6]"
-                    style={{ boxShadow: "0 10px 30px rgba(13,45,74,.1)" }}
-                  >
-                    <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[9px] bg-[#10553C]/15" />
-                    <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#D4A853]/30" />
-                  </div>
-                </div>
-
-                <p className="type-kicker text-[#10553C]/65 mt-9">
-                  Something&apos;s inside...
-                </p>
-              </div>
-            )}
-
-            {animPhase === "revealed" && (
-              <div className="relative z-10 text-center px-2">
                 <div
+                  aria-hidden="true"
+                  className="absolute h-[164px] w-[164px] rounded-full border-[3px] border-[#f59e0b]/55 bg-[#0d4a3a] sm:h-[206px] sm:w-[206px]"
                   style={{
-                    animation: prefersReducedMotion
-                      ? "none"
-                      : d1Visible
-                        ? "fadeUp .5s ease forwards"
+                    boxShadow: "inset 0 14px 40px rgba(0,0,0,.4), 0 22px 50px rgba(13,74,58,.28)",
+                    animation:
+                      animPhase === "sealed" && !prefersReducedMotion
+                        ? "dhSheen 1.5s ease-in-out infinite"
                         : "none",
-                    opacity: prefersReducedMotion ? 1 : 0,
                   }}
-                  className="inline-block border border-[#10553C]/25 rounded-full px-5 py-2.5 mb-8 bg-[#10553C]/6"
-                >
-                  <span className="type-kicker text-[#10553C]">
-                    OFFICIAL TRAVELHOLICS DUCK FIND
-                  </span>
-                </div>
+                />
 
                 <div
+                  className="relative h-[176px] w-[176px] sm:h-[220px] sm:w-[220px]"
                   style={{
                     animation: prefersReducedMotion
                       ? "none"
-                      : !d2Visible
-                      ? "none"
-                      : duckFloat
-                        ? "duckFloat 3s ease-in-out infinite"
-                        : "duckPop .65s cubic-bezier(.22,.61,.36,1) forwards",
-                    opacity: d2Visible ? 1 : 0,
-                    filter: "drop-shadow(0 8px 24px rgba(13,45,74,.15))",
+                      : !duckVisible
+                        ? "none"
+                        : duckBob
+                          ? "dhDuckBob 3.4s ease-in-out infinite"
+                          : "dhDuckRise .8s cubic-bezier(.22,.61,.36,1) forwards",
+                    opacity: duckVisible ? 1 : 0,
+                    filter: "drop-shadow(0 16px 34px rgba(26,46,42,.34))",
                   }}
-                  className="relative mb-9 block w-[220px] h-[220px] mx-auto"
                 >
                   <Image
                     src="/images/traveholics_duck.svg"
                     alt="The Travelholics duck you found"
                     fill
-                    className="object-contain p-2"
+                    className="object-contain"
                     priority
                   />
                 </div>
+              </div>
 
+              {animPhase === "sealed" && !prefersReducedMotion && (
+                <p className="text-[17px] font-bold uppercase tracking-[0.22em] text-[#0d4a3a]/70">
+                  Something&apos;s surfacing…
+                </p>
+              )}
+
+              {animPhase === "revealed" && (
                 <div
                   style={{
                     animation: prefersReducedMotion
                       ? "none"
-                      : d3Visible
-                        ? "fadeUp .6s ease forwards"
+                      : copyVisible
+                        ? "dhFadeUp .6s ease forwards"
                         : "none",
                     opacity: prefersReducedMotion ? 1 : 0,
                   }}
                 >
-                  <h1
-                    className={`${playfair.className} type-page-title text-[#0D2D4A] mb-2`}
-                  >
+                  <span className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#0d4a3a]/25 bg-[#0d4a3a]/8 px-5 py-2.5 text-[14px] font-extrabold uppercase tracking-[0.16em] text-[#0d4a3a]">
+                    Official duck find
+                  </span>
+
+                  <h1 className="font-serif text-[44px] font-bold leading-[1.02] tracking-[-0.02em] text-[#1A2E2A] sm:text-[62px] lg:text-[76px]">
                     You found the duck.
                   </h1>
-
-                  <h2
-                    className={`${playfair.className} type-page-subhead font-bold italic mb-7`}
-                    style={{ color: "#0E9E72" }}
-                  >
+                  <p className="mt-3 font-serif text-[30px] font-semibold italic leading-tight text-[#10755A] sm:text-[40px] lg:text-[46px]">
                     Now claim your magnet.
-                  </h2>
+                  </p>
 
-                  <p className="type-body-lg text-[#3A5244] max-w-[290px] mx-auto mb-9">
+                  <p className="mx-auto mt-8 max-w-[52ch] text-[18px] leading-[1.65] text-[#3F5049] sm:text-[20px]">
                     Travelholics ducks are hidden across cruise ships for fellow
-                    travelers to discover. If you found one, we&apos;re sending
-                    you an official Travelholics Cruise Life magnet to bring the
-                    memory home and rep your next sailing in style.
+                    travelers to discover. You found one — so we&apos;re sending you
+                    an official Cruise Life door magnet to bring the memory home
+                    and rep your next sailing in style.
                   </p>
 
                   <a
-                    href="#form"
-                    className="type-cta flex min-h-12 w-full items-center justify-center py-5 bg-[#10553C] text-[#FAF9F6] tracking-[.1em] uppercase rounded-[4px] text-center active:scale-[.98] transition-transform"
+                    href="#claim"
+                    className="mt-11 inline-flex min-h-[56px] w-full max-w-[420px] items-center justify-center rounded-2xl bg-[#0d4a3a] px-9 text-[17px] font-extrabold uppercase tracking-[0.1em] text-[#FCFAF5] shadow-[0_14px_32px_rgba(13,74,58,0.3)] transition-transform hover:bg-[#0f5a46] active:scale-[.985]"
                   >
-                    Claim My Magnet →
+                    Claim my magnet →
                   </a>
 
-                  <p className="type-caption text-[#9AA89F] mt-3.5">
-                    No purchase necessary. Welcome to Cruise Life.
+                  <p className="mt-5 text-[16px] text-[#6B7B74]">
+                    Free. No purchase necessary. Welcome to Cruise Life.
                   </p>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </section>
 
+          {/* ---------------------------------------------------------- */}
+          {/* Claim: product panel + form                                 */}
+          {/* ---------------------------------------------------------- */}
           {formState !== "success" && (
-            <section className="px-6 py-16 bg-[#FAF9F6] scroll-mt-24" id="form">
-              {/* UGC Magnet Ad Video above the form */}
-              <div className="w-full flex flex-col items-center mb-8">
-                  <div className="w-full max-w-[320px] mb-3">
-                    <p className="type-kicker text-[#10553C] mb-1">
-                      SEE THE MAGNET IN ACTION
-                    </p>
-                    <p className="type-caption text-[#6B8077]">
-                      A quick look at the Travelholics Cruise Life magnet and why cruisers are making it part of their cabin door tradition.
-                    </p>
-                  </div>
-                <video
-                  ref={videoRef}
-                  onClick={handleVideoClick}
-                  src="/videos/travelholics_pacific_mexican_door_magnet.mp4"
-                  controls
-                  loop
-                  playsInline
-                  poster="/images/travelholic_ticket_magnent_pacific.png"
-                  className="rounded-2xl w-full max-w-[320px] aspect-video border border-[#D4A853]/20 shadow-lg mb-5 bg-black cursor-pointer"
-                  preload="metadata"
-                  aria-label="Watch a Travelholics cruiser show off their magnet!"
-                >
-                  Sorry, your browser does not support embedded videos.
-                </video>
-              </div>
-              <div className="mb-10">
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="w-[3px] h-[72px] bg-[#10553C] rounded-full shrink-0 mt-1" />
-                  <div>
-                    <div
-                      className={`${playfair.className} type-section-title text-[#0D2D4A] leading-none`}
-                    >
-                      Where should we send
+            <section
+              ref={claimRef}
+              id="claim"
+              className="scroll-mt-[68px] border-t border-[#E5DDCD] bg-[#FCFAF5] px-6 py-20 sm:px-10 sm:py-24 lg:py-28"
+            >
+              <div className="mx-auto grid max-w-[1180px] gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-20">
+                {/* What you're getting */}
+                <aside className="lg:sticky lg:top-[100px] lg:self-start">
+                  <p className="text-[14px] font-extrabold uppercase tracking-[0.18em] text-[#10755A]">
+                    Your reward
+                  </p>
+                  <h2 className="mt-3 font-serif text-[34px] font-bold leading-[1.08] tracking-[-0.02em] text-[#1A2E2A] sm:text-[42px]">
+                    The Cruise Life door magnet
+                  </h2>
+                  <p className="mt-4 max-w-[46ch] text-[18px] leading-[1.65] text-[#3F5049]">
+                    Hand-picked for the {shipLabel} duck hunt. It goes on your
+                    cabin door, survives the sea air, and comes home with you.
+                  </p>
+
+                  <div className="mt-8 overflow-hidden rounded-3xl border border-[#E5DDCD] bg-white shadow-[0_18px_44px_rgba(26,46,42,0.09)]">
+                    <div className="relative aspect-square w-full bg-[#F5EFE4]">
+                      <Image
+                        src="/images/travelholic_ticket_magnent_pacific.png"
+                        alt="Travelholics Cruise Life cruise door magnet"
+                        fill
+                        className="object-contain p-8"
+                        sizes="(max-width: 1024px) 92vw, 440px"
+                      />
                     </div>
-                    <div
-                      className={`${playfair.className} type-section-title font-bold italic leading-none mt-1`}
-                      style={{ color: "#0E9E72" }}
-                    >
-                      your magnet?
+                    <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-[#EFE7D8] px-6 py-5 text-[16px] font-semibold text-[#3F5049]">
+                      <span>Ships free</span>
+                      <span className="text-[#C9BFAC]">•</span>
+                      <span>2–3 weeks</span>
+                      <span className="text-[#C9BFAC]">•</span>
+                      <span>US addresses</span>
                     </div>
                   </div>
-                </div>
-                <p className="type-body text-[#6B8077] ml-[15px]">
-                  Tell us a little about your cruise so we can personalize your Travelholics Cruise Life delivery.
-                </p>
-              </div>
 
-              <form className="space-y-8 relative" onSubmit={handleSubmit}>
-                <p className="sr-only" aria-live="polite" role="status">
-                  {formState === "submitting" ? "Submitting your magnet claim." : ""}
-                </p>
-                <div className="absolute -left-[10000px] top-auto w-px h-px overflow-hidden" aria-hidden="true">
-                  <label htmlFor="website">Website</label>
-                  <input
-                    id="website"
-                    name="website"
-                    type="text"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                  />
-                </div>
+                  <div className="mt-8">
+                    <p className="text-[14px] font-extrabold uppercase tracking-[0.18em] text-[#10755A]">
+                      See it in action
+                    </p>
+                    <p className="mt-2 max-w-[46ch] text-[17px] leading-relaxed text-[#4B5B54]">
+                      A quick look at why cruisers are making the magnet part of
+                      their cabin door tradition.
+                    </p>
+                    <video
+                      ref={videoRef}
+                      onClick={handleVideoClick}
+                      src="/videos/travelholics_pacific_mexican_door_magnet.mp4"
+                      controls
+                      loop
+                      playsInline
+                      poster="/images/pacific_mexican_door_magnent.png"
+                      className="mt-4 aspect-video w-full cursor-pointer rounded-2xl border border-[#E5DDCD] bg-black shadow-[0_14px_34px_rgba(26,46,42,0.12)]"
+                      preload="metadata"
+                      aria-label="Watch a Travelholics cruiser show off their magnet"
+                    >
+                      Sorry, your browser does not support embedded videos.
+                    </video>
+                  </div>
+                </aside>
 
+                {/* Form */}
                 <div>
-                  <div className="type-kicker text-[#10553C] mb-2">
-                    First Name
-                  </div>
-                  <input
-                    required
-                    type="text"
-                    autoComplete="given-name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="Your first name"
-                    className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
-                  />
-                </div>
+                  <div className="mb-10">
+                    <h2 className="font-serif text-[36px] font-bold leading-[1.06] tracking-[-0.02em] text-[#1A2E2A] sm:text-[46px]">
+                      Where should we send it?
+                    </h2>
+                    <p className="mt-4 max-w-[46ch] text-[18px] leading-[1.65] text-[#3F5049]">
+                      Three quick steps. Takes about a minute, even on ship wifi.
+                    </p>
 
-                <div>
-                  <div className="type-kicker text-[#10553C] mb-2">
-                    Last Name
-                  </div>
-                  <input
-                    required
-                    type="text"
-                    autoComplete="family-name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Your last name"
-                    className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <div className="type-kicker text-[#10553C] mb-2">
-                    Email Address
-                  </div>
-                  <input
-                    required
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="hello@example.com"
-                    className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <div className="type-kicker text-[#10553C] mb-2">
-                    Where Are You From?
-                  </div>
-                  <input
-                    type="text"
-                    autoComplete="address-level2"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    placeholder="City, State"
-                    className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <div className="type-kicker text-[#10553C] mb-2">
-                    WHAT SHIP ARE YOU SAILING ON?
-                  </div>
-                  <input
-                    type="text"
-                    autoComplete="organization"
-                    value={shipName}
-                    onChange={(e) => setShipName(e.target.value)}
-                    placeholder="Navigator of the Seas"
-                    className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
-                  />
-                </div>
-
-                <div className="space-y-6">
-                  <div className="type-kicker text-[#10553C]">
-                    Where Should We Ship Your Magnet?
+                    <div className="mt-7">
+                      <div
+                        className="h-2 w-full overflow-hidden rounded-full bg-[#E5DDCD]"
+                        role="progressbar"
+                        aria-valuenow={progress}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-label="Claim form progress"
+                      >
+                        <div
+                          className="h-full rounded-full bg-[#10755A] transition-[width] duration-500 ease-out"
+                          style={{ width: `${progress}%` }}
+                        />
+                      </div>
+                      <p className="mt-2.5 text-[15px] font-semibold text-[#6B7B74]">
+                        {progress === 100 ? "All set — send it through." : `${progress}% complete`}
+                      </p>
+                    </div>
                   </div>
 
-                  <div>
-                    <input
-                      required
-                      type="text"
-                      autoComplete="address-line1"
-                      value={shippingAddress1}
-                      onChange={(e) => setShippingAddress1(e.target.value)}
-                      placeholder="Street address"
-                      className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
-                    />
-                  </div>
+                  <form onSubmit={handleSubmit} className="relative space-y-12" noValidate>
+                    <p className="sr-only" aria-live="polite" role="status">
+                      {formState === "submitting" ? "Submitting your magnet claim." : ""}
+                    </p>
 
-                  <div>
-                    <input
-                      type="text"
-                      autoComplete="address-line2"
-                      value={shippingAddress2}
-                      onChange={(e) => setShippingAddress2(e.target.value)}
-                      placeholder="Apt / suite (optional)"
-                      className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
-                    />
-                  </div>
+                    <div
+                      className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
+                      aria-hidden="true"
+                    >
+                      <label htmlFor="website">Website</label>
+                      <input
+                        id="website"
+                        name="website"
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={website}
+                        onChange={(e) => setWebsite(e.target.value)}
+                      />
+                    </div>
 
-                  <div>
-                    <input
-                      required
-                      type="text"
-                      autoComplete="address-level2"
-                      value={shippingCity}
-                      onChange={(e) => setShippingCity(e.target.value)}
-                      placeholder="City"
-                      className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
-                    />
-                  </div>
+                    {/* Step 1 */}
+                    <div>
+                      <StepHeading
+                        step={1}
+                        title="Who found it?"
+                        blurb="So we know whose name goes on the package."
+                      />
+                      <div className="grid gap-5 sm:grid-cols-2">
+                        <TextField
+                          id="firstName"
+                          label="First name"
+                          value={values.firstName}
+                          onChange={(value) => setField("firstName", value)}
+                          error={errors.firstName}
+                          autoComplete="given-name"
+                          placeholder="Jane"
+                        />
+                        <TextField
+                          id="lastName"
+                          label="Last name"
+                          value={values.lastName}
+                          onChange={(value) => setField("lastName", value)}
+                          error={errors.lastName}
+                          autoComplete="family-name"
+                          placeholder="Smith"
+                        />
+                        <div className="sm:col-span-2">
+                          <TextField
+                            id="email"
+                            label="Email address"
+                            type="email"
+                            inputMode="email"
+                            value={values.email}
+                            onChange={(value) => setField("email", value)}
+                            error={errors.email}
+                            hint="We'll confirm here when your magnet ships."
+                            autoComplete="email"
+                            placeholder="jane@email.com"
+                          />
+                        </div>
+                      </div>
+                    </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <input
-                      required
-                      type="text"
-                      autoComplete="address-level1"
-                      value={shippingState}
-                      onChange={(e) => setShippingState(e.target.value)}
-                      placeholder="State"
-                      className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
-                    />
-                    <input
-                      required
-                      type="text"
-                      inputMode="numeric"
-                      autoComplete="postal-code"
-                      value={shippingZip}
-                      onChange={(e) => setShippingZip(e.target.value)}
-                      placeholder="ZIP"
-                      className="w-full bg-transparent border-b-[1.5px] border-[#C8C4BC] py-3 text-[17px] text-[#0D2D4A] placeholder:text-[#C8C4BC] focus:outline-none focus:border-[#10553C] transition-colors"
-                    />
-                  </div>
-                </div>
+                    {/* Step 2 */}
+                    <div>
+                      <StepHeading
+                        step={2}
+                        title="Where should we ship it?"
+                        blurb="US addresses only for now. Double-check the apartment number — it's the top reason a magnet comes back."
+                      />
+                      <div className="grid gap-5 sm:grid-cols-2">
+                        <div className="sm:col-span-2">
+                          <TextField
+                            id="shippingAddress1"
+                            label="Street address"
+                            value={values.shippingAddress1}
+                            onChange={(value) => setField("shippingAddress1", value)}
+                            error={errors.shippingAddress1}
+                            autoComplete="address-line1"
+                            placeholder="123 Harbor Lane"
+                          />
+                        </div>
+                        <div className="sm:col-span-2">
+                          <TextField
+                            id="shippingAddress2"
+                            label="Apt / suite"
+                            optional
+                            value={values.shippingAddress2}
+                            onChange={(value) => setField("shippingAddress2", value)}
+                            autoComplete="address-line2"
+                            placeholder="Apt 4B"
+                          />
+                        </div>
+                        <div className="sm:col-span-2">
+                          <TextField
+                            id="shippingCity"
+                            label="City"
+                            value={values.shippingCity}
+                            onChange={(value) => setField("shippingCity", value)}
+                            error={errors.shippingCity}
+                            autoComplete="address-level2"
+                            placeholder="Port Canaveral"
+                          />
+                        </div>
+                        <StateField
+                          value={values.shippingState}
+                          onChange={(value) => setField("shippingState", value)}
+                          error={errors.shippingState}
+                        />
+                        <TextField
+                          id="shippingZip"
+                          label="ZIP code"
+                          inputMode="numeric"
+                          value={values.shippingZip}
+                          onChange={(value) => setField("shippingZip", value)}
+                          error={errors.shippingZip}
+                          autoComplete="postal-code"
+                          placeholder="32920"
+                        />
+                      </div>
+                    </div>
 
-                <div>
-                  <div className="type-kicker text-[#10553C] mb-3">
-                    What&apos;s the Occasion?
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {TRAVEL_OPTIONS.map((option) => (
-                      <button
-                        key={option}
-                        type="button"
-                        onClick={() => setTravelReason(option)}
-                        className={`min-h-12 px-4 py-2 text-sm font-bold rounded-[2px] tracking-[.05em] transition-all border ${
-                          travelReason === option
-                            ? "bg-[#0D2D4A] text-[#FAF9F6] border-[#0D2D4A]"
-                            : "bg-transparent text-[#0D2D4A] border-[#C8C4BC] hover:border-[#0D2D4A]"
+                    {/* Step 3 */}
+                    <div>
+                      <StepHeading
+                        step={3}
+                        title="Tell us about your sailing"
+                        blurb="Optional, but it helps us personalize what we send you next."
+                      />
+                      <div className="grid gap-5 sm:grid-cols-2">
+                        <TextField
+                          id="shipName"
+                          label="What ship are you on?"
+                          optional
+                          value={values.shipName}
+                          onChange={(value) => setField("shipName", value)}
+                          autoComplete="organization"
+                          placeholder="Navigator of the Seas"
+                        />
+                        <TextField
+                          id="city"
+                          label="Where are you from?"
+                          optional
+                          value={values.city}
+                          onChange={(value) => setField("city", value)}
+                          autoComplete="address-level2"
+                          placeholder="City, State"
+                        />
+                      </div>
+
+                      <fieldset className="mt-7">
+                        <legend className="mb-3.5 block text-[16px] font-bold text-[#1A2E2A]">
+                          What&apos;s the occasion?
+                        </legend>
+                        <div className="flex flex-wrap gap-2.5">
+                          {TRAVEL_OPTIONS.map((option) => (
+                            <button
+                              key={option}
+                              type="button"
+                              aria-pressed={travelReason === option}
+                              onClick={() => setTravelReason(option)}
+                              className={`min-h-[48px] rounded-full border px-5 text-[16px] font-bold transition-colors ${
+                                travelReason === option
+                                  ? "border-[#0d4a3a] bg-[#0d4a3a] text-[#FCFAF5]"
+                                  : "border-[#DED6C6] bg-white text-[#1A2E2A] hover:border-[#0d4a3a]"
+                              }`}
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                      </fieldset>
+                    </div>
+
+                    {/* Consent + submit */}
+                    <div className="space-y-6">
+                      <label
+                        htmlFor="newsletterOptIn"
+                        className={`flex cursor-pointer items-start gap-4 rounded-2xl border p-5 transition-colors ${
+                          errors.consent
+                            ? "border-[#D9505C] bg-[#D9505C]/5"
+                            : "border-[#0d4a3a]/20 bg-[#0d4a3a]/[0.05]"
                         }`}
                       >
-                        {option}
+                        <input
+                          id="newsletterOptIn"
+                          name="newsletterOptIn"
+                          type="checkbox"
+                          checked={newsletterOptIn}
+                          onChange={(e) => {
+                            setNewsletterOptIn(e.target.checked);
+                            if (e.target.checked) {
+                              setErrors((current) => {
+                                if (!current.consent) return current;
+                                const next = { ...current };
+                                delete next.consent;
+                                return next;
+                              });
+                            }
+                          }}
+                          aria-invalid={errors.consent ? true : undefined}
+                          aria-describedby={errors.consent ? "consent-error" : undefined}
+                          className="mt-0.5 h-6 w-6 shrink-0 accent-[#0d4a3a]"
+                        />
+                        <span className="text-[16px] leading-[1.6] text-[#3F5049]">
+                          {DUCK_HUNT_CONSENT_TEXT}
+                        </span>
+                      </label>
+
+                      {errors.consent && (
+                        <p id="consent-error" className="text-[16px] font-semibold text-[#C0392B]">
+                          {errors.consent}
+                        </p>
+                      )}
+
+                      {submitError && (
+                        <p
+                          role="alert"
+                          className="rounded-2xl border border-[#D9505C]/35 bg-[#D9505C]/8 p-4 text-[16px] font-medium leading-relaxed text-[#C0392B]"
+                        >
+                          {submitError}
+                        </p>
+                      )}
+
+                      <button
+                        type="submit"
+                        disabled={formState === "submitting"}
+                        className="min-h-[58px] w-full rounded-2xl bg-[#0d4a3a] px-8 text-[17px] font-extrabold uppercase tracking-[0.1em] text-[#FCFAF5] shadow-[0_14px_32px_rgba(13,74,58,0.3)] transition-transform hover:bg-[#0f5a46] active:scale-[.985] disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {formState === "submitting" ? "Sending…" : "Send my magnet"}
                       </button>
-                    ))}
-                  </div>
+
+                      <p className="text-center text-[16px] text-[#6B7B74]">
+                        We only use your address to mail the magnet. Unsubscribe anytime.
+                      </p>
+                    </div>
+                  </form>
                 </div>
-
-                <label className="flex items-start gap-3 rounded-xl border border-[#10553C]/20 bg-[#10553C]/5 p-4 text-left">
-                  <input
-                    required
-                    type="checkbox"
-                    checked={newsletterOptIn}
-                    onChange={(e) => setNewsletterOptIn(e.target.checked)}
-                    className="mt-1 h-5 w-5 shrink-0 accent-[#10553C]"
-                  />
-                  <span className="type-caption leading-relaxed text-[#3A5244]">
-                    {DUCK_HUNT_CONSENT_TEXT}
-                  </span>
-                </label>
-
-                {formState === "error" && errorMessage && (
-                  <p className="type-body text-red-500 text-center">{errorMessage}</p>
-                )}
-                <button
-                  type="submit"
-                  disabled={formState === "submitting"}
-                  className="type-cta min-h-12 w-full py-5 bg-[#10553C] text-[#FAF9F6] tracking-[.1em] uppercase rounded-[4px] active:scale-[.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed"
-                >
-                  {formState === "submitting" ? "Sending..." : "SEND MY MAGNET"}
-                </button>
-              </form>
+              </div>
             </section>
           )}
 
+          {/* ---------------------------------------------------------- */}
+          {/* Confirmation                                                */}
+          {/* ---------------------------------------------------------- */}
           {formState === "success" && (
-            <section className="bg-[#0D2D4A] px-8 py-16 flex flex-col items-center text-center">
-              <div className="text-[56px] mb-6">🎉</div>
+            <section className="bg-[#0d4a3a] px-6 py-20 sm:px-10 sm:py-24 lg:py-28">
+              <div className="mx-auto max-w-[720px] text-center">
+                <span className="inline-flex items-center gap-2 rounded-full border border-[#f59e0b]/45 bg-[#f59e0b]/12 px-5 py-2.5 text-[14px] font-extrabold uppercase tracking-[0.16em] text-[#f59e0b]">
+                  Gift claimed
+                </span>
 
-              <h2
-                className={`${playfair.className} type-section-title text-[#F7F4EF] mb-2`}
-              >
-                Your magnet request is in.
-              </h2>
-              <h2
-                className={`${playfair.className} type-section-title font-bold italic mb-6`}
-                style={{ color: "#0E9E72" }}
-              >
-                We&apos;ll review your details
-              </h2>
+                <h2 className="mt-7 font-serif text-[42px] font-bold leading-[1.04] tracking-[-0.02em] text-[#FCFAF5] sm:text-[58px]">
+                  Your magnet is on the way.
+                </h2>
+                <p className="mx-auto mt-5 max-w-[46ch] text-[19px] leading-[1.65] text-[#FCFAF5]/72">
+                  Nice find, {values.firstName || "cruiser"}. Here&apos;s exactly
+                  what happens next.
+                </p>
 
-              <p className="type-body-lg text-[#F7F4EF]/60 max-w-[280px] mb-12">
-                and follow up with next steps.
-              </p>
+                {/* Shipping-to card: echoing the address back catches typos while
+                    the cruiser is still on the page and can do something about it. */}
+                <div className="mt-12 overflow-hidden rounded-3xl bg-[#FCFAF5] text-left shadow-[0_24px_60px_rgba(0,0,0,0.28)]">
+                  <div className="relative aspect-[16/10] w-full bg-[#F5EFE4]">
+                    <Image
+                      src="/images/travelholic_ticket_magnent_pacific.png"
+                      alt={`${shipLabel} cruise door magnet`}
+                      fill
+                      className="object-contain p-8"
+                      sizes="(max-width: 768px) 92vw, 680px"
+                      priority
+                    />
+                  </div>
+                  <div className="border-t border-[#EFE7D8] p-7 sm:p-9">
+                    <p className="text-[14px] font-extrabold uppercase tracking-[0.18em] text-[#10755A]">
+                      Shipping to
+                    </p>
+                    <address className="mt-3 text-[19px] not-italic leading-[1.6] font-semibold text-[#1A2E2A]">
+                      {values.firstName} {values.lastName}
+                      <br />
+                      {values.shippingAddress1}
+                      {values.shippingAddress2 && (
+                        <>
+                          <br />
+                          {values.shippingAddress2}
+                        </>
+                      )}
+                      <br />
+                      {values.shippingCity}, {values.shippingState} {values.shippingZip}
+                    </address>
+                    <p className="mt-5 text-[16px] leading-relaxed text-[#6B7B74]">
+                      Wrong address? Email{" "}
+                      <a
+                        href="mailto:hello@yotravelholic.com"
+                        className="font-semibold text-[#0d4a3a] underline underline-offset-2"
+                      >
+                        hello@yotravelholic.com
+                      </a>{" "}
+                      and we&apos;ll fix it before it ships.
+                    </p>
+                  </div>
+                </div>
 
-              <div className="w-full max-w-[320px] rounded-[22px] border border-[#D4A853]/20 bg-[#F7F4EF] p-4 shadow-2xl shadow-black/20 mb-8">
-                <div className="mb-3 flex justify-center">
-                  <span className="inline-flex items-center rounded-full border border-[#D4A853]/40 bg-[#0D2D4A] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4A853] shadow-sm">
-                    Gift claimed
-                  </span>
+                <div className="mt-10 space-y-4 text-left">
+                  {[
+                    {
+                      title: "We're packing your magnet",
+                      body: `It ships within 2–3 weeks. A confirmation goes to ${values.email}.`,
+                    },
+                    {
+                      title: "Follow along on TikTok",
+                      body: "Cruise tips, deals, and trip ideas @rjsmom1 — plus Instagram and YouTube below.",
+                    },
+                  ].map((step, index) => (
+                    <div
+                      key={step.title}
+                      className="flex gap-5 rounded-2xl border border-[#f59e0b]/20 bg-white/[0.04] p-6"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f59e0b] text-[16px] font-black text-[#0d4a3a]">
+                        {index + 1}
+                      </span>
+                      <div>
+                        <p className="text-[19px] font-bold text-[#FCFAF5]">{step.title}</p>
+                        <p className="mt-1.5 text-[17px] leading-relaxed text-[#FCFAF5]/60">
+                          {step.body}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="relative mx-auto aspect-square w-full max-w-[240px] overflow-hidden rounded-2xl bg-white">
-                  <Image
-                    src="/images/travelholic_ticket_magnent_pacific.png"
-                    alt={`${shipLabel} cruise door magnet gift`}
-                    fill
-                    className="object-contain p-4"
-                    sizes="(max-width: 390px) 72vw, 240px"
-                    priority
-                  />
-                </div>
-                <div className="mt-4 rounded-2xl bg-[#0D2D4A] px-4 py-3 text-left">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4A853]">
-                    Your gift
-                  </p>
-                  <p className="mt-1 text-sm font-bold text-[#F7F4EF]">
-                    {shipLabel} cruise door magnet
-                  </p>
-                  <p className="mt-1 text-xs leading-relaxed text-[#F7F4EF]/65">
-                    A little keepsake from the {shipLabel} duck hunt.
-                  </p>
-                </div>
+
+                <Link
+                  href="/"
+                  className="mt-12 inline-flex min-h-[56px] w-full max-w-[420px] items-center justify-center rounded-2xl border-2 border-[#f59e0b] px-9 text-[17px] font-extrabold uppercase tracking-[0.1em] text-[#f59e0b] transition-colors hover:bg-[#f59e0b] hover:text-[#0d4a3a]"
+                >
+                  Explore Cruise Life →
+                </Link>
               </div>
-
-              <div className="w-full space-y-3 text-left">
-                <div className="flex gap-4 items-start p-5 border border-[#D4A853]/15 rounded-[4px]">
-                  <div className="w-7 h-7 bg-[#D4A853] rounded-full flex items-center justify-center text-[#0D2D4A] font-black text-xs shrink-0">
-                    1
-                  </div>
-                  <div>
-                    <div className="text-[#F7F4EF] font-bold text-base mb-1">
-                      We&apos;re shipping your magnet
-                    </div>
-                    <div className="type-caption text-[#F7F4EF]/45">
-                      It ships within 2–3 weeks to the address you gave us.
-                      We&apos;ll send a confirmation to{" "}
-                      <span className="text-[#F7F4EF]">{email}</span>.
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-4 items-start p-5 border border-[#D4A853]/15 rounded-[4px]">
-                  <div className="w-7 h-7 bg-[#D4A853] rounded-full flex items-center justify-center text-[#0D2D4A] font-black text-xs shrink-0">
-                    2
-                  </div>
-                  <div>
-                    <div className="text-[#F7F4EF] font-bold text-base mb-1">
-                      Follow us on TikTok
-                    </div>
-                    <div className="type-caption text-[#F7F4EF]/45">
-                      Cruise tips, deals, and trip ideas @rjsmom1 — and find
-                      us on Instagram and YouTube below too.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <Link
-                href="/"
-                className="type-cta mt-12 text-[#D4A853] tracking-[.08em] uppercase flex items-center gap-2"
-              >
-                Join Cruise Life →
-              </Link>
             </section>
           )}
         </main>
 
+        {/* Mobile sticky CTA — only while the form is off-screen, and never
+            over the submit button it points at. */}
+        {showStickyCta && animPhase === "revealed" && formState !== "success" && (
+          <div
+            className="fixed inset-x-0 bottom-0 z-40 border-t border-[#E0D8C8] bg-[#F5EFE4]/95 px-5 pt-4 backdrop-blur-md lg:hidden"
+            style={{
+              paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
+              animation: prefersReducedMotion ? "none" : "dhSlideUp .3s ease forwards",
+            }}
+          >
+            <a
+              href="#claim"
+              className="flex min-h-[54px] w-full items-center justify-center rounded-2xl bg-[#0d4a3a] px-8 text-[17px] font-extrabold uppercase tracking-[0.1em] text-[#FCFAF5] shadow-[0_10px_26px_rgba(13,74,58,0.28)] active:scale-[.985]"
+            >
+              Claim my magnet →
+            </a>
+          </div>
+        )}
+
         <div
-          className="fixed inset-0 pointer-events-none opacity-[0.03]"
+          className="pointer-events-none fixed inset-0 opacity-[0.028]"
           style={{
             backgroundImage:
               "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
