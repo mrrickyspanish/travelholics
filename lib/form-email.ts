@@ -2,7 +2,12 @@ export const FORM_EMAIL_TO = "hello@yotravelholic.com";
 export const FORM_EMAIL_BCC = "ricky@creativeeyestudios.com";
 
 export type FormEmailPayload = {
-  formType: "contact" | "collaborate" | "cruise-interest" | "duck-hunt";
+  formType:
+    | "contact"
+    | "collaborate"
+    | "cruise-interest"
+    | "duck-hunt"
+    | "duck-hunt-address";
   [key: string]: unknown;
 };
 

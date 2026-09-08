@@ -6,7 +6,12 @@ const BCC_EMAIL = "ricky@creativeeyestudios.com";
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 
 type SendEmailPayload = {
-  formType?: "contact" | "collaborate" | "cruise-interest" | "duck-hunt";
+  formType?:
+    | "contact"
+    | "collaborate"
+    | "cruise-interest"
+    | "duck-hunt"
+    | "duck-hunt-address";
   [key: string]: unknown;
 };
 
@@ -26,7 +31,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Missing formType." }, { status: 400 });
   }
 
-  const allowedTypes = new Set(["contact", "collaborate", "cruise-interest", "duck-hunt"]);
+  const allowedTypes = new Set([
+    "contact",
+    "collaborate",
+    "cruise-interest",
+    "duck-hunt",
+    "duck-hunt-address",
+  ]);
   if (!allowedTypes.has(payload.formType)) {
     return NextResponse.json({ error: "Invalid formType." }, { status: 400 });
   }
@@ -83,6 +94,24 @@ export async function POST(request: Request) {
       </p>
       <p><strong>Newsletter Opt-In:</strong> ${payload.newsletterOptIn ? "Yes" : "No"}</p>
       <p><strong>Consent Text:</strong> ${payload.consentText || "N/A"}</p>
+    `;
+  } else if (payload.formType === "duck-hunt-address") {
+    subject = `Duck Hunt Address from ${payload.firstName || "Website Visitor"} ${payload.lastName || ""}`.trim();
+    htmlContent = `
+      <h2>Duck Hunt Mailing Address</h2>
+      <p><strong>Name:</strong> ${payload.firstName || "N/A"} ${payload.lastName || ""}</p>
+      <p><strong>Email:</strong> ${payload.email || "N/A"}</p>
+      <p><strong>Mailing Address:</strong><br/>
+        ${payload.shippingAddress1 || "N/A"}${payload.shippingAddress2 ? `<br/>${payload.shippingAddress2}` : ""}<br/>
+        ${payload.shippingCity || "N/A"}, ${payload.shippingState || "N/A"} ${payload.shippingZip || "N/A"}
+      </p>
+      <p><strong>Matched Existing Registration:</strong> ${
+        payload.matched === true
+          ? "Yes — existing duck_hunt_leads row updated"
+          : payload.matched === false
+            ? "No — new lead created from the address form"
+            : "Unknown"
+      }</p>
     `;
   }
 
