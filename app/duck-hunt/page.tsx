@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowLeft, ArrowRight, Check, ChevronDown, Mail, Play, Ship, Truck, Youtube } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, Check, ChevronDown, Mail, Ship, Truck, Youtube } from "lucide-react";
 import { FaTiktok } from "react-icons/fa6";
 import { sendFormEmail } from "@/lib/form-email";
 import { DUCK_HUNT_WELCOME } from "@/lib/duck-hunt-content";
@@ -46,7 +46,7 @@ const US_STATES = [
   "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "VI", "WA", "WV", "WI", "WY",
 ];
 const CONFETTI_COLORS = ["#0d4a3a", "#10755A", "#f59e0b", "#F26A75", "#F4C4CC", "#FCFAF5"];
-const MAGNET = "/images/travelholic_ticket_magnent_pacific.png";
+const MAGNET = "/images/cruise_life_magnet_final.webp";
 const YOUTUBE = "https://www.youtube.com/@yotravelholic";
 
 function formatShipName(ship: string | null) {
@@ -283,11 +283,11 @@ export default function DuckHuntPage() {
                 <div className={styles.reward}>
                   <div className={styles.rewardTop}><span className={styles.eyebrow}>Your duck hunt gift</span><b>FREE</b></div>
                   <div className={styles.rewardStage}>
-                    <Image src={MAGNET} alt="Your free Travelholics Cruise Life door magnet" width={1920} height={1080} sizes="(max-width: 800px) 90vw, 520px" priority className={styles.magnet} />
+                    <Image src={MAGNET} alt="Your free Travelholics Cruise Life magnet" width={360} height={203} sizes="(max-width: 800px) 90vw, 520px" priority className={styles.magnet} />
                     <Image src="/images/traveholics_duck.svg" alt="" width={104} height={104} priority className={styles.duck} />
                   </div>
                   <div className={styles.rewardBottom}>
-                    <p>Cruise Life<br /><strong>Door magnet</strong></p>
+                    <p>Cruise Life<br /><strong>Magnet</strong></p>
                     <span><Truck size={17} aria-hidden="true" /> Free US shipping<br />Ships in 2–3 weeks</span>
                   </div>
                 </div>
@@ -387,8 +387,15 @@ export default function DuckHuntPage() {
                 </ul>
                 <p className={styles.nextHint}>Claim your gift, then come say hello.</p>
                 <details className={styles.details}>
-                  <summary><Play size={16} aria-hidden="true" /> See the magnet on a cabin door <ChevronDown size={16} aria-hidden="true" /></summary>
-                  <video src="/videos/travelholics_pacific_mexican_door_magnet.mp4" controls playsInline preload="none" poster="/images/pacific_mexican_door_magnent.png" aria-label="See the Travelholics cruise door magnet" />
+                  <summary>See the magnet in action <ChevronDown size={16} aria-hidden="true" /></summary>
+                  <Image
+                    src={MAGNET}
+                    alt="Travelholics Cruise Life magnet"
+                    width={360}
+                    height={203}
+                    sizes="(max-width: 800px) 90vw, 520px"
+                    style={{ width: "100%", height: "auto", borderRadius: ".7rem" }}
+                  />
                 </details>
               </aside>
             </div>
@@ -424,7 +431,7 @@ export default function DuckHuntPage() {
 
               <aside className={styles.receipt}>
                 <p className={styles.eyebrow}>A good find, coming home</p>
-                <Image src={MAGNET} alt="Your claimed Cruise Life door magnet" width={1920} height={1080} sizes="(max-width: 800px) 85vw, 380px" />
+                <Image src={MAGNET} alt="Your claimed Cruise Life magnet" width={360} height={203} sizes="(max-width: 800px) 85vw, 380px" />
                 <h2>Your magnet is claimed.</h2>
                 <p>Free US shipping. Ships in 2–3 weeks.</p>
                 {campaign.ship && <p className={styles.receiptShip}><Ship size={17} aria-hidden="true" /><span>{campaign.ship}{campaign.duck && <> · Duck #{campaign.duck}</>}</span></p>}
