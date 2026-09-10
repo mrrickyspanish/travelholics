@@ -55,13 +55,13 @@ export const GroupTrips = () => {
               Your people. Your ship. Your sailing.
             </h2>
             <p className="mt-5 max-w-[36ch] text-[1.05rem] font-medium leading-[1.72] text-white/72 sm:text-[1.15rem] lg:mx-0">
-              Group trips with Travelholics aren&apos;t just coordinated bookings — they&apos;re the kind of trip people talk about for years. Yolanda handles the logistics so your crew just shows up and goes.
+              Bring your people. Yolanda handles the ships, cabins, and logistics so your crew can get to the good part: making memories together.
             </p>
             <Link
               href="/#contact"
               className="mt-8 inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md shadow-coral/15 transition-colors hover:bg-coral-deep"
             >
-              Join the Next Sailing
+              Plan a Group Cruise
             </Link>
           </motion.div>
 

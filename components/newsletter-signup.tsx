@@ -1,18 +1,23 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useId, useRef, useState } from "react";
+import { SUBSCRIBE_URL } from "@/lib/youtube";
+import { TIKTOK_PROFILE_URL } from "@/lib/liveSchedule";
 
 type SignupState = "idle" | "submitting" | "success" | "error";
 
 type NewsletterSignupProps = {
   source?: string;
   compact?: boolean;
+  community?: boolean;
 };
 
 const CONSENT_TEXT =
   "By subscribing, you agree to receive Travelholics cruise deals, shop drops, travel tips, and updates. You can unsubscribe anytime.";
 
-export function NewsletterSignup({ source = "footer-newsletter", compact = false }: NewsletterSignupProps) {
+export function NewsletterSignup({ source = "footer-newsletter", compact = false, community = false }: NewsletterSignupProps) {
+  const formId = useId();
+  const pending = useRef(false);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<SignupState>("idle");
@@ -20,6 +25,8 @@ export function NewsletterSignup({ source = "footer-newsletter", compact = false
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (pending.current) return;
+    pending.current = true;
     setStatus("submitting");
     setErrorMessage("");
 
@@ -60,43 +67,47 @@ export function NewsletterSignup({ source = "footer-newsletter", compact = false
       setStatus("success");
       setFirstName("");
       setEmail("");
-    } catch (error) {
+    } catch {
       setStatus("error");
-      setErrorMessage(error instanceof Error ? error.message : "Unable to subscribe right now.");
+      setErrorMessage("We couldn’t confirm your signup. Your details are still here. Please try again.");
+    } finally {
+      pending.current = false;
     }
   }
 
   return (
-    <div className={compact ? "" : "rounded-2xl border border-white/10 bg-white/[0.04] p-5"}>
-      <h3 className="text-eyebrow font-bold text-white/40 mb-3">Cruise Life List</h3>
-      <p className="text-footer-body text-white/65 leading-relaxed mb-4">
-        Join Cruise Life. Get cruise deals, shop drops, and Travelholics updates before they disappear.
+    <div className={compact || community ? "" : "rounded-2xl border border-white/10 bg-white/[0.04] p-5"}>
+      <h3 className="text-lg font-bold text-white mb-3">{community ? "Save your spot in the Crew." : "Cruise Life List"}</h3>
+      <p className="text-base text-white/80 leading-relaxed mb-4">
+        {community ? "Just your email to get started. First name is optional." : "Cruise tips, deals, and Travelholics shop drops, straight to your inbox."}
       </p>
 
       {status === "success" ? (
-        <div className="rounded-lg border border-coral/30 bg-coral/10 px-4 py-3 text-footer-body text-white">
-          You&apos;re in. We&apos;ll send the good cruise and shop deals your way.
+        <div role="status" className="rounded-lg border border-coral/30 bg-coral/10 px-4 py-3 text-base text-white">
+          <p className="font-serif text-2xl">You&apos;re in. Welcome to the Crew!</p>
+          <p className="mt-3">Cruise tips and Travelholics updates are headed to your inbox. Keep the conversation going with Yolanda.</p>
+          <div className="mt-4 flex flex-wrap gap-4"><a className="inline-flex min-h-12 items-center underline underline-offset-4" href={SUBSCRIBE_URL} target="_blank" rel="noopener noreferrer">Subscribe on YouTube</a><a className="inline-flex min-h-12 items-center underline underline-offset-4" href={TIKTOK_PROFILE_URL} target="_blank" rel="noopener noreferrer">Follow on TikTok</a></div>
         </div>
       ) : (
         <form className="space-y-3" onSubmit={handleSubmit}>
-          <label className="sr-only" htmlFor="newsletter-first-name">
-            First name
+          <label className="block text-sm text-white/90" htmlFor={`${formId}-first-name`}>
+            First name (optional)
           </label>
           <input
-            id="newsletter-first-name"
+            id={`${formId}-first-name`}
             type="text"
             autoComplete="given-name"
             value={firstName}
             onChange={(event) => setFirstName(event.target.value)}
             placeholder="First name"
-            className="w-full rounded-lg border border-white/10 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition-colors focus:border-coral"
+            className="min-h-12 w-full rounded-lg border border-white/40 bg-white/10 px-4 py-3 text-base text-white placeholder:text-white/60 outline-none transition-colors focus:border-coral focus:ring-2 focus:ring-coral"
           />
 
-          <label className="sr-only" htmlFor="newsletter-email">
+          <label className="block text-sm text-white/90" htmlFor={`${formId}-email`}>
             Email address
           </label>
           <input
-            id="newsletter-email"
+            id={`${formId}-email`}
             required
             type="email"
             inputMode="email"
@@ -104,18 +115,18 @@ export function NewsletterSignup({ source = "footer-newsletter", compact = false
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             placeholder="Email address"
-            className="w-full rounded-lg border border-white/10 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition-colors focus:border-coral"
+            className="min-h-12 w-full rounded-lg border border-white/40 bg-white/10 px-4 py-3 text-base text-white placeholder:text-white/60 outline-none transition-colors focus:border-coral focus:ring-2 focus:ring-coral"
           />
 
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="w-full rounded-lg bg-coral px-4 py-3 text-xs font-black uppercase tracking-[0.18em] text-navy transition-transform active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+            className="min-h-12 w-full rounded-lg bg-coral px-4 py-3 text-base font-bold text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {status === "submitting" ? "Joining..." : "Join the List"}
+            {status === "submitting" ? "Joining..." : "Join the Crew"}
           </button>
 
-          <p className="text-[11px] leading-relaxed text-white/35">{CONSENT_TEXT}</p>
+          <p className="text-sm leading-relaxed text-white/75">{CONSENT_TEXT}</p>
 
           {status === "error" && (
             <p className="text-footer-body text-coral" role="alert">

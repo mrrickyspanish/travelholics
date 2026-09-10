@@ -56,7 +56,7 @@ export const Header = () => {
   const liveStatus = useLiveStatus();
 
   const isHome = pathname === "/";
-  const isHeroArrival = isHome && !isScrolled && !menuOpen;
+  const isHeroArrival = false;
   const isLive = liveStatus?.state === "live";
   const isSoon = liveStatus?.state === "soon";
   const isActive = isLive || isSoon;
@@ -88,7 +88,7 @@ export const Header = () => {
   }, [menuOpen]);
 
   const isShopFull = pathname === "/shop-full";
-  const solidBg = isScrolled || isShopFull || menuOpen;
+  const solidBg = isHome || isScrolled || isShopFull || menuOpen;
   const navBg = isHeroArrival
     ? "bg-transparent"
     : isLive
@@ -147,7 +147,7 @@ export const Header = () => {
               )}
             </button>
 
-            {isActive && !isHeroArrival ? (
+            {isActive && !isHome && !isHeroArrival ? (
               <a href={liveHref} target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-white/20 border border-white/25 px-4 py-2 text-sm font-semibold text-white hover:bg-white/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white min-w-[140px] justify-center">
                 <PulsingDot className="text-white" />
                 <AnimatePresence mode="wait" initial={false}>
@@ -157,7 +157,7 @@ export const Header = () => {
                 </AnimatePresence>
               </a>
             ) : (
-              <a href="/#contact" className="hidden sm:inline-flex items-center rounded-xl bg-coral px-5 py-2 text-sm font-semibold text-white hover:bg-coral-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2">
+              <a href="/#crew" className="hidden sm:inline-flex items-center rounded-xl bg-coral px-5 py-2 text-sm font-semibold text-white hover:bg-coral-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2">
                 Join the Crew
               </a>
             )}
@@ -200,7 +200,7 @@ export const Header = () => {
             </nav>
 
             <div className="px-8 sm:px-16 pb-10 space-y-4">
-              <a href="/#contact" onClick={() => setMenuOpen(false)} className="inline-flex items-center rounded-xl bg-coral px-6 py-3 text-sm font-semibold text-white hover:bg-coral-deep transition-colors">
+              <a href="/#crew" onClick={() => setMenuOpen(false)} className="inline-flex items-center rounded-xl bg-coral px-6 py-3 text-sm font-semibold text-white hover:bg-coral-deep transition-colors">
                 Join the Crew
               </a>
               <div className="flex gap-5">

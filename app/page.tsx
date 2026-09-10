@@ -1,53 +1,51 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/header";
-import { Hero } from "@/components/hero";
+import { HomeHero, HomeVideo, HomeCommunity, HomeStories } from "@/components/home-community";
 import { IntentCards } from "@/components/intent-cards";
 import { MeetYolanda } from "@/components/meet-yolanda";
-import { StatsStrip } from "@/components/stats-strip";
-import { LatestVideos } from "@/components/latest-videos";
 import { DestinationMap } from "@/components/destination-map";
 import { GroupTrips } from "@/components/group-trips";
 import { ShopStrip } from "@/components/shop-strip";
-import { Testimonials } from "@/components/testimonials";
 import { ContactForm } from "@/components/contact-form";
 import { Footer } from "@/components/footer";
 import { MobileCTA } from "@/components/mobile-cta";
-import { getFeaturedLongForm, getShorts } from "@/lib/youtube-feed";
+import { getArticles } from "@/lib/articles";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Travelholics | Certified Cruise Specialist — Yolanda Harris",
+  title: "Travelholics | Find Your Cruise People with Yolanda",
   description:
-    "Plan your cruise with Yolanda — Certified Cruise Specialist, 20+ years, every major line. Same price as booking direct, zero fees, plus daily cruise advice on TikTok.",
+    "Join Yolanda’s cruise community for practical tips, packing advice, ship stories, and Travelholics updates. Watch on YouTube, hang on TikTok, and join the email crew.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Travelholics | Certified Cruise Specialist — Yolanda Harris",
+    title: "Travelholics | Find Your Cruise People with Yolanda",
     description:
-      "Plan your cruise with Yolanda — Certified Cruise Specialist, 20+ years, every major line. Same price as booking direct, zero fees, plus daily cruise advice on TikTok.",
+      "Real cruise advice, good company, and your next great story. Join Yolanda and the Travelholics crew.",
     url: "/",
     type: "website",
   },
 };
 
 export default async function Home() {
-  const [featuredVideo, shorts] = await Promise.all([
-    getFeaturedLongForm(),
-    getShorts(3),
-  ]);
+  const stories = await getArticles({ category: "trip-blog", limit: 2 });
 
   return (
     <>
       <Header />
-      <MobileCTA />
-      <Hero />
+      <MobileCTA community />
+      <main>
+      <HomeHero />
+      <HomeVideo />
+      <HomeCommunity />
+      <HomeStories articles={stories} />
       <MeetYolanda />
       <IntentCards />
       <GroupTrips />
       <DestinationMap />
-      <StatsStrip />
-      <LatestVideos featured={featuredVideo} shorts={shorts} />
       <ShopStrip />
-      <Testimonials />
       <ContactForm />
+      </main>
       <Footer />
     </>
   );
