@@ -46,7 +46,7 @@ const US_STATES = [
   "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "VI", "WA", "WV", "WI", "WY",
 ];
 const CONFETTI_COLORS = ["#0d4a3a", "#10755A", "#f59e0b", "#F26A75", "#F4C4CC", "#FCFAF5"];
-const MAGNET = "/images/cruise_life_magnet_final.webp";
+const MAGNET = "/images/cruise_life_magnet_final.png";
 const YOUTUBE = "https://www.youtube.com/@yotravelholic";
 
 function formatShipName(ship: string | null) {
