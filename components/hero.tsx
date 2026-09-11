@@ -40,10 +40,10 @@ export const Hero = () => {
         aria-hidden="true"
         style={{
           background:
-            "linear-gradient(90deg, rgba(5,28,24,.70) 0%, rgba(5,28,24,.28) 46%, rgba(5,28,24,.06) 72%, rgba(5,28,24,.14) 100%)",
+            "linear-gradient(90deg, rgba(5,28,24,.72) 0%, rgba(5,28,24,.28) 46%, rgba(5,28,24,.05) 72%, rgba(5,28,24,.14) 100%)",
         }}
       />
-      <div className="absolute inset-x-0 bottom-0 h-[46%] bg-gradient-to-t from-[#061d19]/88 via-[#061d19]/18 to-transparent" aria-hidden="true" />
+      <div className="absolute inset-x-0 bottom-0 h-[52%] bg-gradient-to-t from-[#061d19]/92 via-[#061d19]/20 to-transparent" aria-hidden="true" />
 
       <div className="relative mx-auto flex min-h-[96svh] max-w-[96rem] flex-col px-5 pb-8 pt-28 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12 xl:px-16">
         <div className="flex-1" />
@@ -52,29 +52,31 @@ export const Hero = () => {
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-[76rem]"
+          className="max-w-[72rem]"
         >
-          <h1 className="font-serif text-[clamp(5rem,14vw,12rem)] font-semibold leading-[0.76] tracking-[-0.075em] text-white">
-            Travelholic.
+          <p className="mb-4 text-[10px] font-black uppercase tracking-[0.22em] text-white/58 sm:text-[11px]">
+            Travelholics
+          </p>
+          <h1 className="max-w-[9ch] font-serif text-[clamp(4rem,10.5vw,9.5rem)] font-semibold leading-[0.82] tracking-[-0.07em] text-white">
+            Your next trip should feel <span className="text-coral">like this.</span>
           </h1>
 
-          <div className="mt-6 max-w-[38rem] border-t border-white/22 pt-5">
-            <p className="text-xs italic tracking-wide text-white/50 sm:text-sm">/ˈtra-vəl-hä-lik/</p>
-            <p className="mt-2 max-w-[15ch] font-serif text-[clamp(1.8rem,4.2vw,4rem)] font-semibold leading-[0.92] tracking-[-0.05em] text-white">
-              Someone who travels <span className="text-coral">between trips.</span>
+          <div className="mt-6 flex flex-col gap-5 border-t border-white/20 pt-5 sm:max-w-[38rem] sm:flex-row sm:items-end sm:justify-between">
+            <p className="max-w-[18ch] font-serif text-[clamp(1.55rem,3.2vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-white/88">
+              For people who are always between trips.
             </p>
+            <Link
+              href="/#contact"
+              className="inline-flex min-h-13 w-fit shrink-0 items-center justify-center rounded-full bg-coral px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+            >
+              Plan my next cruise
+            </Link>
           </div>
-
-          <Link
-            href="/#contact"
-            className="mt-7 inline-flex min-h-13 items-center justify-center rounded-full bg-coral px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-          >
-            Plan with Yolanda
-          </Link>
         </motion.div>
 
-        <div className="mt-10 flex justify-end border-t border-white/12 pt-4">
-          <span className="inline-flex items-center gap-2 text-[11px] font-semibold text-white/44">
+        <div className="mt-8 flex items-center justify-between border-t border-white/12 pt-4 text-[10px] font-semibold text-white/42 sm:text-[11px]">
+          <span className="italic tracking-wide">travelholic /ˈtra-vəl-hä-lik/</span>
+          <span className="inline-flex items-center gap-2">
             <MapPin className="h-3.5 w-3.5" /> Charlotte Amalie · St. Thomas
           </span>
         </div>
