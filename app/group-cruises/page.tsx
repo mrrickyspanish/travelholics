@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
+import GroupCruiseHeroMinimal from '@/components/group-cruise-hero-minimal'
 import GroupCruiseStory from '@/components/group-cruise-story'
 
 export const metadata: Metadata = {
@@ -13,7 +14,11 @@ export default function GroupCruisesPage() {
   return (
     <>
       <Header />
-      <GroupCruiseStory />
+      <GroupCruiseHeroMinimal />
+      <div className="group-cruise-story-restraint">
+        <style>{`.group-cruise-story-restraint #group-cruise-hero { display: none; }`}</style>
+        <GroupCruiseStory />
+      </div>
       <Footer />
     </>
   )
