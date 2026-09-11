@@ -2,119 +2,45 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight, PartyPopper, Ship, Sparkles, UsersRound } from "lucide-react";
 import { motion } from "framer-motion";
 
-const featuredTile = {
-  caption: "Sail-Away Days",
-  src: "/images/dest-caribbean.jpg",
-  alt: "Cruise ship at a beautiful Caribbean destination",
-};
-
-const supportingTiles = [
-  {
-    caption: "Good People",
-    src: "/images/about-with-travelers.jpg",
-    alt: "Group of travelers enjoying their cruise together",
-  },
-  {
-    caption: "Glacier Season",
-    src: "/images/dest-alaska.jpg",
-    alt: "Stunning Alaska glacial landscape",
-  },
-  {
-    caption: "Port Days",
-    src: "/images/dest-mediterranean.jpg",
-    alt: "Mediterranean coastal adventure",
-  },
-  {
-    caption: "The Whole Crew",
-    src: "/images/about-port-of-call.jpg",
-    alt: "Travelers at a scenic port of call",
-  },
+const moments = [
+  { src: "/images/about-with-travelers.jpg", alt: "Friends enjoying a cruise together", label: "Your people" },
+  { src: "/images/dest-caribbean.jpg", alt: "Caribbean cruise destination", label: "Your sailing" },
+  { src: "/images/about-port-of-call.jpg", alt: "Travelers enjoying a port day", label: "Your memories" },
 ];
-
-const photoLabelClass = "absolute bottom-4 right-4 text-right text-[0.56rem] font-bold uppercase leading-none tracking-[0.14em] text-white/70 lg:bottom-5 lg:right-5";
 
 export const GroupTrips = () => {
   return (
-    <section id="group-trips" className="relative scroll-mt-24 overflow-hidden bg-emerald-deep pt-12 pb-14 sm:pt-16 sm:pb-18 lg:pt-20 lg:pb-24">
-      <div className="pointer-events-none absolute left-[-7rem] top-12 h-56 w-56 rounded-full bg-coral/12 blur-3xl" aria-hidden="true" />
-      <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
-        <div className="grid items-center gap-10 lg:grid-cols-[0.36fr_0.64fr] lg:gap-14 xl:gap-18">
-          <motion.div
-            initial={{ opacity: 0, x: -18 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
-            className="mx-auto max-w-[34rem] text-center lg:mx-0 lg:text-left"
-          >
-            <p className="mb-4 text-[0.82rem] font-bold uppercase tracking-[0.16em] text-coral">
-              GROUP CRUISE EXPERIENCES
-            </p>
-            <h2 className="type-homepage-h2 font-serif text-white">
-              Your people. Your ship. Your sailing.
-            </h2>
-            <p className="mt-5 max-w-[36ch] text-[1.05rem] font-medium leading-[1.72] text-white/72 sm:text-[1.15rem] lg:mx-0">
-              Group trips with Travelholics aren&apos;t just coordinated bookings — they&apos;re the kind of trip people talk about for years. Yolanda handles the logistics so your crew just shows up and goes.
-            </p>
-            <Link
-              href="/#contact"
-              className="mt-8 inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md shadow-coral/15 transition-colors hover:bg-coral-deep"
-            >
-              Join the Next Sailing
-            </Link>
-          </motion.div>
+    <section id="group-trips" className="relative overflow-hidden bg-emerald-deep py-16 text-white sm:py-20 lg:py-24">
+      <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-coral/10 blur-3xl" aria-hidden="true" />
+      <div className="mx-auto grid max-w-[92rem] gap-10 px-5 sm:px-6 lg:grid-cols-[0.48fr_0.52fr] lg:items-center lg:px-10 xl:px-12">
+        <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-xs font-black uppercase tracking-[0.15em] text-white/80"><PartyPopper size={15} className="text-coral" /> Group Cruises</div>
+          <h2 className="font-serif text-[clamp(3rem,6vw,5.8rem)] font-semibold leading-[0.94] tracking-[-0.05em]">Bring the crew.<br /><span className="text-coral">We&apos;ll build the cruise.</span></h2>
+          <p className="mt-6 max-w-xl text-lg font-medium leading-8 text-white/72">Birthdays. Family reunions. Friends trips. Church groups. Or just because everybody keeps saying, “we need to take a trip.” Yolanda helps turn the idea into an experience.</p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55, delay: 0.08 }}
-            className="grid gap-4 lg:grid-cols-[1.05fr_1fr] lg:gap-5"
-          >
-            <article className="group relative min-h-[28rem] overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_24px_64px_rgba(26,58,82,0.13)] ring-1 ring-white/70 lg:min-h-[34rem]">
-              <div className="relative h-full overflow-hidden rounded-[1.5rem] bg-cream">
-                <Image
-                  src={featuredTile.src}
-                  alt={featuredTile.alt}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 1024px) 92vw, 38vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/28 via-transparent to-transparent" aria-hidden="true" />
-                <p className={photoLabelClass}>{featuredTile.caption}</p>
+          <div className="mt-7 grid max-w-xl gap-3 sm:grid-cols-3">
+            <div className="rounded-2xl bg-white/[0.07] p-4"><Ship size={19} className="text-coral" /><p className="mt-3 text-sm font-bold">Choose the right sailing</p></div>
+            <div className="rounded-2xl bg-white/[0.07] p-4"><UsersRound size={19} className="text-coral" /><p className="mt-3 text-sm font-bold">Keep the group together</p></div>
+            <div className="rounded-2xl bg-white/[0.07] p-4"><Sparkles size={19} className="text-coral" /><p className="mt-3 text-sm font-bold">Get your own trip home base</p></div>
+          </div>
+
+          <Link href="/group-cruises" className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-coral px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-black/10 transition hover:bg-coral-deep">Start Planning Your Group Cruise <ArrowRight size={18} /></Link>
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.55, delay: 0.08 }} className="grid grid-cols-3 gap-3 sm:gap-4">
+          {moments.map((moment, index) => (
+            <article key={moment.label} className={`group relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 shadow-2xl ${index === 1 ? "mt-8 mb-8" : "mb-16"}`}>
+              <div className="relative min-h-[24rem] sm:min-h-[30rem] lg:min-h-[34rem]">
+                <Image src={moment.src} alt={moment.alt} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 31vw, 17vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-emerald-deep/75 via-transparent to-transparent" />
+                <p className="absolute inset-x-0 bottom-0 p-4 text-center font-serif text-xl font-semibold sm:p-5 sm:text-2xl">{moment.label}</p>
               </div>
             </article>
-
-            <div className="grid grid-cols-2 gap-4 lg:gap-5">
-              {supportingTiles.map(({ caption, src, alt }, index) => (
-                <article
-                  key={caption}
-                  className={`group relative min-h-[12rem] overflow-hidden rounded-[1.65rem] bg-white p-2 shadow-[0_18px_42px_rgba(26,58,82,0.1)] ring-1 ring-white/70 sm:min-h-[15rem] ${index === 1 ? "lg:translate-y-7" : ""} ${index === 2 ? "lg:-translate-y-2" : ""}`}
-                >
-                  <div className="relative h-full overflow-hidden rounded-[1.2rem] bg-cream">
-                    <Image
-                      src={src}
-                      alt={alt}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 1024px) 45vw, 22vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/28 via-transparent to-transparent" aria-hidden="true" />
-                    <p className={photoLabelClass}>{caption}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Wave — sand (Destination Map) rises out of dark emerald */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 w-full overflow-hidden leading-none" aria-hidden="true">
-        <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block h-14 w-full sm:h-18 lg:h-24 fill-sand">
-          <path d="M0,48 C180,16 360,80 540,32 C720,0 900,64 1080,32 C1260,0 1380,56 1440,32 L1440,80 L0,80 Z" />
-        </svg>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
