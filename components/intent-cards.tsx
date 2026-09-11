@@ -36,7 +36,35 @@ export const IntentCards = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="bg-[#f4efe4] py-20 sm:py-28 lg:py-32">
+    <section id="destination-discovery" className="bg-[#f4efe4] py-20 sm:py-28 lg:py-32">
+      <style>{`
+        @media (max-width: 767px) {
+          #destination-discovery .destination-grid {
+            grid-template-columns: 1fr !important;
+            grid-auto-rows: 20rem !important;
+          }
+          #destination-discovery .destination-grid article {
+            grid-column: auto !important;
+          }
+          #destination-discovery .destination-grid article h3 {
+            font-size: 2.25rem !important;
+            line-height: 1 !important;
+          }
+          #destination-discovery .destination-grid article p {
+            margin-top: 0.75rem !important;
+            font-size: 0.875rem !important;
+            line-height: 1.5rem !important;
+          }
+          #destination-discovery .destination-grid article a > div:last-child {
+            padding: 1.5rem !important;
+          }
+          #destination-discovery .destination-grid article a > div:last-child span {
+            width: 2.5rem !important;
+            height: 2.5rem !important;
+          }
+        }
+      `}</style>
+
       <div className="mx-auto max-w-[96rem] px-5 sm:px-8 lg:px-12 xl:px-16">
         <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
           <div>
@@ -55,7 +83,7 @@ export const IntentCards = () => {
           </div>
         </div>
 
-        <div className="mt-12 grid auto-rows-[20rem] gap-3 lg:grid-cols-12 lg:auto-rows-[17rem]">
+        <div className="destination-grid mt-12 grid auto-rows-[20rem] gap-3 lg:grid-cols-12 lg:auto-rows-[17rem]">
           {destinations.map((destination, index) => (
             <motion.article
               key={destination.title}
