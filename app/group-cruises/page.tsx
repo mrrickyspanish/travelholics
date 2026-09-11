@@ -3,6 +3,7 @@ import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import GroupCruiseHeroMinimal from '@/components/group-cruise-hero-minimal'
 import GroupCruiseStory from '@/components/group-cruise-story'
+import '../mobile-polish.css'
 
 export const metadata: Metadata = {
   title: 'Group Cruises with Yolanda',
@@ -15,7 +16,7 @@ export default function GroupCruisesPage() {
     <>
       <Header />
       <GroupCruiseHeroMinimal />
-      <div className="group-cruise-story-restraint">
+      <div className="group-cruise-story-restraint group-cruise-mobile-optimized">
         <style>{`.group-cruise-story-restraint #group-cruise-hero { display: none; }`}</style>
         <GroupCruiseStory />
       </div>
