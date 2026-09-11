@@ -16,6 +16,35 @@ export const GroupTrips = () => {
 
   return (
     <section id="group-trips" className="relative overflow-hidden bg-[#082d27] py-20 text-white sm:py-28 lg:py-32">
+      <style>{`
+        @media (max-width: 767px) {
+          #group-trips .group-trip-gallery {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 0.75rem !important;
+          }
+          #group-trips .group-trip-gallery .group-trip-moment {
+            margin: 0 !important;
+            width: auto !important;
+            min-height: 11rem !important;
+          }
+          #group-trips .group-trip-gallery .group-trip-moment:nth-child(1) {
+            grid-column: 1 / -1 !important;
+            min-height: 15rem !important;
+          }
+          #group-trips .group-trip-gallery .group-trip-moment:nth-child(2) {
+            grid-column: 1 !important;
+          }
+          #group-trips .group-trip-gallery .group-trip-moment:nth-child(3) {
+            grid-column: 2 !important;
+          }
+          #group-trips .group-trip-gallery figcaption {
+            padding: 1rem !important;
+            font-size: 0.62rem !important;
+            line-height: 1.05rem !important;
+          }
+        }
+      `}</style>
+
       <div className="pointer-events-none absolute -right-8 top-0 font-serif text-[18vw] font-semibold leading-none tracking-[-0.08em] text-white/[0.025]" aria-hidden="true">
         TOGETHER
       </div>
@@ -43,7 +72,7 @@ export const GroupTrips = () => {
           </Link>
         </motion.div>
 
-        <div className="grid grid-cols-12 gap-3">
+        <div className="group-trip-gallery grid grid-cols-12 gap-3">
           {moments.map((moment, index) => (
             <motion.figure
               key={moment.label}
@@ -52,11 +81,13 @@ export const GroupTrips = () => {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
               className={
-                index === 0
-                  ? "relative col-span-8 min-h-[31rem] overflow-hidden sm:min-h-[38rem]"
-                  : index === 1
-                    ? "relative col-span-4 mt-16 min-h-[20rem] overflow-hidden sm:min-h-[25rem]"
-                    : "relative col-span-5 -mt-24 ml-auto min-h-[16rem] overflow-hidden sm:min-h-[20rem]"
+                `group-trip-moment ${
+                  index === 0
+                    ? "relative col-span-8 min-h-[31rem] overflow-hidden sm:min-h-[38rem]"
+                    : index === 1
+                      ? "relative col-span-4 mt-16 min-h-[20rem] overflow-hidden sm:min-h-[25rem]"
+                      : "relative col-span-5 -mt-24 ml-auto min-h-[16rem] overflow-hidden sm:min-h-[20rem]"
+                }`
               }
             >
               <Image
