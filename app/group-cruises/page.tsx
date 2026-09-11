@@ -44,7 +44,7 @@ export default function GroupCruisesPage() {
           <div className="relative mx-auto grid max-w-[92rem] items-end gap-12 px-5 pb-20 sm:px-6 lg:grid-cols-[0.62fr_0.38fr] lg:px-10 lg:pb-28 xl:px-12">
             <div className="max-w-4xl">
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-white/85 backdrop-blur-sm"><PartyPopper size={15} className="text-coral" /> Group Cruises by Travelholics</div>
-              <h1 className="font-serif text-[clamp(3.25rem,8vw,7.3rem)] font-semibold leading-[0.91] tracking-[-0.055em]">Your people.<br /><span className="text-coral">One unforgettable</span><br />cruise.</h1>
+              <h1 className="font-serif text-[clamp(3.25rem,8vw,7.3rem)] font-semibold leading-[0.91] tracking-[-0.055em]">Your people.<br /><span className="inline-block whitespace-nowrap text-[0.82em] text-coral">One unforgettable</span><br />cruise.</h1>
               <p className="mt-7 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">Bring the crew. Yolanda partners with you to shape the sailing, organize the details, and build a group experience that feels exciting from the first conversation to sail away.</p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"><Link href="#start-planning" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-coral px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-black/10 transition hover:bg-coral-deep">Start Planning Your Group Cruise <ArrowDown size={18} /></Link><span className="text-sm font-semibold text-white/55">No cruise picked yet? That is completely fine.</span></div>
             </div>
@@ -54,7 +54,7 @@ export default function GroupCruisesPage() {
 
         <section className="mx-auto max-w-[92rem] px-5 py-16 sm:px-6 sm:py-20 lg:px-10 lg:py-24 xl:px-12">
           <div className="mx-auto max-w-3xl text-center"><p className="text-xs font-black uppercase tracking-[0.16em] text-coral">Who is this for?</p><h2 className="mt-3 font-serif text-4xl font-semibold tracking-[-0.04em] text-royal-deep sm:text-5xl">If your people are ready, we can build the experience.</h2></div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{groupIdeas.map(([title, copy], index) => <article key={title} className="rounded-[1.7rem] border border-white/80 bg-cream p-6 shadow-[0_16px_46px_rgba(26,46,42,0.06)]"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-coral/10 text-coral">{index === 0 ? <Heart size={20} /> : index === 1 ? <PartyPopper size={20} /> : index === 2 ? <Sparkles size={20} /> : <UsersRound size={20} />}</span><h3 className="mt-5 text-lg font-bold text-ink">{title}</h3><p className="mt-2 text-sm leading-6 text-stone">{copy}</p></article>)}</div>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{groupIdeas.map(([title, copy], index) => <article key={title} className="flex flex-col items-center rounded-[1.7rem] border border-white/80 bg-cream p-6 text-center shadow-[0_16px_46px_rgba(26,46,42,0.06)]"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-coral/10 text-coral">{index === 0 ? <Heart size={20} /> : index === 1 ? <PartyPopper size={20} /> : index === 2 ? <Sparkles size={20} /> : <UsersRound size={20} />}</span><h3 className="mt-5 text-lg font-bold text-ink">{title}</h3><p className="mt-2 text-sm leading-6 text-stone">{copy}</p></article>)}</div>
         </section>
 
         <section className="bg-cream py-16 sm:py-20 lg:py-24">
@@ -67,7 +67,7 @@ export default function GroupCruisesPage() {
         <section className="bg-emerald-deep py-16 text-white sm:py-20 lg:py-24">
           <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
             <div className="max-w-3xl"><p className="text-xs font-black uppercase tracking-[0.16em] text-coral">How we get you onboard</p><h2 className="mt-3 font-serif text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">From “we should do a cruise” to “meet us on the Lido deck.”</h2></div>
-            <div className="mt-10 grid gap-4 lg:grid-cols-4">{steps.map(([title, copy], index) => <article key={title} className="relative rounded-[1.6rem] border border-white/12 bg-white/[0.07] p-6"><span className="text-5xl font-black leading-none text-coral/35">0{index + 1}</span><h3 className="mt-5 text-xl font-bold">{title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{copy}</p></article>)}</div>
+            <div className="mt-10 grid gap-4 lg:grid-cols-4">{steps.map(([title, copy], index) => <article key={title} className="relative flex flex-col items-center rounded-[1.6rem] border border-white/12 bg-white/[0.07] p-6 text-center"><span className="text-5xl font-black leading-none text-coral/35">0{index + 1}</span><h3 className="mt-5 text-xl font-bold">{title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{copy}</p></article>)}</div>
           </div>
         </section>
 
