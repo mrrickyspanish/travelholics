@@ -1,100 +1,93 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
-const cards = [
-  { title: "Caribbean", location: "Caribbean", href: "/cruises/caribbean", image: "/images/destinations/caribbean-hero.png", imageAlt: "Cruise ship docked at a Caribbean port with turquoise water" },
-  { title: "Alaska", location: "Alaska", href: "/cruises/alaska", image: "/images/destinations/alaska-hero.png", imageAlt: "Glacier and mountain landscape on an Alaska cruise route" },
-  { title: "Mediterranean", location: "Mediterranean", href: "/cruises/mediterranean", image: "/images/destinations/mediterranean-hero.png", imageAlt: "Mediterranean coastal town seen from a cruise ship" },
-];
-
-const desktopSlots = [
-  { left: "0%", top: "2rem", width: "52%", height: "25rem", zIndex: 30, opacity: 1, scale: 1, rotate: 0 },
-  { left: "47%", top: "5.2rem", width: "35%", height: "22rem", zIndex: 20, opacity: 0.98, scale: 1, rotate: -1.2 },
-  { left: "76%", top: "8rem", width: "24%", height: "17rem", zIndex: 10, opacity: 0.92, scale: 1, rotate: 1.5 },
+const destinations = [
+  {
+    title: "Caribbean",
+    note: "Warm water, big ships, easy yes.",
+    href: "/cruises/caribbean",
+    image: "/images/destinations/caribbean-hero.png",
+    imageAlt: "Cruise ship docked at a Caribbean port with turquoise water",
+    className: "lg:col-span-7 lg:row-span-2",
+  },
+  {
+    title: "Alaska",
+    note: "Glaciers, wildlife, and the kind of quiet you remember.",
+    href: "/cruises/alaska",
+    image: "/images/destinations/alaska-hero.png",
+    imageAlt: "Glacier and mountain landscape on an Alaska cruise route",
+    className: "lg:col-span-5",
+  },
+  {
+    title: "Mediterranean",
+    note: "Wake up somewhere different every morning.",
+    href: "/cruises/mediterranean",
+    image: "/images/destinations/mediterranean-hero.png",
+    imageAlt: "Mediterranean coastal town seen from a cruise ship",
+    className: "lg:col-span-5",
+  },
 ];
 
 export const IntentCards = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotionPreference = () => setPrefersReducedMotion(mediaQuery.matches);
-    updateMotionPreference();
-    mediaQuery.addEventListener("change", updateMotionPreference);
-    return () => mediaQuery.removeEventListener("change", updateMotionPreference);
-  }, []);
-
-  useEffect(() => {
-    if (isPaused || prefersReducedMotion) return;
-    const interval = window.setInterval(() => setActiveIndex((index) => (index + 1) % cards.length), 4200);
-    return () => window.clearInterval(interval);
-  }, [isPaused, prefersReducedMotion]);
+  const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-cream pt-4 pb-14 sm:pt-6 sm:pb-18 lg:pt-8 lg:pb-24">
-      {/* Wave — dark emerald (Group Trips) crashes up into cream */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 w-full overflow-hidden leading-none" aria-hidden="true">
-        <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block h-14 w-full sm:h-18 lg:h-24 fill-emerald-deep">
-          <path d="M0,32 C180,80 360,0 540,48 C720,80 900,16 1080,48 C1260,80 1380,24 1440,48 L1440,80 L0,80 Z" />
-        </svg>
-      </div>
-      <style>{`
-        @keyframes travelholicsDotPulse {
-          0%, 100% { transform: scale(1); opacity: 0.78; box-shadow: 0 0 0 0 rgba(16,117,90,0.34), 0 0 10px rgba(16,117,90,0.58); }
-          50% { transform: scale(1.18); opacity: 1; box-shadow: 0 0 0 4px rgba(16,117,90,0.10), 0 0 16px rgba(16,117,90,0.76); }
-        }
-      `}</style>
-      <div className="pointer-events-none absolute left-1/2 top-8 h-40 w-40 -translate-x-1/2 rounded-full bg-coral/8 blur-3xl" aria-hidden="true" />
-
-      <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
-        <div className="mt-0 grid items-center gap-10 sm:mt-12 lg:mt-14 lg:grid-cols-[0.42fr_0.58fr] lg:gap-12 xl:gap-16">
-          <motion.div initial={{ opacity: 0, x: -18 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="relative max-w-[34rem] lg:flex lg:min-h-[28rem] lg:flex-col lg:justify-center">
-            <span className="mb-3 hidden self-start items-center gap-2 rounded-full border border-white/40 bg-white/20 px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-ink shadow-[0_10px_26px_rgba(26,58,82,0.08)] backdrop-blur-md lg:inline-flex">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-mid" style={{ animation: "travelholicsDotPulse 2.1s ease-in-out infinite" }} aria-hidden="true" />
-              Wander Freely
-            </span>
-            <h2 className="mb-4 font-serif text-[clamp(2rem,3vw,3rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-ink lg:text-6xl">Not Your Boring<br />Travel Agent</h2>
-            <p className="max-w-[39ch] text-[1.05rem] font-medium leading-[1.75] text-ink/76 sm:text-[1.15rem]">Handpicked starting points for the first-timer, the romantic, and the crew that&apos;s already been once and wants to go bigger. Caribbean, Alaska, Mediterranean, and wherever you&apos;re dreaming next.</p>
-            <Link href="/#contact" className="mt-7 inline-flex min-h-[46px] w-fit items-center justify-center rounded-xl bg-ink px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-emerald-deep">Start planning</Link>
-          </motion.div>
-
-          <div className="relative hidden min-h-[28rem] overflow-visible lg:block" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)} onFocusCapture={() => setIsPaused(true)} onBlurCapture={() => setIsPaused(false)}>
-            {cards.map((card, index) => {
-              const slotIndex = (index - activeIndex + cards.length) % cards.length;
-              const slot = desktopSlots[slotIndex];
-              return (
-                <motion.a key={card.title} href={card.href} className="group absolute block overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_24px_60px_rgba(26,58,82,0.14)] ring-1 ring-stone/10" aria-label={card.title} initial={false} animate={slot} transition={{ duration: prefersReducedMotion ? 0 : 0.78, ease: [0.16, 1, 0.3, 1] }}>
-                  <div className="relative h-full overflow-hidden rounded-[1.55rem] bg-sand">
-                    <Image src={card.image} alt={card.imageAlt} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes={slotIndex === 0 ? "44vw" : "30vw"} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/84 via-ink/26 to-transparent" aria-hidden="true" />
-                    <p className="absolute bottom-4 right-4 text-right font-script text-[1.6rem] font-semibold leading-none text-coral lg:bottom-5 lg:right-5 lg:text-[1.8rem]">{card.location}</p>
-                  </div>
-                </motion.a>
-              );
-            })}
+    <section className="bg-[#f4efe4] py-20 sm:py-28 lg:py-32">
+      <div className="mx-auto max-w-[96rem] px-5 sm:px-8 lg:px-12 xl:px-16">
+        <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
+          <div>
+            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Start with a feeling</p>
+            <h2 className="mt-4 max-w-[10ch] font-serif text-[clamp(3.4rem,6.5vw,6.8rem)] font-semibold leading-[0.86] tracking-[-0.065em] text-royal-deep">
+              Where should we wake up next?
+            </h2>
           </div>
+          <div className="lg:justify-self-end">
+            <p className="max-w-xl text-base leading-7 text-stone sm:text-lg sm:leading-8">
+              You do not need to know the ship yet. Pick the kind of trip you want to feel, then let Yolanda help narrow down the sailing that actually fits.
+            </p>
+            <Link href="/#contact" className="mt-5 inline-flex items-center gap-2 text-sm font-black text-ink underline decoration-coral decoration-2 underline-offset-4 transition hover:text-coral-deep">
+              Help me choose <ArrowUpRight size={16} />
+            </Link>
+          </div>
+        </div>
 
-          <div className="-mx-5 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:hidden">
-            <div className="flex snap-x snap-mandatory gap-4">
-              {cards.map((card) => (
-                <div key={card.title} className="w-[82vw] max-w-[24rem] shrink-0 snap-start">
-                  <a href={card.href} className="group relative block h-[24rem] overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_22px_52px_rgba(26,58,82,0.12)] ring-1 ring-stone/10" aria-label={card.title}>
-                    <div className="relative h-full overflow-hidden rounded-[1.55rem] bg-sand">
-                      <Image src={card.image} alt={card.imageAlt} fill className="object-cover" sizes="82vw" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-ink/84 via-ink/26 to-transparent" aria-hidden="true" />
-                      <p className="absolute bottom-4 right-4 text-right font-script text-[1.6rem] font-semibold leading-none text-coral">{card.location}</p>
+        <div className="mt-12 grid auto-rows-[20rem] gap-3 lg:grid-cols-12 lg:auto-rows-[17rem]">
+          {destinations.map((destination, index) => (
+            <motion.article
+              key={destination.title}
+              initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.18 }}
+              transition={{ duration: 0.65, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              className={`group relative overflow-hidden ${destination.className}`}
+            >
+              <Link href={destination.href} className="absolute inset-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-coral">
+                <Image
+                  src={destination.image}
+                  alt={destination.imageAlt}
+                  fill
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/14 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-7 lg:p-8">
+                  <div className="flex items-end justify-between gap-5">
+                    <div>
+                      <h3 className="font-serif text-4xl font-semibold leading-none tracking-[-0.05em] sm:text-5xl">{destination.title}</h3>
+                      <p className="mt-3 max-w-md text-sm leading-6 text-white/68 sm:text-base">{destination.note}</p>
                     </div>
-                  </a>
+                    <span className="mb-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/24 bg-black/10 text-white backdrop-blur-sm transition group-hover:rotate-12 group-hover:bg-white group-hover:text-ink">
+                      <ArrowUpRight size={18} />
+                    </span>
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
+              </Link>
+            </motion.article>
+          ))}
         </div>
       </div>
     </section>
