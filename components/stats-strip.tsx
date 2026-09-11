@@ -1,59 +1,41 @@
-import { BadgeDollarSign, Ship, Sparkles, Users } from "lucide-react";
-
 const stats = [
   {
-    icon: Ship,
     value: "6+",
     label: "Cruise lines sailed",
     note: "Real ship experience, not brochure guesses",
   },
   {
-    icon: Users,
     value: "20K+",
     label: "Travelers following along",
-    note: "Daily cruise advice from Yolanda on TikTok",
+    note: "Daily cruise advice from Yolanda",
   },
   {
-    icon: Sparkles,
     value: "20+",
     label: "Years of travel experience",
-    note: "A planner who's actually been there",
+    note: "A planner who has actually been there",
   },
   {
-    icon: BadgeDollarSign,
-    value: "No Fees",
-    label: "Same price as booking direct",
-    note: "You get guidance without the markup",
+    value: "$0",
+    label: "Planning fees",
+    note: "Guidance without the markup",
   },
 ];
 
 export const StatsStrip = () => {
   return (
-    <section className="relative overflow-hidden bg-sand pt-0 pb-8 sm:pb-10 lg:pb-12">
-      <div className="mx-auto w-full max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
-        <div className="rounded-[2rem] border border-white/70 bg-cream/82 p-3 shadow-[0_22px_60px_rgba(26,58,82,0.08)] backdrop-blur-sm sm:p-4 lg:rounded-[2.5rem] lg:p-5">
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-stone/16">
-            {stats.map(({ icon: Icon, value, label, note }) => (
-              <div
-                key={label}
-                className="group relative min-h-[11rem] rounded-[1.5rem] bg-white/78 p-4 shadow-[0_10px_30px_rgba(26,58,82,0.06)] ring-1 ring-stone/8 transition-transform duration-300 hover:-translate-y-1 sm:p-5 lg:min-h-[13rem] lg:rounded-[2rem] lg:bg-transparent lg:shadow-none lg:ring-0"
-              >
-                <div className="mb-5 flex items-center justify-between gap-4">
-                  <Icon className="text-coral" size={25} strokeWidth={2} />
-                  <span className="h-px flex-1 bg-stone/12" aria-hidden="true" />
-                </div>
-                <p className="font-serif text-[clamp(2rem,6vw,3.25rem)] font-semibold leading-none tracking-[-0.04em] text-[#0E125C]">
-                  {value}
-                </p>
-                <p className="mt-3 text-[1rem] font-bold leading-tight text-ink">
-                  {label}
-                </p>
-                <p className="mt-2 max-w-[20ch] text-[0.92rem] font-medium leading-snug text-stone">
-                  {note}
-                </p>
-              </div>
-            ))}
-          </div>
+    <section className="border-y border-ink/10 bg-[#fbf7ef]">
+      <div className="mx-auto max-w-[96rem] px-5 sm:px-8 lg:px-12 xl:px-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4">
+          {stats.map(({ value, label, note }, index) => (
+            <div
+              key={label}
+              className={`py-9 sm:py-12 lg:px-8 lg:py-14 ${index % 2 === 0 ? "pr-4" : "pl-4"} ${index < 3 ? "lg:border-r lg:border-ink/10" : ""} ${index >= 2 ? "border-t border-ink/10 lg:border-t-0" : ""}`}
+            >
+              <p className="font-serif text-[clamp(2.7rem,5vw,5.2rem)] font-semibold leading-none tracking-[-0.055em] text-royal-deep">{value}</p>
+              <p className="mt-3 text-sm font-black text-ink sm:text-base">{label}</p>
+              <p className="mt-2 max-w-[22ch] text-xs leading-5 text-stone sm:text-sm sm:leading-6">{note}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
