@@ -3,6 +3,7 @@ import 'server-only'
 import { Resend } from 'resend'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://yotravelholic.com'
+const SCHEDULING_URL = process.env.NEXT_PUBLIC_GROUP_CRUISE_SCHEDULING_URL
 const INTERNAL_TO = 'hello@yotravelholic.com'
 const INTERNAL_BCC = 'ricky@creativeeyestudios.com'
 
@@ -54,6 +55,10 @@ function shell(content: string) {
 }
 
 export async function sendGroupInquiryReceipt(input: { name: string; email: string }) {
+  const schedulingCta = SCHEDULING_URL
+    ? `<a href="${SCHEDULING_URL}" style="display:inline-block;margin:10px 8px 0 0;background:#10755A;color:white;text-decoration:none;font-weight:700;padding:13px 18px;border-radius:10px">Schedule time with Yolanda</a>`
+    : ''
+
   return send({
     to: input.email,
     subject: 'Your group cruise is officially in motion ✨',
@@ -61,6 +66,7 @@ export async function sendGroupInquiryReceipt(input: { name: string; email: stri
       <h1 style="font-size:28px;line-height:1.15;margin:0 0 14px">We got it, ${escapeHtml(input.name)}.</h1>
       <p style="font-size:16px;line-height:1.7">Thanks for trusting Travelholics with your group cruise. Yolanda will review what you shared and connect with you to start shaping the experience.</p>
       <p style="font-size:16px;line-height:1.7">Have your estimated group size, preferred dates, and any cruise ideas handy. If you already know what you want, even better.</p>
+      ${schedulingCta}
       <a href="${SITE_URL}/thank-you/group-cruise" style="display:inline-block;margin-top:10px;background:#F26A75;color:white;text-decoration:none;font-weight:700;padding:13px 18px;border-radius:10px">See what happens next</a>
     `),
   })
