@@ -4,9 +4,8 @@ import { useState } from "react";
 import confetti from "canvas-confetti";
 import { supabase } from "@/lib/supabase";
 import { buildFallbackMailto, sendFormEmail } from "@/lib/form-email";
-import { motion } from "framer-motion";
-import { CheckCircle, Ship } from "lucide-react";
-import { Button } from "@/components/button";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, CheckCircle } from "lucide-react";
 
 const DESTINATION_OPTIONS = [
   "Caribbean",
@@ -29,6 +28,7 @@ const TIMING_OPTIONS = [
 ];
 
 export const ContactForm = () => {
+  const reduceMotion = useReducedMotion();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -52,25 +52,19 @@ export const ContactForm = () => {
       ["Travel Timeframe", formData.timing],
       ["Dream Trip Details", formData.message],
     ];
-
-    return checks
-      .filter(([, value]) => !value.trim())
-      .map(([label]) => label);
+    return checks.filter(([, value]) => !value.trim()).map(([label]) => label);
   };
 
   const fullName = `${formData.firstName} ${formData.lastName}`.trim();
-
   const directMailto = buildFallbackMailto(
     `New Cruise Inquiry from ${fullName || "Website Visitor"}`,
-    `Name: ${fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nDestination: ${formData.destination}\nTiming: ${formData.timing}\nMessage: ${formData.message}`
+    `Name: ${fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nDestination: ${formData.destination}\nTiming: ${formData.timing}\nMessage: ${formData.message}`,
   );
 
   const fireConfetti = () => {
     const colors = ["#F26A75", "#0d4a3a", "#10755A", "#FCFAF5", "#F4C4CC"];
     confetti({ particleCount: 90, spread: 70, origin: { x: 0.35, y: 0.55 }, colors });
-    setTimeout(() => {
-      confetti({ particleCount: 90, spread: 70, origin: { x: 0.65, y: 0.55 }, colors });
-    }, 160);
+    setTimeout(() => confetti({ particleCount: 90, spread: 70, origin: { x: 0.65, y: 0.55 }, colors }), 160);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -133,135 +127,89 @@ export const ContactForm = () => {
     }
   };
 
-  const inputClass =
-    "w-full min-h-12 rounded-2xl border border-blush bg-white px-4 py-3 text-[15px] text-ink outline-none transition-all placeholder:text-stone/55 focus:border-emerald-mid focus:ring-2 focus:ring-emerald-mid/20";
-  const labelClass = "mb-1.5 block text-[0.95rem] font-semibold text-ink";
+  const inputClass = "mt-2 w-full border-0 border-b border-ink/20 bg-transparent px-0 py-3 text-base text-ink outline-none transition placeholder:text-stone/45 focus:border-coral focus:ring-0";
+  const labelClass = "block text-sm font-bold text-ink";
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-emerald-deep text-white">
+    <section id="contact" className="overflow-hidden bg-[#082d27] text-white">
       <motion.div
-        initial={{ opacity: 0, y: 18 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 22 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="grid min-h-[42rem] lg:grid-cols-[0.44fr_0.56fr]"
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="mx-auto grid max-w-[96rem] lg:grid-cols-[0.4fr_0.6fr]"
       >
-        <div className="relative flex items-center bg-emerald-deep px-5 py-16 sm:px-8 lg:px-10 xl:px-16">
-          <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #FCFAF5 1px, transparent 0)", backgroundSize: "28px 28px" }} aria-hidden="true" />
-          <div className="relative z-10 mx-auto w-full max-w-[34rem] lg:mr-0 lg:ml-auto">
-            <p className="font-script text-[2.7rem] font-semibold leading-none text-coral sm:text-[3.1rem]">
-              Let&apos;s make it happen
-            </p>
-            <h2 className="type-homepage-h2 mt-4 font-serif text-white">
-              Plan your next cruise.
+        <div className="flex flex-col justify-between px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16">
+          <div>
+            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Your turn</p>
+            <h2 className="mt-5 max-w-[8ch] font-serif text-[clamp(3.8rem,7vw,7.4rem)] font-semibold leading-[0.83] tracking-[-0.07em]">
+              Tell Yolanda where your mind keeps going.
             </h2>
-            <p className="mt-6 max-w-[31ch] text-[1.08rem] font-medium leading-[1.75] text-white/78 sm:text-[1.18rem]">
-              Tell Yolanda where your mind keeps wandering. She will help turn the idea into the right ship, stay, timing, and plan.
+            <p className="mt-7 max-w-md text-base leading-7 text-white/62 sm:text-lg sm:leading-8">
+              You do not need the ship, cabin, or perfect dates figured out. Start with what you know. She will help shape the rest.
             </p>
+          </div>
 
-            <ul className="mt-8 grid gap-3 text-left sm:grid-cols-2 lg:grid-cols-1">
-              {[
-                "Personalized recommendations",
-                "Exclusive perks and upgrades",
-                "Group trips made easier",
-                "No booking fees, ever",
-              ].map((item) => (
-                <li key={item} className="flex items-center gap-3">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-coral ring-1 ring-white/12">
-                    <CheckCircle size={16} strokeWidth={2.3} />
-                  </span>
-                  <span className="text-[1rem] font-semibold text-white/88">{item}</span>
-                </li>
-              ))}
-            </ul>
+          <div className="mt-12 grid grid-cols-2 border-y border-white/14 py-5 text-sm font-semibold text-white/66">
+            <p className="border-r border-white/14 pr-5">Personal recommendations</p>
+            <p className="pl-5">No planning fees</p>
           </div>
         </div>
 
-        <div className="flex items-center bg-cream px-5 py-16 text-ink sm:px-8 lg:px-10 xl:px-16">
-          <div className="mx-auto w-full max-w-[48rem] lg:ml-0 lg:mr-auto">
+        <div className="bg-[#fbf7ef] px-5 py-16 text-ink sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16">
+          <div className="mx-auto max-w-[48rem] lg:mx-0">
             {isSuccess ? (
-              <div className="flex min-h-[30rem] flex-col items-center justify-center rounded-[2rem] bg-white p-8 text-center shadow-[0_22px_60px_rgba(26,58,82,0.08)]">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blush text-coral">
-                  <CheckCircle size={34} />
-                </div>
-                <h3 className="font-serif text-[2rem] font-semibold leading-tight text-ink">You&apos;re on the list!</h3>
-                <p className="mt-3 max-w-[38ch] text-[1.05rem] font-medium leading-relaxed text-ink/76">
-                  I&apos;ve received your inquiry and will be in touch within 24 hours. Start dreaming. I&apos;ll handle the rest.
-                </p>
-                <button onClick={() => setIsSuccess(false)} className="mt-6 font-semibold text-coral underline underline-offset-4">
-                  Send another inquiry
-                </button>
+              <div className="flex min-h-[34rem] flex-col justify-center border-y border-ink/12 py-10">
+                <CheckCircle className="text-coral" size={42} />
+                <p className="mt-5 text-[10px] font-black uppercase tracking-[0.2em] text-coral">Inquiry received</p>
+                <h3 className="mt-3 max-w-[12ch] font-serif text-5xl font-semibold leading-[0.9] tracking-[-0.055em] text-royal-deep sm:text-6xl">Now the fun part starts.</h3>
+                <p className="mt-5 max-w-xl text-base leading-7 text-stone">Yolanda has your inquiry and will be in touch within 24 hours. Start dreaming. She will help with the decisions.</p>
+                <button onClick={() => setIsSuccess(false)} className="mt-7 w-fit text-sm font-black text-ink underline decoration-coral decoration-2 underline-offset-4">Send another inquiry</button>
               </div>
             ) : (
-              <div className="rounded-[2rem] bg-white/76 p-5 shadow-[0_22px_60px_rgba(26,58,82,0.08)] ring-1 ring-white/80 sm:p-7 lg:p-8">
-                <p className="max-w-[42ch] text-[1.05rem] font-semibold leading-relaxed text-ink/78">
-                  Ready to set sail? Tell us a little about your trip.
-                </p>
-                <p className="mt-2 text-[0.95rem] font-semibold text-stone/70">* Required fields</p>
+              <>
+                <div className="flex items-end justify-between gap-5 border-b border-ink/12 pb-5">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-coral">Cruise planning inquiry</p>
+                    <p className="mt-2 font-serif text-3xl font-semibold tracking-[-0.04em] text-royal-deep sm:text-4xl">Give us the starting point.</p>
+                  </div>
+                  <p className="hidden text-xs font-semibold text-stone/65 sm:block">* Required</p>
+                </div>
 
-                <form onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
+                <form onSubmit={handleSubmit} noValidate className="mt-8 space-y-8">
                   <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
                     <label htmlFor="website">Website</label>
                     <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
                   </div>
 
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label htmlFor="firstName" className={labelClass}>First Name *</label>
-                      <input id="firstName" required type="text" placeholder="Jane" className={inputClass} value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} />
-                    </div>
-                    <div>
-                      <label htmlFor="lastName" className={labelClass}>Last Name *</label>
-                      <input id="lastName" required type="text" placeholder="Smith" className={inputClass} value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} />
-                    </div>
+                  <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
+                    <label htmlFor="firstName" className={labelClass}>First name *<input id="firstName" required type="text" placeholder="Jane" className={inputClass} value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} /></label>
+                    <label htmlFor="lastName" className={labelClass}>Last name *<input id="lastName" required type="text" placeholder="Smith" className={inputClass} value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} /></label>
+                    <label htmlFor="email" className={labelClass}>Email address *<input id="email" required type="email" placeholder="jane@email.com" className={inputClass} value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} /></label>
+                    <label htmlFor="phone" className={labelClass}>Phone <span className="font-normal text-stone">(optional)</span><input id="phone" type="tel" placeholder="(555) 000-0000" className={inputClass} value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} /></label>
+                    <label htmlFor="destination" className={labelClass}>Destination *<select id="destination" required className={`${inputClass} cursor-pointer`} value={formData.destination} onChange={(e) => setFormData({ ...formData, destination: e.target.value })}><option value="" disabled>Select destination...</option>{DESTINATION_OPTIONS.map((destination) => <option key={destination} value={destination}>{destination}</option>)}</select></label>
+                    <label htmlFor="timing" className={labelClass}>Travel timeframe *<select id="timing" required className={`${inputClass} cursor-pointer`} value={formData.timing} onChange={(e) => setFormData({ ...formData, timing: e.target.value })}><option value="" disabled>Select timeframe...</option>{TIMING_OPTIONS.map((timing) => <option key={timing} value={timing}>{timing}</option>)}</select></label>
                   </div>
 
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label htmlFor="email" className={labelClass}>Email Address *</label>
-                      <input id="email" required type="email" placeholder="jane@email.com" className={inputClass} value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
-                    </div>
-                    <div>
-                      <label htmlFor="phone" className={labelClass}>Phone <span className="font-normal text-stone">(Optional)</span></label>
-                      <input id="phone" type="tel" placeholder="(555) 000-0000" className={inputClass} value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
-                    </div>
-                  </div>
-
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label htmlFor="destination" className={labelClass}>Destination *</label>
-                      <select id="destination" required className={`${inputClass} cursor-pointer appearance-none`} value={formData.destination} onChange={(e) => setFormData({ ...formData, destination: e.target.value })}>
-                        <option value="" disabled>Select destination...</option>
-                        {DESTINATION_OPTIONS.map((destination) => <option key={destination} value={destination}>{destination}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label htmlFor="timing" className={labelClass}>Travel Timeframe *</label>
-                      <select id="timing" required className={`${inputClass} cursor-pointer appearance-none`} value={formData.timing} onChange={(e) => setFormData({ ...formData, timing: e.target.value })}>
-                        <option value="" disabled>Select timeframe...</option>
-                        {TIMING_OPTIONS.map((timing) => <option key={timing} value={timing}>{timing}</option>)}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className={labelClass}>Tell us about your dream trip *</label>
-                    <textarea id="message" required rows={5} placeholder="Where do you want to go? How many travelers? Any special occasions?" className={`${inputClass} resize-none`} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
-                  </div>
-
-                  <Button disabled={isSubmitting} type="submit" variant="coral" className="flex w-full items-center justify-center gap-2 text-[15px]">
-                    {isSubmitting ? "Submitting..." : (<><span>Start Planning My Trip</span> <Ship size={16} /></>)}
-                  </Button>
+                  <label htmlFor="message" className={labelClass}>Tell us about the trip *<textarea id="message" required rows={4} placeholder="Where do you want to go? Who is traveling? Any special occasion?" className={`${inputClass} min-h-28 resize-y`} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} /></label>
 
                   {submitError && (
-                    <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                    <div className="border-l-2 border-amber-500 bg-amber-50 px-4 py-3 text-sm text-amber-900">
                       <p className="font-semibold">Submission issue</p>
                       <p className="mt-1">{submitError}</p>
-                      <a href={directMailto} className="mt-2 inline-flex text-amber-900 underline underline-offset-2">Email directly instead</a>
+                      <a href={directMailto} className="mt-2 inline-flex underline underline-offset-2">Email directly instead</a>
                     </div>
                   )}
+
+                  <button
+                    disabled={isSubmitting}
+                    type="submit"
+                    className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-coral-deep disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+                  >
+                    {isSubmitting ? "Sending..." : "Start planning my trip"} <ArrowRight size={17} />
+                  </button>
                 </form>
-              </div>
+              </>
             )}
           </div>
         </div>
