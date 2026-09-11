@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Instagram, Youtube } from "lucide-react";
+import { ChevronDown, Mail, Instagram, Youtube } from "lucide-react";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 
 const quickLinks = [
@@ -31,6 +31,12 @@ const shopLinks = [
   { label: "Returns",      href: "/returns" },
 ];
 
+const mobileGroups = [
+  { label: "Explore", links: quickLinks },
+  { label: "Travel", links: travelLinks },
+  { label: "Shop", links: shopLinks },
+];
+
 const TikTokIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
     <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.87a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.3z" />
@@ -43,23 +49,88 @@ const FacebookIcon = () => (
   </svg>
 );
 
+const SocialLinks = () => (
+  <div className="flex gap-2 flex-wrap">
+    <a href="https://www.instagram.com/yotravelholic" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 hover:bg-coral flex items-center justify-center transition-colors" aria-label="Instagram"><Instagram size={15} className="text-white" /></a>
+    <a href="https://www.facebook.com/yotravelholic" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 hover:bg-coral flex items-center justify-center transition-colors" aria-label="Facebook"><FacebookIcon /></a>
+    <a href="https://www.tiktok.com/@rjsmom1" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 hover:bg-coral flex items-center justify-center transition-colors" aria-label="TikTok"><TikTokIcon /></a>
+    <a href="https://www.youtube.com/@yotravelholic" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 hover:bg-coral flex items-center justify-center transition-colors" aria-label="YouTube"><Youtube size={15} className="text-white" /></a>
+    <a href="mailto:hello@yotravelholic.com" className="w-9 h-9 rounded-full bg-white/10 hover:bg-coral flex items-center justify-center transition-colors" aria-label="Email"><Mail size={15} className="text-white" /></a>
+  </div>
+);
+
 export const Footer = () => {
   return (
     <footer className="bg-navy">
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 mb-12">
+      <div className="lg:hidden px-5 py-9 sm:px-8 sm:py-11">
+        <div className="flex items-end justify-between gap-5 border-b border-white/10 pb-6">
+          <div>
+            <Link href="/" className="inline-block focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none rounded">
+              <Image src="/images/travelholics_logo_stack.png" alt="Travelholics" width={220} height={120} className="h-auto w-[145px] sm:w-[165px]" />
+            </Link>
+            <p className="mt-2 max-w-[24rem] text-sm leading-6 text-white/52">Curated cruises. Real experience. Stress-free planning.</p>
+          </div>
+        </div>
+
+        <div className="py-5">
+          <SocialLinks />
+        </div>
+
+        <details id="newsletter" className="group scroll-mt-24 border-y border-white/10">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-sm font-black text-white">
+            <span>Join the Cruise Life List</span>
+            <ChevronDown className="h-4 w-4 text-white/45 transition-transform group-open:rotate-180" />
+          </summary>
+          <div className="pb-5">
+            <NewsletterSignup compact />
+          </div>
+        </details>
+
+        <nav aria-label="Footer navigation" className="border-b border-white/10">
+          {mobileGroups.map((group) => (
+            <details key={group.label} className="group border-t border-white/10 first:border-t-0">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-sm font-black text-white/82">
+                <span>{group.label}</span>
+                <ChevronDown className="h-4 w-4 text-white/38 transition-transform group-open:rotate-180" />
+              </summary>
+              <ul className="grid grid-cols-2 gap-x-6 gap-y-1 pb-4">
+                {group.links.map(({ label, href }) => (
+                  <li key={`${group.label}-${label}`}>
+                    <Link href={href} className="block py-2 text-sm font-medium text-white/55 transition-colors hover:text-white">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ))}
+        </nav>
+
+        <div className="grid grid-cols-2 gap-4 border-b border-white/10 py-5 text-sm">
+          <a href="mailto:hello@yotravelholic.com" className="font-semibold text-white/68 transition-colors hover:text-white">Email us</a>
+          <a href="sms:+18472382473" className="text-right font-semibold text-white/68 transition-colors hover:text-white">Text us</a>
+        </div>
+
+        <div className="pt-5 text-[11px] leading-5 text-white/34">
+          <div className="flex flex-wrap gap-x-4 gap-y-1">
+            <Link href="/privacy" className="hover:text-white/65 transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-white/65 transition-colors">Terms</Link>
+            <Link href="/shipping" className="hover:text-white/65 transition-colors">Shipping</Link>
+            <Link href="/returns" className="hover:text-white/65 transition-colors">Returns</Link>
+          </div>
+          <div className="mt-3 flex items-center justify-between gap-4">
+            <span>&copy; {new Date().getFullYear()} Travelholics</span>
+            <a href="https://creativeeyestudios.com" target="_blank" rel="noopener noreferrer" className="italic text-white/18 hover:text-white/55 transition-colors">Creative Eye Studios</a>
+          </div>
+        </div>
+      </div>
+
+      <div className="hidden lg:block max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-6 gap-10 mb-12">
           <div>
             <Link href="/" className="inline-block mb-4 focus-visible:ring-2 focus-visible:ring-coral focus-visible:outline-none rounded">
-              <Image src="/images/travelholics_logo_stack.png" alt="Travelholics" width={220} height={120} className="h-auto w-[180px] sm:w-[210px]" />
+              <Image src="/images/travelholics_logo_stack.png" alt="Travelholics" width={220} height={120} className="h-auto w-[210px]" />
             </Link>
             <p className="text-footer-body text-white/60 leading-relaxed mb-5">Curated cruises. Real experience.<br />Stress-free planning.<br />Memories that last a lifetime.</p>
-            <div className="flex gap-2 flex-wrap">
-              <a href="https://www.instagram.com/yotravelholic" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 hover:bg-coral flex items-center justify-center transition-colors" aria-label="Instagram"><Instagram size={15} className="text-white" /></a>
-              <a href="https://www.facebook.com/yotravelholic" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 hover:bg-coral flex items-center justify-center transition-colors" aria-label="Facebook"><FacebookIcon /></a>
-              <a href="https://www.tiktok.com/@rjsmom1" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 hover:bg-coral flex items-center justify-center transition-colors" aria-label="TikTok"><TikTokIcon /></a>
-              <a href="https://www.youtube.com/@yotravelholic" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 hover:bg-coral flex items-center justify-center transition-colors" aria-label="YouTube"><Youtube size={15} className="text-white" /></a>
-              <a href="mailto:hello@yotravelholic.com" className="w-9 h-9 rounded-full bg-white/10 hover:bg-coral flex items-center justify-center transition-colors" aria-label="Email"><Mail size={15} className="text-white" /></a>
-            </div>
+            <SocialLinks />
           </div>
 
           <div>
@@ -80,10 +151,10 @@ export const Footer = () => {
             <a href="sms:+18472382473" className="text-footer-body text-white/70 hover:text-white transition-colors block">Text us: (847) 238-2473</a>
           </div>
 
-          <div id="newsletter" className="scroll-mt-24 md:col-span-2 lg:col-span-1"><NewsletterSignup compact /></div>
+          <div id="newsletter-desktop" className="scroll-mt-24 col-span-2"><NewsletterSignup compact /></div>
         </div>
 
-        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-footer-body text-white/40">
+        <div className="pt-6 border-t border-white/10 flex items-center justify-between gap-4 text-footer-body text-white/40">
           <span>&copy; {new Date().getFullYear()} Yolanda Harris | Travelholics. All rights reserved.</span>
           <div className="flex items-center gap-5">
             <Link href="/privacy" className="hover:text-white/70 transition-colors">Privacy Policy</Link>
