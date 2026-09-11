@@ -1,60 +1,59 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Ship, ShoppingBag, Handshake } from "lucide-react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 export const MobileCTA = () => {
-  const [visible, setVisible] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
+  const [nearContact, setNearContact] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const onScroll = () => {
-      setVisible(window.scrollY > window.innerHeight * 0.8);
-    };
+    const onScroll = () => setPastHero(window.scrollY > window.innerHeight * 0.82);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    const contact = document.getElementById("contact");
+    const observer = contact
+      ? new IntersectionObserver(([entry]) => setNearContact(entry.isIntersecting), { rootMargin: "180px 0px 0px" })
+      : null;
+    if (contact && observer) observer.observe(contact);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      observer?.disconnect();
+    };
   }, []);
 
   const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("contact")?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
   };
+
+  const visible = pastHero && !nearContact;
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
+          initial={reduceMotion ? false : { y: 70, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="fixed bottom-0 inset-x-0 z-50 lg:hidden"
+          exit={reduceMotion ? { opacity: 0 } : { y: 70, opacity: 0 }}
+          transition={{ duration: 0.28, ease: "easeOut" }}
+          className="fixed inset-x-0 bottom-0 z-50 px-4 pb-[max(0.85rem,env(safe-area-inset-bottom))] lg:hidden"
         >
-          <div className="h-4 bg-gradient-to-t from-white to-transparent" />
-          <div className="bg-white border-t border-slate-100 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3">
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                onClick={scrollToContact}
-                className="min-h-12 bg-coral hover:bg-coral-deep text-white font-bold py-3 rounded-xl shadow-lg shadow-coral/20 flex flex-col items-center justify-center gap-1 transition-all active:scale-[0.98] text-sm"
-              >
-                <Ship size={16} />
-                Plan
-              </button>
-              <a
-                href="/shop"
-                className="min-h-12 bg-emerald-mid hover:bg-emerald-deep text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-deep/20 flex flex-col items-center justify-center gap-1 transition-all text-sm"
-              >
-                <ShoppingBag size={16} />
-                Shop
-              </a>
-              <a
-                href="/collaborate"
-                className="min-h-12 bg-navy hover:bg-ink text-white font-bold py-3 rounded-xl shadow-lg shadow-navy/20 flex flex-col items-center justify-center gap-1 transition-all text-sm"
-              >
-                <Handshake size={16} />
-                Collab
-              </a>
-            </div>
-          </div>
+          <button
+            onClick={scrollToContact}
+            className="mx-auto flex min-h-13 w-full max-w-md items-center justify-between rounded-full border border-white/18 bg-[#082d27]/96 px-5 py-3.5 text-left text-white shadow-[0_18px_45px_rgba(7,31,27,0.28)] backdrop-blur-xl"
+          >
+            <span>
+              <span className="block text-[10px] font-black uppercase tracking-[0.18em] text-coral">Ready when you are</span>
+              <span className="mt-0.5 block text-sm font-bold">Plan my next cruise</span>
+            </span>
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-coral text-white">
+              <ArrowUpRight size={17} />
+            </span>
+          </button>
         </motion.div>
       )}
     </AnimatePresence>
