@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
+import { BrandThesis } from "@/components/brand-thesis";
 import { IntentCards } from "@/components/intent-cards";
+import { CruiseLineStrip } from "@/components/cruise-line-strip";
 import { MeetYolanda } from "@/components/meet-yolanda";
 import { StatsStrip } from "@/components/stats-strip";
 import { LatestVideos } from "@/components/latest-videos";
@@ -41,8 +43,10 @@ export default async function Home() {
       <MobileCTA />
       <main className="home-mobile-optimized">
         <Hero />
-        <MeetYolanda />
+        <BrandThesis />
         <IntentCards />
+        <CruiseLineStrip />
+        <MeetYolanda />
         <GroupTrips />
         <DestinationMap />
         <StatsStrip />
