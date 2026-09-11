@@ -6,7 +6,7 @@ import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 
 export const metadata: Metadata = {
-  title: 'Your Group Cruise Is in Motion | Travelholics',
+  title: 'Your Group Cruise Is in Motion',
   robots: { index: false, follow: false },
 }
 
@@ -30,7 +30,7 @@ export default function GroupCruiseThankYouPage() {
             {videoUrl ? (
               <video controls playsInline className="aspect-video w-full bg-ink object-cover" poster="/images/about-port-of-call.jpg"><source src={videoUrl} /></video>
             ) : (
-              <div className="relative aspect-video min-h-[280px] overflow-hidden bg-emerald-deep"><Image src="/images/about-port-of-call.jpg" alt="Yolanda from Travelholics" fill className="object-cover opacity-55" sizes="(max-width: 1024px) 92vw, 960px" /><div className="absolute inset-0 bg-gradient-to-t from-emerald-deep via-emerald-deep/35 to-transparent" /><div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8"><p className="text-xs font-black uppercase tracking-[0.15em] text-coral">A note from Yolanda</p><h2 className="mt-2 font-serif text-3xl font-semibold">Your personal welcome video goes here.</h2><p className="mt-2 max-w-xl text-sm leading-6 text-white/70">The experience is wired for Yolanda's Group Cruise thank-you video as soon as the final clip is uploaded.</p></div></div>
+              <div className="relative aspect-video min-h-[280px] overflow-hidden bg-emerald-deep"><Image src="/images/about-port-of-call.jpg" alt="Yolanda from Travelholics" fill className="object-cover opacity-55" sizes="(max-width: 1024px) 92vw, 960px" /><div className="absolute inset-0 bg-gradient-to-t from-emerald-deep via-emerald-deep/35 to-transparent" /><div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8"><p className="text-xs font-black uppercase tracking-[0.15em] text-coral">A note from Yolanda</p><h2 className="mt-2 font-serif text-3xl font-semibold">I&apos;m excited to hear what you have in mind.</h2><p className="mt-2 max-w-xl text-sm leading-6 text-white/70">I&apos;ll review what you shared, then we&apos;ll talk through the group, the sailing, and the details that can make this cruise feel like yours.</p></div></div>
             )}
           </section>
 
