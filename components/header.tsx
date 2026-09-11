@@ -57,7 +57,9 @@ export const Header = () => {
   const liveStatus = useLiveStatus();
 
   const isHome = pathname === "/";
-  const isHeroArrival = isHome && !isScrolled && !menuOpen;
+  const isHomeHeroArrival = isHome && !isScrolled && !menuOpen;
+  const hasDarkHero = isHome || pathname === "/group-cruises" || pathname.startsWith("/trips/");
+  const isDarkHero = hasDarkHero && !isScrolled && !menuOpen;
   const isLive = liveStatus?.state === "live";
   const isSoon = liveStatus?.state === "soon";
   const isActive = isLive || isSoon;
@@ -90,7 +92,7 @@ export const Header = () => {
 
   const isShopFull = pathname === "/shop-full";
   const solidBg = isScrolled || isShopFull || menuOpen;
-  const navBg = isHeroArrival
+  const navBg = isDarkHero
     ? "bg-transparent"
     : isLive
     ? "bg-coral shadow-sm"
@@ -98,8 +100,8 @@ export const Header = () => {
     ? "bg-ink shadow-sm"
     : solidBg
     ? (isShopFull ? "bg-white shadow-sm" : "bg-cream/96 backdrop-blur-sm shadow-sm")
-    : "bg-transparent";
-  const onDark = isActive || isHeroArrival;
+    : "bg-cream/96 backdrop-blur-sm shadow-sm";
+  const onDark = isActive || isDarkHero;
   const linkBase = "text-sm font-medium px-3 py-2 rounded-lg transition-colors duration-150";
   const linkColor = onDark ? "text-white/88 hover:text-white hover:bg-white/10" : "text-ink/70 hover:text-ink hover:bg-sand";
   const linkActive = onDark ? "text-white font-semibold" : "text-ink font-semibold";
@@ -107,9 +109,9 @@ export const Header = () => {
 
   return (
     <>
-      <header className={`fixed ${isHeroArrival ? "top-3 sm:top-4 lg:top-5" : "top-0"} inset-x-0 z-50 transition-all duration-300 ${navBg}`}>
-        <div className={`${isHeroArrival ? "mx-auto grid h-12 max-w-[calc(100%-1.5rem)] grid-cols-[auto_1fr_auto] items-center gap-3 px-3 sm:h-16 sm:max-w-[calc(100%-2rem)] sm:gap-4 sm:px-4 lg:max-w-[calc(100%-2.5rem)]" : "max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-[auto_1fr_auto] items-center h-16 gap-4"}`}>
-          {!isHeroArrival && (
+      <header className={`fixed ${isHomeHeroArrival ? "top-3 sm:top-4 lg:top-5" : "top-0"} inset-x-0 z-50 transition-all duration-300 ${navBg}`}>
+        <div className={`${isHomeHeroArrival ? "mx-auto grid h-12 max-w-[calc(100%-1.5rem)] grid-cols-[auto_1fr_auto] items-center gap-3 px-3 sm:h-16 sm:max-w-[calc(100%-2rem)] sm:gap-4 sm:px-4 lg:max-w-[calc(100%-2.5rem)]" : "max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-[auto_1fr_auto] items-center h-16 gap-4"}`}>
+          {!isHomeHeroArrival && (
             <Link href="/" className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral rounded-md">
               <span className={`${wordmarkStyles.frame} w-[170px] lg:w-[205px]`}>
                 <Image
@@ -124,7 +126,7 @@ export const Header = () => {
             </Link>
           )}
 
-          {!isHeroArrival && (
+          {!isHomeHeroArrival && (
             <nav className="hidden lg:flex items-center justify-center gap-0.5">
               {DESKTOP_NAV.map((link) => {
                 const active = !link.href.includes("#") && (pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href.split("#")[0])));
@@ -138,7 +140,7 @@ export const Header = () => {
             </nav>
           )}
 
-          <div className={`${isHeroArrival ? "hidden" : "flex items-center gap-1 sm:gap-2 justify-end"}`}>
+          <div className={`${isHomeHeroArrival ? "hidden" : "flex items-center gap-1 sm:gap-2 justify-end"}`}>
             <button type="button" onClick={openDrawer} aria-label={`Cart${count > 0 ? `, ${count} items` : ""}`} className={iconBtn}>
               <ShoppingBag className="h-5 w-5" />
               {count > 0 && (
@@ -148,7 +150,7 @@ export const Header = () => {
               )}
             </button>
 
-            {isActive && !isHeroArrival ? (
+            {isActive && !isHomeHeroArrival ? (
               <a href={liveHref} target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-white/20 border border-white/25 px-4 py-2 text-sm font-semibold text-white hover:bg-white/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white min-w-[140px] justify-center">
                 <PulsingDot className="text-white" />
                 <AnimatePresence mode="wait" initial={false}>
@@ -176,26 +178,16 @@ export const Header = () => {
             <div className="flex items-center justify-between px-5 sm:px-8 h-16 border-b border-white/10">
               <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-md">
                 <span className={`${wordmarkStyles.frame} w-[180px]`}>
-                  <Image
-                    src="/images/Traveholic_logo_wordmark_white.png"
-                    alt="Travelholics"
-                    fill
-                    className={wordmarkStyles.source}
-                    sizes="180px"
-                  />
+                  <Image src="/images/Traveholic_logo_wordmark_white.png" alt="Travelholics" fill className={wordmarkStyles.source} sizes="180px" />
                 </span>
               </Link>
-              <button type="button" onClick={() => setMenuOpen(false)} aria-label="Close menu" className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
-                <X className="h-5 w-5" />
-              </button>
+              <button type="button" onClick={() => setMenuOpen(false)} aria-label="Close menu" className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"><X className="h-5 w-5" /></button>
             </div>
 
             <nav className="flex-1 flex flex-col justify-center px-8 sm:px-16 gap-1 overflow-y-auto py-6">
               {MOBILE_NAV.map((link, i) => (
                 <motion.div key={link.label} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04, duration: 0.2 }}>
-                  <Link href={link.href} onClick={() => setMenuOpen(false)} className="block font-serif text-[2.15rem] sm:text-5xl font-semibold tracking-tight text-white/90 hover:text-coral transition-colors py-1">
-                    {link.label}
-                  </Link>
+                  <Link href={link.href} onClick={() => setMenuOpen(false)} className="block font-serif text-[2.15rem] sm:text-5xl font-semibold tracking-tight text-white/90 hover:text-coral transition-colors py-1">{link.label}</Link>
                 </motion.div>
               ))}
             </nav>
