@@ -36,29 +36,32 @@ export const IntentCards = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="destination-discovery" className="bg-[#f4efe4] py-20 sm:py-28 lg:py-32">
+    <section id="destination-discovery" className="destination-discovery-section bg-[#f4efe4] py-20 sm:py-28 lg:py-32">
       <style>{`
         @media (max-width: 767px) {
-          #destination-discovery .destination-grid {
+          .home-mobile-optimized #destination-discovery.destination-discovery-section .destination-grid {
             grid-template-columns: 1fr !important;
             grid-auto-rows: 20rem !important;
           }
-          #destination-discovery .destination-grid article {
+          .home-mobile-optimized #destination-discovery.destination-discovery-section .destination-grid article {
             grid-column: auto !important;
           }
-          #destination-discovery .destination-grid article h3 {
-            font-size: 2.25rem !important;
-            line-height: 1 !important;
+          .home-mobile-optimized #destination-discovery.destination-discovery-section .destination-grid article h3 {
+            font-size: clamp(2rem, 9.5vw, 2.55rem) !important;
+            line-height: 0.98 !important;
+            max-width: calc(100% - 3.25rem) !important;
+            overflow-wrap: normal !important;
+            word-break: normal !important;
           }
-          #destination-discovery .destination-grid article p {
+          .home-mobile-optimized #destination-discovery.destination-discovery-section .destination-grid article p {
             margin-top: 0.75rem !important;
             font-size: 0.875rem !important;
             line-height: 1.5rem !important;
           }
-          #destination-discovery .destination-grid article a > div:last-child {
+          .home-mobile-optimized #destination-discovery.destination-discovery-section .destination-grid article a > div:last-child {
             padding: 1.5rem !important;
           }
-          #destination-discovery .destination-grid article a > div:last-child span {
+          .home-mobile-optimized #destination-discovery.destination-discovery-section .destination-grid article a > div:last-child span {
             width: 2.5rem !important;
             height: 2.5rem !important;
           }
@@ -104,7 +107,7 @@ export const IntentCards = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/14 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-7 lg:p-8">
                   <div className="flex items-end justify-between gap-5">
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <h3 className="font-serif text-4xl font-semibold leading-none tracking-[-0.05em] sm:text-5xl">{destination.title}</h3>
                       <p className="mt-3 max-w-md text-sm leading-6 text-white/68 sm:text-base">{destination.note}</p>
                     </div>
