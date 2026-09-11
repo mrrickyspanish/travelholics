@@ -27,12 +27,15 @@ const DESKTOP_NAV: NavItem[] = [
   { label: "Our Story", href: "/#about" },
 ];
 
-const MOBILE_NAV: NavItem[] = [
+const MOBILE_PRIMARY: NavItem[] = [
   { label: "Cruises", href: "/cruises/caribbean" },
   { label: "Group Cruises", href: "/group-cruises" },
-  { label: "Live", href: "/live" },
-  { label: "Videos", href: "/videos" },
+  { label: "Live", href: "/live", liveIndicator: true },
   { label: "Shop", href: "/shop" },
+];
+
+const MOBILE_SECONDARY: NavItem[] = [
+  { label: "Videos", href: "/videos" },
   { label: "Guides", href: "/guides" },
   { label: "Blog", href: "/blog" },
   { label: "Our Story", href: "/#about" },
@@ -175,30 +178,57 @@ export const Header = () => {
       <AnimatePresence>
         {menuOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="fixed inset-0 z-[100] flex flex-col" style={{ background: "#0E125C" }} aria-modal="true" role="dialog">
-            <div className="flex items-center justify-between px-5 sm:px-8 h-16 border-b border-white/10">
+            <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 px-5 sm:px-8">
               <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-md">
-                <span className={`${wordmarkStyles.frame} w-[180px]`}>
+                <span className={`${wordmarkStyles.frame} w-[165px] sm:w-[180px]`}>
                   <Image src="/images/Traveholic_logo_wordmark_white.png" alt="Travelholics" fill className={wordmarkStyles.source} sizes="180px" />
                 </span>
               </Link>
               <button type="button" onClick={() => setMenuOpen(false)} aria-label="Close menu" className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"><X className="h-5 w-5" /></button>
             </div>
 
-            <nav className="flex-1 flex flex-col justify-center px-8 sm:px-16 gap-1 overflow-y-auto py-6">
-              {MOBILE_NAV.map((link, i) => (
-                <motion.div key={link.label} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04, duration: 0.2 }}>
-                  <Link href={link.href} onClick={() => setMenuOpen(false)} className="block font-serif text-[2.15rem] sm:text-5xl font-semibold tracking-tight text-white/90 hover:text-coral transition-colors py-1">{link.label}</Link>
-                </motion.div>
-              ))}
-            </nav>
+            <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-8 sm:py-7">
+              <nav aria-label="Primary mobile navigation">
+                <div className="grid grid-cols-2 border-y border-white/12">
+                  {MOBILE_PRIMARY.map((link, i) => (
+                    <motion.div
+                      key={link.label}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.035, duration: 0.18 }}
+                      className={`${i % 2 === 0 ? "border-r border-white/12 pr-4" : "pl-4"} ${i < 2 ? "border-b border-white/12" : ""}`}
+                    >
+                      <Link href={link.href} onClick={() => setMenuOpen(false)} className="flex min-h-[76px] items-center gap-2 py-4 font-serif text-[1.65rem] font-semibold leading-[1] tracking-[-0.04em] text-white/92 transition-colors hover:text-coral sm:min-h-[88px] sm:text-3xl">
+                        {link.label}
+                        {link.liveIndicator && isActive && <PulsingDot className="text-coral" />}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
 
-            <div className="px-8 sm:px-16 pb-10 space-y-4">
-              <a href="/#contact" onClick={() => setMenuOpen(false)} className="inline-flex items-center rounded-xl bg-coral px-6 py-3 text-sm font-semibold text-white hover:bg-coral-deep transition-colors">Join the Crew</a>
-              <div className="flex gap-5">
-                <a href={TIKTOK_PROFILE_URL} target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">TikTok</a>
-                <a href="https://www.instagram.com/yotravelholic" target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">Instagram</a>
+                <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-1 sm:mt-6 sm:grid-cols-3">
+                  {MOBILE_SECONDARY.map((link, i) => (
+                    <motion.div key={link.label} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.12 + i * 0.025 }}>
+                      <Link href={link.href} onClick={() => setMenuOpen(false)} className="block py-2.5 text-[0.95rem] font-semibold text-white/58 transition-colors hover:text-white sm:text-base">
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              </nav>
+
+              <div className="mt-6 border-t border-white/10 pt-5 sm:mt-7">
+                <a href="/#contact" onClick={() => setMenuOpen(false)} className="flex min-h-12 w-full items-center justify-center rounded-full bg-coral px-6 py-3 text-sm font-black text-white transition-colors hover:bg-coral-deep sm:w-fit">
+                  Plan my next cruise
+                </a>
+                <div className="mt-4 flex items-center justify-between gap-4 text-sm">
+                  <div className="flex gap-5">
+                    <a href={TIKTOK_PROFILE_URL} target="_blank" rel="noreferrer" className="text-white/45 hover:text-white transition-colors">TikTok</a>
+                    <a href="https://www.instagram.com/yotravelholic" target="_blank" rel="noreferrer" className="text-white/45 hover:text-white transition-colors">Instagram</a>
+                  </div>
+                  <p className="text-xs text-white/22">© {new Date().getFullYear()}</p>
+                </div>
               </div>
-              <p className="text-xs text-white/25">© {new Date().getFullYear()} Travelholics</p>
             </div>
           </motion.div>
         )}
