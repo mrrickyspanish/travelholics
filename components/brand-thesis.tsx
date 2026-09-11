@@ -17,7 +17,7 @@ export const BrandThesis = () => {
         <div className="grid gap-6 lg:grid-cols-[0.62fr_0.38fr] lg:items-end lg:gap-12">
           <h2 className="max-w-[16ch] font-serif text-[clamp(2.7rem,6.5vw,6.6rem)] font-semibold leading-[0.9] tracking-[-0.065em] text-royal-deep">
             <span className="block">From “we should go”</span>
-            <span className="block">to “we&apos;re booked.”</span>
+            <span className="block">to <span className="text-coral">“we&apos;re booked.”</span></span>
           </h2>
 
           <div className="max-w-xl lg:justify-self-end">
