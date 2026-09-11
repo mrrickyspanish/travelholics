@@ -19,16 +19,17 @@ type NavItem = {
 
 const DESKTOP_NAV: NavItem[] = [
   { label: "Cruises", href: "/cruises/caribbean" },
+  { label: "Group Cruises", href: "/group-cruises" },
   { label: "Live", href: "/live", liveIndicator: true },
   { label: "Videos", href: "/videos" },
   { label: "Shop", href: "/shop" },
-  { label: "Guides", href: "/guides" },
   { label: "Blog", href: "/blog" },
   { label: "Our Story", href: "/#about" },
 ];
 
 const MOBILE_NAV: NavItem[] = [
   { label: "Cruises", href: "/cruises/caribbean" },
+  { label: "Group Cruises", href: "/group-cruises" },
   { label: "Live", href: "/live" },
   { label: "Videos", href: "/videos" },
   { label: "Shop", href: "/shop" },
@@ -189,10 +190,10 @@ export const Header = () => {
               </button>
             </div>
 
-            <nav className="flex-1 flex flex-col justify-center px-8 sm:px-16 gap-1">
+            <nav className="flex-1 flex flex-col justify-center px-8 sm:px-16 gap-1 overflow-y-auto py-6">
               {MOBILE_NAV.map((link, i) => (
                 <motion.div key={link.label} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04, duration: 0.2 }}>
-                  <Link href={link.href} onClick={() => setMenuOpen(false)} className="block font-serif text-[2.5rem] sm:text-5xl font-semibold tracking-tight text-white/90 hover:text-coral transition-colors py-1">
+                  <Link href={link.href} onClick={() => setMenuOpen(false)} className="block font-serif text-[2.15rem] sm:text-5xl font-semibold tracking-tight text-white/90 hover:text-coral transition-colors py-1">
                     {link.label}
                   </Link>
                 </motion.div>
@@ -200,9 +201,7 @@ export const Header = () => {
             </nav>
 
             <div className="px-8 sm:px-16 pb-10 space-y-4">
-              <a href="/#contact" onClick={() => setMenuOpen(false)} className="inline-flex items-center rounded-xl bg-coral px-6 py-3 text-sm font-semibold text-white hover:bg-coral-deep transition-colors">
-                Join the Crew
-              </a>
+              <a href="/#contact" onClick={() => setMenuOpen(false)} className="inline-flex items-center rounded-xl bg-coral px-6 py-3 text-sm font-semibold text-white hover:bg-coral-deep transition-colors">Join the Crew</a>
               <div className="flex gap-5">
                 <a href={TIKTOK_PROFILE_URL} target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">TikTok</a>
                 <a href="https://www.instagram.com/yotravelholic" target="_blank" rel="noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">Instagram</a>

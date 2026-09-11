@@ -12,6 +12,7 @@ import {
   FileText,
   BookOpen,
   Map,
+  UsersRound,
   ShoppingBag,
   QrCode,
   KeyRound,
@@ -34,11 +35,11 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/admin/articles', label: 'Articles', icon: FileText },
   { href: '/admin/encyclopedia', label: 'Encyclopedia', icon: BookOpen },
   { href: '/admin/trip-pages', label: 'Trip Pages', icon: Map },
+  { href: '/admin/group-trips', label: 'Group Trips', icon: UsersRound },
   { href: '/admin/shop', label: 'Shop', icon: ShoppingBag },
   { href: '/admin/short-links', label: 'Short Links', icon: QrCode },
 ]
 
-// Owner-only. The page and its API endpoint re-check this on the server.
 const OWNER_NAV_ITEMS: NavItem[] = [
   { href: '/admin/access', label: 'Admin Access', icon: KeyRound },
 ]
@@ -64,13 +65,7 @@ function Logo() {
   )
 }
 
-export default function AdminShell({
-  children,
-  userEmail,
-}: {
-  children: React.ReactNode
-  userEmail: string
-}) {
+export default function AdminShell({ children, userEmail }: { children: React.ReactNode; userEmail: string }) {
   const pathname = usePathname()
   const [confirmSignOut, setConfirmSignOut] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -80,26 +75,19 @@ export default function AdminShell({
     [userEmail]
   )
 
-  // Close the drawer whenever navigation happens
   useEffect(() => {
     setDrawerOpen(false)
     setConfirmSignOut(false)
   }, [pathname])
 
-  // Lock body scroll while the drawer is open
   useEffect(() => {
     document.body.style.overflow = drawerOpen ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
+    return () => { document.body.style.overflow = '' }
   }, [drawerOpen])
 
   async function handleSignOut() {
     const supabase = createBrowserSupabase()
     await supabase.auth.signOut()
-    // Full document load, not router.push. Client-side navigation reuses the
-    // cached RSC payload for this shared layout, so the previous admin's email
-    // and nav items survive into the next session.
     window.location.assign('/admin/login')
   }
 
@@ -108,12 +96,10 @@ export default function AdminShell({
     return pathname.startsWith(href)
   }
 
-  const currentSection =
-    navItems.find(({ href, exact }) => isActive(href, exact))?.label ?? 'Admin'
+  const currentSection = navItems.find(({ href, exact }) => isActive(href, exact))?.label ?? 'Admin'
 
   const sidebarContent = (
     <>
-      {/* Nav */}
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
         {navItems.map(({ href, label, icon: Icon, exact }) => (
           <Link
@@ -129,7 +115,6 @@ export default function AdminShell({
             {label}
           </Link>
         ))}
-
         <a
           href="https://yotravelholic.com"
           target="_blank"
@@ -141,32 +126,17 @@ export default function AdminShell({
         </a>
       </nav>
 
-      {/* Footer */}
       <div className="border-t border-white/5 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
         <p className="truncate text-xs text-white/40 mb-3">{userEmail}</p>
         {confirmSignOut ? (
           <div className="space-y-1.5">
             <p className="text-xs text-white/60 mb-2">Sure?</p>
-            <button
-              onClick={handleSignOut}
-              className="w-full rounded-md bg-red-600/80 px-3 py-2 text-xs font-medium text-white hover:bg-red-600 transition-colors"
-            >
-              Yes, sign out
-            </button>
-            <button
-              onClick={() => setConfirmSignOut(false)}
-              className="w-full rounded-md px-3 py-2 text-xs font-medium text-white/50 hover:text-white transition-colors"
-            >
-              Cancel
-            </button>
+            <button onClick={handleSignOut} className="w-full rounded-md bg-red-600/80 px-3 py-2 text-xs font-medium text-white hover:bg-red-600 transition-colors">Yes, sign out</button>
+            <button onClick={() => setConfirmSignOut(false)} className="w-full rounded-md px-3 py-2 text-xs font-medium text-white/50 hover:text-white transition-colors">Cancel</button>
           </div>
         ) : (
-          <button
-            onClick={() => setConfirmSignOut(true)}
-            className="flex w-full items-center gap-2 rounded-md py-1 text-xs text-white/40 hover:text-white/70 transition-colors"
-          >
-            <LogOut size={14} />
-            Sign Out
+          <button onClick={() => setConfirmSignOut(true)} className="flex w-full items-center gap-2 rounded-md py-1 text-xs text-white/40 hover:text-white/70 transition-colors">
+            <LogOut size={14} /> Sign Out
           </button>
         )}
       </div>
@@ -175,65 +145,28 @@ export default function AdminShell({
 
   return (
     <div className="admin-shell flex h-dvh flex-col overflow-hidden bg-[#0f1f1b] lg:flex-row">
-      {/* Mobile top bar */}
       <header className="relative flex h-14 shrink-0 items-center justify-between border-b border-white/5 bg-[#0b1812] px-2 pt-[env(safe-area-inset-top)] lg:hidden">
-        <button
-          onClick={() => setDrawerOpen(true)}
-          className="rounded-lg p-2.5 text-white/70 hover:bg-white/5 hover:text-white active:bg-white/10 transition-colors"
-          aria-label="Open menu"
-        >
-          <Menu size={22} />
-        </button>
-        <div className="pointer-events-none absolute inset-x-14 top-[env(safe-area-inset-top)] flex h-14 items-center justify-center">
-          <span className="truncate text-[15px] font-semibold text-white">{currentSection}</span>
-        </div>
-        <a
-          href="https://yotravelholic.com"
-          target="_blank"
-          rel="noreferrer"
-          className="rounded-lg p-2.5 text-white/50 hover:bg-white/5 hover:text-white active:bg-white/10 transition-colors"
-          aria-label="View site"
-        >
-          <ExternalLink size={19} />
-        </a>
+        <button onClick={() => setDrawerOpen(true)} className="rounded-lg p-2.5 text-white/70 hover:bg-white/5 hover:text-white active:bg-white/10 transition-colors" aria-label="Open menu"><Menu size={22} /></button>
+        <div className="pointer-events-none absolute inset-x-14 top-[env(safe-area-inset-top)] flex h-14 items-center justify-center"><span className="truncate text-[15px] font-semibold text-white">{currentSection}</span></div>
+        <a href="https://yotravelholic.com" target="_blank" rel="noreferrer" className="rounded-lg p-2.5 text-white/50 hover:bg-white/5 hover:text-white active:bg-white/10 transition-colors" aria-label="View site"><ExternalLink size={19} /></a>
       </header>
 
-      {/* Desktop sidebar */}
       <aside className="hidden w-60 shrink-0 flex-col bg-[#0b1812] border-r border-white/5 lg:flex">
-        <div className="flex h-16 items-center px-5 border-b border-white/5">
-          <Logo />
-        </div>
+        <div className="flex h-16 items-center px-5 border-b border-white/5"><Logo /></div>
         {sidebarContent}
       </aside>
 
-      {/* Mobile drawer */}
-      {drawerOpen && (
+      {drawerOpen ? (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setDrawerOpen(false)}
-            aria-hidden="true"
-          />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setDrawerOpen(false)} aria-hidden="true" />
           <aside className="absolute inset-y-0 left-0 flex w-[280px] max-w-[85vw] flex-col bg-[#0b1812] shadow-2xl">
-            <div className="flex h-14 shrink-0 items-center justify-between border-b border-white/5 px-4 pt-[env(safe-area-inset-top)]">
-              <Logo />
-              <button
-                onClick={() => setDrawerOpen(false)}
-                className="-mr-2 rounded-lg p-2 text-white/70 hover:bg-white/5 hover:text-white transition-colors"
-                aria-label="Close menu"
-              >
-                <X size={20} />
-              </button>
-            </div>
+            <div className="flex h-14 shrink-0 items-center justify-between border-b border-white/5 px-4 pt-[env(safe-area-inset-top)]"><Logo /><button onClick={() => setDrawerOpen(false)} className="-mr-2 rounded-lg p-2 text-white/70 hover:bg-white/5 hover:text-white transition-colors" aria-label="Close menu"><X size={20} /></button></div>
             {sidebarContent}
           </aside>
         </div>
-      )}
+      ) : null}
 
-      {/* Main content */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden overscroll-y-contain bg-white">
-        {children}
-      </main>
+      <main className="flex-1 overflow-y-auto overflow-x-hidden overscroll-y-contain bg-white">{children}</main>
     </div>
   )
 }
