@@ -2,45 +2,83 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, PartyPopper, Ship, Sparkles, UsersRound } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 
 const moments = [
   { src: "/images/about-with-travelers.jpg", alt: "Friends enjoying a cruise together", label: "Your people" },
-  { src: "/images/dest-caribbean.jpg", alt: "Caribbean cruise destination", label: "Your sailing" },
   { src: "/images/about-port-of-call.jpg", alt: "Travelers enjoying a port day", label: "Your memories" },
+  { src: "/images/dest-caribbean.jpg", alt: "Caribbean cruise destination", label: "Your sailing" },
 ];
 
 export const GroupTrips = () => {
-  return (
-    <section id="group-trips" className="relative overflow-hidden bg-emerald-deep py-16 text-white sm:py-20 lg:py-24">
-      <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-coral/10 blur-3xl" aria-hidden="true" />
-      <div className="mx-auto grid max-w-[92rem] gap-10 px-5 sm:px-6 lg:grid-cols-[0.48fr_0.52fr] lg:items-center lg:px-10 xl:px-12">
-        <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-xs font-black uppercase tracking-[0.15em] text-white/80"><PartyPopper size={15} className="text-coral" /> Group Cruises</div>
-          <h2 className="font-serif text-[clamp(3rem,6vw,5.8rem)] font-semibold leading-[0.94] tracking-[-0.05em]">Bring the crew.<br /><span className="text-coral">We&apos;ll build the cruise.</span></h2>
-          <p className="mt-6 max-w-xl text-lg font-medium leading-8 text-white/72">Birthdays. Family reunions. Friends trips. Church groups. Or just because everybody keeps saying, “we need to take a trip.” Yolanda helps turn the idea into an experience.</p>
+  const reduceMotion = useReducedMotion();
 
-          <div className="mt-7 grid max-w-xl gap-3 sm:grid-cols-3">
-            <div className="rounded-2xl bg-white/[0.07] p-4"><Ship size={19} className="text-coral" /><p className="mt-3 text-sm font-bold">Choose the right sailing</p></div>
-            <div className="rounded-2xl bg-white/[0.07] p-4"><UsersRound size={19} className="text-coral" /><p className="mt-3 text-sm font-bold">Keep the group together</p></div>
-            <div className="rounded-2xl bg-white/[0.07] p-4"><Sparkles size={19} className="text-coral" /><p className="mt-3 text-sm font-bold">Get your own trip home base</p></div>
+  return (
+    <section id="group-trips" className="relative overflow-hidden bg-[#082d27] py-20 text-white sm:py-28 lg:py-32">
+      <div className="pointer-events-none absolute -right-8 top-0 font-serif text-[18vw] font-semibold leading-none tracking-[-0.08em] text-white/[0.025]" aria-hidden="true">
+        TOGETHER
+      </div>
+
+      <div className="relative mx-auto grid max-w-[96rem] gap-12 px-5 sm:px-8 lg:grid-cols-[0.44fr_0.56fr] lg:items-center lg:px-12 xl:px-16">
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Group Cruises</p>
+          <h2 className="mt-5 max-w-[9ch] font-serif text-[clamp(3.7rem,7vw,7.6rem)] font-semibold leading-[0.84] tracking-[-0.07em]">
+            Bring the people. We&apos;ll build the story.
+          </h2>
+          <p className="mt-7 max-w-xl text-base leading-7 text-white/64 sm:text-lg sm:leading-8">
+            Birthdays, family reunions, church groups, friends trips, or the trip everybody keeps saying they should take. Yolanda helps shape the sailing and keeps the planning from becoming the main event.
+          </p>
+
+          <div className="mt-8 border-y border-white/14 py-5">
+            <p className="max-w-lg font-serif text-2xl font-semibold leading-[1.1] tracking-[-0.035em] text-white sm:text-3xl">
+              Once the cruise is set, your group gets one personalized place to keep the trip together.
+            </p>
           </div>
 
-          <Link href="/group-cruises" className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-coral px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-black/10 transition hover:bg-coral-deep">Start Planning Your Group Cruise <ArrowRight size={18} /></Link>
+          <Link
+            href="/group-cruises"
+            className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-coral px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-coral-deep"
+          >
+            Explore Group Cruises <ArrowUpRight size={17} />
+          </Link>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.55, delay: 0.08 }} className="grid grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-12 gap-3">
           {moments.map((moment, index) => (
-            <article key={moment.label} className={`group relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 shadow-2xl ${index === 1 ? "mt-8 mb-8" : "mb-16"}`}>
-              <div className="relative min-h-[24rem] sm:min-h-[30rem] lg:min-h-[34rem]">
-                <Image src={moment.src} alt={moment.alt} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 31vw, 17vw" />
-                <div className="absolute inset-0 bg-gradient-to-t from-emerald-deep/75 via-transparent to-transparent" />
-                <p className="absolute inset-x-0 bottom-0 p-4 text-center font-serif text-xl font-semibold sm:p-5 sm:text-2xl">{moment.label}</p>
-              </div>
-            </article>
+            <motion.figure
+              key={moment.label}
+              initial={reduceMotion ? false : { opacity: 0, y: 26 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className={
+                index === 0
+                  ? "relative col-span-8 min-h-[31rem] overflow-hidden sm:min-h-[38rem]"
+                  : index === 1
+                    ? "relative col-span-4 mt-16 min-h-[20rem] overflow-hidden sm:min-h-[25rem]"
+                    : "relative col-span-5 -mt-24 ml-auto min-h-[16rem] overflow-hidden sm:min-h-[20rem]"
+              }
+            >
+              <Image
+                src={moment.src}
+                alt={moment.alt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 70vw, 38vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#061d19]/72 via-transparent to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-5 text-[10px] font-black uppercase tracking-[0.2em] text-white/72 sm:p-6">
+                {moment.label}
+              </figcaption>
+            </motion.figure>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
