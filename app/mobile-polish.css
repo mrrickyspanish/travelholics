@@ -1,0 +1,555 @@
+@media (max-width: 767px) {
+  /* Shared mobile rhythm */
+  .home-mobile-optimized h2,
+  .group-cruise-mobile-optimized h2 {
+    text-wrap: balance;
+  }
+
+  /* Homepage hero: cinematic, but no longer a desktop billboard on a phone. */
+  .home-mobile-optimized > section:first-child {
+    min-height: 82svh !important;
+  }
+
+  .home-mobile-optimized > section:first-child > div:last-child {
+    min-height: 82svh !important;
+    padding-top: 6rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  .home-mobile-optimized > section:first-child h1 {
+    font-size: clamp(3.7rem, 17vw, 5.15rem) !important;
+    line-height: 0.79 !important;
+    letter-spacing: -0.065em !important;
+  }
+
+  .home-mobile-optimized > section:first-child h1 + div {
+    margin-top: 1.25rem !important;
+    padding-top: 1rem !important;
+  }
+
+  .home-mobile-optimized > section:first-child h1 + div p:last-child {
+    font-size: 1.75rem !important;
+    line-height: 0.96 !important;
+  }
+
+  .home-mobile-optimized > section:first-child > div:last-child > div:last-child {
+    display: none !important;
+  }
+
+  /* Meet Yolanda: portrait becomes a feature image, not an entire screen. */
+  .home-mobile-optimized #about > div > div:first-child {
+    min-height: 22rem !important;
+  }
+
+  .home-mobile-optimized #about > div > div:first-child > div:last-child {
+    padding: 1.25rem !important;
+  }
+
+  .home-mobile-optimized #about > div > div:first-child > div:last-child p:last-child {
+    margin-top: 0.5rem !important;
+    font-size: 1.65rem !important;
+    line-height: 1 !important;
+  }
+
+  .home-mobile-optimized #about > div > div:nth-child(2) {
+    padding: 3rem 1.25rem !important;
+  }
+
+  .home-mobile-optimized #about h2 {
+    margin-top: 0.85rem !important;
+    max-width: 13ch !important;
+    font-size: 2.65rem !important;
+    line-height: 0.92 !important;
+    letter-spacing: -0.055em !important;
+  }
+
+  .home-mobile-optimized #about blockquote {
+    margin-top: 1.6rem !important;
+    padding-left: 1rem !important;
+  }
+
+  .home-mobile-optimized #about blockquote p {
+    font-size: 1.55rem !important;
+    line-height: 1.12 !important;
+  }
+
+  .home-mobile-optimized #about blockquote + p {
+    margin-top: 1.35rem !important;
+    line-height: 1.65 !important;
+  }
+
+  .home-mobile-optimized #about > div > div:nth-child(2) > div:last-child {
+    margin-top: 2rem !important;
+  }
+
+  .home-mobile-optimized #about > div > div:nth-child(2) > div:last-child > div:first-child {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .home-mobile-optimized #about > div > div:nth-child(2) > div:last-child > div:first-child p:first-child {
+    font-size: 2.2rem !important;
+  }
+
+  /* Destination discovery: 3 cards become a compact 2-row mobile mosaic. */
+  .home-mobile-optimized #about + section {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .home-mobile-optimized #about + section > div > div:first-child {
+    gap: 1.25rem !important;
+  }
+
+  .home-mobile-optimized #about + section h2 {
+    margin-top: 0.75rem !important;
+    max-width: 12ch !important;
+    font-size: 2.65rem !important;
+    line-height: 0.93 !important;
+    letter-spacing: -0.055em !important;
+  }
+
+  .home-mobile-optimized #about + section > div > div:first-child p {
+    line-height: 1.55 !important;
+  }
+
+  .home-mobile-optimized #about + section > div > div:last-child {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-rows: 11.5rem !important;
+    margin-top: 2rem !important;
+  }
+
+  .home-mobile-optimized #about + section article:first-child {
+    grid-column: 1 / -1 !important;
+  }
+
+  .home-mobile-optimized #about + section article h3 {
+    font-size: 1.7rem !important;
+  }
+
+  .home-mobile-optimized #about + section article p {
+    margin-top: 0.35rem !important;
+    font-size: 0.75rem !important;
+    line-height: 1.1rem !important;
+  }
+
+  .home-mobile-optimized #about + section article a > div:last-child {
+    padding: 1rem !important;
+  }
+
+  .home-mobile-optimized #about + section article a > div:last-child span {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+
+  /* Group cruise homepage teaser: keep the editorial collage without a 500px lead image. */
+  .home-mobile-optimized #group-trips {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .home-mobile-optimized #group-trips > div {
+    gap: 2rem !important;
+  }
+
+  .home-mobile-optimized #group-trips h2 {
+    margin-top: 0.85rem !important;
+    max-width: 10ch !important;
+    font-size: 2.75rem !important;
+    line-height: 0.91 !important;
+    letter-spacing: -0.055em !important;
+  }
+
+  .home-mobile-optimized #group-trips h2 + p {
+    margin-top: 1.25rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .home-mobile-optimized #group-trips > div > div:last-child figure:nth-child(1) {
+    min-height: 19rem !important;
+  }
+
+  .home-mobile-optimized #group-trips > div > div:last-child figure:nth-child(2) {
+    min-height: 13rem !important;
+    margin-top: 2rem !important;
+  }
+
+  .home-mobile-optimized #group-trips > div > div:last-child figure:nth-child(3) {
+    min-height: 10rem !important;
+    margin-top: -5rem !important;
+  }
+
+  /* Map and proof stay useful, but lose desktop-sized breathing room. */
+  .home-mobile-optimized #map {
+    padding-top: 2.75rem !important;
+    padding-bottom: 2.75rem !important;
+  }
+
+  .home-mobile-optimized #map + section > div > div > div {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  .home-mobile-optimized #map + section p:first-child {
+    font-size: 2.25rem !important;
+  }
+
+  /* Video stage, when the feed is populated. */
+  .home-mobile-optimized #videos {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .home-mobile-optimized #videos h2 {
+    margin-top: 0.75rem !important;
+    font-size: 2.7rem !important;
+    line-height: 0.92 !important;
+  }
+
+  .home-mobile-optimized #videos > div > div:first-child {
+    gap: 1.25rem !important;
+  }
+
+  .home-mobile-optimized #videos > div > div:last-child {
+    margin-top: 2rem !important;
+    gap: 1.5rem !important;
+  }
+
+  .home-mobile-optimized #videos h3 {
+    font-size: 1.9rem !important;
+  }
+
+  /* Shop is already horizontal on phones. Make it feel like a shelf, not full-page cards. */
+  .home-mobile-optimized > section:nth-last-of-type(3) {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .home-mobile-optimized > section:nth-last-of-type(3) h2 {
+    margin-top: 0.75rem !important;
+    font-size: 2.65rem !important;
+    line-height: 0.93 !important;
+  }
+
+  .home-mobile-optimized > section:nth-last-of-type(3) > div > div:first-child {
+    gap: 1.25rem !important;
+  }
+
+  .home-mobile-optimized > section:nth-last-of-type(3) > div > div:last-child {
+    margin-top: 2rem !important;
+  }
+
+  .home-mobile-optimized > section:nth-last-of-type(3) > div > div:last-child a {
+    width: 58vw !important;
+    max-width: 15rem !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  .home-mobile-optimized > section:nth-last-of-type(3) h3 {
+    font-size: 1.35rem !important;
+  }
+
+  /* Testimonials: photos support the story instead of consuming the story. */
+  .home-mobile-optimized #testimonials {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .home-mobile-optimized #testimonials > div > div:first-child {
+    gap: 1.25rem !important;
+  }
+
+  .home-mobile-optimized #testimonials h2 {
+    margin-top: 0.75rem !important;
+    max-width: 12ch !important;
+    font-size: 2.65rem !important;
+    line-height: 0.93 !important;
+  }
+
+  .home-mobile-optimized #testimonials > div > div:nth-child(2) {
+    margin-top: 2rem !important;
+  }
+
+  .home-mobile-optimized #testimonials article > div > div:first-child {
+    min-height: 13rem !important;
+  }
+
+  .home-mobile-optimized #testimonials article > div > div:last-child {
+    padding: 1.25rem !important;
+  }
+
+  .home-mobile-optimized #testimonials blockquote {
+    font-size: 1.45rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .home-mobile-optimized #testimonials article > div > div:last-child > div:last-child {
+    margin-top: 1.5rem !important;
+    padding-top: 1rem !important;
+  }
+
+  .home-mobile-optimized #testimonials > div > div:last-child {
+    margin-top: 1.75rem !important;
+  }
+
+  /* Contact: same fields, dramatically less preamble. */
+  .home-mobile-optimized #contact > div > div:first-child,
+  .home-mobile-optimized #contact > div > div:last-child {
+    padding: 3rem 1.25rem !important;
+  }
+
+  .home-mobile-optimized #contact h2 {
+    margin-top: 0.85rem !important;
+    max-width: 10ch !important;
+    font-size: 2.7rem !important;
+    line-height: 0.91 !important;
+  }
+
+  .home-mobile-optimized #contact h2 + p {
+    margin-top: 1.25rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .home-mobile-optimized #contact > div > div:first-child > div:last-child {
+    margin-top: 2rem !important;
+  }
+
+  .home-mobile-optimized #contact form {
+    margin-top: 1.5rem !important;
+  }
+
+  /* Group Cruises lead hero */
+  #group-cruise-hero-minimal {
+    min-height: 82svh !important;
+  }
+
+  #group-cruise-hero-minimal > div:last-child {
+    min-height: 82svh !important;
+    padding-top: 6rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  #group-cruise-hero-minimal h1 {
+    max-width: 11ch !important;
+    font-size: 3.45rem !important;
+    line-height: 0.86 !important;
+    letter-spacing: -0.06em !important;
+  }
+
+  #group-cruise-hero-minimal h1 + a {
+    margin-top: 1.5rem !important;
+  }
+
+  /* Group Cruises story: preserve all content, compress the mobile reading path. */
+  .group-cruise-mobile-optimized main > section:nth-of-type(2) {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(2) > div:first-child {
+    gap: 1.25rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(2) h2 {
+    margin-top: 0.75rem !important;
+    max-width: 12ch !important;
+    font-size: 2.65rem !important;
+    line-height: 0.93 !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(2) > div:nth-child(2) {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-rows: 11.5rem !important;
+    margin-top: 2rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(2) article:first-child,
+  .group-cruise-mobile-optimized main > section:nth-of-type(2) article:last-child {
+    grid-column: 1 / -1 !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(2) article {
+    min-height: 0 !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(2) article > div:last-child {
+    padding: 1rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(2) article h3 {
+    font-size: 1.65rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(2) article p {
+    margin-top: 0.35rem !important;
+    font-size: 0.75rem !important;
+    line-height: 1.1rem !important;
+  }
+
+  /* Yolanda on Group Cruises */
+  .group-cruise-mobile-optimized main > section:nth-of-type(3) > div > div:first-child {
+    min-height: 21rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(3) > div > div:nth-child(2) {
+    padding: 3rem 1.25rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(3) h2 {
+    margin-top: 0.85rem !important;
+    max-width: 13ch !important;
+    font-size: 2.65rem !important;
+    line-height: 0.93 !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(3) h2 + p {
+    margin-top: 1.25rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(3) > div > div:nth-child(2) > div:last-child {
+    margin-top: 2rem !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  /* Process: the old 21rem-per-step desktop rhythm was the biggest mobile scroll offender. */
+  .group-cruise-mobile-optimized main > section:nth-of-type(4) {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(4) h2 {
+    margin-top: 0.75rem !important;
+    max-width: 14ch !important;
+    font-size: 2.65rem !important;
+    line-height: 0.92 !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(4) > div > div:nth-child(2) {
+    margin-top: 2rem !important;
+    gap: 0 !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(4) article {
+    min-height: 0 !important;
+    padding-top: 1.8rem !important;
+    padding-bottom: 1.8rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(4) article h3 {
+    margin-top: 0.65rem !important;
+    font-size: 2rem !important;
+    line-height: 0.98 !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(4) article h3 + p {
+    margin-top: 0.85rem !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Trip Hub demo */
+  .group-cruise-mobile-optimized main > section:nth-of-type(5) {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(5) > div {
+    gap: 2rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(5) h2 {
+    margin-top: 0.75rem !important;
+    max-width: 11ch !important;
+    font-size: 2.65rem !important;
+    line-height: 0.93 !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(5) h2 + p {
+    margin-top: 1.2rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(5) h3 {
+    font-size: 2.1rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(5) > div > div:nth-child(2) > div > div:nth-child(2) > div {
+    padding: 1.15rem !important;
+  }
+
+  /* FAQs */
+  .group-cruise-mobile-optimized main > section:nth-of-type(6) {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(6) > div > div {
+    gap: 1.5rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(6) h2 {
+    margin-top: 0.75rem !important;
+    font-size: 2.6rem !important;
+    line-height: 0.93 !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(6) details {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  /* Planning form */
+  .group-cruise-mobile-optimized main > section:nth-of-type(7) {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(7) > div {
+    gap: 2rem !important;
+  }
+
+  .group-cruise-mobile-optimized main > section:nth-of-type(7) h2 {
+    margin-top: 0.75rem !important;
+    max-width: 11ch !important;
+    font-size: 2.65rem !important;
+    line-height: 0.93 !important;
+  }
+
+  .group-cruise-mobile-optimized #start-planning form > div:first-child {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .group-cruise-mobile-optimized #start-planning form > div:nth-child(2) {
+    padding-top: 1.4rem !important;
+    padding-bottom: 1.4rem !important;
+  }
+
+  .group-cruise-mobile-optimized #start-planning form button[type="button"] {
+    padding: 1rem !important;
+  }
+
+  .group-cruise-mobile-optimized #start-planning form button[type="button"] svg {
+    margin-bottom: 0.75rem !important;
+  }
+
+  .group-cruise-mobile-optimized #start-planning form textarea {
+    min-height: 5.5rem !important;
+  }
+
+  /* Footer keeps every link, but stops stacking six full columns vertically. */
+  .home-mobile-optimized + footer > div > div:first-child,
+  .group-cruise-mobile-optimized + footer > div > div:first-child {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.75rem 1.25rem !important;
+  }
+
+  .home-mobile-optimized + footer > div > div:first-child > div:first-child,
+  .home-mobile-optimized + footer > div > div:first-child > div:last-child,
+  .group-cruise-mobile-optimized + footer > div > div:first-child > div:first-child,
+  .group-cruise-mobile-optimized + footer > div > div:first-child > div:last-child {
+    grid-column: 1 / -1 !important;
+  }
+}
