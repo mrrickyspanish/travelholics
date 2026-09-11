@@ -22,8 +22,20 @@ export const MeetYolanda = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="px-5 pt-10 sm:px-8 sm:pt-14 lg:px-12 lg:py-16 xl:px-16"
+          className="px-5 pt-9 sm:px-8 sm:pt-14 lg:px-12 lg:py-16 xl:px-16"
         >
+          <div className="mb-6 lg:hidden">
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-coral">Meet Yolanda</p>
+            <div
+              role="heading"
+              aria-level={2}
+              className="mt-3 font-serif text-[clamp(2.15rem,10.4vw,2.65rem)] font-semibold leading-[0.91] tracking-[-0.055em] text-royal-deep"
+            >
+              <span className="block whitespace-nowrap">From “we should go”</span>
+              <span className="mt-1 block whitespace-nowrap">to “we&apos;re booked.”</span>
+            </div>
+          </div>
+
           <div className="relative h-[19rem] overflow-hidden sm:h-[28rem] lg:h-full lg:min-h-[42rem]">
             <Image
               src="/images/hero-yolanda.jpg"
@@ -45,26 +57,28 @@ export const MeetYolanda = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col justify-between px-5 py-10 sm:px-8 sm:py-14 lg:px-12 lg:py-16 xl:px-16"
+          className="flex flex-col justify-between px-5 py-9 sm:px-8 sm:py-14 lg:px-12 lg:py-16 xl:px-16"
         >
           <div>
-            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Meet Yolanda</p>
-            <h2 className="mt-4 max-w-[12ch] font-serif text-[clamp(2.8rem,5.4vw,6rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-royal-deep">
-              From “we should go” to “we&apos;re booked.”
-            </h2>
+            <div className="hidden lg:block">
+              <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Meet Yolanda</p>
+              <h2 className="mt-4 max-w-[12ch] font-serif text-[clamp(2.8rem,5.4vw,6rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-royal-deep">
+                From “we should go” to “we&apos;re booked.”
+              </h2>
+            </div>
 
-            <p className="mt-6 max-w-xl text-base leading-7 text-stone sm:text-lg sm:leading-8">
+            <p className="max-w-xl text-base leading-7 text-stone sm:text-lg sm:leading-8 lg:mt-6">
               Tell Yolanda how you want the trip to feel. She brings the ship knowledge, cabin strategy, timing, and the little details that turn a good cruise into the right cruise for you.
             </p>
 
-            <div className="mt-8 border-y border-ink/12 py-6">
+            <div className="mt-7 border-y border-ink/12 py-5 sm:mt-8 sm:py-6">
               <p className="max-w-[22ch] font-serif text-2xl font-semibold leading-[1.05] tracking-[-0.04em] text-ink sm:text-3xl">
                 Bring the dream. She&apos;ll help you find the cruise that fits it.
               </p>
             </div>
           </div>
 
-          <div className="mt-9">
+          <div className="mt-8 sm:mt-9">
             <div className="grid grid-cols-3 border-b border-ink/12 pb-6">
               {proof.map(([value, label]) => (
                 <div key={label} className="border-r border-ink/12 px-3 first:pl-0 last:border-r-0 last:pr-0 sm:px-6">
