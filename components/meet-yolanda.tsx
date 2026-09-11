@@ -16,56 +16,56 @@ export const MeetYolanda = () => {
 
   return (
     <section id="about" className="border-b border-ink/10 bg-[#fbf7ef]">
-      <div className="mx-auto grid max-w-[96rem] lg:grid-cols-[0.44fr_0.56fr]">
+      <div className="mx-auto grid max-w-[96rem] lg:grid-cols-[0.42fr_0.58fr] lg:items-stretch">
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, x: -22 }}
+          initial={reduceMotion ? false : { opacity: 0, x: -18 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="relative min-h-[34rem] overflow-hidden lg:min-h-[48rem]"
+          className="px-5 pt-10 sm:px-8 sm:pt-14 lg:px-12 lg:py-16 xl:px-16"
         >
-          <Image
-            src="/images/hero-yolanda.jpg"
-            alt="Yolanda Harris of Travelholics"
-            fill
-            className="object-cover object-center"
-            sizes="(max-width: 1024px) 100vw, 44vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#082d27]/74 via-transparent to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8 lg:p-10">
-            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-coral">Yolanda Harris · Travelholics</p>
-            <p className="mt-3 max-w-[18ch] font-serif text-3xl font-semibold leading-[0.98] tracking-[-0.045em] sm:text-4xl">
-              The woman behind the advice, the bookings, and the group chat saves.
-            </p>
+          <div className="relative h-[19rem] overflow-hidden sm:h-[28rem] lg:h-full lg:min-h-[42rem]">
+            <Image
+              src="/images/hero-yolanda.jpg"
+              alt="Yolanda Harris of Travelholics"
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 42vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#082d27]/58 via-transparent to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-7">
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-coral">Yolanda Harris</p>
+              <p className="mt-1 text-xs font-semibold text-white/72">Certified Cruise Specialist · Travelholics</p>
+            </div>
           </div>
         </motion.div>
 
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col justify-between px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-16 xl:px-16"
+          className="flex flex-col justify-between px-5 py-10 sm:px-8 sm:py-14 lg:px-12 lg:py-16 xl:px-16"
         >
           <div>
-            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Meet your cruise person</p>
-            <h2 className="mt-5 max-w-[11ch] font-serif text-[clamp(3.3rem,6vw,6.8rem)] font-semibold leading-[0.86] tracking-[-0.065em] text-royal-deep">
-              Experience is better when it comes with a person.
+            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Meet Yolanda</p>
+            <h2 className="mt-4 max-w-[12ch] font-serif text-[clamp(2.8rem,5.4vw,6rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-royal-deep">
+              From “we should go” to “we&apos;re booked.”
             </h2>
 
-            <blockquote className="mt-9 max-w-2xl border-l-2 border-coral pl-5 sm:pl-7">
-              <p className="font-serif text-2xl font-semibold leading-[1.15] tracking-[-0.035em] text-ink sm:text-3xl">
-                “Booking direct gives you a confirmation number. Booking with me gives you someone who cares how the trip turns out.”
-              </p>
-            </blockquote>
-
-            <p className="mt-7 max-w-xl text-base leading-7 text-stone sm:text-lg sm:leading-8">
-              Yolanda helps you choose the right ship, cabin, destination, and timing, then stays close to the details that can make a good trip feel effortless. First cruise or fifteenth, this is planning with an actual human in your corner.
+            <p className="mt-6 max-w-xl text-base leading-7 text-stone sm:text-lg sm:leading-8">
+              Tell Yolanda how you want the trip to feel. She brings the ship knowledge, cabin strategy, timing, and the little details that turn a good cruise into the right cruise for you.
             </p>
+
+            <div className="mt-8 border-y border-ink/12 py-6">
+              <p className="max-w-[22ch] font-serif text-2xl font-semibold leading-[1.05] tracking-[-0.04em] text-ink sm:text-3xl">
+                Bring the dream. She&apos;ll help you find the cruise that fits it.
+              </p>
+            </div>
           </div>
 
-          <div className="mt-12">
-            <div className="grid grid-cols-3 border-y border-ink/12 py-6">
+          <div className="mt-9">
+            <div className="grid grid-cols-3 border-b border-ink/12 pb-6">
               {proof.map(([value, label]) => (
                 <div key={label} className="border-r border-ink/12 px-3 first:pl-0 last:border-r-0 last:pr-0 sm:px-6">
                   <p className="font-serif text-3xl font-semibold tracking-[-0.045em] text-royal-deep sm:text-4xl">{value}</p>
@@ -74,7 +74,7 @@ export const MeetYolanda = () => {
               ))}
             </div>
 
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 href="/#contact"
                 className="inline-flex min-h-12 items-center justify-center rounded-full bg-coral px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-coral-deep"
@@ -85,7 +85,7 @@ export const MeetYolanda = () => {
                 href="/live"
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-ink/15 px-6 py-3 text-sm font-bold text-ink transition hover:border-ink/30 hover:bg-white/60"
               >
-                Get daily cruise tips <ArrowUpRight size={16} />
+                See her cruise advice <ArrowUpRight size={16} />
               </Link>
             </div>
           </div>
