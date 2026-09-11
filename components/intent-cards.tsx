@@ -39,23 +39,35 @@ export const IntentCards = () => {
     <section id="destination-discovery" className="destination-discovery-section bg-[#f4efe4] py-20 sm:py-28 lg:py-32">
       <style>{`
         @media (max-width: 767px) {
+          .home-mobile-optimized #destination-discovery.destination-discovery-section {
+            padding-top: 3.5rem !important;
+            padding-bottom: 3.5rem !important;
+          }
+          .home-mobile-optimized #destination-discovery.destination-discovery-section h2 {
+            margin-top: .75rem !important;
+            max-width: 12ch !important;
+            font-size: 2.65rem !important;
+            line-height: .93 !important;
+            letter-spacing: -.055em !important;
+          }
           .home-mobile-optimized #destination-discovery.destination-discovery-section .destination-grid {
             grid-template-columns: 1fr !important;
             grid-auto-rows: 20rem !important;
+            margin-top: 2rem !important;
           }
           .home-mobile-optimized #destination-discovery.destination-discovery-section .destination-grid article {
             grid-column: auto !important;
           }
           .home-mobile-optimized #destination-discovery.destination-discovery-section .destination-grid article h3 {
             font-size: clamp(2rem, 9.5vw, 2.55rem) !important;
-            line-height: 0.98 !important;
+            line-height: .98 !important;
             max-width: calc(100% - 3.25rem) !important;
             overflow-wrap: normal !important;
             word-break: normal !important;
           }
           .home-mobile-optimized #destination-discovery.destination-discovery-section .destination-grid article p {
-            margin-top: 0.75rem !important;
-            font-size: 0.875rem !important;
+            margin-top: .75rem !important;
+            font-size: .875rem !important;
             line-height: 1.5rem !important;
           }
           .home-mobile-optimized #destination-discovery.destination-discovery-section .destination-grid article a > div:last-child {
@@ -72,17 +84,11 @@ export const IntentCards = () => {
         <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Start with a feeling</p>
-            <h2 className="mt-4 max-w-[10ch] font-serif text-[clamp(3.4rem,6.5vw,6.8rem)] font-semibold leading-[0.86] tracking-[-0.065em] text-royal-deep">
-              Where should we wake up next?
-            </h2>
+            <h2 className="mt-4 max-w-[10ch] font-serif text-[clamp(3.4rem,6.5vw,6.8rem)] font-semibold leading-[0.86] tracking-[-0.065em] text-royal-deep">Where should we wake up next?</h2>
           </div>
           <div className="lg:justify-self-end">
-            <p className="max-w-xl text-base leading-7 text-stone sm:text-lg sm:leading-8">
-              You do not need to know the ship yet. Pick the kind of trip you want to feel, then let Yolanda help narrow down the sailing that actually fits.
-            </p>
-            <Link href="/#contact" className="mt-5 inline-flex items-center gap-2 text-sm font-black text-ink underline decoration-coral decoration-2 underline-offset-4 transition hover:text-coral-deep">
-              Help me choose <ArrowUpRight size={16} />
-            </Link>
+            <p className="max-w-xl text-base leading-7 text-stone sm:text-lg sm:leading-8">You do not need to know the ship yet. Pick the kind of trip you want to feel, then let Yolanda help narrow down the sailing that actually fits.</p>
+            <Link href="/#contact" className="mt-5 inline-flex items-center gap-2 text-sm font-black text-ink underline decoration-coral decoration-2 underline-offset-4 transition hover:text-coral-deep">Help me choose <ArrowUpRight size={16} /></Link>
           </div>
         </div>
 
@@ -97,13 +103,7 @@ export const IntentCards = () => {
               className={`group relative overflow-hidden ${destination.className}`}
             >
               <Link href={destination.href} className="absolute inset-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-coral">
-                <Image
-                  src={destination.image}
-                  alt={destination.imageAlt}
-                  fill
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
-                  sizes="(max-width: 1024px) 100vw, 60vw"
-                />
+                <Image src={destination.image} alt={destination.imageAlt} fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]" sizes="(max-width: 1024px) 100vw, 60vw" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/14 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-7 lg:p-8">
                   <div className="flex items-end justify-between gap-5">
@@ -111,9 +111,7 @@ export const IntentCards = () => {
                       <h3 className="font-serif text-4xl font-semibold leading-none tracking-[-0.05em] sm:text-5xl">{destination.title}</h3>
                       <p className="mt-3 max-w-md text-sm leading-6 text-white/68 sm:text-base">{destination.note}</p>
                     </div>
-                    <span className="mb-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/24 bg-black/10 text-white backdrop-blur-sm transition group-hover:rotate-12 group-hover:bg-white group-hover:text-ink">
-                      <ArrowUpRight size={18} />
-                    </span>
+                    <span className="mb-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/24 bg-black/10 text-white backdrop-blur-sm transition group-hover:rotate-12 group-hover:bg-white group-hover:text-ink"><ArrowUpRight size={18} /></span>
                   </div>
                 </div>
               </Link>
