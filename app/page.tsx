@@ -13,6 +13,7 @@ import { ContactForm } from "@/components/contact-form";
 import { Footer } from "@/components/footer";
 import { MobileCTA } from "@/components/mobile-cta";
 import { getFeaturedLongForm, getShorts } from "@/lib/youtube-feed";
+import "./mobile-polish.css";
 
 export const metadata: Metadata = {
   title: "Travelholics | Certified Cruise Specialist — Yolanda Harris",
@@ -38,16 +39,18 @@ export default async function Home() {
     <>
       <Header />
       <MobileCTA />
-      <Hero />
-      <MeetYolanda />
-      <IntentCards />
-      <GroupTrips />
-      <DestinationMap />
-      <StatsStrip />
-      <LatestVideos featured={featuredVideo} shorts={shorts} />
-      <ShopStrip />
-      <Testimonials />
-      <ContactForm />
+      <main className="home-mobile-optimized">
+        <Hero />
+        <MeetYolanda />
+        <IntentCards />
+        <GroupTrips />
+        <DestinationMap />
+        <StatsStrip />
+        <LatestVideos featured={featuredVideo} shorts={shorts} />
+        <ShopStrip />
+        <Testimonials />
+        <ContactForm />
+      </main>
       <Footer />
     </>
   );
