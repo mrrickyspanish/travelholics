@@ -54,7 +54,7 @@ export const ShopStrip = () => {
         <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Travelholics Originals</p>
-            <h2 className="mt-4 max-w-[10ch] font-serif text-[clamp(3.3rem,6vw,6.4rem)] font-semibold leading-[0.88] tracking-[-0.06em] text-royal-deep">
+            <h2 className="mt-4 max-w-[18ch] font-serif text-[clamp(3rem,6vw,6.4rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-royal-deep lg:max-w-[10ch] lg:leading-[0.88]">
               Bring a little cruise life home.
             </h2>
           </div>
