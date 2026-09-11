@@ -31,15 +31,9 @@ export const GroupTrips = () => {
           <h2 className="mt-5 max-w-[9ch] font-serif text-[clamp(3.7rem,7vw,7.6rem)] font-semibold leading-[0.84] tracking-[-0.07em]">
             Bring the people. We&apos;ll build the story.
           </h2>
-          <p className="mt-7 max-w-xl text-base leading-7 text-white/64 sm:text-lg sm:leading-8">
-            Birthdays, family reunions, church groups, friends trips, or the trip everybody keeps saying they should take. Yolanda helps shape the sailing and keeps the planning from becoming the main event.
+          <p className="mt-7 max-w-[31rem] text-base leading-7 text-white/64 sm:text-lg sm:leading-8">
+            Yolanda shapes the sailing. Your crew gets one place to keep the trip together.
           </p>
-
-          <div className="mt-8 border-y border-white/14 py-5">
-            <p className="max-w-lg font-serif text-2xl font-semibold leading-[1.1] tracking-[-0.035em] text-white sm:text-3xl">
-              Once the cruise is set, your group gets one personalized place to keep the trip together.
-            </p>
-          </div>
 
           <Link
             href="/group-cruises"
