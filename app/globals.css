@@ -61,6 +61,16 @@ body {
 }
 
 @layer base {
+  /* Guardrail: headings never strand a single word alone on the last line.
+     Balancing every heading site-wide means new sections inherit the rule
+     instead of each one re-solving it per breakpoint. Unsupported browsers
+     fall back to normal wrapping. */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
   /* Guardrail: prevent ultra-small arbitrary text sizes from slipping into new files. */
   [class*="text-[10px]"],
   [class*="text-[11px]"],

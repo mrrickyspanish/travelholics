@@ -330,11 +330,13 @@
     padding-bottom: 2rem !important;
   }
 
+  /* Sized so "unforgettable cruise." stays on one line at 390px. Going larger
+     wraps it and strands "cruise." alone on the last line. */
   #group-cruise-hero-minimal h1 {
-    max-width: 11ch !important;
-    font-size: 3.45rem !important;
-    line-height: 0.86 !important;
-    letter-spacing: -0.06em !important;
+    max-width: none !important;
+    font-size: clamp(1.8rem, 9.8vw, 3.2rem) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.05em !important;
   }
 
   #group-cruise-hero-minimal h1 + a {
