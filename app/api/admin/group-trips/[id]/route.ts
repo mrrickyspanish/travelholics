@@ -14,7 +14,7 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { id } = await context.params
-  const body = await request.json() as { status?: 'draft' | 'published' | 'archived'; details?: GroupTripUpdateInput }
+  const body = await request.json() as { status?: 'draft' | 'published' | 'archived'; details?: GroupTripUpdateInput; confirmedImpact?: boolean }
   const supabase = createSupabaseAdmin()
 
   if (body.details) {
@@ -165,16 +165,36 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     return NextResponse.json({ error: 'Invalid trip update.' }, { status: 400 })
   }
 
+  const { data: currentTrip } = await supabase.from('group_trips').select('id,status').eq('id', id).maybeSingle()
+  if (!currentTrip) return NextResponse.json({ error: 'Trip not found.' }, { status: 404 })
+
+  const disruptive = body.status === 'archived' || (currentTrip.status === 'published' && body.status === 'draft')
+  if (disruptive && !body.confirmedImpact) {
+    const { data: activeParties, error: partyError } = await supabase
+      .from('group_trip_parties')
+      .select('id,status')
+      .eq('trip_id', id)
+      .neq('status', 'invited')
+    if (partyError) return NextResponse.json({ error: partyError.message }, { status: 500 })
+
+    const activeCount = activeParties?.length ?? 0
+    if (activeCount > 0) {
+      const bookedCount = (activeParties ?? []).filter((party) => party.status === 'booked' || party.status === 'travel_ready').length
+      return NextResponse.json({
+        error: body.status === 'archived'
+          ? `This trip has ${activeCount} active traveling ${activeCount === 1 ? 'party' : 'parties'}, including ${bookedCount} booked or Travel Ready. Confirm before archiving.`
+          : `This published trip has ${activeCount} active traveling ${activeCount === 1 ? 'party' : 'parties'}. Confirm before returning it to draft.`,
+        requiresConfirmation: true,
+        activeCount,
+        bookedCount,
+      }, { status: 409 })
+    }
+  }
+
   const patch: Record<string, unknown> = { status: body.status }
   if (body.status === 'published') patch.published_at = new Date().toISOString()
 
-  const { data, error } = await supabase
-    .from('group_trips')
-    .update(patch)
-    .eq('id', id)
-    .select('*')
-    .single()
-
+  const { data, error } = await supabase.from('group_trips').update(patch).eq('id', id).select('*').single()
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ trip: data })
 }
