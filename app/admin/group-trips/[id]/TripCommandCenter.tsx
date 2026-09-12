@@ -37,23 +37,47 @@ export default function TripCommandCenter({ tripId, slug, status: initialStatus,
     return typeof window === 'undefined' ? path : `${window.location.origin}${path}`
   }
 
+  function showNotice(message: string) {
+    setNotice(message)
+    window.setTimeout(() => setNotice((current) => current === message ? '' : current), 3200)
+  }
+
   async function copy(label: string, value: string) {
     await navigator.clipboard.writeText(absolute(value))
     setCopied(label)
+    showNotice(label === 'guest' ? 'Guest Trip Hub link copied.' : 'Private group leader link copied.')
     window.setTimeout(() => setCopied(''), 1600)
   }
 
   async function setTripStatus(nextStatus: 'draft' | 'published' | 'archived') {
+    const active = parties.filter((party) => party.status !== 'invited').length
+    const booked = parties.filter((party) => party.status === 'booked' || party.status === 'travel_ready').length
+    const disruptive = nextStatus === 'archived' || (status === 'published' && nextStatus === 'draft')
+
+    if (nextStatus === 'archived') {
+      const detail = active
+        ? ` This trip has ${active} active traveling ${active === 1 ? 'party' : 'parties'}${booked ? `, including ${booked} booked or Travel Ready` : ''}.`
+        : ''
+      const confirmed = window.confirm(`Archive this Trip Hub?${detail}\n\nExisting authorized travelers and the group leader will keep read-only access, but new access-code entries, invitations, and booking requests will pause until the trip is republished.`)
+      if (!confirmed) return
+    }
+
+    if (status === 'published' && nextStatus === 'draft') {
+      const confirmed = window.confirm(`Return this live Trip Hub to draft?${active ? ` It currently has ${active} active traveling ${active === 1 ? 'party' : 'parties'}.` : ''}\n\nGuest access will pause until you publish again. The private group leader link will continue to work as a read-only preview.`)
+      if (!confirmed) return
+    }
+
     setBusy('trip')
     setError('')
     setNotice('')
     const response = await fetch(`/api/admin/group-trips/${tripId}`, {
-      method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: nextStatus }),
+      method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: nextStatus, confirmedImpact: disruptive }),
     })
     const data = await response.json()
     setBusy('')
     if (!response.ok) { setError(data.error || 'Unable to update trip.'); return }
     setStatus(nextStatus)
+    showNotice(nextStatus === 'published' ? 'Trip Hub published.' : nextStatus === 'archived' ? 'Trip Hub archived in read-only reference mode.' : 'Trip Hub returned to draft. Leader preview remains available.')
     router.refresh()
   }
 
@@ -68,6 +92,7 @@ export default function TripCommandCenter({ tripId, slug, status: initialStatus,
     setBusy('')
     if (!response.ok) { setError(data.error || 'Unable to update traveler.'); return }
     setParties((current) => current.map((party) => party.id === partyId ? { ...party, status: nextStatus } : party))
+    showNotice('Traveler status updated.')
   }
 
   async function resendWelcome(party: Party) {
@@ -81,7 +106,7 @@ export default function TripCommandCenter({ tripId, slug, status: initialStatus,
     const data = await response.json()
     setBusy('')
     if (!response.ok) { setError(data.error || 'Unable to resend the welcome email.'); return }
-    setNotice(`Booked welcome resent to ${party.primary_name}.`)
+    showNotice(`Booked welcome resent to ${party.primary_name}.`)
   }
 
   const booked = parties.filter((party) => party.status === 'booked' || party.status === 'travel_ready').length
@@ -90,7 +115,7 @@ export default function TripCommandCenter({ tripId, slug, status: initialStatus,
   return (
     <div className="space-y-6">
       {error ? <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</p> : null}
-      {notice ? <p className="rounded-xl bg-[#eaf5f0] px-4 py-3 text-sm font-medium text-[#10755A]">{notice}</p> : null}
+      {notice ? <div role="status" className="fixed bottom-5 right-5 z-[80] max-w-sm rounded-xl border border-[#cfe6dc] bg-white px-4 py-3 text-sm font-semibold text-[#10755A] shadow-xl">{notice}</div> : null}
 
       <div className="grid gap-3 sm:grid-cols-3">
         <div className="rounded-2xl border border-[#e2e8e5] bg-white p-5"><p className="text-xs font-bold uppercase tracking-wide text-[#829089]">People on trip</p><p className="mt-2 text-3xl font-semibold text-[#10251e]">{parties.length}</p></div>
@@ -101,22 +126,22 @@ export default function TripCommandCenter({ tripId, slug, status: initialStatus,
       <div className="grid gap-4 lg:grid-cols-2">
         <div className="rounded-2xl border border-[#e2e8e5] bg-white p-5">
           <div className="mb-4 flex items-center gap-2 text-[#10251e]"><Send size={18} /><h2 className="font-semibold">Guest trip link</h2></div>
-          <p className="text-sm leading-6 text-[#718079]">Guests use this link plus the shared group code.</p>
-          <div className="mt-4 flex gap-2"><button type="button" onClick={() => copy('guest', `/trips/${slug}`)} className="inline-flex items-center gap-2 rounded-xl bg-[#eaf5f0] px-4 py-2.5 text-sm font-semibold text-[#10755A]"><Copy size={15} /> {copied === 'guest' ? 'Copied' : 'Copy guest link'}</button>{status === 'published' ? <a href={`/trips/${slug}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-[#dce4e0] px-4 py-2.5 text-sm font-semibold text-[#4d625a]">Open <ExternalLink size={15} /></a> : null}</div>
+          <p className="text-sm leading-6 text-[#718079]">Guests use this link plus the shared group code when the Trip Hub is published.</p>
+          <div className="mt-4 flex flex-wrap gap-2"><button type="button" onClick={() => copy('guest', `/trips/${slug}`)} className="inline-flex items-center gap-2 rounded-xl bg-[#eaf5f0] px-4 py-2.5 text-sm font-semibold text-[#10755A]"><Copy size={15} /> {copied === 'guest' ? 'Copied' : 'Copy guest link'}</button>{status === 'published' ? <a href={`/trips/${slug}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-[#dce4e0] px-4 py-2.5 text-sm font-semibold text-[#4d625a]">Open <ExternalLink size={15} /></a> : null}</div>
         </div>
         <div className="rounded-2xl border border-[#e2e8e5] bg-white p-5">
           <div className="mb-4 flex items-center gap-2 text-[#10251e]"><UsersRound size={18} /><h2 className="font-semibold">Group leader link</h2></div>
-          <p className="text-sm leading-6 text-[#718079]">Private link unlocks the same trip hub plus names, statuses, counts, and guest invites.</p>
-          <button type="button" onClick={() => copy('leader', `/trips/${slug}/leader?token=${leaderToken}`)} className="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#eaf5f0] px-4 py-2.5 text-sm font-semibold text-[#10755A]"><Copy size={15} /> {copied === 'leader' ? 'Copied' : 'Copy leader link'}</button>
+          <p className="text-sm leading-6 text-[#718079]">Private link works in draft preview, live mode, and archived read-only mode.</p>
+          <div className="mt-4 flex flex-wrap gap-2"><button type="button" onClick={() => copy('leader', `/trips/${slug}/leader?token=${leaderToken}`)} className="inline-flex items-center gap-2 rounded-xl bg-[#eaf5f0] px-4 py-2.5 text-sm font-semibold text-[#10755A]"><Copy size={15} /> {copied === 'leader' ? 'Copied' : 'Copy leader link'}</button><a href={`/trips/${slug}/leader?token=${leaderToken}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-[#dce4e0] px-4 py-2.5 text-sm font-semibold text-[#4d625a]">{status === 'draft' ? 'Preview' : 'Open'} <ExternalLink size={15} /></a></div>
         </div>
       </div>
 
       <div className="rounded-2xl border border-[#e2e8e5] bg-white p-5 sm:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div><p className="text-xs font-bold uppercase tracking-wide text-[#829089]">Trip status</p><p className="mt-1 text-lg font-semibold capitalize text-[#10251e]">{status}</p></div>
+          <div><p className="text-xs font-bold uppercase tracking-wide text-[#829089]">Trip status</p><p className="mt-1 text-lg font-semibold capitalize text-[#10251e]">{status}</p>{status === 'archived' ? <p className="mt-1 text-xs text-[#718079]">Existing authorized sessions are read-only. New trip activity is paused.</p> : status === 'draft' ? <p className="mt-1 text-xs text-[#718079]">Guests cannot enter. The private leader preview is available.</p> : null}</div>
           <div className="flex flex-wrap gap-2">
             {status !== 'published' ? <button type="button" disabled={busy === 'trip'} onClick={() => setTripStatus('published')} className="rounded-xl bg-[#F26A75] px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50">Publish Trip Hub</button> : <button type="button" disabled={busy === 'trip'} onClick={() => setTripStatus('draft')} className="rounded-xl border border-[#dce4e0] px-4 py-2.5 text-sm font-semibold text-[#4d625a] disabled:opacity-50">Return to draft</button>}
-            {status !== 'archived' ? <button type="button" disabled={busy === 'trip'} onClick={() => setTripStatus('archived')} className="rounded-xl border border-[#dce4e0] px-4 py-2.5 text-sm font-semibold text-[#4d625a] disabled:opacity-50">Archive</button> : null}
+            {status !== 'archived' ? <button type="button" disabled={busy === 'trip'} onClick={() => setTripStatus('archived')} className="rounded-xl border border-red-200 px-4 py-2.5 text-sm font-semibold text-red-700 disabled:opacity-50">Archive</button> : null}
           </div>
         </div>
       </div>
