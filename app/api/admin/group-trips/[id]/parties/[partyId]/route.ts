@@ -12,8 +12,8 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
 
   const { id, partyId } = await context.params
   const body = await request.json() as { status?: PartyStatus; action?: 'resend_welcome' }
-
   const supabase = createSupabaseAdmin()
+
   const { data: current } = await supabase
     .from('group_trip_parties')
     .select('id,status,primary_name,email,phone,party_size,cabin_preference,booked_at,updated_at')
@@ -26,36 +26,19 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     if (!BOOKED_STATUSES.has(current.status as PartyStatus)) {
       return NextResponse.json({ error: 'The welcome email can only be resent after this party is booked.' }, { status: 409 })
     }
-
-    const { data: trip } = await supabase
-      .from('group_trips')
-      .select('name,slug,access_code')
-      .eq('id', id)
-      .maybeSingle()
+    const { data: trip } = await supabase.from('group_trips').select('name,slug,access_code').eq('id', id).maybeSingle()
     if (!trip) return NextResponse.json({ error: 'Trip not found.' }, { status: 404 })
-
-    const sent = await sendBookedWelcome({
-      name: current.primary_name,
-      email: current.email,
-      tripName: trip.name,
-      slug: trip.slug,
-      accessCode: trip.access_code,
-    })
+    const sent = await sendBookedWelcome({ name: current.primary_name, email: current.email, tripName: trip.name, slug: trip.slug, accessCode: trip.access_code })
     if (!sent) return NextResponse.json({ error: 'The welcome email could not be sent.' }, { status: 502 })
-
     return NextResponse.json({ party: current, resent: true })
   }
 
   const status = body.status
-  if (!status || !PARTY_STATUSES.includes(status)) {
-    return NextResponse.json({ error: 'Invalid traveler status.' }, { status: 400 })
-  }
+  if (!status || !PARTY_STATUSES.includes(status)) return NextResponse.json({ error: 'Invalid traveler status.' }, { status: 400 })
 
-  const wasBooked = BOOKED_STATUSES.has(current.status as PartyStatus)
-  const willBeBooked = BOOKED_STATUSES.has(status)
+  const firstBookedEntry = BOOKED_STATUSES.has(status) && !current.booked_at
   const patch: Record<string, unknown> = { status }
-  if (willBeBooked && !wasBooked) patch.booked_at = new Date().toISOString()
-  if (!willBeBooked && wasBooked) patch.booked_at = null
+  if (firstBookedEntry) patch.booked_at = new Date().toISOString()
 
   const { data: party, error } = await supabase
     .from('group_trip_parties')
@@ -65,23 +48,9 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     .single()
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
-  // Send the celebratory welcome only the first time the party enters the booked family.
-  // Moving Booked -> Travel Ready (or back) keeps booked_at intact and does not duplicate email.
-  if (willBeBooked && !wasBooked) {
-    const { data: trip } = await supabase
-      .from('group_trips')
-      .select('name,slug,access_code')
-      .eq('id', id)
-      .maybeSingle()
-    if (trip) {
-      await sendBookedWelcome({
-        name: current.primary_name,
-        email: current.email,
-        tripName: trip.name,
-        slug: trip.slug,
-        accessCode: trip.access_code,
-      })
-    }
+  if (firstBookedEntry) {
+    const { data: trip } = await supabase.from('group_trips').select('name,slug,access_code').eq('id', id).maybeSingle()
+    if (trip) await sendBookedWelcome({ name: current.primary_name, email: current.email, tripName: trip.name, slug: trip.slug, accessCode: trip.access_code })
   }
 
   return NextResponse.json({ party })

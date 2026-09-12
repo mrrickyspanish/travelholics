@@ -102,6 +102,11 @@ export default function EditGroupTripForm({ trip, cabins: initialCabins, itinera
     setForm((current) => ({ ...current, [key]: value }))
   }
 
+  function showNotice(message: string) {
+    setNotice(message)
+    window.setTimeout(() => setNotice((current) => current === message ? '' : current), 4200)
+  }
+
   function updateCabin(index: number, patch: Partial<EditableCabinOfferInput>) {
     set('cabins', form.cabins.map((item, i) => i === index ? { ...item, ...patch } : item))
   }
@@ -134,7 +139,7 @@ export default function EditGroupTripForm({ trip, cabins: initialCabins, itinera
       })
       const data = await response.json()
       if (!response.ok) throw new Error(data.error || 'Unable to save the Trip Hub.')
-      setNotice(data.accessCodeChanged ? 'Trip Hub saved. The shared access code changed, so guests will need to enter the new code next time they open the hub.' : 'Trip Hub saved.')
+      showNotice(data.accessCodeChanged ? 'Trip Hub saved. The shared access code changed, so guests will need the new code next time they open the hub.' : 'Trip Hub saved.')
       router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to save the Trip Hub.')
@@ -145,6 +150,7 @@ export default function EditGroupTripForm({ trip, cabins: initialCabins, itinera
 
   return (
     <div className="min-h-full bg-[#f7f8f5] px-4 py-6 sm:px-8 lg:px-10 lg:py-9">
+      {notice ? <div role="status" className="fixed bottom-24 right-5 z-[80] max-w-sm rounded-xl border border-[#cfe6dc] bg-white px-4 py-3 text-sm font-semibold leading-6 text-[#176047] shadow-xl sm:bottom-6">{notice}</div> : null}
       <div className="mx-auto max-w-6xl">
         <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -157,7 +163,6 @@ export default function EditGroupTripForm({ trip, cabins: initialCabins, itinera
         </div>
 
         {error ? <p role="alert" className="mb-5 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</p> : null}
-        {notice ? <p role="status" className="mb-5 rounded-xl border border-[#cfe6dc] bg-[#eaf5f0] px-4 py-3 text-sm font-medium text-[#176047]">{notice}</p> : null}
 
         <div className="space-y-6">
           <section className="rounded-3xl border border-[#e2e8e5] bg-white p-5 shadow-sm sm:p-7">
