@@ -32,7 +32,7 @@ export const LatestVideos = ({ featured, shorts }: LatestVideosProps) => {
             </h2>
           </div>
           <div className="lg:justify-self-end">
-            <p className="max-w-xl text-base leading-7 text-white/62 sm:text-lg sm:leading-8">
+            <p className="max-w-xl text-lg leading-7 text-white/62 sm:leading-8">
               Ship rankings, cruise pricing, packing calls, port days, and the little things Yolanda wishes somebody had told you before embarkation.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">

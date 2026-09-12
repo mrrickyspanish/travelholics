@@ -21,7 +21,7 @@ export const BrandThesis = () => {
           </h2>
 
           <div className="max-w-xl lg:justify-self-end">
-            <p className="text-base leading-7 text-stone sm:text-lg sm:leading-8">
+            <p className="text-lg leading-7 text-stone sm:leading-8">
               First cruise. Honeymoon. Cruise number 90. Or bringing the whole crew. If you&apos;re thinking about a cruise, you landed in the right place.
             </p>
           </div>

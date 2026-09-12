@@ -60,7 +60,7 @@ export const GroupTrips = () => {
           <h2 className="mt-5 max-w-[9ch] font-serif text-[clamp(3.7rem,7vw,7.6rem)] font-semibold leading-[0.84] tracking-[-0.07em]">
             Bring the people. We&apos;ll build the story.
           </h2>
-          <p className="mt-7 max-w-[31rem] text-base leading-7 text-white/64 sm:text-lg sm:leading-8">
+          <p className="mt-7 max-w-[31rem] text-lg leading-7 text-white/64 sm:leading-8">
             Yolanda shapes the sailing. Your crew gets one place to keep the trip together.
           </p>
 

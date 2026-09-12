@@ -26,7 +26,7 @@ export const MeetYolanda = () => {
         >
           <div className="mb-6 lg:hidden">
             <h2 className="font-serif text-[2.65rem] font-semibold leading-[0.92] tracking-[-0.055em] text-royal-deep sm:text-5xl">Meet Yolanda.</h2>
-            <p className="mt-3 max-w-[30rem] text-base leading-7 text-stone">The person behind the ship knowledge, cabin strategy, and advice that turns cruise curiosity into confidence.</p>
+            <p className="mt-3 max-w-[30rem] text-lg leading-7 text-stone">The person behind the ship knowledge, cabin strategy, and advice that turns cruise curiosity into confidence.</p>
           </div>
 
           <div className="relative h-[20rem] overflow-hidden sm:h-[28rem] lg:h-full lg:min-h-[42rem]">
@@ -52,7 +52,7 @@ export const MeetYolanda = () => {
               <p className="mt-5 max-w-xl text-lg leading-8 text-stone">The person behind the ship knowledge, cabin strategy, and advice that turns cruise curiosity into confidence.</p>
             </div>
 
-            <p className="max-w-xl text-base leading-7 text-stone sm:text-lg sm:leading-8 lg:mt-7">She has spent years learning how cruise lines, ships, cabin categories, itineraries, and timing actually feel once you are onboard. That experience becomes your shortcut to the cruise that fits you, not just the cruise that showed up first in a search.</p>
+            <p className="max-w-xl text-lg leading-7 text-stone sm:leading-8 lg:mt-7">She has spent years learning how cruise lines, ships, cabin categories, itineraries, and timing actually feel once you are onboard. That experience becomes your shortcut to the cruise that fits you, not just the cruise that showed up first in a search.</p>
 
             <div className="mt-7 border-y border-ink/12 py-5 sm:mt-8 sm:py-6">
               <p className="max-w-[24ch] font-serif text-2xl font-semibold leading-[1.05] tracking-[-0.04em] text-ink sm:text-3xl">Bring the dream. She&apos;ll help you find the cruise that fits it.</p>
@@ -64,7 +64,7 @@ export const MeetYolanda = () => {
               {proof.map(([value, label]) => (
                 <div key={label} className="border-r border-ink/12 px-3 first:pl-0 last:border-r-0 last:pr-0 sm:px-6">
                   <p className="font-serif text-3xl font-semibold tracking-[-0.045em] text-royal-deep sm:text-4xl">{value}</p>
-                  <p className="mt-2 text-[9px] font-black uppercase tracking-[0.13em] text-stone/72 sm:text-[11px]">{label}</p>
+                  <p className="mt-2 text-[11px] font-black uppercase tracking-[0.13em] text-stone/72 sm:text-xs">{label}</p>
                 </div>
               ))}
             </div>

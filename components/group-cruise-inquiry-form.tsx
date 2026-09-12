@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { ArrowLeft, ArrowRight, Check, Ship, Sparkles } from 'lucide-react'
 
 const inputClass = 'mt-2 w-full border-0 border-b border-ink/20 bg-transparent px-0 py-3 text-base text-ink outline-none transition placeholder:text-stone/45 focus:border-emerald-mid focus:ring-0'
-const labelClass = 'block text-sm font-bold text-ink'
+const labelClass = 'block text-base font-bold text-ink'
 
 export default function GroupCruiseInquiryForm() {
   const router = useRouter()

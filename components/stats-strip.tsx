@@ -16,8 +16,8 @@ export const StatsStrip = () => {
               className={`py-6 sm:py-10 lg:px-8 lg:py-14 ${index % 2 === 0 ? "pr-4" : "pl-4"} ${index < 3 ? "lg:border-r lg:border-ink/10" : ""} ${index >= 2 ? "border-t border-ink/10 lg:border-t-0" : ""}`}
             >
               <p className="font-serif text-[2.25rem] font-semibold leading-none tracking-[-0.05em] text-royal-deep sm:text-[clamp(2.7rem,5vw,5.2rem)]">{value}</p>
-              <p className="mt-2 text-[13px] font-black leading-5 text-ink sm:mt-3 sm:text-base">{label}</p>
-              <p className="mt-1.5 max-w-[22ch] text-[11px] leading-4 text-stone sm:mt-2 sm:text-sm sm:leading-6">{note}</p>
+              <p className="mt-2 text-sm font-black leading-5 text-ink sm:mt-3 sm:text-base">{label}</p>
+              <p className="mt-1.5 max-w-[22ch] text-[13px] leading-4 text-stone sm:mt-2 sm:text-sm sm:leading-6">{note}</p>
             </div>
           ))}
         </div>

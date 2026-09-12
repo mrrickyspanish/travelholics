@@ -59,7 +59,7 @@ export const ShopStrip = () => {
             </h2>
           </div>
           <div className="lg:justify-self-end">
-            <p className="max-w-xl text-base leading-7 text-stone sm:text-lg sm:leading-8">
+            <p className="max-w-xl text-lg leading-7 text-stone sm:leading-8">
               Travel pieces, cabin personality, and small reminders that your next trip is never as far away as it feels.
             </p>
             <Link href="/shop-full" className="mt-5 inline-flex items-center gap-2 text-sm font-black text-ink underline decoration-coral decoration-2 underline-offset-4 transition hover:text-coral-deep">

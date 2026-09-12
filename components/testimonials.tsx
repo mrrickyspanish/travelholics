@@ -35,7 +35,7 @@ export const Testimonials = () => {
               The trip should feel good before you even leave.
             </h2>
           </div>
-          <p className="max-w-xl text-base leading-7 text-stone lg:justify-self-end sm:text-lg sm:leading-8">
+          <p className="max-w-xl text-lg leading-7 text-stone lg:justify-self-end sm:leading-8">
             The proof is not just the itinerary. It is whether people felt taken care of, understood the plan, and came home ready to do it again.
           </p>
         </div>

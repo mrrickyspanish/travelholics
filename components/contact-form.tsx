@@ -128,7 +128,7 @@ export const ContactForm = () => {
   };
 
   const inputClass = "mt-2 w-full border-0 border-b border-ink/20 bg-transparent px-0 py-3 text-base text-ink outline-none transition placeholder:text-stone/45 focus:border-coral focus:ring-0";
-  const labelClass = "block text-sm font-bold text-ink";
+  const labelClass = "block text-base font-bold text-ink";
 
   return (
     <section id="contact" className="overflow-hidden bg-[#082d27] text-white">
@@ -145,7 +145,7 @@ export const ContactForm = () => {
             <h2 className="mt-5 max-w-[8ch] font-serif text-[clamp(3.8rem,7vw,7.4rem)] font-semibold leading-[0.83] tracking-[-0.07em]">
               Tell Yolanda where your mind keeps going.
             </h2>
-            <p className="mt-7 max-w-md text-base leading-7 text-white/62 sm:text-lg sm:leading-8">
+            <p className="mt-7 max-w-md text-lg leading-7 text-white/62 sm:leading-8">
               You do not need the ship, cabin, or perfect dates figured out. Start with what you know. She will help shape the rest.
             </p>
           </div>
@@ -163,7 +163,7 @@ export const ContactForm = () => {
                 <CheckCircle className="text-coral" size={42} />
                 <p className="mt-5 text-[10px] font-black uppercase tracking-[0.2em] text-coral">Inquiry received</p>
                 <h3 className="mt-3 max-w-[12ch] font-serif text-5xl font-semibold leading-[0.9] tracking-[-0.055em] text-royal-deep sm:text-6xl">Now the fun part starts.</h3>
-                <p className="mt-5 max-w-xl text-base leading-7 text-stone">Yolanda has your inquiry and will be in touch within 24 hours. Start dreaming. She will help with the decisions.</p>
+                <p className="mt-5 max-w-xl text-lg leading-7 text-stone">Yolanda has your inquiry and will be in touch within 24 hours. Start dreaming. She will help with the decisions.</p>
                 <button onClick={() => setIsSuccess(false)} className="mt-7 w-fit text-sm font-black text-ink underline decoration-coral decoration-2 underline-offset-4">Send another inquiry</button>
               </div>
             ) : (

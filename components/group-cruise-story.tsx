@@ -212,7 +212,7 @@ export default function GroupCruiseStory() {
           </motion.div>
 
           <div className="mt-8 grid gap-7 border-t border-white/20 pt-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,.55fr)] lg:items-end">
-            <p className="max-w-2xl text-base font-medium leading-7 text-white/76 sm:text-lg sm:leading-8">Bring the crew. Yolanda partners with you to shape the sailing, organize the details, and build a group experience that feels exciting from the first conversation to sail away.</p>
+            <p className="max-w-2xl text-lg font-medium leading-7 text-white/76 sm:leading-8">Bring the crew. Yolanda partners with you to shape the sailing, organize the details, and build a group experience that feels exciting from the first conversation to sail away.</p>
             <div className="lg:text-right">
               <p className="font-serif text-xl leading-tight text-white sm:text-2xl">The woman you know from TikTok is the woman helping you plan it.</p>
               <p className="mt-2 text-sm text-white/48">A real partner, not a booking link and a good-luck email.</p>
@@ -260,7 +260,7 @@ export default function GroupCruiseStory() {
             <div>
               <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">Experience with a face</p>
               <h2 className="mt-5 max-w-[11ch] font-serif text-[clamp(3.2rem,5.8vw,6.4rem)] font-semibold leading-[0.88] tracking-[-0.06em] text-royal-deep">Cruise knowledge is better when it comes with a person.</h2>
-              <p className="mt-7 max-w-xl text-base leading-7 text-stone sm:text-lg sm:leading-8">Yolanda brings 20+ years of travel experience, firsthand experience across 6+ cruise lines, and a community of 20K+ travelers who follow along for practical cruise advice. When you plan a group with Travelholics, that experience becomes part of your trip.</p>
+              <p className="mt-7 max-w-xl text-lg leading-7 text-stone sm:leading-8">Yolanda brings 20+ years of travel experience, firsthand experience across 6+ cruise lines, and a community of 20K+ travelers who follow along for practical cruise advice. When you plan a group with Travelholics, that experience becomes part of your trip.</p>
             </div>
 
             <div className="mt-12 grid grid-cols-3 border-y border-ink/12 py-6">
@@ -297,7 +297,7 @@ export default function GroupCruiseStory() {
                   <span className={`absolute -left-10 top-11 h-3.5 w-3.5 rounded-full border transition sm:-left-14 sm:h-5 sm:w-5 ${activeStep === index ? 'border-coral bg-coral' : 'border-white/28 bg-[#082d27]'}`} />
                   <p className="text-[10px] font-black uppercase tracking-[0.22em] text-coral">0{index + 1} · {step.kicker}</p>
                   <h3 className="mt-4 max-w-xl font-serif text-4xl font-semibold leading-[0.95] tracking-[-0.045em] sm:text-5xl">{step.title}</h3>
-                  <p className="mt-5 max-w-lg text-base leading-7 text-white/58">{step.copy}</p>
+                  <p className="mt-5 max-w-lg text-lg leading-7 text-white/58">{step.copy}</p>
                 </motion.article>
               ))}
             </div>
@@ -317,7 +317,7 @@ export default function GroupCruiseStory() {
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">Your group gets its own home base</p>
             <h2 className="mt-4 max-w-[9ch] font-serif text-[clamp(3.3rem,6vw,6.2rem)] font-semibold leading-[0.88] tracking-[-0.06em] text-royal-deep">The group chat can go back to being fun.</h2>
-            <p className="mt-6 max-w-md text-base leading-7 text-stone sm:text-lg sm:leading-8">Once your cruise is locked in, Travelholics creates a personalized Trip Hub for the group. One place for cabin choices, group pricing, important dates, itinerary details, and booking requests.</p>
+            <p className="mt-6 max-w-md text-lg leading-7 text-stone sm:leading-8">Once your cruise is locked in, Travelholics creates a personalized Trip Hub for the group. One place for cabin choices, group pricing, important dates, itinerary details, and booking requests.</p>
             <div className="mt-8 space-y-3 border-t border-ink/12 pt-6">
               {['Private group access code', 'Cabin choices with transparent pricing', 'Important deadlines in one place', 'One clear booking request flow'].map((item) => (
                 <p key={item} className="flex items-center gap-3 text-sm font-semibold text-ink"><CheckCircle2 size={17} className="text-emerald-mid" />{item}</p>
@@ -397,7 +397,7 @@ export default function GroupCruiseStory() {
                     <span>{question}</span>
                     <span className="mt-1 text-coral transition-transform group-open:rotate-45">+</span>
                   </summary>
-                  <p className="mt-4 max-w-2xl pr-10 text-sm leading-6 text-stone sm:text-base sm:leading-7">{answer}</p>
+                  <p className="mt-4 max-w-2xl pr-10 text-base leading-6 text-stone sm:text-lg sm:leading-7">{answer}</p>
                 </details>
               ))}
             </div>
@@ -410,7 +410,7 @@ export default function GroupCruiseStory() {
           <div className="lg:sticky lg:top-28">
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">Your turn</p>
             <h2 className="mt-4 max-w-[9ch] font-serif text-[clamp(3.3rem,5.8vw,6rem)] font-semibold leading-[0.88] tracking-[-0.06em] text-royal-deep">Tell us who&apos;s coming. We&apos;ll build from there.</h2>
-            <p className="mt-6 max-w-md text-base leading-7 text-stone">You do not need a perfect plan. Give Yolanda the starting point and she will help turn it into a cruise worth getting everybody together for.</p>
+            <p className="mt-6 max-w-md text-lg leading-7 text-stone">You do not need a perfect plan. Give Yolanda the starting point and she will help turn it into a cruise worth getting everybody together for.</p>
             <p className="mt-8 flex items-start gap-3 border-t border-ink/12 pt-5 text-sm leading-6 text-stone"><CalendarDays size={19} className="mt-0.5 shrink-0 text-emerald-mid" />After you submit, you can optionally schedule time with Yolanda right away.</p>
           </div>
           <GroupCruiseInquiryForm />

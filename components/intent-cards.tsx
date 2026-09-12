@@ -87,7 +87,7 @@ export const IntentCards = () => {
             <h2 className="mt-4 max-w-[10ch] font-serif text-[clamp(3.4rem,6.5vw,6.8rem)] font-semibold leading-[0.86] tracking-[-0.065em] text-royal-deep">Where should we wake up next?</h2>
           </div>
           <div className="lg:justify-self-end">
-            <p className="max-w-xl text-base leading-7 text-stone sm:text-lg sm:leading-8">You do not need to know the ship yet. Pick the kind of trip you want to feel, then let Yolanda help narrow down the sailing that actually fits.</p>
+            <p className="max-w-xl text-lg leading-7 text-stone sm:leading-8">You do not need to know the ship yet. Pick the kind of trip you want to feel, then let Yolanda help narrow down the sailing that actually fits.</p>
             <Link href="/#contact" className="mt-5 inline-flex items-center gap-2 text-sm font-black text-ink underline decoration-coral decoration-2 underline-offset-4 transition hover:text-coral-deep">Help me choose <ArrowUpRight size={16} /></Link>
           </div>
         </div>
