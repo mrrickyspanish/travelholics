@@ -5,6 +5,22 @@ import { useRouter } from 'next/navigation'
 import { ArrowLeft, ArrowRight, BedDouble, CalendarClock, Check, MapPinned, Plus, Ship, Trash2, UsersRound } from 'lucide-react'
 import type { CabinOfferInput, DeadlineInput, GroupTripCreateInput, ItineraryItemInput, PriceDisplay } from '@/types/group-trips'
 
+export type GroupTripInquiryPrefill = {
+  id: string
+  status: string
+  leader_name: string
+  email: string
+  phone: string | null
+  group_type: string | null
+  estimated_group_size: number | null
+  destination: string | null
+  preferred_dates: string | null
+  cruise_line: string | null
+  ship: string | null
+  sailing_date: string | null
+  converted_trip_id: string | null
+}
+
 const STEPS = [
   { label: 'Basics', icon: Ship },
   { label: 'Booking details', icon: UsersRound },
@@ -33,16 +49,33 @@ const emptyCabin = (): CabinOfferInput => ({ name: '', description: '', occupanc
 const emptyItinerary = (dayNumber: number): ItineraryItemInput => ({ dayNumber, title: '', port: '', arrivalTime: '', departureTime: '', description: '' })
 const emptyDeadline = (): DeadlineInput => ({ title: '', deadlineDate: '', description: '', reminderDaysBefore: [30, 14, 7] })
 
-export default function GroupTripWizard() {
+export default function GroupTripWizard({ initialInquiry = null }: { initialInquiry?: GroupTripInquiryPrefill | null }) {
   const router = useRouter()
   const [step, setStep] = useState(0)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [slugTouched, setSlugTouched] = useState(false)
   const [form, setForm] = useState<GroupTripCreateInput>({
-    name: '', slug: '', destination: '', cruiseLine: '', ship: '', sailDate: '', returnDate: '', departurePort: '',
-    heroImageUrl: '', overview: '', accessCode: '', groupLeaderName: '', groupLeaderEmail: '', groupLeaderPhone: '',
-    priceDisplay: 'both', bookingRequestNote: '', cabins: [emptyCabin()], itinerary: [], deadlines: [],
+    name: '',
+    slug: '',
+    destination: initialInquiry?.destination || '',
+    cruiseLine: initialInquiry?.cruise_line || '',
+    ship: initialInquiry?.ship || '',
+    sailDate: initialInquiry?.sailing_date || '',
+    returnDate: '',
+    departurePort: '',
+    heroImageUrl: '',
+    overview: '',
+    accessCode: '',
+    groupLeaderName: initialInquiry?.leader_name || '',
+    groupLeaderEmail: initialInquiry?.email || '',
+    groupLeaderPhone: initialInquiry?.phone || '',
+    priceDisplay: 'both',
+    bookingRequestNote: '',
+    inquiryId: initialInquiry?.id,
+    cabins: [emptyCabin()],
+    itinerary: [],
+    deadlines: [],
   })
 
   const canContinue = useMemo(() => {
@@ -124,6 +157,19 @@ export default function GroupTripWizard() {
           <h1 className="text-3xl font-semibold tracking-tight text-[#10251e] sm:text-4xl">Build the group experience</h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-[#65736d]">Fill it out once. Travelholics turns it into the protected trip hub your group will use.</p>
         </div>
+
+        {initialInquiry ? (
+          <div className="mb-6 rounded-2xl border border-[#cfe2d9] bg-[#edf7f2] p-4 sm:p-5">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#10755A]">Building from confirmed inquiry</p>
+                <p className="mt-1 text-base font-semibold text-[#10251e]">{initialInquiry.leader_name}</p>
+                <p className="mt-1 text-sm text-[#65736d]">{initialInquiry.group_type || 'Group cruise'}{initialInquiry.estimated_group_size ? ` · ~${initialInquiry.estimated_group_size} travelers` : ''}{initialInquiry.preferred_dates ? ` · ${initialInquiry.preferred_dates}` : ''}</p>
+              </div>
+              <p className="text-xs font-semibold text-[#60736a]">Leader and known sailing details are already filled in.</p>
+            </div>
+          </div>
+        ) : null}
 
         <div className="mb-6 overflow-x-auto pb-2">
           <div className="flex min-w-[720px] gap-2">

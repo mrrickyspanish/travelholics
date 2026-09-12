@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { BedDouble, CalendarDays, CheckCircle2, Clock3, Mail, MapPin, Plus, Send, Ship, Trash2, UsersRound } from 'lucide-react'
+import { BedDouble, CalendarDays, Check, CheckCircle2, Clock3, Mail, MapPin, Pencil, Plus, Send, Ship, Trash2, X } from 'lucide-react'
 import { partyStatusLabel, type PartyStatus, type PriceDisplay } from '@/types/group-trips'
 
 type Cabin = { id: string; name: string; description: string | null; occupancy_label: string | null; per_person_price: number | string | null; cabin_total_price: number | string | null; availability_note: string | null }
@@ -29,6 +29,11 @@ export default function TripHubClient({ trip, cabins, itinerary, deadlines, isLe
   const [inviteEmail, setInviteEmail] = useState('')
   const [inviteBusy, setInviteBusy] = useState(false)
   const [inviteError, setInviteError] = useState('')
+  const [inviteNotice, setInviteNotice] = useState('')
+  const [editingInviteId, setEditingInviteId] = useState<string | null>(null)
+  const [editInviteName, setEditInviteName] = useState('')
+  const [editInviteEmail, setEditInviteEmail] = useState('')
+  const [editInviteBusy, setEditInviteBusy] = useState(false)
 
   const counts = useMemo(() => ({
     invited: parties.filter((party) => party.status === 'invited').length,
@@ -55,6 +60,7 @@ export default function TripHubClient({ trip, cabins, itinerary, deadlines, isLe
     event.preventDefault()
     setInviteBusy(true)
     setInviteError('')
+    setInviteNotice('')
     const response = await fetch(`/api/group-trips/${trip.slug}/invite`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: inviteName, email: inviteEmail }) })
     const data = await response.json()
     setInviteBusy(false)
@@ -62,11 +68,49 @@ export default function TripHubClient({ trip, cabins, itinerary, deadlines, isLe
     setParties((current) => [...current, data.party])
     setInviteName('')
     setInviteEmail('')
+    setInviteNotice(`Invitation sent to ${data.party.primary_name}.`)
+  }
+
+  function startInviteEdit(party: Party) {
+    setEditingInviteId(party.id)
+    setEditInviteName(party.primary_name)
+    setEditInviteEmail(party.email)
+    setInviteError('')
+    setInviteNotice('')
+  }
+
+  function cancelInviteEdit() {
+    setEditingInviteId(null)
+    setEditInviteName('')
+    setEditInviteEmail('')
+  }
+
+  async function saveInviteEdit(partyId: string) {
+    setEditInviteBusy(true)
+    setInviteError('')
+    setInviteNotice('')
+    const response = await fetch(`/api/group-trips/${trip.slug}/invite`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ partyId, name: editInviteName, email: editInviteEmail }),
+    })
+    const data = await response.json()
+    setEditInviteBusy(false)
+    if (!response.ok) { setInviteError(data.error || 'Unable to update invitation.'); return }
+    setParties((current) => current.map((party) => party.id === partyId ? data.party : party))
+    cancelInviteEdit()
+    setInviteNotice(data.invitationResent ? 'Invitation updated and a fresh email was sent.' : 'Invitation saved.')
   }
 
   async function removeInvite(partyId: string) {
+    setInviteError('')
+    setInviteNotice('')
     const response = await fetch(`/api/group-trips/${trip.slug}/invite?partyId=${encodeURIComponent(partyId)}`, { method: 'DELETE' })
-    if (response.ok) setParties((current) => current.filter((party) => party.id !== partyId))
+    const data = await response.json()
+    if (!response.ok) { setInviteError(data.error || 'Unable to remove invitation.'); return }
+    setParties((current) => current.filter((party) => party.id !== partyId))
+    if (editingInviteId === partyId) cancelInviteEdit()
+    setInviteNotice('Guest removed from the invitation list.')
   }
 
   function chooseCabin(id: string) {
@@ -92,10 +136,15 @@ export default function TripHubClient({ trip, cabins, itinerary, deadlines, isLe
       {isLeader ? (
         <section className="border-b border-ink/8 bg-cream px-5 py-8 sm:px-8 lg:px-12">
           <div className="mx-auto max-w-7xl">
-            <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-xs font-black uppercase tracking-[0.15em] text-coral">Group Leader View</p><h2 className="mt-1 font-serif text-3xl font-semibold text-royal-deep">Your crew at a glance</h2></div><p className="text-sm text-stone">Names and booking progress only. Travelholics handles the rest.</p></div>
-            <div className="grid gap-3 sm:grid-cols-3"><div className="rounded-2xl bg-sand p-4"><p className="text-xs font-bold uppercase tracking-wide text-stone">Invited</p><p className="mt-1 text-3xl font-semibold text-royal-deep">{parties.length}</p></div><div className="rounded-2xl bg-sand p-4"><p className="text-xs font-bold uppercase tracking-wide text-stone">Responded</p><p className="mt-1 text-3xl font-semibold text-royal-deep">{counts.responded}</p></div><div className="rounded-2xl bg-emerald-mid/10 p-4"><p className="text-xs font-bold uppercase tracking-wide text-emerald-mid">Booked / ready</p><p className="mt-1 text-3xl font-semibold text-emerald-deep">{counts.booked}</p></div></div>
-            <div className="mt-5 overflow-hidden rounded-2xl border border-ink/8 bg-white"><div className="divide-y divide-ink/8">{parties.length ? parties.map((party) => <div key={party.id} className="flex items-center justify-between gap-4 px-4 py-3.5 sm:px-5"><div><p className="font-semibold text-ink">{party.primary_name}</p><p className="text-xs text-stone">{partyStatusLabel(party.status)}</p></div>{party.status === 'invited' ? <button type="button" onClick={() => removeInvite(party.id)} className="rounded-lg p-2 text-stone hover:bg-red-50 hover:text-red-600" aria-label={`Remove invitation for ${party.primary_name}`}><Trash2 size={16} /></button> : <CheckCircle2 size={18} className="text-emerald-mid" />}</div>) : <p className="px-5 py-8 text-center text-sm text-stone">No guests added yet.</p>}</div></div>
-            <form onSubmit={inviteGuest} className="mt-4 grid gap-3 rounded-2xl bg-emerald-deep p-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end sm:p-5"><label className="text-xs font-bold uppercase tracking-wide text-white/60">Guest name<input required className="mt-1.5 w-full rounded-xl border border-white/10 bg-white px-3.5 py-3 text-sm text-ink outline-none" value={inviteName} onChange={(e) => setInviteName(e.target.value)} /></label><label className="text-xs font-bold uppercase tracking-wide text-white/60">Guest email<input required type="email" className="mt-1.5 w-full rounded-xl border border-white/10 bg-white px-3.5 py-3 text-sm text-ink outline-none" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} /></label><button disabled={inviteBusy} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-coral px-4 py-3 text-sm font-bold text-white disabled:opacity-50"><Send size={16} /> {inviteBusy ? 'Sending…' : 'Send invite'}</button>{inviteError ? <p className="text-sm font-semibold text-red-200 sm:col-span-3">{inviteError}</p> : null}</form>
+            <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-xs font-black uppercase tracking-[0.15em] text-coral">Group Leader View</p><h2 className="mt-1 font-serif text-3xl font-semibold text-royal-deep">Your crew at a glance</h2></div><p className="max-w-md text-sm text-stone">Names and booking progress only. You can correct or remove invitations until a guest responds. Travelholics handles the booking work.</p></div>
+            <div className="grid gap-3 sm:grid-cols-3"><div className="rounded-2xl bg-sand p-4"><p className="text-xs font-bold uppercase tracking-wide text-stone">People invited</p><p className="mt-1 text-3xl font-semibold text-royal-deep">{parties.length}</p></div><div className="rounded-2xl bg-sand p-4"><p className="text-xs font-bold uppercase tracking-wide text-stone">Responded</p><p className="mt-1 text-3xl font-semibold text-royal-deep">{counts.responded}</p></div><div className="rounded-2xl bg-emerald-mid/10 p-4"><p className="text-xs font-bold uppercase tracking-wide text-emerald-mid">Booked / ready</p><p className="mt-1 text-3xl font-semibold text-emerald-deep">{counts.booked}</p></div></div>
+            {inviteError ? <p role="alert" className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{inviteError}</p> : null}
+            {inviteNotice ? <p className="mt-4 flex items-center gap-2 rounded-xl bg-emerald-mid/10 px-4 py-3 text-sm font-semibold text-emerald-deep"><Check size={16} /> {inviteNotice}</p> : null}
+            <div className="mt-5 overflow-hidden rounded-2xl border border-ink/8 bg-white"><div className="divide-y divide-ink/8">{parties.length ? parties.map((party) => {
+              const editing = editingInviteId === party.id
+              return <div key={party.id} className="px-4 py-3.5 sm:px-5">{editing ? <div className="grid gap-3 sm:grid-cols-[1fr_1.2fr_auto] sm:items-end"><label className="text-xs font-bold uppercase tracking-wide text-stone">Guest name<input autoFocus required value={editInviteName} onChange={(e) => setEditInviteName(e.target.value)} className="mt-1.5 w-full rounded-xl border border-ink/10 bg-cream px-3.5 py-3 text-sm font-medium normal-case tracking-normal text-ink outline-none focus:border-emerald-mid" /></label><label className="text-xs font-bold uppercase tracking-wide text-stone">Email<input required type="email" value={editInviteEmail} onChange={(e) => setEditInviteEmail(e.target.value)} className="mt-1.5 w-full rounded-xl border border-ink/10 bg-cream px-3.5 py-3 text-sm font-medium normal-case tracking-normal text-ink outline-none focus:border-emerald-mid" /></label><div className="flex gap-2"><button type="button" disabled={editInviteBusy} onClick={() => saveInviteEdit(party.id)} className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-emerald-mid px-4 py-2.5 text-sm font-bold text-white disabled:opacity-50"><Check size={15} /> {editInviteBusy ? 'Saving…' : 'Save'}</button><button type="button" onClick={cancelInviteEdit} className="inline-flex min-h-11 items-center justify-center rounded-xl border border-ink/10 px-3 text-stone" aria-label="Cancel edit"><X size={17} /></button></div></div> : <div className="flex items-center justify-between gap-4"><div className="min-w-0"><p className="truncate font-semibold text-ink">{party.primary_name}</p><p className="truncate text-xs text-stone">{party.status === 'invited' ? `Invited · ${party.email}` : partyStatusLabel(party.status)}</p></div>{party.status === 'invited' ? <div className="flex shrink-0 gap-1"><button type="button" onClick={() => startInviteEdit(party)} className="rounded-lg p-2 text-stone hover:bg-sand hover:text-emerald-deep" aria-label={`Edit invitation for ${party.primary_name}`}><Pencil size={16} /></button><button type="button" onClick={() => removeInvite(party.id)} className="rounded-lg p-2 text-stone hover:bg-red-50 hover:text-red-600" aria-label={`Remove invitation for ${party.primary_name}`}><Trash2 size={16} /></button></div> : <CheckCircle2 size={18} className="shrink-0 text-emerald-mid" />}</div>}</div>
+            }) : <p className="px-5 py-8 text-center text-sm text-stone">No guests added yet.</p>}</div></div>
+            <form onSubmit={inviteGuest} className="mt-4 grid gap-3 rounded-2xl bg-emerald-deep p-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end sm:p-5"><label className="text-xs font-bold uppercase tracking-wide text-white/60">Guest name<input required className="mt-1.5 w-full rounded-xl border border-white/10 bg-white px-3.5 py-3 text-sm text-ink outline-none" value={inviteName} onChange={(e) => setInviteName(e.target.value)} /></label><label className="text-xs font-bold uppercase tracking-wide text-white/60">Guest email<input required type="email" className="mt-1.5 w-full rounded-xl border border-white/10 bg-white px-3.5 py-3 text-sm text-ink outline-none" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} /></label><button disabled={inviteBusy} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-coral px-4 py-3 text-sm font-bold text-white disabled:opacity-50"><Send size={16} /> {inviteBusy ? 'Sending…' : 'Send invite'}</button></form>
           </div>
         </section>
       ) : null}

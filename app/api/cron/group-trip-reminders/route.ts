@@ -63,7 +63,10 @@ export async function GET(request: Request) {
       .in('status', statuses)
 
     for (const party of parties ?? []) {
-      const eventKey = `deadline:${deadline.id}:${party.id}:${daysUntil}`
+      // Include the due date in the idempotency key. If Yolanda moves a deadline,
+      // the reminder schedule should follow the new date instead of being blocked
+      // by a reminder that belonged to the old date.
+      const eventKey = `deadline:${deadline.id}:${deadline.deadline_date}:${party.id}:${daysUntil}`
       const { data: logged } = await supabase.from('group_trip_email_log').select('id').eq('event_key', eventKey).maybeSingle()
       if (logged) continue
       const sent = await sendDeadlineReminder({ name: party.primary_name, email: party.email, tripName: tripJoin.name, deadlineTitle: deadline.title, deadlineDate: deadline.deadline_date, slug: tripJoin.slug })

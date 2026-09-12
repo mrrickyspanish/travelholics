@@ -56,6 +56,16 @@ export async function PATCH(request: Request, context: { params: Promise<{ slug:
   if (!trip) return NextResponse.json({ error: 'Trip not found.' }, { status: 404 })
   if (!authorized) return NextResponse.json({ error: 'Group leader access required.' }, { status: 403 })
 
+  const { data: current } = await supabase
+    .from('group_trip_parties')
+    .select('id,primary_name,email,status')
+    .eq('id', partyId)
+    .eq('trip_id', trip.id)
+    .maybeSingle()
+
+  if (!current) return NextResponse.json({ error: 'Guest invitation not found.' }, { status: 404 })
+  if (current.status !== 'invited') return NextResponse.json({ error: 'Only guests who are still Invited can be edited.' }, { status: 409 })
+
   const { data: party, error } = await supabase
     .from('group_trip_parties')
     .update({ primary_name: name, email })
@@ -65,10 +75,11 @@ export async function PATCH(request: Request, context: { params: Promise<{ slug:
     .select('id,primary_name,email,status')
     .maybeSingle()
   if (error) return NextResponse.json({ error: error.code === '23505' ? 'That email is already on this trip.' : error.message }, { status: error.code === '23505' ? 409 : 500 })
-  if (!party) return NextResponse.json({ error: 'Only guests who are still Invited can be edited.' }, { status: 409 })
+  if (!party) return NextResponse.json({ error: 'This invitation changed while you were editing it. Refresh and try again.' }, { status: 409 })
 
-  await sendTripInvite({ name, email, tripName: trip.name, slug: trip.slug, accessCode: trip.access_code })
-  return NextResponse.json({ party })
+  const changed = current.primary_name !== name || current.email !== email
+  if (changed) await sendTripInvite({ name, email, tripName: trip.name, slug: trip.slug, accessCode: trip.access_code })
+  return NextResponse.json({ party, invitationResent: changed })
 }
 
 export async function DELETE(request: Request, context: { params: Promise<{ slug: string }> }) {
@@ -81,7 +92,16 @@ export async function DELETE(request: Request, context: { params: Promise<{ slug
   if (!trip) return NextResponse.json({ error: 'Trip not found.' }, { status: 404 })
   if (!authorized) return NextResponse.json({ error: 'Group leader access required.' }, { status: 403 })
 
-  const { error } = await supabase.from('group_trip_parties').delete().eq('id', partyId).eq('trip_id', trip.id).eq('status', 'invited')
+  const { data: deleted, error } = await supabase
+    .from('group_trip_parties')
+    .delete()
+    .eq('id', partyId)
+    .eq('trip_id', trip.id)
+    .eq('status', 'invited')
+    .select('id')
+    .maybeSingle()
+
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (!deleted) return NextResponse.json({ error: 'Only guests who are still Invited can be removed.' }, { status: 409 })
   return NextResponse.json({ success: true })
 }

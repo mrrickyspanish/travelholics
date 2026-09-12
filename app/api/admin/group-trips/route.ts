@@ -37,11 +37,29 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Complete the required trip, sailing, access, and group leader fields.' }, { status: 400 })
   }
 
-  if (!Array.isArray(input.cabins) || input.cabins.length === 0) {
-    return NextResponse.json({ error: 'Add at least one cabin offer.' }, { status: 400 })
+  if (!Array.isArray(input.cabins) || input.cabins.length === 0 || input.cabins.some((cabin) => !cabin.name?.trim())) {
+    return NextResponse.json({ error: 'Add at least one named cabin offer.' }, { status: 400 })
   }
 
   const supabase = createSupabaseAdmin()
+
+  if (input.inquiryId) {
+    const { data: inquiry, error: inquiryError } = await supabase
+      .from('group_cruise_inquiries')
+      .select('id,status,converted_trip_id')
+      .eq('id', input.inquiryId)
+      .maybeSingle()
+
+    if (inquiryError) return NextResponse.json({ error: inquiryError.message }, { status: 500 })
+    if (!inquiry) return NextResponse.json({ error: 'The source inquiry could not be found.' }, { status: 404 })
+    if (inquiry.converted_trip_id) {
+      return NextResponse.json({ error: 'This inquiry has already been converted to a Trip Hub.' }, { status: 409 })
+    }
+    if (inquiry.status === 'closed_lost') {
+      return NextResponse.json({ error: 'Reopen this inquiry before converting it to a trip.' }, { status: 409 })
+    }
+  }
+
   const { data: trip, error: tripError } = await supabase
     .from('group_trips')
     .insert({
@@ -68,6 +86,9 @@ export async function POST(request: Request) {
     .single()
 
   if (tripError || !trip) {
+    if (tripError?.code === '23505') {
+      return NextResponse.json({ error: 'A trip with this URL or source inquiry already exists.' }, { status: 409 })
+    }
     return NextResponse.json({ error: tripError?.message || 'Unable to create trip.' }, { status: 500 })
   }
 
@@ -115,10 +136,17 @@ export async function POST(request: Request) {
     }
 
     if (input.inquiryId) {
-      await supabase
+      const { error: conversionError } = await supabase
         .from('group_cruise_inquiries')
-        .update({ status: 'confirmed', converted_trip_id: trip.id })
+        .update({
+          status: 'confirmed',
+          converted_trip_id: trip.id,
+          converted_at: new Date().toISOString(),
+        })
         .eq('id', input.inquiryId)
+        .is('converted_trip_id', null)
+
+      if (conversionError) throw conversionError
     }
   } catch (error) {
     await supabase.from('group_trips').delete().eq('id', trip.id)

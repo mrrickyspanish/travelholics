@@ -44,6 +44,7 @@ export async function POST(request: Request, context: { params: Promise<{ slug: 
       .select('name')
       .eq('id', cabinOfferId)
       .eq('trip_id', trip.id)
+      .eq('active', true)
       .maybeSingle()
     if (!cabin) return NextResponse.json({ error: 'That cabin option is not available for this trip.' }, { status: 400 })
     cabinName = cabin.name
@@ -55,6 +56,19 @@ export async function POST(request: Request, context: { params: Promise<{ slug: 
     .eq('trip_id', trip.id)
     .eq('email', email)
     .maybeSingle()
+
+  // One traveling party gets one intake submission. Once Travelholics has started
+  // working that party, a public form submission must never move it backwards.
+  if (existing && existing.status !== 'invited') {
+    return NextResponse.json({
+      success: true,
+      partyId: existing.id,
+      alreadySubmitted: true,
+      message: existing.status === 'submitted'
+        ? 'Your booking request is already with Travelholics.'
+        : 'Travelholics is already working on your booking. Contact Yolanda if you need to change anything.',
+    })
+  }
 
   const partyPayload = {
     trip_id: trip.id,
@@ -75,9 +89,13 @@ export async function POST(request: Request, context: { params: Promise<{ slug: 
       .from('group_trip_parties')
       .update(partyPayload)
       .eq('id', existing.id)
+      .eq('status', 'invited')
       .select('id')
-      .single()
-    if (error || !data) return NextResponse.json({ error: error?.message || 'Unable to update your request.' }, { status: 500 })
+      .maybeSingle()
+    if (error) return NextResponse.json({ error: error.message || 'Unable to update your request.' }, { status: 500 })
+    if (!data) {
+      return NextResponse.json({ error: 'Your trip status changed while this request was being submitted. Refresh the page and try again.' }, { status: 409 })
+    }
     partyId = data.id
     await supabase.from('group_trip_party_members').delete().eq('party_id', partyId)
   } else {
@@ -86,12 +104,22 @@ export async function POST(request: Request, context: { params: Promise<{ slug: 
       .insert(partyPayload)
       .select('id')
       .single()
-    if (error || !data) return NextResponse.json({ error: error?.message || 'Unable to save your request.' }, { status: 500 })
+    if (error || !data) {
+      if (error?.code === '23505') {
+        return NextResponse.json({ error: 'A booking request for this email is already on the trip.' }, { status: 409 })
+      }
+      return NextResponse.json({ error: error?.message || 'Unable to save your request.' }, { status: 500 })
+    }
     partyId = data.id
   }
 
   if (members.length) {
-    await supabase.from('group_trip_party_members').insert(members.map((fullName) => ({ party_id: partyId, full_name: fullName })))
+    const { error: memberError } = await supabase
+      .from('group_trip_party_members')
+      .insert(members.map((fullName) => ({ party_id: partyId, full_name: fullName })))
+    if (memberError) {
+      return NextResponse.json({ error: 'Your request was saved, but the traveler names could not be added. Please contact Travelholics.' }, { status: 500 })
+    }
   }
 
   await Promise.allSettled([
