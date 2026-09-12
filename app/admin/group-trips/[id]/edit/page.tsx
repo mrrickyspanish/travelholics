@@ -18,6 +18,7 @@ export default async function EditGroupTripPage({ params }: { params: Promise<{ 
 
   return (
     <EditGroupTripForm
+      key={tripResult.data.updated_at}
       trip={tripResult.data}
       cabins={cabinsResult.data ?? []}
       itinerary={itineraryResult.data ?? []}
