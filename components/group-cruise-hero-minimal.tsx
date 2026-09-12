@@ -78,7 +78,7 @@ export default function GroupCruiseHeroMinimal() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 14 }}
-            className="fixed inset-x-4 bottom-4 z-40 md:hidden"
+            className="fixed inset-x-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 md:hidden"
           >
             <Link
               href="#start-planning"
