@@ -55,6 +55,31 @@ export type GroupTripCreateInput = {
   deadlines: DeadlineInput[]
 }
 
+export type EditableCabinOfferInput = CabinOfferInput & { id?: string }
+export type EditableItineraryItemInput = ItineraryItemInput & { id?: string }
+export type EditableDeadlineInput = DeadlineInput & { id?: string }
+
+export type GroupTripUpdateInput = {
+  name: string
+  destination: string
+  cruiseLine: string
+  ship: string
+  sailDate: string
+  returnDate?: string
+  departurePort?: string
+  heroImageUrl?: string
+  overview?: string
+  accessCode: string
+  groupLeaderName: string
+  groupLeaderEmail: string
+  groupLeaderPhone?: string
+  priceDisplay: PriceDisplay
+  bookingRequestNote?: string
+  cabins: EditableCabinOfferInput[]
+  itinerary: EditableItineraryItemInput[]
+  deadlines: EditableDeadlineInput[]
+}
+
 export function partyStatusLabel(status: PartyStatus | string) {
   return ({
     invited: 'Invited',
