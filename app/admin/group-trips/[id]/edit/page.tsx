@@ -16,13 +16,22 @@ export default async function EditGroupTripPage({ params }: { params: Promise<{ 
 
   if (!tripResult.data) notFound()
 
+  const cabins = cabinsResult.data ?? []
+  const itinerary = itineraryResult.data ?? []
+  const deadlines = deadlinesResult.data ?? []
+  const editorKey = [
+    cabins.map((row) => row.id).join(','),
+    itinerary.map((row) => row.id).join(','),
+    deadlines.map((row) => row.id).join(','),
+  ].join('|')
+
   return (
     <EditGroupTripForm
-      key={tripResult.data.updated_at}
+      key={editorKey}
       trip={tripResult.data}
-      cabins={cabinsResult.data ?? []}
-      itinerary={itineraryResult.data ?? []}
-      deadlines={deadlinesResult.data ?? []}
+      cabins={cabins}
+      itinerary={itinerary}
+      deadlines={deadlines}
     />
   )
 }
