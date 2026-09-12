@@ -27,7 +27,7 @@ export const LatestVideos = ({ featured, shorts }: LatestVideosProps) => {
         <div className="grid gap-8 lg:grid-cols-[0.4fr_0.6fr] lg:items-end">
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Travelholics TV</p>
-            <h2 className="mt-4 max-w-[9ch] font-serif text-[clamp(3.4rem,6.5vw,7rem)] font-semibold leading-[0.86] tracking-[-0.065em]">
+            <h2 className="mt-4 max-w-[9ch] font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.05em]">
               Watch before you book.
             </h2>
           </div>

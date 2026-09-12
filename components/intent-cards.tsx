@@ -84,7 +84,7 @@ export const IntentCards = () => {
         <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Start with a feeling</p>
-            <h2 className="mt-4 max-w-[10ch] font-serif text-[clamp(3.4rem,6.5vw,6.8rem)] font-semibold leading-[0.86] tracking-[-0.065em] text-royal-deep">Where should we wake up next?</h2>
+            <h2 className="mt-4 max-w-[10ch] font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-royal-deep">Where should we wake up next?</h2>
           </div>
           <div className="lg:justify-self-end">
             <p className="max-w-xl text-lg leading-7 text-stone sm:leading-8">You do not need to know the ship yet. Pick the kind of trip you want to feel, then let Yolanda help narrow down the sailing that actually fits.</p>

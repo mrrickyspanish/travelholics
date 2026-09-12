@@ -142,7 +142,7 @@ export default function TripHubClient({ trip, cabins, itinerary, deadlines, isLe
         <div className="mx-auto flex min-h-[58vh] max-w-7xl items-end">
           <div className="max-w-4xl">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.15em] backdrop-blur-sm"><Ship size={15} className="text-coral" /> Your Travelholics Group Cruise</div>
-            <h1 className="font-serif text-[clamp(3.2rem,8vw,7rem)] font-semibold leading-[0.92] tracking-[-0.055em]">{trip.name}</h1>
+            <h1 className="font-serif text-[clamp(2.8rem,5.5vw,5rem)] font-semibold leading-[0.95] tracking-[-0.055em]">{trip.name}</h1>
             <p className="mt-6 text-lg font-semibold text-white/82 sm:text-xl">{trip.destination} · {trip.cruiseLine} · {trip.ship}</p>
             <div className="mt-7 flex flex-wrap gap-3 text-sm font-semibold text-white/75"><span className="rounded-xl bg-white/10 px-4 py-3 backdrop-blur-sm">{dateLabel(trip.sailDate)}{trip.returnDate ? ` → ${dateLabel(trip.returnDate)}` : ''}</span>{trip.departurePort ? <span className="rounded-xl bg-white/10 px-4 py-3 backdrop-blur-sm">Sailing from {trip.departurePort}</span> : null}</div>
           </div>

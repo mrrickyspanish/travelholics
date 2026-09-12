@@ -230,7 +230,7 @@ export default function GroupCruiseStory() {
         <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-end">
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">Bring a reason. Or don&apos;t.</p>
-            <h2 className="mt-4 max-w-[10ch] font-serif text-[clamp(3.2rem,6vw,6rem)] font-semibold leading-[0.88] tracking-[-0.06em] text-royal-deep">The occasion is just the excuse.</h2>
+            <h2 className="mt-4 max-w-[10ch] font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-royal-deep">The occasion is just the excuse.</h2>
           </div>
           <p className="max-w-2xl text-lg leading-8 text-stone lg:justify-self-end">The point is getting your people out of the group chat and into a shared story. Travelholics helps turn the reason into the experience.</p>
         </div>
@@ -259,7 +259,7 @@ export default function GroupCruiseStory() {
           <div className="flex flex-col justify-between px-5 py-14 sm:px-8 sm:py-18 lg:px-12 lg:py-16 xl:px-16">
             <div>
               <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">Experience with a face</p>
-              <h2 className="mt-5 max-w-[11ch] font-serif text-[clamp(3.2rem,5.8vw,6.4rem)] font-semibold leading-[0.88] tracking-[-0.06em] text-royal-deep">Cruise knowledge is better when it comes with a person.</h2>
+              <h2 className="mt-5 max-w-[11ch] font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-royal-deep">Cruise knowledge is better when it comes with a person.</h2>
               <p className="mt-7 max-w-xl text-lg leading-7 text-stone sm:leading-8">Yolanda brings 20+ years of travel experience, firsthand experience across 6+ cruise lines, and a community of 20K+ travelers who follow along for practical cruise advice. When you plan a group with Travelholics, that experience becomes part of your trip.</p>
             </div>
 
@@ -279,7 +279,7 @@ export default function GroupCruiseStory() {
         <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
           <div className="max-w-4xl">
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">The process</p>
-            <h2 className="mt-4 max-w-[13ch] font-serif text-[clamp(3.4rem,6.5vw,6.8rem)] font-semibold leading-[0.86] tracking-[-0.06em]">From “we should” to “what time are we meeting on deck?”</h2>
+            <h2 className="mt-4 max-w-[13ch] font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.05em]">From “we should” to “what time are we meeting on deck?”</h2>
           </div>
 
           <div className="mt-14 grid gap-12 lg:grid-cols-[0.52fr_0.48fr] lg:gap-16">
@@ -316,7 +316,7 @@ export default function GroupCruiseStory() {
         <div className="relative mx-auto grid max-w-[92rem] gap-12 px-5 sm:px-6 lg:grid-cols-[0.37fr_0.63fr] lg:items-center lg:px-10 xl:px-12">
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">Your group gets its own home base</p>
-            <h2 className="mt-4 max-w-[9ch] font-serif text-[clamp(3.3rem,6vw,6.2rem)] font-semibold leading-[0.88] tracking-[-0.06em] text-royal-deep">The group chat can go back to being fun.</h2>
+            <h2 className="mt-4 max-w-[9ch] font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-royal-deep">The group chat can go back to being fun.</h2>
             <p className="mt-6 max-w-md text-lg leading-7 text-stone sm:leading-8">Once your cruise is locked in, Travelholics creates a personalized Trip Hub for the group. One place for cabin choices, group pricing, important dates, itinerary details, and booking requests.</p>
             <div className="mt-8 space-y-3 border-t border-ink/12 pt-6">
               {['Private group access code', 'Cabin choices with transparent pricing', 'Important deadlines in one place', 'One clear booking request flow'].map((item) => (
@@ -409,7 +409,7 @@ export default function GroupCruiseStory() {
         <div className="mx-auto grid max-w-[92rem] gap-12 px-5 sm:px-6 lg:grid-cols-[0.34fr_0.66fr] lg:items-start lg:px-10 xl:px-12">
           <div className="lg:sticky lg:top-28">
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">Your turn</p>
-            <h2 className="mt-4 max-w-[9ch] font-serif text-[clamp(3.3rem,5.8vw,6rem)] font-semibold leading-[0.88] tracking-[-0.06em] text-royal-deep">Tell us who&apos;s coming. We&apos;ll build from there.</h2>
+            <h2 className="mt-4 max-w-[9ch] font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-royal-deep">Tell us who&apos;s coming. We&apos;ll build from there.</h2>
             <p className="mt-6 max-w-md text-lg leading-7 text-stone">You do not need a perfect plan. Give Yolanda the starting point and she will help turn it into a cruise worth getting everybody together for.</p>
             <p className="mt-8 flex items-start gap-3 border-t border-ink/12 pt-5 text-sm leading-6 text-stone"><CalendarDays size={19} className="mt-0.5 shrink-0 text-emerald-mid" />After you submit, you can optionally schedule time with Yolanda right away.</p>
           </div>

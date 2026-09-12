@@ -142,7 +142,7 @@ export const ContactForm = () => {
         <div className="flex flex-col justify-between px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16">
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Your turn</p>
-            <h2 className="mt-5 max-w-[8ch] font-serif text-[clamp(3.8rem,7vw,7.4rem)] font-semibold leading-[0.83] tracking-[-0.07em]">
+            <h2 className="mt-5 max-w-[8ch] font-serif text-[clamp(2.8rem,4.6vw,4.8rem)] font-semibold leading-[0.95] tracking-[-0.06em]">
               Tell Yolanda where your mind keeps going.
             </h2>
             <p className="mt-7 max-w-md text-lg leading-7 text-white/62 sm:leading-8">

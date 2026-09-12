@@ -57,7 +57,7 @@ export const Hero = () => {
           <p className="mb-4 text-[10px] font-black uppercase tracking-[0.22em] text-white/58 sm:text-[11px]">
             Travelholics
           </p>
-          <h1 className="max-w-[9ch] font-serif text-[clamp(4rem,10.5vw,9.5rem)] font-semibold leading-[0.82] tracking-[-0.07em] text-white">
+          <h1 className="max-w-[9ch] font-serif text-[clamp(3.4rem,7vw,6.75rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-white">
             Your next trip should feel <span className="text-coral">like this.</span>
           </h1>
 

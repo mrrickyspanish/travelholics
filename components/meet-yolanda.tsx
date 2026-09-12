@@ -48,7 +48,7 @@ export const MeetYolanda = () => {
         >
           <div>
             <div className="hidden lg:block">
-              <h2 className="font-serif text-[clamp(3rem,5vw,5.8rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-royal-deep">Meet Yolanda.</h2>
+              <h2 className="font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-royal-deep">Meet Yolanda.</h2>
               <p className="mt-5 max-w-xl text-lg leading-8 text-stone">The person behind the ship knowledge, cabin strategy, and advice that turns cruise curiosity into confidence.</p>
             </div>
 

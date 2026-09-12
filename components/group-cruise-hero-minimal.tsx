@@ -58,7 +58,7 @@ export default function GroupCruiseHeroMinimal() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-[78rem]"
           >
-            <h1 className="max-w-[10ch] font-serif text-[clamp(4.4rem,11vw,10rem)] font-semibold leading-[0.8] tracking-[-0.07em] text-white">
+            <h1 className="max-w-[10ch] font-serif text-[clamp(3.4rem,7vw,6.75rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-white">
               Your people. <span className="text-coral">One unforgettable cruise.</span>
             </h1>
 

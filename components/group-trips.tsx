@@ -57,7 +57,7 @@ export const GroupTrips = () => {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">Group Cruises</p>
-          <h2 className="mt-5 max-w-[9ch] font-serif text-[clamp(3.7rem,7vw,7.6rem)] font-semibold leading-[0.84] tracking-[-0.07em]">
+          <h2 className="mt-5 max-w-[9ch] font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.06em]">
             Bring the people. We&apos;ll build the story.
           </h2>
           <p className="mt-7 max-w-[31rem] text-lg leading-7 text-white/64 sm:leading-8">
@@ -86,7 +86,7 @@ export const GroupTrips = () => {
                     ? "relative col-span-8 min-h-[31rem] overflow-hidden sm:min-h-[38rem]"
                     : index === 1
                       ? "relative col-span-4 mt-16 min-h-[20rem] overflow-hidden sm:min-h-[25rem]"
-                      : "relative col-span-5 -mt-24 ml-auto min-h-[16rem] overflow-hidden sm:min-h-[20rem]"
+                      : "relative col-span-5 col-start-8 -mt-24 min-h-[16rem] overflow-hidden sm:min-h-[20rem]"
                 }`
               }
             >

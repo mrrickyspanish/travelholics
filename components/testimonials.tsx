@@ -31,7 +31,7 @@ export const Testimonials = () => {
         <div className="grid gap-8 lg:grid-cols-[0.38fr_0.62fr] lg:items-end">
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.22em] text-coral">From the crew</p>
-            <h2 className="mt-4 max-w-[9ch] font-serif text-[clamp(3.5rem,6vw,6.6rem)] font-semibold leading-[0.86] tracking-[-0.065em] text-royal-deep">
+            <h2 className="mt-4 max-w-[9ch] font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-royal-deep">
               The trip should feel good before you even leave.
             </h2>
           </div>
