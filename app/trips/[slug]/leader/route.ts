@@ -13,7 +13,6 @@ export async function GET(request: Request, context: { params: Promise<{ slug: s
     .from('group_trips')
     .select('id,slug,status,access_code,leader_access_token')
     .eq('slug', slug)
-    .eq('status', 'published')
     .maybeSingle()
 
   if (!trip || token !== trip.leader_access_token) {
