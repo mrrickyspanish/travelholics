@@ -144,7 +144,21 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
       }
     }
 
-    return NextResponse.json({ trip, accessCodeChanged: tripResult.data.access_code !== input.accessCode.trim() })
+    const [savedCabins, savedItinerary, savedDeadlines] = await Promise.all([
+      supabase.from('group_trip_cabin_offers').select('*').eq('trip_id', id).eq('active', true).order('sort_order', { ascending: true }),
+      supabase.from('group_trip_itinerary_items').select('*').eq('trip_id', id).order('sort_order', { ascending: true }),
+      supabase.from('group_trip_deadlines').select('*').eq('trip_id', id).eq('active', true).order('deadline_date', { ascending: true }),
+    ])
+    const refreshError = savedCabins.error || savedItinerary.error || savedDeadlines.error
+    if (refreshError) return NextResponse.json({ error: `Trip Hub saved, but the editor could not refresh: ${refreshError.message}` }, { status: 500 })
+
+    return NextResponse.json({
+      trip,
+      cabins: savedCabins.data ?? [],
+      itinerary: savedItinerary.data ?? [],
+      deadlines: savedDeadlines.data ?? [],
+      accessCodeChanged: tripResult.data.access_code !== input.accessCode.trim(),
+    })
   }
 
   if (!body.status || !TRIP_STATUSES.includes(body.status)) {
