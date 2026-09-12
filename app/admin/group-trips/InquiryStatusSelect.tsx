@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { INQUIRY_STATUSES, type InquiryStatus } from '@/types/group-trips'
 
 const labels: Record<InquiryStatus, string> = {
@@ -12,6 +13,7 @@ const labels: Record<InquiryStatus, string> = {
 }
 
 export default function InquiryStatusSelect({ inquiryId, initialStatus }: { inquiryId: string; initialStatus: InquiryStatus }) {
+  const router = useRouter()
   const [status, setStatus] = useState(initialStatus)
   const [busy, setBusy] = useState(false)
 
@@ -22,7 +24,11 @@ export default function InquiryStatusSelect({ inquiryId, initialStatus }: { inqu
     const response = await fetch(`/api/admin/group-cruise-inquiries/${inquiryId}`, {
       method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: next }),
     })
-    if (!response.ok) setStatus(previous)
+    if (!response.ok) {
+      setStatus(previous)
+    } else {
+      router.refresh()
+    }
     setBusy(false)
   }
 
