@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import { createSupabaseAdmin } from '@/lib/supabase-admin'
 import GroupTripWizard, { type GroupTripInquiryPrefill } from './GroupTripWizard'
 
@@ -13,9 +14,10 @@ export default async function NewGroupTripPage({ searchParams }: { searchParams:
       .eq('id', inquiry)
       .maybeSingle()
 
-    if (data && !data.converted_trip_id && data.status !== 'closed_lost') {
-      initialInquiry = data as GroupTripInquiryPrefill
-    }
+    if (!data) redirect('/admin/group-trips')
+    if (data.converted_trip_id) redirect(`/admin/group-trips/${data.converted_trip_id}`)
+    if (data.status === 'closed_lost') redirect(`/admin/group-trips?inquiry=${data.id}`)
+    initialInquiry = data as GroupTripInquiryPrefill
   }
 
   return <GroupTripWizard initialInquiry={initialInquiry} />
