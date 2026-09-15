@@ -13,7 +13,7 @@ export default function GroupCruiseInquiryForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [form, setForm] = useState({
-    cruiseStage: 'help', groupType: '', estimatedGroupSize: '', destination: '', preferredDates: '', budgetRange: '', cruiseLine: '', ship: '', sailingDate: '', notes: '',
+    cruiseStage: 'help', groupType: '', estimatedGroupSize: '', destination: '', preferredDates: '', cruiseLine: '', ship: '', sailingDate: '', notes: '',
     leaderName: '', email: '', phone: '', preferredContact: 'phone', smsConsent: false,
   })
 
@@ -90,7 +90,6 @@ export default function GroupCruiseInquiryForm() {
               <label className={labelClass}>About how many travelers?<input type="number" min="2" className={inputClass} value={form.estimatedGroupSize} onChange={(e) => set('estimatedGroupSize', e.target.value)} placeholder="20" /></label>
               <label className={labelClass}>Destination or region<input className={inputClass} value={form.destination} onChange={(e) => set('destination', e.target.value)} placeholder="Caribbean, Alaska, Mediterranean..." /></label>
               <label className={labelClass}>Preferred dates or timeframe<input className={inputClass} value={form.preferredDates} onChange={(e) => set('preferredDates', e.target.value)} placeholder="Summer 2027, June 10–17..." /></label>
-              <label className={labelClass}>Rough per-person budget<select className={inputClass} value={form.budgetRange} onChange={(e) => set('budgetRange', e.target.value)}><option value="">Not sure yet</option><option value="Under $1,000">Under $1,000</option><option value="$1,000–$1,500">$1,000–$1,500</option><option value="$1,500–$2,500">$1,500–$2,500</option><option value="$2,500+">$2,500+</option></select></label>
             </div>
 
             {form.cruiseStage === 'specific' ? (
@@ -104,7 +103,7 @@ export default function GroupCruiseInquiryForm() {
               </div>
             ) : null}
 
-            <label className={labelClass}>Anything else Yolanda should know?<textarea className={`${inputClass} min-h-28 resize-y`} value={form.notes} onChange={(e) => set('notes', e.target.value)} placeholder="Tell us the vibe, must-haves, or anything that would make this trip special." /></label>
+            <label className={labelClass}>What kind of experience should this feel like?<textarea className={`${inputClass} min-h-28 resize-y`} value={form.notes} onChange={(e) => set('notes', e.target.value)} placeholder="Relaxed, adventurous, celebratory, family-friendly, elevated, or a mix. Tell Yolanda what matters most to your group." /></label>
 
             <button type="button" onClick={() => setStep(2)} className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 text-sm font-black text-white transition hover:translate-y-[-1px] hover:bg-coral-deep sm:w-auto">Keep planning <ArrowRight size={17} /></button>
           </div>
