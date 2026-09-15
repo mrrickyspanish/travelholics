@@ -65,7 +65,7 @@ export async function sendGroupInquiryReceipt(input: { name: string; email: stri
     html: shell(`
       <h1 style="font-size:28px;line-height:1.15;margin:0 0 14px">We got it, ${escapeHtml(input.name)}.</h1>
       <p style="font-size:16px;line-height:1.7">Thanks for trusting Travelholics with your group cruise. Yolanda will review what you shared and connect with you to start shaping the experience.</p>
-      <p style="font-size:16px;line-height:1.7">Have your estimated group size, preferred dates, and any cruise ideas handy. If you already know what you want, even better.</p>
+      <p style="font-size:16px;line-height:1.7">Have your estimated group size, preferred dates, and experience priorities handy. If you already know what you want, even better.</p>
       ${schedulingCta}
       <a href="${SITE_URL}/thank-you/group-cruise" style="display:inline-block;margin-top:10px;background:#F26A75;color:white;text-decoration:none;font-weight:700;padding:13px 18px;border-radius:10px">See what happens next</a>
     `),
@@ -88,7 +88,7 @@ export async function sendGroupInquiryInternal(input: Record<string, unknown> & 
       <p><strong>Trip direction:</strong> ${escapeHtml(input.cruiseStage === 'specific' ? 'Already has a cruise in mind' : 'Needs help choosing')}</p>
       <p><strong>Destination:</strong> ${escapeHtml(input.destination || 'Open')}</p>
       <p><strong>Preferred dates:</strong> ${escapeHtml(input.preferredDates || 'Open')}</p>
-      <p><strong>Notes:</strong> ${escapeHtml(input.notes || 'None')}</p>
+      <p><strong>Experience vision:</strong> ${escapeHtml(input.notes || 'Not provided')}</p>
       <a href="${SITE_URL}/admin/group-trips?inquiry=${encodeURIComponent(input.id)}" style="display:inline-block;margin-top:12px;background:#10755A;color:white;text-decoration:none;font-weight:700;padding:12px 16px;border-radius:10px">Open in Travelholics Admin</a>
     `),
   })
