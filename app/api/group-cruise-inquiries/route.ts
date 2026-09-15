@@ -36,7 +36,6 @@ export async function POST(request: Request) {
       cruise_stage: cruiseStage,
       destination: String(body.destination ?? '').trim() || null,
       preferred_dates: String(body.preferredDates ?? '').trim() || null,
-      budget_range: String(body.budgetRange ?? '').trim() || null,
       cruise_line: cruiseStage === 'specific' ? String(body.cruiseLine ?? '').trim() || null : null,
       ship: cruiseStage === 'specific' ? String(body.ship ?? '').trim() || null : null,
       sailing_date: cruiseStage === 'specific' && body.sailingDate ? String(body.sailingDate) : null,
