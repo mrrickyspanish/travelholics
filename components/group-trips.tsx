@@ -69,7 +69,7 @@ export const GroupTrips = () => {
 
           <Link
             href="/group-cruises"
-            className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-coral px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-coral-deep"
+            className="mt-8 inline-flex min-h-11 w-fit items-center justify-center rounded-none bg-coral px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 gap-2"
           >
             Explore Group Cruises <ArrowUpRight size={17} />
           </Link>

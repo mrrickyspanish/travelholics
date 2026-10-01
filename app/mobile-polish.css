@@ -17,11 +17,21 @@
     padding-bottom: 1.5rem !important;
   }
 
+  /* The h1 is a two-line designed stack ("From 'we should go'" / "to 'we're
+     booked.'"), set with explicit block spans. 10vw is the measured ceiling
+     that keeps BOTH lines unbroken from 360px to 430px -- above it the longer
+     line wraps and the quoted phrases split mid-sentence. No ch cap here: the
+     spans control the breaks, and a cap only forces a wrap. Re-measure if the
+     copy changes. */
   .home-mobile-optimized #hero h1 {
-    max-width: 13ch !important;
-    font-size: clamp(3rem, 13vw, 4.2rem) !important;
-    line-height: 0.84 !important;
-    letter-spacing: -0.062em !important;
+    font-size: clamp(2.1rem, 10vw, 3rem) !important;
+    line-height: 0.92 !important;
+    letter-spacing: -0.055em !important;
+  }
+
+  .home-mobile-optimized #hero h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.05 !important;
   }
 
   /* The positioning line under the headline. On phones it REPLACES the desktop
@@ -112,10 +122,17 @@
     padding: 1.25rem !important;
   }
 
-  .home-mobile-optimized #about > div > div:first-child > div:last-child p:last-child {
-    margin-top: 0.5rem !important;
+  /* The name is the big one. This rule used to put 1.65rem on p:last-child --
+     the "Certified Cruise Specialist" caption -- which rendered the subtitle
+     LARGER than "Yolanda Harris" above it. The size belongs to the name; the
+     caption only needs the gap. */
+  .home-mobile-optimized #about > div > div:first-child > div:last-child p:first-child {
     font-size: 1.65rem !important;
     line-height: 1 !important;
+  }
+
+  .home-mobile-optimized #about > div > div:first-child > div:last-child p:last-child {
+    margin-top: 0.5rem !important;
   }
 
   .home-mobile-optimized #about > div > div:nth-child(2) {

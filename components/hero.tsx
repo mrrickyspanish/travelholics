@@ -64,8 +64,9 @@ export const Hero = () => {
           <p className="mb-4 text-sm font-black uppercase tracking-[0.2em] text-white/62">
             Certified Cruise Specialist
           </p>
-          <h1 className="max-w-[11ch] font-serif text-[clamp(3.4rem,7vw,6.75rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-white">
-            Your next cruise should feel <span className="text-coral">like this.</span>
+          <h1 className="font-serif text-[clamp(3rem,6.2vw,5.75rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white">
+            <span className="block">From &ldquo;we should go&rdquo;</span>
+            <span className="block">to <span className="text-coral">&ldquo;we&apos;re booked.&rdquo;</span></span>
           </h1>
 
           <p className="mt-5 max-w-[42ch] text-lg leading-7 text-white/82 sm:leading-8">
@@ -73,15 +74,12 @@ export const Hero = () => {
           </p>
 
           <div className="mt-6 flex flex-col gap-5 border-t border-white/20 pt-5 sm:max-w-[38rem] sm:flex-row sm:items-end sm:justify-between">
-            {/* Desktop-only vibe line. On phones the qualifier above carries the
-                message instead, so the hero still fits 82svh without shrinking
-                the headline. See app/mobile-polish.css. */}
-            <p className="hidden max-w-[18ch] font-serif text-[clamp(1.55rem,3.2vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-white/88 md:block">
-              For people who are always between trips.
-            </p>
+            <h2 className="max-w-[20ch] font-serif text-[clamp(1.5rem,3.2vw,2.4rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-white/88">
+              Your next trip should feel like this.
+            </h2>
             <Link
               href="/#contact"
-              className="inline-flex min-h-13 w-fit shrink-0 items-center justify-center rounded-full bg-coral px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+              className="inline-flex min-h-11 w-fit items-center justify-center rounded-none bg-coral px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 shrink-0"
             >
               Plan my cruise
             </Link>

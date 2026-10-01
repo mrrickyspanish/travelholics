@@ -82,7 +82,7 @@ export const HowItWorks = () => {
           </p>
           <Link
             href="/#contact"
-            className="inline-flex min-h-12 w-fit shrink-0 items-center justify-center gap-2 rounded-full bg-coral px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+            className="inline-flex min-h-11 w-fit items-center justify-center rounded-none bg-coral px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 shrink-0 gap-2"
           >
             Plan my cruise <ArrowUpRight size={17} />
           </Link>

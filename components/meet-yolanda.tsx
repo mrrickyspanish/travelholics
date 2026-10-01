@@ -34,7 +34,7 @@ export const MeetYolanda = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-[#082d27]/58 via-transparent to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-7">
               <p className="font-serif text-2xl font-semibold tracking-[-0.04em]">Yolanda Harris</p>
-              <p className="mt-1 text-sm font-semibold text-white/72">Certified Cruise Specialist · Travelholics</p>
+              <p className="mt-1 text-sm font-semibold text-white/72">Certified Cruise Specialist</p>
             </div>
           </div>
         </motion.div>
@@ -70,8 +70,8 @@ export const MeetYolanda = () => {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/#contact" className="inline-flex min-h-12 items-center justify-center rounded-full bg-coral px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-coral-deep">Plan with Yolanda</Link>
-              <Link href="/live" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-ink/15 px-6 py-3 text-sm font-bold text-ink transition hover:border-ink/30 hover:bg-white/60">See her cruise advice <ArrowUpRight size={16} /></Link>
+              <Link href="/#contact" className="inline-flex min-h-11 w-fit items-center justify-center rounded-none bg-coral px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80">Plan with Yolanda</Link>
+              <Link href="/live" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-none border border-ink/20 px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-ink transition hover:border-ink/40 hover:bg-white/60">See her cruise advice <ArrowUpRight size={16} /></Link>
             </div>
           </div>
         </motion.div>

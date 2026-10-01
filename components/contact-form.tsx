@@ -204,7 +204,7 @@ export const ContactForm = () => {
                   <button
                     disabled={isSubmitting}
                     type="submit"
-                    className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-coral-deep disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+                    className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-none bg-coral px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:-translate-y-0.5 hover:bg-coral-deep disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                   >
                     {isSubmitting ? "Sending..." : "Start planning my trip"} <ArrowRight size={17} />
                   </button>

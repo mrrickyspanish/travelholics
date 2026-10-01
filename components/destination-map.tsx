@@ -366,7 +366,7 @@ export function DestinationMap() {
               </p>
               <a
                 href="/#contact"
-                className="mt-8 inline-flex min-h-[46px] items-center justify-center rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
+                className="mt-8 inline-flex min-h-[46px] items-center justify-center rounded-none bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
               >
                 Plan my cruise
               </a>
@@ -581,7 +581,7 @@ export function DestinationMap() {
                         <p className="mt-1 text-[0.86rem] font-medium leading-snug text-stone">{activeDestination.sub}</p>
                         <a
                           href={DESTINATION_CTA_HREF}
-                          className="mt-4 inline-flex items-center rounded-xl bg-coral px-4 py-2 text-[0.82rem] font-semibold text-white transition-colors hover:bg-coral-deep"
+                          className="mt-4 inline-flex items-center rounded-none bg-coral px-4 py-2 text-[0.82rem] font-semibold text-white transition-colors hover:bg-coral-deep"
                         >
                           Plan my cruise
                         </a>
@@ -675,7 +675,7 @@ export function DestinationMap() {
             <div className="mt-6 text-center">
               <a
                 href="/#contact"
-                className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-coral px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-coral-deep sm:w-auto"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-none bg-coral px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-coral-deep sm:w-auto"
               >
                 Plan my cruise
               </a>

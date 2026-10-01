@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
-import { BrandThesis } from "@/components/brand-thesis";
 import { HowItWorks } from "@/components/how-it-works";
 import { IntentCards } from "@/components/intent-cards";
 import { CruiseLineStrip } from "@/components/cruise-line-strip";
@@ -43,7 +42,7 @@ export default async function Home() {
       <Header />
       <MobileCTA />
       <main className="home-mobile-optimized">
-        {/* Order is deliberate: say what this is (Hero, BrandThesis, HowItWorks),
+        {/* Order is deliberate: say what this is (Hero, HowItWorks),
             then who says it (MeetYolanda, StatsStrip, Testimonials), then the
             wider offer (GroupTrips, DestinationMap, LatestVideos, ShopStrip),
             then the ask. Nothing sells merch ahead of social proof.
@@ -52,7 +51,6 @@ export default async function Home() {
             position. If you add or move a section, keep its id — do not
             reintroduce nth-child/adjacent-sibling selectors there. */}
         <Hero />
-        <BrandThesis />
         <HowItWorks />
         <IntentCards />
         <CruiseLineStrip />

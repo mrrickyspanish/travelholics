@@ -44,7 +44,7 @@ export const MobileCTA = () => {
         >
           <button
             onClick={scrollToContact}
-            className="mx-auto flex min-h-13 w-full max-w-md items-center justify-between rounded-full border border-white/18 bg-[#082d27]/96 px-5 py-3.5 text-left text-white shadow-[0_18px_45px_rgba(7,31,27,0.28)] backdrop-blur-xl"
+            className="mx-auto flex min-h-13 w-full max-w-md items-center justify-between rounded-none border border-white/18 bg-[#082d27]/96 px-5 py-3.5 text-left text-white shadow-[0_18px_45px_rgba(7,31,27,0.28)] backdrop-blur-xl"
           >
             <span>
               <span className="block text-[10px] font-black uppercase tracking-[0.18em] text-coral">Ready when you are</span>
