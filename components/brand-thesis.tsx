@@ -6,7 +6,7 @@ export const BrandThesis = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="border-b border-ink/10 bg-[#fbf7ef] text-ink">
+    <section id="thesis" className="border-b border-ink/10 bg-[#fbf7ef] text-ink">
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

@@ -7,7 +7,7 @@ const stats = [
 
 export const StatsStrip = () => {
   return (
-    <section className="border-y border-ink/10 bg-[#fbf7ef]">
+    <section id="proof" className="border-y border-ink/10 bg-[#fbf7ef]">
       <div className="mx-auto max-w-[96rem] px-5 sm:px-8 lg:px-12 xl:px-16">
         <div className="grid grid-cols-2 lg:grid-cols-4">
           {stats.map(({ value, label, note }, index) => (

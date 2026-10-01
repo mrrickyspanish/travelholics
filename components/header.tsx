@@ -164,7 +164,7 @@ export const Header = () => {
               </a>
             ) : (
               <a href="/#contact" className="hidden sm:inline-flex items-center rounded-xl bg-coral px-5 py-2 text-sm font-semibold text-white hover:bg-coral-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2">
-                Join the Crew
+                Plan my cruise
               </a>
             )}
 
@@ -219,7 +219,7 @@ export const Header = () => {
 
               <div className="mt-6 border-t border-white/10 pt-5 sm:mt-7">
                 <a href="/#contact" onClick={() => setMenuOpen(false)} className="flex min-h-12 w-full items-center justify-center rounded-full bg-coral px-6 py-3 text-sm font-black text-white transition-colors hover:bg-coral-deep sm:w-fit">
-                  Plan my next cruise
+                  Plan my cruise
                 </a>
                 <div className="mt-4 flex items-center justify-between gap-4 text-sm">
                   <div className="flex gap-5">

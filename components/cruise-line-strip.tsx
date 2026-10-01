@@ -16,7 +16,7 @@ export const CruiseLineStrip = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="overflow-hidden border-y border-ink/10 bg-[#f1ebdf] text-ink">
+    <section id="cruise-lines" className="overflow-hidden border-y border-ink/10 bg-[#f1ebdf] text-ink">
       <div className="mx-auto max-w-[96rem] px-5 py-9 sm:px-8 sm:py-11 lg:px-12 xl:px-16">
         <div className="grid gap-6 lg:grid-cols-[0.32fr_0.68fr] lg:items-center lg:gap-10">
           <p className="max-w-[19ch] font-serif text-2xl font-semibold leading-[1.02] tracking-[-0.04em] text-royal-deep sm:text-3xl">

@@ -69,7 +69,7 @@ export const Testimonials = () => {
                   </div>
                   <div className="mt-8 border-t border-ink/12 pt-5">
                     <p className="text-sm font-black text-ink">{testimonial.name}</p>
-                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-stone/70">{testimonial.trip}</p>
+                    <p className="mt-1 text-sm font-semibold uppercase tracking-[0.12em] text-stone/70">{testimonial.trip}</p>
                   </div>
                 </div>
               </div>

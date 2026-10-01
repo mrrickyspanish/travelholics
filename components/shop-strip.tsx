@@ -43,7 +43,7 @@ export const ShopStrip = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="border-b border-ink/10 bg-[#fbf7ef] py-20 sm:py-28 lg:py-32">
+    <section id="shop-strip" className="border-b border-ink/10 bg-[#fbf7ef] py-20 sm:py-28 lg:py-32">
       <motion.div
         className="mx-auto max-w-[96rem] px-5 sm:px-8 lg:px-12 xl:px-16"
         initial={reduceMotion ? false : { opacity: 0, y: 24 }}

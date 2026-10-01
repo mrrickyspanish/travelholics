@@ -48,7 +48,7 @@ export const MobileCTA = () => {
           >
             <span>
               <span className="block text-[10px] font-black uppercase tracking-[0.18em] text-coral">Ready when you are</span>
-              <span className="mt-0.5 block text-sm font-bold">Plan my next cruise</span>
+              <span className="mt-0.5 block text-sm font-bold">Plan my cruise</span>
             </span>
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-coral text-white">
               <ArrowUpRight size={17} />

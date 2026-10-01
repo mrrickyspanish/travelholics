@@ -5,35 +5,102 @@
     text-wrap: balance;
   }
 
-  /* Homepage hero: cinematic, but no longer a desktop billboard on a phone. */
-  .home-mobile-optimized > section:first-child {
+  /* Homepage hero: cinematic, but no longer a desktop billboard on a phone.
+     Targeted by id so reordering app/page.tsx cannot silently repoint these. */
+  .home-mobile-optimized #hero {
     min-height: 82svh !important;
   }
 
-  .home-mobile-optimized > section:first-child > div:last-child {
+  .home-mobile-optimized #hero > div:last-child {
     min-height: 82svh !important;
-    padding-top: 6rem !important;
+    padding-top: 5.5rem !important;
     padding-bottom: 1.5rem !important;
   }
 
-  .home-mobile-optimized > section:first-child h1 {
-    font-size: clamp(3.7rem, 17vw, 5.15rem) !important;
-    line-height: 0.79 !important;
-    letter-spacing: -0.065em !important;
+  .home-mobile-optimized #hero h1 {
+    max-width: 13ch !important;
+    font-size: clamp(3rem, 13vw, 4.2rem) !important;
+    line-height: 0.84 !important;
+    letter-spacing: -0.062em !important;
   }
 
-  .home-mobile-optimized > section:first-child h1 + div {
-    margin-top: 1.25rem !important;
-    padding-top: 1rem !important;
+  /* The positioning line under the headline. On phones it REPLACES the desktop
+     serif vibe line (hidden there via `hidden md:block` in the component), so
+     it is the hero's only full sentence — hold it at the 18px body floor and
+     do not shrink it to buy vertical space. */
+  .home-mobile-optimized #hero h1 + p {
+    margin-top: 0.9rem !important;
+    line-height: 1.45 !important;
   }
 
-  .home-mobile-optimized > section:first-child h1 + div p:last-child {
-    font-size: 1.75rem !important;
-    line-height: 0.96 !important;
+  .home-mobile-optimized #hero h1 + p + div {
+    margin-top: 1.1rem !important;
+    padding-top: 0.9rem !important;
   }
 
-  .home-mobile-optimized > section:first-child > div:last-child > div:last-child {
-    display: none !important;
+  /* The credential strip is the only element in the mobile hero that names the
+     category at all. It used to be display:none here. Do not hide it again. */
+  .home-mobile-optimized #hero .hero-trust {
+    margin-top: 1.1rem !important;
+    padding-top: 0.85rem !important;
+  }
+
+  /* How it works: the page's plain-English explanation of the service. Tighten
+     the rhythm on phones, but the step copy stays at the 18px body floor — this
+     is the section a first-time visitor reads to understand what Yolanda does. */
+  .home-mobile-optimized #how-it-works {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .home-mobile-optimized #how-it-works > div > div:first-child {
+    gap: 1.25rem !important;
+  }
+
+  .home-mobile-optimized #how-it-works h2 {
+    margin-top: 0.75rem !important;
+    max-width: 13ch !important;
+    font-size: 2.65rem !important;
+    line-height: 0.93 !important;
+    letter-spacing: -0.055em !important;
+  }
+
+  .home-mobile-optimized #how-it-works > div > div:first-child p {
+    line-height: 1.55 !important;
+  }
+
+  .home-mobile-optimized #how-it-works ol {
+    margin-top: 2rem !important;
+  }
+
+  .home-mobile-optimized #how-it-works ol li {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  .home-mobile-optimized #how-it-works ol li p:first-child {
+    font-size: 2rem !important;
+  }
+
+  .home-mobile-optimized #how-it-works h3 {
+    margin-top: 0.85rem !important;
+    font-size: 1.5rem !important;
+    line-height: 1.12 !important;
+  }
+
+  .home-mobile-optimized #how-it-works h3 + p {
+    margin-top: 0.75rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .home-mobile-optimized #how-it-works > div > div:last-child {
+    margin-top: 2rem !important;
+    padding-top: 1.75rem !important;
+  }
+
+  .home-mobile-optimized #how-it-works > div > div:last-child p {
+    font-size: 1.65rem !important;
+    line-height: 1.1 !important;
   }
 
   /* Meet Yolanda: portrait becomes a feature image, not an entire screen. */
@@ -91,57 +158,6 @@
     font-size: 2.2rem !important;
   }
 
-  /* Destination discovery: 3 cards become a compact 2-row mobile mosaic. */
-  .home-mobile-optimized #about + section {
-    padding-top: 3.5rem !important;
-    padding-bottom: 3.5rem !important;
-  }
-
-  .home-mobile-optimized #about + section > div > div:first-child {
-    gap: 1.25rem !important;
-  }
-
-  .home-mobile-optimized #about + section h2 {
-    margin-top: 0.75rem !important;
-    max-width: 12ch !important;
-    font-size: 2.65rem !important;
-    line-height: 0.93 !important;
-    letter-spacing: -0.055em !important;
-  }
-
-  .home-mobile-optimized #about + section > div > div:first-child p {
-    line-height: 1.55 !important;
-  }
-
-  .home-mobile-optimized #about + section > div > div:last-child {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    grid-auto-rows: 11.5rem !important;
-    margin-top: 2rem !important;
-  }
-
-  .home-mobile-optimized #about + section article:first-child {
-    grid-column: 1 / -1 !important;
-  }
-
-  .home-mobile-optimized #about + section article h3 {
-    font-size: 1.7rem !important;
-  }
-
-  .home-mobile-optimized #about + section article p {
-    margin-top: 0.35rem !important;
-    font-size: 0.75rem !important;
-    line-height: 1.1rem !important;
-  }
-
-  .home-mobile-optimized #about + section article a > div:last-child {
-    padding: 1rem !important;
-  }
-
-  .home-mobile-optimized #about + section article a > div:last-child span {
-    width: 2rem !important;
-    height: 2rem !important;
-  }
-
   /* Group cruise homepage teaser: keep the editorial collage without a 500px lead image. */
   .home-mobile-optimized #group-trips {
     padding-top: 3.5rem !important;
@@ -165,32 +181,18 @@
     line-height: 1.55 !important;
   }
 
-  .home-mobile-optimized #group-trips > div > div:last-child figure:nth-child(1) {
-    min-height: 19rem !important;
-  }
-
-  .home-mobile-optimized #group-trips > div > div:last-child figure:nth-child(2) {
-    min-height: 13rem !important;
-    margin-top: 2rem !important;
-  }
-
-  .home-mobile-optimized #group-trips > div > div:last-child figure:nth-child(3) {
-    min-height: 10rem !important;
-    margin-top: -5rem !important;
-  }
-
   /* Map and proof stay useful, but lose desktop-sized breathing room. */
   .home-mobile-optimized #map {
     padding-top: 2.75rem !important;
     padding-bottom: 2.75rem !important;
   }
 
-  .home-mobile-optimized #map + section > div > div > div {
+  .home-mobile-optimized #proof > div > div > div {
     padding-top: 1.5rem !important;
     padding-bottom: 1.5rem !important;
   }
 
-  .home-mobile-optimized #map + section p:first-child {
+  .home-mobile-optimized #proof p:first-child {
     font-size: 2.25rem !important;
   }
 
@@ -220,33 +222,33 @@
   }
 
   /* Shop is already horizontal on phones. Make it feel like a shelf, not full-page cards. */
-  .home-mobile-optimized > section:nth-last-of-type(3) {
+  .home-mobile-optimized #shop-strip {
     padding-top: 3.5rem !important;
     padding-bottom: 3.5rem !important;
   }
 
-  .home-mobile-optimized > section:nth-last-of-type(3) h2 {
+  .home-mobile-optimized #shop-strip h2 {
     margin-top: 0.75rem !important;
     font-size: 2.65rem !important;
     line-height: 0.93 !important;
   }
 
-  .home-mobile-optimized > section:nth-last-of-type(3) > div > div:first-child {
+  .home-mobile-optimized #shop-strip > div > div:first-child {
     gap: 1.25rem !important;
   }
 
-  .home-mobile-optimized > section:nth-last-of-type(3) > div > div:last-child {
+  .home-mobile-optimized #shop-strip > div > div:last-child {
     margin-top: 2rem !important;
   }
 
-  .home-mobile-optimized > section:nth-last-of-type(3) > div > div:last-child a {
+  .home-mobile-optimized #shop-strip > div > div:last-child a {
     width: 58vw !important;
     max-width: 15rem !important;
     padding-top: 0.75rem !important;
     padding-bottom: 0.75rem !important;
   }
 
-  .home-mobile-optimized > section:nth-last-of-type(3) h3 {
+  .home-mobile-optimized #shop-strip h3 {
     font-size: 1.35rem !important;
   }
 

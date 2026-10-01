@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { BrandThesis } from "@/components/brand-thesis";
+import { HowItWorks } from "@/components/how-it-works";
 import { IntentCards } from "@/components/intent-cards";
 import { CruiseLineStrip } from "@/components/cruise-line-strip";
 import { MeetYolanda } from "@/components/meet-yolanda";
@@ -42,17 +43,26 @@ export default async function Home() {
       <Header />
       <MobileCTA />
       <main className="home-mobile-optimized">
+        {/* Order is deliberate: say what this is (Hero, BrandThesis, HowItWorks),
+            then who says it (MeetYolanda, StatsStrip, Testimonials), then the
+            wider offer (GroupTrips, DestinationMap, LatestVideos, ShopStrip),
+            then the ask. Nothing sells merch ahead of social proof.
+
+            NOTE: app/mobile-polish.css targets these sections by id, not by
+            position. If you add or move a section, keep its id — do not
+            reintroduce nth-child/adjacent-sibling selectors there. */}
         <Hero />
         <BrandThesis />
+        <HowItWorks />
         <IntentCards />
         <CruiseLineStrip />
         <MeetYolanda />
+        <StatsStrip />
+        <Testimonials />
         <GroupTrips />
         <DestinationMap />
-        <StatsStrip />
         <LatestVideos featured={featuredVideo} shorts={shorts} />
         <ShopStrip />
-        <Testimonials />
         <ContactForm />
       </main>
       <Footer />

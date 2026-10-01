@@ -368,7 +368,7 @@ export function DestinationMap() {
                 href="/#contact"
                 className="mt-8 inline-flex min-h-[46px] items-center justify-center rounded-xl bg-coral px-6 py-3 text-[1rem] font-semibold text-white shadow-md transition-colors hover:bg-coral-deep"
               >
-                Plan My Cruise
+                Plan my cruise
               </a>
             </motion.div>
 
@@ -459,7 +459,7 @@ export function DestinationMap() {
                               x={regionLabel.dx ?? 0}
                               y={regionLabel.dy ?? 0}
                               textAnchor={regionLabel.textAnchor}
-                              fontSize="10"
+                              fontSize="13"
                               fontWeight="700"
                               letterSpacing="0.18em"
                               fill="#1A2E2A"
@@ -583,7 +583,7 @@ export function DestinationMap() {
                           href={DESTINATION_CTA_HREF}
                           className="mt-4 inline-flex items-center rounded-xl bg-coral px-4 py-2 text-[0.82rem] font-semibold text-white transition-colors hover:bg-coral-deep"
                         >
-                          Plan My Cruise
+                          Plan my cruise
                         </a>
                       </div>
                     </motion.div>
@@ -677,7 +677,7 @@ export function DestinationMap() {
                 href="/#contact"
                 className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-coral px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-coral-deep sm:w-auto"
               >
-                Plan My Cruise
+                Plan my cruise
               </a>
             </div>
           </motion.div>

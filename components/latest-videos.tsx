@@ -90,7 +90,7 @@ export const LatestVideos = ({ featured, shorts }: LatestVideosProps) => {
                         sizes="(max-width: 1024px) 31vw, 14vw"
                       />
                     </div>
-                    <p className="mt-2 line-clamp-2 text-xs font-semibold leading-5 text-white/72 sm:text-sm">{short.title}</p>
+                    <p className="mt-2 line-clamp-2 text-sm font-semibold leading-5 text-white/72">{short.title}</p>
                   </div>
                 ))}
               </div>

@@ -1,9 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { MapPin } from "lucide-react";
+
+// The credential strip. This is the page's first and most load-bearing piece of
+// plain-English positioning — before this existed, the word "cruise" did not
+// appear on the homepage until a button, and "Certified Cruise Specialist"
+// appeared only as a photo caption five screens down. Do not demote it to
+// desktop-only.
+const credentials = ["20+ years planning", "Every major cruise line"];
 
 export const Hero = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -17,7 +24,7 @@ export const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[96svh] overflow-hidden bg-[#071f1b] text-white">
+    <section id="hero" className="relative min-h-[96svh] overflow-hidden bg-[#071f1b] text-white">
       <video
         ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover object-center"
@@ -54,31 +61,50 @@ export const Hero = () => {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-[72rem]"
         >
-          <p className="mb-4 text-[10px] font-black uppercase tracking-[0.22em] text-white/58 sm:text-[11px]">
-            Travelholics
+          <p className="mb-4 text-sm font-black uppercase tracking-[0.2em] text-white/62">
+            Certified Cruise Specialist
           </p>
-          <h1 className="max-w-[9ch] font-serif text-[clamp(3.4rem,7vw,6.75rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-white">
-            Your next trip should feel <span className="text-coral">like this.</span>
+          <h1 className="max-w-[11ch] font-serif text-[clamp(3.4rem,7vw,6.75rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-white">
+            Your next cruise should feel <span className="text-coral">like this.</span>
           </h1>
 
+          <p className="mt-5 max-w-[42ch] text-lg leading-7 text-white/82 sm:leading-8">
+            Cruise planning with Yolanda Harris. Same price as booking direct — zero planning fees.
+          </p>
+
           <div className="mt-6 flex flex-col gap-5 border-t border-white/20 pt-5 sm:max-w-[38rem] sm:flex-row sm:items-end sm:justify-between">
-            <p className="max-w-[18ch] font-serif text-[clamp(1.55rem,3.2vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-white/88">
+            {/* Desktop-only vibe line. On phones the qualifier above carries the
+                message instead, so the hero still fits 82svh without shrinking
+                the headline. See app/mobile-polish.css. */}
+            <p className="hidden max-w-[18ch] font-serif text-[clamp(1.55rem,3.2vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-white/88 md:block">
               For people who are always between trips.
             </p>
             <Link
               href="/#contact"
               className="inline-flex min-h-13 w-fit shrink-0 items-center justify-center rounded-full bg-coral px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
             >
-              Plan my next cruise
+              Plan my cruise
             </Link>
           </div>
         </motion.div>
 
-        <div className="mt-8 flex items-center justify-between border-t border-white/12 pt-4 text-[10px] font-semibold text-white/42 sm:text-[11px]">
-          <span className="italic tracking-wide">travelholic /ˈtra-vəl-hä-lik/</span>
-          <span className="inline-flex items-center gap-2">
-            <MapPin className="h-3.5 w-3.5" /> Charlotte Amalie · St. Thomas
-          </span>
+        <div className="hero-trust mt-8 border-t border-white/12 pt-4">
+          <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm font-semibold text-white/68 md:gap-x-6">
+            {credentials.map((credential) => (
+              <Fragment key={credential}>
+                <li>{credential}</li>
+                <li className="hidden h-3 w-px bg-white/20 md:block" aria-hidden="true" />
+              </Fragment>
+            ))}
+            <li className="font-black text-coral">$0 planning fees</li>
+          </ul>
+
+          <div className="mt-3 hidden items-center justify-between text-sm font-semibold text-white/42 md:flex">
+            <span className="italic tracking-wide">travelholic /ˈtra-vəl-hä-lik/</span>
+            <span className="inline-flex items-center gap-2">
+              <MapPin className="h-3.5 w-3.5" /> Charlotte Amalie · St. Thomas
+            </span>
+          </div>
         </div>
       </div>
     </section>

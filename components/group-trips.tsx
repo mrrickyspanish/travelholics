@@ -37,10 +37,13 @@ export const GroupTrips = () => {
           #group-trips .group-trip-gallery .group-trip-moment:nth-child(3) {
             grid-column: 2 !important;
           }
+          /* 0.875rem, not 0.62rem. The globals.css guardrail only rewrites
+             arbitrary Tailwind classes (text-[10px]-text-[13px]); raw CSS like
+             this sails past it, so the 13px floor has to be honoured here. */
           #group-trips .group-trip-gallery figcaption {
             padding: 1rem !important;
-            font-size: 0.62rem !important;
-            line-height: 1.05rem !important;
+            font-size: 0.875rem !important;
+            line-height: 1.25rem !important;
           }
         }
       `}</style>

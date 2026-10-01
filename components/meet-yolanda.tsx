@@ -34,7 +34,7 @@ export const MeetYolanda = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-[#082d27]/58 via-transparent to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-7">
               <p className="font-serif text-2xl font-semibold tracking-[-0.04em]">Yolanda Harris</p>
-              <p className="mt-1 text-xs font-semibold text-white/72">Certified Cruise Specialist · Travelholics</p>
+              <p className="mt-1 text-sm font-semibold text-white/72">Certified Cruise Specialist · Travelholics</p>
             </div>
           </div>
         </motion.div>
@@ -64,7 +64,7 @@ export const MeetYolanda = () => {
               {proof.map(([value, label]) => (
                 <div key={label} className="border-r border-ink/12 px-3 first:pl-0 last:border-r-0 last:pr-0 sm:px-6">
                   <p className="font-serif text-3xl font-semibold tracking-[-0.045em] text-royal-deep sm:text-4xl">{value}</p>
-                  <p className="mt-2 text-[11px] font-black uppercase tracking-[0.13em] text-stone/72 sm:text-xs">{label}</p>
+                  <p className="mt-2 text-[11px] font-black uppercase tracking-[0.13em] text-stone/72 sm:text-sm">{label}</p>
                 </div>
               ))}
             </div>

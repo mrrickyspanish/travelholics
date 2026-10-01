@@ -173,7 +173,7 @@ export const ContactForm = () => {
                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-coral">Cruise planning inquiry</p>
                     <p className="mt-2 font-serif text-3xl font-semibold tracking-[-0.04em] text-royal-deep sm:text-4xl">Give us the starting point.</p>
                   </div>
-                  <p className="hidden text-xs font-semibold text-stone/65 sm:block">* Required</p>
+                  <p className="hidden text-sm font-semibold text-stone/65 sm:block">* Required</p>
                 </div>
 
                 <form onSubmit={handleSubmit} noValidate className="mt-8 space-y-8">
