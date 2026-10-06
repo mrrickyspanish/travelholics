@@ -3,17 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Heart, Ship, Tag, Users } from "lucide-react";
-
-// The four proof points, as icon tiles. This strip is the only part of the
-// mobile hero that names the category and kills the cost objection, so it is
-// never hidden at narrow widths -- see app/mobile-polish.css.
-const proofPoints = [
-  { Icon: Tag, line1: "Same price", line2: "as booking direct" },
-  { Icon: Users, line1: "Expert guidance", line2: "every step of the way" },
-  { Icon: Ship, line1: "All major", line2: "cruise lines" },
-  { Icon: Heart, line1: "Trips for", line2: "every style" },
-];
+import { ArrowRight } from "lucide-react";
 
 // Hand-drawn underline under "booked.". preserveAspectRatio="none" lets it
 // stretch with the word at every clamp() size instead of needing a per-breakpoint
@@ -144,22 +134,6 @@ export const Hero = () => {
           </div>
         </motion.div>
 
-        <ul className="hero-trust mt-9 grid grid-cols-1 gap-x-5 gap-y-3 border-t border-white/14 pt-6 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-5 lg:grid-cols-4">
-          {proofPoints.map(({ Icon, line1, line2 }, index) => (
-            <li
-              key={line1}
-              className={`flex items-center gap-3 lg:gap-4 ${index > 0 ? "lg:border-l lg:border-white/14 lg:pl-8" : ""}`}
-            >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-teal/55 text-teal">
-                <Icon size={19} strokeWidth={2} />
-              </span>
-              <span className="min-w-0 text-sm font-semibold leading-tight">
-                <span className="text-white lg:block">{line1}</span>{" "}
-                <span className="text-white/62 lg:block">{line2}</span>
-              </span>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );

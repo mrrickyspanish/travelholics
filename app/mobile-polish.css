@@ -44,20 +44,6 @@
     margin-top: 1.25rem !important;
   }
 
-  /* Four proof tiles stay a 2x2 grid on phones. This strip is the only part of
-     the mobile hero that names the category, so it is never hidden here --
-     an earlier revision had display:none on it. */
-  .home-mobile-optimized #hero .hero-trust {
-    margin-top: 1.5rem !important;
-    padding-top: 1.1rem !important;
-    gap: 1rem 1rem !important;
-  }
-
-  .home-mobile-optimized #hero .hero-trust li > span:first-child {
-    width: 2.25rem !important;
-    height: 2.25rem !important;
-  }
-
   /* How it works: the page's plain-English explanation of the service. Tighten
      the rhythm on phones, but the step copy stays at the 18px body floor — this
      is the section a first-time visitor reads to understand what Yolanda does. */

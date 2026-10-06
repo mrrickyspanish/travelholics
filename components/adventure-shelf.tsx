@@ -40,9 +40,11 @@ const tiles = [
 ];
 
 const ArrowDoodle = () => (
-  <svg className="mt-2 h-6 w-16 text-teal-deep" viewBox="0 0 70 26" fill="none" aria-hidden="true">
-    <path d="M2 6c14 12 36 16 60 13" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
-    <path d="M52 13.5c4.5 2 7.5 3.5 10 5.5M55 23c3-2.5 5-4.5 7-9.5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+  <svg className="mt-3 h-7 w-24 text-royal-deep" viewBox="0 0 100 34" fill="none" aria-hidden="true">
+    <g stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 8C24 30 56 34 88 22" />
+      <path d="M88 22 76 21M88 22 80 31" />
+    </g>
   </svg>
 );
 
@@ -81,9 +83,9 @@ export const AdventureShelf = () => {
     <section id="adventure-shelf" className="relative z-10 -mt-8 sm:-mt-12 lg:-mt-14">
       <div className="mx-auto max-w-[96rem] px-5 sm:px-8 lg:px-12 xl:px-16">
         <div className="relative flex flex-col overflow-hidden rounded-xl bg-white shadow-[0_22px_60px_rgba(5,28,24,0.22)] lg:flex-row lg:items-stretch">
-          <div className="shrink-0 bg-teal/15 px-6 py-5 lg:flex lg:w-[16rem] lg:flex-col lg:justify-center lg:px-8 lg:py-7">
-            <p className="font-script text-[1.75rem] leading-none text-royal-deep">Find your</p>
-            <p className="mt-1 font-black uppercase tracking-[0.1em] text-royal-deep">Next adventure</p>
+          <div className="m-2 shrink-0 rounded-lg bg-mint px-6 py-5 lg:m-3 lg:flex lg:w-[15rem] lg:flex-col lg:justify-center lg:px-7 lg:py-7">
+            <p className="font-script text-[2rem] leading-none text-royal-deep">Find your</p>
+            <p className="mt-1.5 text-lg font-black uppercase tracking-[0.04em] text-royal-deep">Next adventure</p>
             <ArrowDoodle />
           </div>
 
@@ -96,7 +98,7 @@ export const AdventureShelf = () => {
               <Link
                 key={tile.label}
                 href={tile.href}
-                className="group w-[13.5rem] shrink-0 snap-start overflow-hidden rounded-lg border border-ink/12 transition hover:border-ink/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral sm:w-[14.5rem]"
+                className="group w-[12.5rem] shrink-0 snap-start overflow-hidden rounded-lg bg-white shadow-[0_3px_14px_rgba(5,28,24,0.14)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_26px_rgba(5,28,24,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral sm:w-[13.25rem]"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
@@ -108,8 +110,8 @@ export const AdventureShelf = () => {
                   />
                 </div>
                 <div className="flex items-center justify-between gap-3 px-4 py-3">
-                  <span className="truncate text-sm font-black uppercase tracking-[0.08em] text-ink">{tile.label}</span>
-                  <ChevronRight size={17} className="shrink-0 text-stone transition group-hover:translate-x-0.5 group-hover:text-coral" />
+                  <span className="truncate text-sm font-black uppercase tracking-[0.07em] text-royal-deep">{tile.label}</span>
+                  <ChevronRight size={18} strokeWidth={2.75} className="shrink-0 text-ink/55 transition group-hover:translate-x-0.5 group-hover:text-coral" />
                 </div>
               </Link>
             ))}

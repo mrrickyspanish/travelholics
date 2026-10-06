@@ -34,6 +34,7 @@ export default {
         "royal-deep":   "#1F2D86", // dark royal blue headlines
         teal:            "#26DCDC", // DECORATIVE accent only — underlines, icon rings
         "teal-deep":     "#0E8F8D", // teal that passes contrast on light backgrounds
+        mint:            "#85CACF", // SURFACE only — the Find your next adventure panel
         "hero-sky":      "#FCE8DC", // hero peach gradient top
       },
       fontFamily: {

@@ -32,6 +32,9 @@
      background. */
   --color-teal:          #26DCDC;
   --color-teal-deep:     #0E8F8D;
+  /* Mint surface, sampled from the hero mockup's "Find your next adventure"
+     panel. A surface colour, not a text colour -- royal-deep sits on it. */
+  --color-mint:          #85CACF;
 }
 
 body {
