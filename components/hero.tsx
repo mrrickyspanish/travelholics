@@ -50,15 +50,18 @@ export const Hero = () => {
 
   return (
     <section id="hero" className="relative min-h-[96svh] overflow-hidden bg-[#071f1b] text-white">
-      {/* object-position is right-weighted so the phone crop keeps Yolanda and
-          the ships in frame instead of centring on empty water. */}
+      {/* Phone framing, re-measured against the full-resolution file: the crop
+          keeps Yolanda's face clear of the headline and body copy while holding
+          the sunset behind them. Shifting further left loses her face entirely,
+          which is the point of the photo. Retune by rendering candidates if the
+          photo is ever replaced -- this is specific to THIS file's composition. */}
       <Image
         src="/images/hero-golden-hour.webp"
         alt=""
         fill
         priority
         sizes="100vw"
-        className="object-cover object-[55%_85%] md:object-center"
+        className="object-cover object-[52%_100%] md:object-center"
       />
 
       {/* Two scrims, because the copy sits differently at each size.
