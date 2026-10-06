@@ -88,7 +88,7 @@ export const Hero = () => {
       <div className="absolute inset-x-0 bottom-0 h-[46%] bg-gradient-to-t from-[#04120f]/88 via-[#04120f]/26 to-transparent" aria-hidden="true" />
       <div className="absolute inset-x-0 top-0 h-[22%] bg-gradient-to-b from-[#04120f]/58 to-transparent" aria-hidden="true" />
 
-      <div className="relative mx-auto flex min-h-[96svh] max-w-[96rem] flex-col px-5 pb-8 pt-28 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12 xl:px-16">
+      <div className="relative mx-auto flex min-h-[96svh] max-w-[96rem] flex-col px-5 pb-12 pt-28 sm:px-8 sm:pb-16 lg:px-12 lg:pb-[4.5rem] xl:px-16">
         <div className="flex-1" />
 
         <motion.div

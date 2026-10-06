@@ -11,10 +11,13 @@
     min-height: 82svh !important;
   }
 
+  /* Bottom padding clears the adventure shelf, which pulls up over the hero
+     with a negative margin. Change one and you must change the other --
+     gap = this padding minus that margin. */
   .home-mobile-optimized #hero > div:last-child {
     min-height: 82svh !important;
     padding-top: 5.5rem !important;
-    padding-bottom: 1.5rem !important;
+    padding-bottom: 3rem !important;
   }
 
   /* The h1 is a two-line designed stack ("From 'we should go'" / "to 'we're

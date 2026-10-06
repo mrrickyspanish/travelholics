@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
+import { AdventureShelf } from "@/components/adventure-shelf";
 import { HowItWorks } from "@/components/how-it-works";
 import { IntentCards } from "@/components/intent-cards";
 import { CruiseLineStrip } from "@/components/cruise-line-strip";
@@ -51,6 +52,7 @@ export default async function Home() {
             position. If you add or move a section, keep its id — do not
             reintroduce nth-child/adjacent-sibling selectors there. */}
         <Hero />
+        <AdventureShelf />
         <HowItWorks />
         <IntentCards />
         <CruiseLineStrip />
