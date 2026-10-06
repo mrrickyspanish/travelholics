@@ -75,7 +75,7 @@ export const ShopStrip = () => {
                 key={product.name}
                 href={product.href}
                 aria-label={`Shop ${product.name}`}
-                className={`group block w-[72vw] max-w-[20rem] shrink-0 py-5 lg:w-auto lg:max-w-none lg:px-5 lg:py-7 ${index < products.length - 1 ? "lg:border-r lg:border-ink/10" : ""}`}
+                className={`group block w-[72vw] max-w-[20rem] shrink-0 py-5 lg:w-auto lg:max-w-none lg:px-4 lg:py-7 ${index < products.length - 1 ? "lg:border-r lg:border-ink/10" : ""}`}
               >
                 <div className="relative aspect-square bg-[#f4efe4]">
                   <Image
@@ -85,15 +85,19 @@ export const ShopStrip = () => {
                     className="object-contain p-7 transition-transform duration-500 group-hover:scale-[1.035]"
                     sizes="(max-width: 1024px) 72vw, 25vw"
                   />
-                </div>
-                <div className="mt-5 flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="font-serif text-2xl font-semibold leading-[1] tracking-[-0.04em] text-royal-deep">{product.name}</h3>
-                    <p className="mt-2 text-sm font-black text-coral">{product.price}</p>
-                  </div>
-                  <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink/15 text-ink transition group-hover:rotate-12 group-hover:border-ink group-hover:bg-ink group-hover:text-white">
+                  {/* The arrow lives on the image, not beside the title. Sharing
+                      the title row, it plus its gap took 52px out of a column
+                      only 140px wide at lg -- which is what stranded "Magnet"
+                      and "Lanyard" alone on a second line. The product art is
+                      object-contain with p-7, so the corner it sits in is empty
+                      backdrop at every size. */}
+                  <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 bg-cream/85 text-ink backdrop-blur-sm transition group-hover:rotate-12 group-hover:border-ink group-hover:bg-ink group-hover:text-white">
                     <ArrowUpRight size={16} />
                   </span>
+                </div>
+                <div className="mt-5">
+                  <h3 className="font-serif text-2xl font-semibold leading-[1] tracking-[-0.04em] text-royal-deep lg:text-xl xl:text-2xl">{product.name}</h3>
+                  <p className="mt-2 text-sm font-black text-coral">{product.price}</p>
                 </div>
               </Link>
             ))}
