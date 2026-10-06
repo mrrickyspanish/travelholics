@@ -32,6 +32,8 @@ export default {
         gold:            "#f59e0b", // small accents
         navy:            "#1a3a52", // footer ONLY
         "royal-deep":   "#1F2D86", // dark royal blue headlines
+        teal:            "#26DCDC", // DECORATIVE accent only — underlines, icon rings
+        "teal-deep":     "#0E8F8D", // teal that passes contrast on light backgrounds
         "hero-sky":      "#FCE8DC", // hero peach gradient top
       },
       fontFamily: {

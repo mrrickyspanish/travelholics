@@ -26,6 +26,12 @@
   --color-gold:          #f59e0b;
   --color-navy:          #1a3a52;
   --color-hero-sky:      #FCE8DC;
+  /* Turquoise accent, sampled from the hero mockup (average of the hand-drawn
+     underline stroke). DECORATIVE ONLY -- underlines, icon rings, rules. It
+     fails contrast as text on cream/sand, so it never carries copy on a light
+     background. */
+  --color-teal:          #26DCDC;
+  --color-teal-deep:     #0E8F8D;
 }
 
 body {

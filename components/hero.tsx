@@ -1,56 +1,92 @@
 "use client";
 
-import { Fragment, useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { MapPin } from "lucide-react";
+import { ArrowRight, Heart, Ship, Tag, Users } from "lucide-react";
 
-// The credential strip. This is the page's first and most load-bearing piece of
-// plain-English positioning — before this existed, the word "cruise" did not
-// appear on the homepage until a button, and "Certified Cruise Specialist"
-// appeared only as a photo caption five screens down. Do not demote it to
-// desktop-only.
-const credentials = ["20+ years planning", "Every major cruise line"];
+// The four proof points, as icon tiles. This strip is the only part of the
+// mobile hero that names the category and kills the cost objection, so it is
+// never hidden at narrow widths -- see app/mobile-polish.css.
+const proofPoints = [
+  { Icon: Tag, line1: "Same price", line2: "as booking direct" },
+  { Icon: Users, line1: "Expert guidance", line2: "every step of the way" },
+  { Icon: Ship, line1: "All major", line2: "cruise lines" },
+  { Icon: Heart, line1: "Trips for", line2: "every style" },
+];
+
+// Hand-drawn underline under "booked.". preserveAspectRatio="none" lets it
+// stretch with the word at every clamp() size instead of needing a per-breakpoint
+// asset. Drawn rather than imported so it recolors with the token.
+const Underline = () => (
+  <svg
+    className="pointer-events-none absolute -bottom-[0.18em] left-0 h-[0.22em] w-full overflow-visible text-teal"
+    viewBox="0 0 300 20"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path d="M3 13.5C52 6 108 3.5 164 5c38 1 92 4.5 133 9" fill="none" stroke="currentColor" strokeWidth="5.5" strokeLinecap="round" />
+    <path d="M14 19c46-5.5 104-7.5 157-6.5 30 .6 76 3 118 6.5" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" opacity="0.72" />
+  </svg>
+);
+
+// The three accent ticks that sit off the end of the headline.
+const Sparkle = () => (
+  <svg
+    className="pointer-events-none absolute -right-[0.34em] top-[0.1em] h-[0.42em] w-[0.42em] overflow-visible text-teal"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <g fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
+      <path d="M12 2.5v6" />
+      <path d="M21.5 7.5 16.5 11" />
+      <path d="M22 17.5 16.5 15.5" />
+    </g>
+  </svg>
+);
 
 export const Hero = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = true;
-    video.play().catch(() => {});
-  }, []);
 
   return (
     <section id="hero" className="relative min-h-[96svh] overflow-hidden bg-[#071f1b] text-white">
-      <video
-        ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover object-center"
-        aria-hidden="true"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster="/images/Charlotte_Amalie_StThomas.jpg"
-      >
-        <source
-          src="https://bnjcpfocmgtmutfbanhs.supabase.co/storage/v1/object/public/Images/travel_updated_hero_vid_2.mp4"
-          type="video/mp4"
-        />
-      </video>
+      {/* object-position is right-weighted so the phone crop keeps Yolanda and
+          the ships in frame instead of centring on empty water. */}
+      <Image
+        src="/images/hero-golden-hour.webp"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-[55%_85%] md:object-center"
+      />
 
+      {/* Two scrims, because the copy sits differently at each size.
+          DESKTOP: text is a left column, so the scrim runs left-to-right and
+          clears by ~62% to keep the sunset and the ships readable.
+          MOBILE: text runs full width, so a horizontal scrim leaves the right
+          end of every line uncovered -- measured 1.29:1 against white on the
+          straw hat. This one runs top-to-bottom instead. Both were set by
+          measuring the worst-case background pixel behind each text block;
+          re-measure if the photo or the crop changes. */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 hidden md:block"
         aria-hidden="true"
         style={{
           background:
-            "linear-gradient(90deg, rgba(5,28,24,.72) 0%, rgba(5,28,24,.28) 46%, rgba(5,28,24,.05) 72%, rgba(5,28,24,.14) 100%)",
+            "linear-gradient(90deg, rgba(4,22,20,.88) 0%, rgba(4,22,20,.72) 30%, rgba(4,22,20,.34) 52%, rgba(4,22,20,.06) 72%, rgba(4,22,20,.10) 100%)",
         }}
       />
-      <div className="absolute inset-x-0 bottom-0 h-[52%] bg-gradient-to-t from-[#061d19]/92 via-[#061d19]/20 to-transparent" aria-hidden="true" />
+      <div
+        className="absolute inset-0 md:hidden"
+        aria-hidden="true"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(4,18,15,.56) 0%, rgba(4,18,15,.62) 40%, rgba(4,18,15,.52) 62%, rgba(4,18,15,.34) 100%)",
+        }}
+      />
+      <div className="absolute inset-x-0 bottom-0 h-[46%] bg-gradient-to-t from-[#04120f]/88 via-[#04120f]/26 to-transparent" aria-hidden="true" />
+      <div className="absolute inset-x-0 top-0 h-[22%] bg-gradient-to-b from-[#04120f]/58 to-transparent" aria-hidden="true" />
 
       <div className="relative mx-auto flex min-h-[96svh] max-w-[96rem] flex-col px-5 pb-8 pt-28 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12 xl:px-16">
         <div className="flex-1" />
@@ -59,51 +95,68 @@ export const Hero = () => {
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-[72rem]"
+          className="max-w-[62rem]"
         >
-          <p className="mb-4 text-sm font-black uppercase tracking-[0.2em] text-white/62">
+          <p className="mb-4 text-sm font-black uppercase tracking-[0.2em] text-white/70">
             Certified Cruise Specialist
           </p>
+
           <h1 className="font-serif text-[clamp(3rem,6.2vw,5.75rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white">
             <span className="block">From &ldquo;we should go&rdquo;</span>
-            <span className="block">to <span className="text-coral">&ldquo;we&apos;re booked.&rdquo;</span></span>
+            <span className="block">
+              to{" "}
+              <span className="relative inline-block text-coral">
+                &ldquo;we&rsquo;re{" "}
+                <span className="relative inline-block">
+                  booked.
+                  <Underline />
+                </span>
+                &rdquo;
+                <Sparkle />
+              </span>
+            </span>
           </h1>
 
-          <p className="mt-5 max-w-[42ch] text-lg leading-7 text-white/82 sm:leading-8">
-            Cruise planning with Yolanda Harris. Same price as booking direct — zero planning fees.
+          <p className="mt-6 max-w-[46ch] text-lg leading-7 text-white/85 sm:leading-8">
+            Cruise planning with Yolanda Harris. Same price as booking direct — zero planning fees. More clarity, less stress, and a trip that actually feels like you.
           </p>
 
-          <div className="mt-6 flex flex-col gap-5 border-t border-white/20 pt-5 sm:max-w-[38rem] sm:flex-row sm:items-end sm:justify-between">
-            <h2 className="max-w-[20ch] font-serif text-[clamp(1.5rem,3.2vw,2.4rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-white/88">
-              Your next trip should feel like this.
-            </h2>
-            <Link
-              href="/#contact"
-              className="inline-flex min-h-11 w-fit items-center justify-center rounded-none bg-coral px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 shrink-0"
-            >
-              Plan my cruise
-            </Link>
+          <div className="mt-7 flex flex-col gap-5 sm:max-w-[40rem] sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <Link
+                href="/#contact"
+                className="group inline-flex min-h-11 w-fit shrink-0 items-center gap-4 rounded-none bg-coral py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+              >
+                Plan my cruise
+                <span className="flex h-8 w-8 items-center justify-center bg-white text-coral transition group-hover:translate-x-0.5">
+                  <ArrowRight size={17} strokeWidth={2.75} />
+                </span>
+              </Link>
+
+              <p className="relative mt-4 w-fit text-sm font-black uppercase tracking-[0.045em] text-white/75 sm:tracking-[0.12em]">
+                Same price. More support. Zero fees.
+                <span className="absolute -bottom-1.5 left-0 block h-[3px] w-full bg-teal/85" aria-hidden="true" />
+              </p>
+            </div>
           </div>
         </motion.div>
 
-        <div className="hero-trust mt-8 border-t border-white/12 pt-4">
-          <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm font-semibold text-white/68 md:gap-x-6">
-            {credentials.map((credential) => (
-              <Fragment key={credential}>
-                <li>{credential}</li>
-                <li className="hidden h-3 w-px bg-white/20 md:block" aria-hidden="true" />
-              </Fragment>
-            ))}
-            <li className="font-black text-coral">$0 planning fees</li>
-          </ul>
-
-          <div className="mt-3 hidden items-center justify-between text-sm font-semibold text-white/42 md:flex">
-            <span className="italic tracking-wide">travelholic /ˈtra-vəl-hä-lik/</span>
-            <span className="inline-flex items-center gap-2">
-              <MapPin className="h-3.5 w-3.5" /> Charlotte Amalie · St. Thomas
-            </span>
-          </div>
-        </div>
+        <ul className="hero-trust mt-9 grid grid-cols-1 gap-x-5 gap-y-3 border-t border-white/14 pt-6 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-5 lg:grid-cols-4">
+          {proofPoints.map(({ Icon, line1, line2 }, index) => (
+            <li
+              key={line1}
+              className={`flex items-center gap-3 lg:gap-4 ${index > 0 ? "lg:border-l lg:border-white/14 lg:pl-8" : ""}`}
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-teal/55 text-teal">
+                <Icon size={19} strokeWidth={2} />
+              </span>
+              <span className="min-w-0 text-sm font-semibold leading-tight">
+                <span className="text-white lg:block">{line1}</span>{" "}
+                <span className="text-white/62 lg:block">{line2}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
