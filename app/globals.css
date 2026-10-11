@@ -25,6 +25,16 @@
   --color-stone:         #6B7B74;
   --color-gold:          #f59e0b;
   --color-navy:          #1a3a52;
+  /* royal-deep existed only in tailwind.config.ts. Tailwind v4 builds its
+     utilities from THIS block, so `text-royal-deep` generated no utility at
+     all and its 43 usages silently inherited `ink` — probably since the v4
+     migration. Anything added to tailwind.config.ts must be mirrored here or
+     it does nothing.
+     Deepened from the config's original #1F2D86: at that value the big serif
+     headlines read as a saturated royal blue competing with the coral. This
+     keeps the blue where it helps (the mint shelf panel, eyebrows) without
+     making the headlines shout. */
+  --color-royal-deep:    #16205E;
   --color-hero-sky:      #FCE8DC;
   /* Turquoise accent, sampled from the hero mockup (average of the hand-drawn
      underline stroke). DECORATIVE ONLY -- underlines, icon rings, rules. It

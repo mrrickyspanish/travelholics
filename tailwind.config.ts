@@ -31,7 +31,7 @@ export default {
         stone:           "#6B7B74", // muted text
         gold:            "#f59e0b", // small accents
         navy:            "#1a3a52", // footer ONLY
-        "royal-deep":   "#1F2D86", // dark royal blue headlines
+        "royal-deep":   "#16205E", // dark navy headlines — mirrors app/globals.css @theme
         teal:            "#26DCDC", // DECORATIVE accent only — underlines, icon rings
         "teal-deep":     "#0E8F8D", // teal that passes contrast on light backgrounds
         mint:            "#85CACF", // SURFACE only — the Find your next adventure panel
