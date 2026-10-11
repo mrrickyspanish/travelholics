@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { normalizeUsAddress, validateUsAddress } from "@/lib/address-validation";
+import { verifyUsAddress } from "@/lib/usps-address";
 
 // ------------------------------------------------------------------
 // Duck Hunt address capture
@@ -32,6 +33,8 @@ type DuckHuntAddressRequest = {
   shippingCity?: string;
   shippingState?: string;
   shippingZip?: string;
+  /** Set by the client after the entrant chooses to use an unconfirmed address. */
+  addressConfirmed?: boolean;
 };
 
 function normalizeEmail(email: string) {
@@ -104,6 +107,38 @@ export async function POST(request: Request) {
     zip: shippingZip,
   });
 
+  // USPS check. Advisory by design: an address it cannot confirm is offered
+  // back to the entrant rather than refused, because new construction, rural
+  // routes and APO/FPO addresses can be real and still fail verification.
+  // Every failure of the check itself resolves to "unchecked" and lets the
+  // claim through -- see lib/usps-address.ts.
+  const verification = await verifyUsAddress(address);
+
+  if (verification.status === "unconfirmed" && !body.addressConfirmed) {
+    return NextResponse.json(
+      {
+        error: verification.reason,
+        needsConfirmation: true,
+        address,
+      },
+      { status: 409 },
+    );
+  }
+
+  // Only a confirmed-deliverable address is replaced with the USPS form. An
+  // unconfirmed one is stored exactly as typed -- normalizing an address USPS
+  // could not match risks posting the magnet somewhere nobody lives.
+  const addressToStore = verification.status === "verified" && verification.standardized
+    ? normalizeUsAddress(verification.standardized)
+    : address;
+
+  const verificationStatus =
+    verification.status === "verified"
+      ? "verified"
+      : verification.status === "unconfirmed"
+        ? "unconfirmed_accepted"
+        : "unchecked";
+
   // Config is checked after input validation so a malformed request gets a 400
   // that names the bad field, rather than a 500 that blames the database --
   // and so the validation above is exercisable without one.
@@ -141,11 +176,13 @@ export async function POST(request: Request) {
   );
 
   const addressPayload = {
-    shipping_address1: address.address1,
-    shipping_address2: address.address2,
-    shipping_city: address.city,
-    shipping_state: address.state,
-    shipping_zip: address.zip,
+    shipping_address1: addressToStore.address1,
+    shipping_address2: addressToStore.address2 || null,
+    shipping_city: addressToStore.city,
+    shipping_state: addressToStore.state,
+    shipping_zip: addressToStore.zip,
+    address_verification: verificationStatus,
+    address_verified_at: new Date().toISOString(),
     status: "claimed",
   };
 

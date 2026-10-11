@@ -53,6 +53,10 @@ function DuckHuntAddressForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  // Set when USPS cannot confirm the address. The entrant is shown what USPS
+  // said and can submit the same address again, which the server accepts and
+  // flags for a human to look at before postage.
+  const [unconfirmedReason, setUnconfirmedReason] = useState("");
   const [website, setWebsite] = useState("");
 
   // The campaign email can carry the registrant's details in the link
@@ -78,12 +82,16 @@ function DuckHuntAddressForm() {
     value: DuckHuntAddressFormData[K],
   ) => {
     setFormData((current) => ({ ...current, [key]: value }));
+    setUnconfirmedReason("");
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorMessage("");
     setIsSubmitting(true);
+    // Anything they change counts as a new attempt, so the override only ever
+    // applies to the exact address it was offered for.
+    const confirming = unconfirmedReason !== "";
 
     if (website.trim()) {
       setIsSuccess(true);
@@ -95,17 +103,24 @@ function DuckHuntAddressForm() {
       const response = await fetch("/api/duck-hunt/address", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, addressConfirmed: confirming }),
       });
 
       const result = (await response.json().catch(() => null)) as
-        | { error?: string; matched?: boolean }
+        | { error?: string; matched?: boolean; needsConfirmation?: boolean }
         | null;
+
+      if (response.status === 409 && result?.needsConfirmation) {
+        setUnconfirmedReason(result.error || "USPS could not confirm this address.");
+        setIsSubmitting(false);
+        return;
+      }
 
       if (!response.ok) {
         throw new Error(result?.error || "Unable to save your mailing address.");
       }
 
+      setUnconfirmedReason("");
       setIsSuccess(true);
 
       // The address is safely stored at this point. The internal
@@ -337,6 +352,21 @@ function DuckHuntAddressForm() {
                   <p className="text-sm font-medium text-red-600 text-center">{errorMessage}</p>
                 )}
 
+                {unconfirmedReason && (
+                  <div
+                    role="status"
+                    className="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-left"
+                  >
+                    <p className="text-sm font-bold text-amber-900">
+                      Double-check this address
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-amber-800">
+                      {unconfirmedReason} Fix anything that looks wrong above, or send it
+                      again as-is and we&apos;ll take a look before we post your magnet.
+                    </p>
+                  </div>
+                )}
+
                 <div className="rounded-2xl border border-[#d9e5dd] bg-[#f4f8f6] p-5 flex flex-col md:flex-row md:items-center gap-4 justify-between">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-full bg-[#059669]/15 text-[#059669] flex items-center justify-center shrink-0">
@@ -355,6 +385,10 @@ function DuckHuntAddressForm() {
                   >
                     {isSubmitting ? (
                       "Saving..."
+                    ) : unconfirmedReason ? (
+                      <>
+                        Use This Address <Send size={17} />
+                      </>
                     ) : (
                       <>
                         Send My Magnet <Send size={17} />

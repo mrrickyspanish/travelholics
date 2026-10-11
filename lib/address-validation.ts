@@ -111,11 +111,11 @@ export function validateUsAddress(input: UsAddressInput): AddressIssue[] {
 
 // Normalized values to store, so the database does not collect the same
 // address in five different casings and spacings.
-export function normalizeUsAddress(input: UsAddressInput) {
+export function normalizeUsAddress(input: UsAddressInput): Required<UsAddressInput> {
   const collapse = (value: string) => value.trim().replace(/\s+/g, " ");
   return {
     address1: collapse(input.address1),
-    address2: collapse(input.address2 || "") || null,
+    address2: collapse(input.address2 || ""),
     city: collapse(input.city),
     state: input.state.trim().toUpperCase(),
     zip: input.zip.trim(),

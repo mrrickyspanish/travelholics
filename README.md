@@ -69,6 +69,12 @@ NEXT_PUBLIC_CONTACT_EMAIL=your_email@example.com
 # Server Email Notifications
 RESEND_API_KEY=your_resend_api_key
 RESEND_FROM_EMAIL=Travelholics <hello@yourdomain.com>
+
+# USPS address verification (optional — Duck Hunt shipping addresses)
+# Free credentials from https://developer.usps.com. Leave unset and
+# addresses are still format-checked, just not verified against USPS.
+USPS_CLIENT_ID=your_usps_consumer_key
+USPS_CLIENT_SECRET=your_usps_consumer_secret
 ```
 
 ### 3. Set Up Supabase
@@ -132,6 +138,22 @@ For production on Vercel, confirm these environment variables are set:
 | `RESEND_API_KEY` | Email notifications for forms and newsletter signups |
 | `RESEND_FROM_EMAIL` | Branded sender address once the sending domain is verified in Resend |
 | `NEWSLETTER_AUTOREPLY_ENABLED` | Optional. Set to `false` to disable subscriber confirmation emails |
+| `USPS_CLIENT_ID` | Optional. Verifying Duck Hunt shipping addresses against the USPS Addresses API |
+| `USPS_CLIENT_SECRET` | Optional. Pairs with `USPS_CLIENT_ID` |
+| `USPS_API_BASE` | Optional. Defaults to `https://apis.usps.com`; set to `https://apis-tem.usps.com` for USPS's test environment |
+
+### Duck Hunt address verification
+
+Shipping addresses are always format-checked on the server (`lib/address-validation.ts`,
+covered by `npm run check:address`). With `USPS_CLIENT_ID` / `USPS_CLIENT_SECRET` set they
+are additionally checked against the USPS Addresses API.
+
+The USPS check is advisory and fails open. If it is unconfigured, USPS is unreachable, or
+the request times out, the claim still goes through and the row is recorded as `unchecked` —
+nobody loses a prize because a third-party API had a bad afternoon. An address USPS will not
+confirm is offered back to the entrant once ("use this address anyway") and recorded as
+`unconfirmed_accepted`, so `duck_hunt_leads.address_verification` is the queue of rows worth
+a human glance before postage.
 
 Newsletter signup notifications are sent to `news@yotravelholic.com` with a BCC to `ricky@creativeeyestudios.com`. If `RESEND_API_KEY` is missing, newsletter records can still be saved, but the notification email is skipped.
 Subscribers also receive a confirmation response email by default. To disable that behavior while using external campaigns, set `NEWSLETTER_AUTOREPLY_ENABLED=false`.

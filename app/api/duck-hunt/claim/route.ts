@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { normalizeUsAddress, validateUsAddress } from "@/lib/address-validation";
+import { verifyUsAddress } from "@/lib/usps-address";
 
 const DUCK_HUNT_CONSENT_TEXT =
   "Yes, sign me up for the Travelholics Cruise Life list so I can receive cruise deals, shop drops, travel tips, and updates connected to my Duck Hunt reward. I understand I can unsubscribe anytime.";
@@ -25,6 +26,8 @@ type DuckHuntClaimRequest = {
   shippingCity?: string;
   shippingState?: string;
   shippingZip?: string;
+  /** Set by the client after the entrant chooses to use an unconfirmed address. */
+  addressConfirmed?: boolean;
   newsletterOptIn?: boolean;
   consentText?: string;
 };
@@ -108,6 +111,29 @@ export async function POST(request: Request) {
     zip: shippingZip,
   });
 
+  // Advisory USPS check, same contract as the address route: unconfirmed is
+  // offered back rather than refused, and any failure of the check itself
+  // lets the claim through. See lib/usps-address.ts.
+  const verification = await verifyUsAddress(address);
+
+  if (verification.status === "unconfirmed" && !body.addressConfirmed) {
+    return NextResponse.json(
+      { error: verification.reason, needsConfirmation: true, address },
+      { status: 409 },
+    );
+  }
+
+  const addressToStore = verification.status === "verified" && verification.standardized
+    ? normalizeUsAddress(verification.standardized)
+    : address;
+
+  const verificationStatus =
+    verification.status === "verified"
+      ? "verified"
+      : verification.status === "unconfirmed"
+        ? "unconfirmed_accepted"
+        : "unchecked";
+
   if (!body.newsletterOptIn) {
     return NextResponse.json(
       { error: "Newsletter opt-in is required to claim the Duck Hunt reward." },
@@ -131,11 +157,13 @@ export async function POST(request: Request) {
     source,
     cruise,
     scan_id: scanId,
-    shipping_address1: address.address1,
-    shipping_address2: address.address2,
-    shipping_city: address.city,
-    shipping_state: address.state,
-    shipping_zip: address.zip,
+    shipping_address1: addressToStore.address1,
+    shipping_address2: addressToStore.address2 || null,
+    shipping_city: addressToStore.city,
+    shipping_state: addressToStore.state,
+    shipping_zip: addressToStore.zip,
+    address_verification: verificationStatus,
+    address_verified_at: new Date().toISOString(),
     newsletter_opt_in: true,
     consent_text: consentText,
     consented_at: new Date().toISOString(),
