@@ -110,7 +110,7 @@ export function NewsletterSignup({ source = "footer-newsletter", compact = false
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="w-full rounded-lg bg-coral px-4 py-3 text-xs font-black uppercase tracking-[0.18em] text-navy transition-transform active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-lg bg-coral px-4 py-3 text-sm font-black uppercase tracking-[0.18em] text-navy transition-transform active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {status === "submitting" ? "Joining..." : "Join the List"}
           </button>

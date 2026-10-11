@@ -351,176 +351,181 @@
     margin-top: 1.5rem !important;
   }
 
-  /* Group Cruises story: preserve all content, compress the mobile reading path. */
-  .group-cruise-mobile-optimized main > section:nth-of-type(2) {
+  /* Group Cruises story: preserve all content, compress the mobile reading path.
+     Targeted by id. These were nth-of-type chains counting from a #group-cruise-hero
+     that app/group-cruises/page.tsx hides with display:none -- hidden, but still
+     counted, so deleting that dead hero would have shifted all 34 rules by one and
+     silently restyled the whole page. */
+  .group-cruise-mobile-optimized #group-occasions {
     padding-top: 3.5rem !important;
     padding-bottom: 3.5rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(2) > div:first-child {
+  .group-cruise-mobile-optimized #group-occasions > div:first-child {
     gap: 1.25rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(2) h2 {
+  .group-cruise-mobile-optimized #group-occasions h2 {
     margin-top: 0.75rem !important;
     max-width: 12ch !important;
     font-size: 2.65rem !important;
     line-height: 0.93 !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(2) > div:nth-child(2) {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    grid-auto-rows: 11.5rem !important;
+  /* One column, not a 2x2 mosaic. The middle pair shared a row at 137px, and
+     "Milestone birthdays" needs 235px at this heading size -- which is how it
+     and "Friends trips" each ended up stranding their last word. Cards are
+     shortened to 10rem so four full-width bands cost only ~90px more height
+     than the three rows they replace. */
+  .group-cruise-mobile-optimized #group-occasions > div:nth-child(2) {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: 10rem !important;
     margin-top: 2rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(2) article:first-child,
-  .group-cruise-mobile-optimized main > section:nth-of-type(2) article:last-child {
+  .group-cruise-mobile-optimized #group-occasions article {
     grid-column: 1 / -1 !important;
-  }
-
-  .group-cruise-mobile-optimized main > section:nth-of-type(2) article {
     min-height: 0 !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(2) article > div:last-child {
+  .group-cruise-mobile-optimized #group-occasions article > div:last-child {
     padding: 1rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(2) article h3 {
+  .group-cruise-mobile-optimized #group-occasions article h3 {
     font-size: 1.65rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(2) article p {
+  .group-cruise-mobile-optimized #group-occasions article p {
     margin-top: 0.35rem !important;
-    font-size: 0.75rem !important;
-    line-height: 1.1rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
   }
 
   /* Yolanda on Group Cruises */
-  .group-cruise-mobile-optimized main > section:nth-of-type(3) > div > div:first-child {
+  .group-cruise-mobile-optimized #group-yolanda > div > div:first-child {
     min-height: 21rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(3) > div > div:nth-child(2) {
+  .group-cruise-mobile-optimized #group-yolanda > div > div:nth-child(2) {
     padding: 3rem 1.25rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(3) h2 {
+  .group-cruise-mobile-optimized #group-yolanda h2 {
     margin-top: 0.85rem !important;
     max-width: 13ch !important;
     font-size: 2.65rem !important;
     line-height: 0.93 !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(3) h2 + p {
+  .group-cruise-mobile-optimized #group-yolanda h2 + p {
     margin-top: 1.25rem !important;
     line-height: 1.6 !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(3) > div > div:nth-child(2) > div:last-child {
+  .group-cruise-mobile-optimized #group-yolanda > div > div:nth-child(2) > div:last-child {
     margin-top: 2rem !important;
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
   }
 
   /* Process: the old 21rem-per-step desktop rhythm was the biggest mobile scroll offender. */
-  .group-cruise-mobile-optimized main > section:nth-of-type(4) {
+  .group-cruise-mobile-optimized #group-process {
     padding-top: 3.5rem !important;
     padding-bottom: 3.5rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(4) h2 {
+  .group-cruise-mobile-optimized #group-process h2 {
     margin-top: 0.75rem !important;
     max-width: 14ch !important;
     font-size: 2.65rem !important;
     line-height: 0.92 !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(4) > div > div:nth-child(2) {
+  .group-cruise-mobile-optimized #group-process > div > div:nth-child(2) {
     margin-top: 2rem !important;
     gap: 0 !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(4) article {
+  .group-cruise-mobile-optimized #group-process article {
     min-height: 0 !important;
     padding-top: 1.8rem !important;
     padding-bottom: 1.8rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(4) article h3 {
+  .group-cruise-mobile-optimized #group-process article h3 {
     margin-top: 0.65rem !important;
     font-size: 2rem !important;
     line-height: 0.98 !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(4) article h3 + p {
+  .group-cruise-mobile-optimized #group-process article h3 + p {
     margin-top: 0.85rem !important;
     line-height: 1.55 !important;
   }
 
   /* Trip Hub demo */
-  .group-cruise-mobile-optimized main > section:nth-of-type(5) {
+  .group-cruise-mobile-optimized #group-trip-hub {
     padding-top: 3.5rem !important;
     padding-bottom: 3.5rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(5) > div {
+  .group-cruise-mobile-optimized #group-trip-hub > div {
     gap: 2rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(5) h2 {
+  .group-cruise-mobile-optimized #group-trip-hub h2 {
     margin-top: 0.75rem !important;
     max-width: 11ch !important;
     font-size: 2.65rem !important;
     line-height: 0.93 !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(5) h2 + p {
+  .group-cruise-mobile-optimized #group-trip-hub h2 + p {
     margin-top: 1.2rem !important;
     line-height: 1.55 !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(5) h3 {
+  .group-cruise-mobile-optimized #group-trip-hub h3 {
     font-size: 2.1rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(5) > div > div:nth-child(2) > div > div:nth-child(2) > div {
+  .group-cruise-mobile-optimized #group-trip-hub > div > div:nth-child(2) > div > div:nth-child(2) > div {
     padding: 1.15rem !important;
   }
 
   /* FAQs */
-  .group-cruise-mobile-optimized main > section:nth-of-type(6) {
+  .group-cruise-mobile-optimized #group-faqs {
     padding-top: 3.5rem !important;
     padding-bottom: 3.5rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(6) > div > div {
+  .group-cruise-mobile-optimized #group-faqs > div > div {
     gap: 1.5rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(6) h2 {
+  .group-cruise-mobile-optimized #group-faqs h2 {
     margin-top: 0.75rem !important;
     font-size: 2.6rem !important;
     line-height: 0.93 !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(6) details {
+  .group-cruise-mobile-optimized #group-faqs details {
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
   }
 
   /* Planning form */
-  .group-cruise-mobile-optimized main > section:nth-of-type(7) {
+  .group-cruise-mobile-optimized #start-planning {
     padding-top: 3.5rem !important;
     padding-bottom: 3.5rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(7) > div {
+  .group-cruise-mobile-optimized #start-planning > div {
     gap: 2rem !important;
   }
 
-  .group-cruise-mobile-optimized main > section:nth-of-type(7) h2 {
+  .group-cruise-mobile-optimized #start-planning h2 {
     margin-top: 0.75rem !important;
     max-width: 11ch !important;
     font-size: 2.65rem !important;

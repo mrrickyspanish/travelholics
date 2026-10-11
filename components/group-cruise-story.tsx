@@ -226,7 +226,7 @@ export default function GroupCruiseStory() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[92rem] px-5 py-20 sm:px-6 sm:py-28 lg:px-10 lg:py-32 xl:px-12">
+      <section id="group-occasions" className="mx-auto max-w-[92rem] px-5 py-20 sm:px-6 sm:py-28 lg:px-10 lg:py-32 xl:px-12">
         <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-end">
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">Bring a reason. Or don&apos;t.</p>
@@ -249,7 +249,7 @@ export default function GroupCruiseStory() {
         </div>
       </section>
 
-      <section className="border-y border-ink/10 bg-[#fbf7ef]">
+      <section id="group-yolanda" className="border-y border-ink/10 bg-[#fbf7ef]">
         <div className="mx-auto grid max-w-[92rem] lg:grid-cols-[0.44fr_0.56fr]">
           <div className="relative min-h-[34rem] overflow-hidden lg:min-h-[46rem]">
             <Image src="/images/hero-yolanda.jpg" alt="Yolanda of Travelholics" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 44vw" />
@@ -275,7 +275,7 @@ export default function GroupCruiseStory() {
         </div>
       </section>
 
-      <section ref={processRef} className="relative bg-[#082d27] py-20 text-white sm:py-28 lg:py-32">
+      <section id="group-process" ref={processRef} className="relative bg-[#082d27] py-20 text-white sm:py-28 lg:py-32">
         <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
           <div className="max-w-4xl">
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">The process</p>
@@ -311,7 +311,7 @@ export default function GroupCruiseStory() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#f4efe4] py-20 sm:py-28 lg:py-32">
+      <section id="group-trip-hub" className="relative overflow-hidden bg-[#f4efe4] py-20 sm:py-28 lg:py-32">
         <div aria-hidden="true" className="pointer-events-none absolute -right-10 top-10 font-serif text-[16vw] font-semibold leading-none tracking-[-0.08em] text-emerald-mid/[0.045]">TRIP HUB</div>
         <div className="relative mx-auto grid max-w-[92rem] gap-12 px-5 sm:px-6 lg:grid-cols-[0.37fr_0.63fr] lg:items-center lg:px-10 xl:px-12">
           <div>
@@ -351,18 +351,18 @@ export default function GroupCruiseStory() {
                     {[['4', 'Cabin choices'], ['18', 'Booked'], ['8', 'Planning']].map(([value, label]) => (
                       <div key={label} className="border-r border-ink/10 px-2 last:border-r-0">
                         <p className="font-serif text-2xl font-semibold text-royal-deep">{value}</p>
-                        <p className="mt-1 text-[9px] font-black uppercase tracking-[0.12em] text-stone/60">{label}</p>
+                        <p className="mt-1 text-[10px] font-black uppercase tracking-[0.12em] text-stone/60">{label}</p>
                       </div>
                     ))}
                   </div>
                   <div className="mt-6 grid gap-3 sm:grid-cols-2">
                     <div className="border border-ink/10 bg-white p-4">
-                      <p className="text-[9px] font-black uppercase tracking-[0.16em] text-coral">Cabin spotlight</p>
+                      <p className="text-[10px] font-black uppercase tracking-[0.16em] text-coral">Cabin spotlight</p>
                       <p className="mt-2 font-serif text-2xl font-semibold text-royal-deep">Ocean View Balcony</p>
                       <p className="mt-2 text-sm text-stone">$1,399 per person</p>
                     </div>
                     <div className="border border-ink/10 bg-white p-4">
-                      <p className="text-[9px] font-black uppercase tracking-[0.16em] text-coral">Day 3</p>
+                      <p className="text-[10px] font-black uppercase tracking-[0.16em] text-coral">Day 3</p>
                       <p className="mt-2 font-serif text-2xl font-semibold text-royal-deep">Perfect Day at CocoCay</p>
                       <p className="mt-2 text-sm text-stone">7:00 AM arrival</p>
                     </div>
@@ -370,7 +370,7 @@ export default function GroupCruiseStory() {
                   <div className="mt-3 border border-ink/10 bg-white p-4">
                     <div className="flex items-center justify-between gap-4">
                       <div>
-                        <p className="text-[9px] font-black uppercase tracking-[0.16em] text-coral">Your next move</p>
+                        <p className="text-[10px] font-black uppercase tracking-[0.16em] text-coral">Your next move</p>
                         <p className="mt-1 text-sm font-bold text-ink">Choose a cabin and send your booking request.</p>
                       </div>
                       <ArrowRight className="shrink-0 text-emerald-mid" size={20} />
@@ -383,7 +383,7 @@ export default function GroupCruiseStory() {
         </div>
       </section>
 
-      <section className="border-y border-ink/10 bg-[#fbf7ef] py-20 sm:py-24">
+      <section id="group-faqs" className="border-y border-ink/10 bg-[#fbf7ef] py-20 sm:py-24">
         <div className="mx-auto max-w-[78rem] px-5 sm:px-6 lg:px-10">
           <div className="grid gap-8 lg:grid-cols-[0.36fr_0.64fr]">
             <div>
