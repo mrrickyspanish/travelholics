@@ -10,6 +10,7 @@ import { DUCK_HUNT_WELCOME } from "@/lib/duck-hunt-content";
 import { TIKTOK_PROFILE_URL } from "@/lib/liveSchedule";
 import { DuckHuntFooter } from "@/components/duck-hunt-footer";
 import styles from "./duck-hunt.module.css";
+import { US_STATES, US_STATE_LABELS, US_STATE_SET } from "@/lib/us-states";
 
 type TravelReason = "Vacation" | "Honeymoon" | "Anniversary" | "Family Reunion" | "Birthday" | "Other";
 type FormState = "idle" | "submitting" | "success" | "error";
@@ -42,9 +43,6 @@ const INITIAL_VALUES: ClaimValues = {
   shippingZip: "",
 };
 const TRAVEL_OPTIONS: TravelReason[] = ["Vacation", "Honeymoon", "Anniversary", "Family Reunion", "Birthday", "Other"];
-const US_STATES = [
-  "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "VI", "WA", "WV", "WI", "WY",
-];
 const CONFETTI_COLORS = ["#0d4a3a", "#10755A", "#f59e0b", "#F26A75", "#F4C4CC", "#FCFAF5"];
 const MAGNET = "/images/cruise_life_magnet_final.png";
 const YOUTUBE = "https://www.youtube.com/@yotravelholic";
@@ -61,7 +59,7 @@ function validate(values: ClaimValues, newsletterOptIn: boolean): Errors {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) errors.email = "Add a valid email address.";
   if (!values.shippingAddress1.trim()) errors.shippingAddress1 = "Add your street address.";
   if (!values.shippingCity.trim()) errors.shippingCity = "Add your city.";
-  if (!US_STATES.includes(values.shippingState)) errors.shippingState = "Choose your state or territory.";
+  if (!US_STATE_SET.has(values.shippingState)) errors.shippingState = "Choose your state or territory.";
   if (!/^\d{5}(-\d{4})?$/.test(values.shippingZip.trim())) errors.shippingZip = "Use a 5-digit ZIP or ZIP+4.";
   if (!newsletterOptIn) errors.consent = "Please agree to join the Cruise Life email list to claim your gift.";
   return errors;
@@ -348,7 +346,7 @@ export default function DuckHuntPage() {
                             <label htmlFor="shippingState">State / territory</label>
                             <select id="shippingState" name="shippingState" value={values.shippingState} onChange={(event) => setField("shippingState", event.target.value)} autoComplete="shipping address-level1" aria-invalid={Boolean(errors.shippingState)} aria-describedby={errors.shippingState ? "shippingState-error" : undefined}>
                               <option value="">Select</option>
-                              {US_STATES.map((state) => <option key={state} value={state}>{state}</option>)}
+                              {US_STATES.map((state) => <option key={state} value={state}>{US_STATE_LABELS[state] ?? state}</option>)}
                             </select>
                             {errors.shippingState && <p id="shippingState-error" className={styles.error}>{errors.shippingState}</p>}
                           </div>

@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { sendFormEmail } from "@/lib/form-email";
 import { RippleButton } from "@/components/ripple-button";
+import { US_STATES, US_STATE_LABELS } from "@/lib/us-states";
 
 // ------------------------------------------------------------------
 // Duck Hunt mailing address collection
@@ -43,13 +44,6 @@ const initialFormData: DuckHuntAddressFormData = {
   shippingZip: "",
 };
 
-const US_STATES = [
-  "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI",
-  "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN",
-  "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH",
-  "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA",
-  "VI", "WA", "WV", "WI", "WY",
-];
 
 const inputClass =
   "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20";
@@ -300,7 +294,7 @@ function DuckHuntAddressForm() {
                         <option value="">Select state</option>
                         {US_STATES.map((state) => (
                           <option key={state} value={state}>
-                            {state}
+                            {US_STATE_LABELS[state] ?? state}
                           </option>
                         ))}
                       </select>

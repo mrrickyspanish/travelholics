@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { normalizeUsAddress, validateUsAddress } from "@/lib/address-validation";
 
 // ------------------------------------------------------------------
 // Duck Hunt address capture
@@ -50,16 +51,6 @@ type LeadRow = {
 };
 
 export async function POST(request: Request) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  // RLS only grants anon INSERT on duck_hunt_leads — updating an existing
-  // registrant's row requires the service role, so there's no anon-key
-  // fallback here the way the claim route has one.
-  if (!supabaseUrl || !serviceRoleKey) {
-    return NextResponse.json({ error: "Database not configured." }, { status: 500 });
-  }
-
   const body = (await request.json()) as DuckHuntAddressRequest;
 
   const rawEmail = body.email?.trim() || "";
@@ -86,6 +77,46 @@ export async function POST(request: Request) {
     );
   }
 
+  // The client's `required` and `pattern` attributes are advisory -- a direct
+  // POST skips every one of them -- so the real check happens here. This
+  // catches malformed and junk input only; it cannot tell you whether a
+  // well-formed address exists. See lib/address-validation.ts.
+  const addressIssues = validateUsAddress({
+    address1: shippingAddress1,
+    address2: shippingAddress2,
+    city: shippingCity,
+    state: shippingState,
+    zip: shippingZip,
+  });
+
+  if (addressIssues.length > 0) {
+    return NextResponse.json(
+      { error: addressIssues[0].message, issues: addressIssues },
+      { status: 400 },
+    );
+  }
+
+  const address = normalizeUsAddress({
+    address1: shippingAddress1,
+    address2: shippingAddress2,
+    city: shippingCity,
+    state: shippingState,
+    zip: shippingZip,
+  });
+
+  // Config is checked after input validation so a malformed request gets a 400
+  // that names the bad field, rather than a 500 that blames the database --
+  // and so the validation above is exercisable without one.
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  // RLS only grants anon INSERT on duck_hunt_leads — updating an existing
+  // registrant's row requires the service role, so there's no anon-key
+  // fallback here the way the claim route has one.
+  if (!supabaseUrl || !serviceRoleKey) {
+    return NextResponse.json({ error: "Database not configured." }, { status: 500 });
+  }
+
   const supabase = createClient(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false },
   });
@@ -110,11 +141,11 @@ export async function POST(request: Request) {
   );
 
   const addressPayload = {
-    shipping_address1: shippingAddress1,
-    shipping_address2: shippingAddress2 || null,
-    shipping_city: shippingCity,
-    shipping_state: shippingState,
-    shipping_zip: shippingZip,
+    shipping_address1: address.address1,
+    shipping_address2: address.address2,
+    shipping_city: address.city,
+    shipping_state: address.state,
+    shipping_zip: address.zip,
     status: "claimed",
   };
 

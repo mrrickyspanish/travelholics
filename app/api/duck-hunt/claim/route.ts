@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { normalizeUsAddress, validateUsAddress } from "@/lib/address-validation";
 
 const DUCK_HUNT_CONSENT_TEXT =
   "Yes, sign me up for the Travelholics Cruise Life list so I can receive cruise deals, shop drops, travel tips, and updates connected to my Duck Hunt reward. I understand I can unsubscribe anytime.";
@@ -82,6 +83,31 @@ export async function POST(request: Request) {
     );
   }
 
+  // Same floor as the address form: the client's attributes do not survive a
+  // direct POST, so junk is rejected here. See lib/address-validation.ts.
+  const addressIssues = validateUsAddress({
+    address1: shippingAddress1,
+    address2: body.shippingAddress2?.trim() || "",
+    city: shippingCity,
+    state: shippingState,
+    zip: shippingZip,
+  });
+
+  if (addressIssues.length > 0) {
+    return NextResponse.json(
+      { error: addressIssues[0].message, issues: addressIssues },
+      { status: 400 },
+    );
+  }
+
+  const address = normalizeUsAddress({
+    address1: shippingAddress1,
+    address2: body.shippingAddress2?.trim() || "",
+    city: shippingCity,
+    state: shippingState,
+    zip: shippingZip,
+  });
+
   if (!body.newsletterOptIn) {
     return NextResponse.json(
       { error: "Newsletter opt-in is required to claim the Duck Hunt reward." },
@@ -105,11 +131,11 @@ export async function POST(request: Request) {
     source,
     cruise,
     scan_id: scanId,
-    shipping_address1: shippingAddress1,
-    shipping_address2: body.shippingAddress2?.trim() || null,
-    shipping_city: shippingCity,
-    shipping_state: shippingState,
-    shipping_zip: shippingZip,
+    shipping_address1: address.address1,
+    shipping_address2: address.address2,
+    shipping_city: address.city,
+    shipping_state: address.state,
+    shipping_zip: address.zip,
     newsletter_opt_in: true,
     consent_text: consentText,
     consented_at: new Date().toISOString(),
