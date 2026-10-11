@@ -1,16 +1,35 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
-// Preview placeholders only. Replace these text wordmarks with approved official monochrome SVG assets before merging to main.
-const cruiseLines = [
-  "Royal Caribbean",
-  "Celebrity Cruises",
-  "Norwegian Cruise Line",
-  "Virgin Voyages",
-  "MSC Cruises",
-  "Carnival Cruise Line",
+// Each line renders its approved logo when one is present in
+// public/images/cruise-lines/, and a styled wordmark until then. The two
+// occupy the same box, so dropping a file in changes nothing structurally
+// and the strip stays correct while the folder is filled in one line at a
+// time. See that folder's README for what to collect and why a scraped
+// logo is not an approved asset.
+type CruiseLine = {
+  name: string;
+  /** Path under /public. Omit until an approved asset is in hand. */
+  logo?: string;
+  /** Intrinsic size of that asset. Required by next/image; only the ratio matters. */
+  width?: number;
+  height?: number;
+};
+
+const cruiseLines: CruiseLine[] = [
+  { name: "Royal Caribbean" },
+  { name: "Celebrity Cruises" },
+  { name: "Norwegian Cruise Line" },
+  { name: "Virgin Voyages" },
+  { name: "MSC Cruises" },
+  { name: "Carnival Cruise Line" },
 ];
+
+// One optical height for every mark, so a wide wordmark and a tall roundel
+// still read as one row.
+const LOGO_BOX = "h-7 sm:h-8";
 
 export const CruiseLineStrip = () => {
   const reduceMotion = useReducedMotion();
@@ -24,19 +43,37 @@ export const CruiseLineStrip = () => {
           </p>
 
           <div className="relative overflow-hidden lg:overflow-visible">
-            <motion.div
+            <motion.ul
               initial={reduceMotion ? false : { opacity: 0, x: 18 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.35 }}
               transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-              className="-mx-5 flex gap-8 overflow-x-auto px-5 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-5 lg:overflow-visible lg:px-0"
+              className="-mx-5 flex gap-7 overflow-x-auto px-5 py-2 [scrollbar-width:none] sm:-mx-8 sm:gap-9 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-x-9 lg:gap-y-6 lg:overflow-visible lg:px-0 [&::-webkit-scrollbar]:hidden"
             >
               {cruiseLines.map((line) => (
-                <div key={line} className="shrink-0 whitespace-nowrap border-l border-ink/14 pl-4 text-sm font-black tracking-[-0.02em] text-royal-deep/72 sm:text-base lg:whitespace-normal">
-                  {line}
-                </div>
+                <li
+                  key={line.name}
+                  className={`flex ${LOGO_BOX} shrink-0 items-center border-l border-ink/14 pl-4 lg:shrink`}
+                >
+                  {line.logo ? (
+                    <Image
+                      src={line.logo}
+                      alt={line.name}
+                      width={line.width ?? 160}
+                      height={line.height ?? 32}
+                      // No grayscale/invert filter on purpose: several of these
+                      // brands prohibit altering the mark, and a CSS filter is
+                      // an alteration. Supply the approved mono file instead.
+                      className="h-full w-auto object-contain opacity-80 transition-opacity hover:opacity-100"
+                    />
+                  ) : (
+                    <span className="whitespace-nowrap text-sm font-black tracking-[-0.02em] text-royal-deep/72 sm:text-base lg:whitespace-normal">
+                      {line.name}
+                    </span>
+                  )}
+                </li>
               ))}
-            </motion.div>
+            </motion.ul>
           </div>
         </div>
       </div>
