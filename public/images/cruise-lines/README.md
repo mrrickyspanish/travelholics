@@ -35,8 +35,9 @@ stacked marks at 1. Rendered widths now span 51–116px instead of 41–145px.
 
 ## Replacing or adding one
 
-1. Drop the source in, run the same treatment (preserve alpha, set RGB to
-   `#475569`, trim, 128px tall).
+1. Put the source file somewhere, add it to `JOBS` in
+   `scripts/recolor-cruise-logos.js`, and run:
+   `node scripts/recolor-cruise-logos.js <source-dir> public/images/cruise-lines`
 2. Update its entry's `logo`, `width`, `height` and `scale`.
 3. A line with no `logo` falls back to a styled wordmark in the same box, so
    the strip stays correct mid-swap.

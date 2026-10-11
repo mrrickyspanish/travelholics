@@ -1,3 +1,16 @@
+#!/usr/bin/env node
+/**
+ * Recolour cruise line logos to one slate and write them into
+ * public/images/cruise-lines/.
+ *
+ *   node scripts/recolor-cruise-logos.js <source-dir> <output-dir>
+ *
+ * The source directory holds the brand files exactly as supplied, in
+ * whatever mix of SVG / PNG / JPEG they arrive in. Add new ones to JOBS
+ * below. See public/images/cruise-lines/README.md for why the alpha channel
+ * is preserved rather than flattened, and why the recolour happens here
+ * instead of as a CSS filter at render time.
+ */
 const sharp = require("sharp");
 const fs = require("fs");
 const R = process.argv[2], OUT = process.argv[3];
