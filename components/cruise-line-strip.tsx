@@ -16,20 +16,27 @@ type CruiseLine = {
   /** Intrinsic size of that asset. Required by next/image; only the ratio matters. */
   width?: number;
   height?: number;
+  /**
+   * Share of the row's height this mark fills, for optical balance. Sizing six
+   * logos to one height does not make them look one size: Celebrity is 4.5:1
+   * and rendered 145px wide, while NCL at 1.3:1 rendered 41px and its letters
+   * were unreadable. Wide wordmarks sit below 1, compact stacked marks at 1.
+   */
+  scale?: number;
 };
 
 const cruiseLines: CruiseLine[] = [
-  { name: "Royal Caribbean" },
-  { name: "Celebrity Cruises" },
-  { name: "Norwegian Cruise Line" },
-  { name: "Virgin Voyages" },
-  { name: "MSC Cruises" },
-  { name: "Carnival Cruise Line" },
+  { name: "Royal Caribbean", logo: "/images/cruise-lines/royal-caribbean.png", width: 469, height: 128, scale: 0.72 },
+  { name: "Celebrity Cruises", logo: "/images/cruise-lines/celebrity.png", width: 581, height: 128, scale: 0.64 },
+  { name: "Norwegian Cruise Line", logo: "/images/cruise-lines/norwegian.png", width: 162, height: 128, scale: 1 },
+  { name: "MSC Cruises", logo: "/images/cruise-lines/msc.png", width: 357, height: 128, scale: 0.86 },
+  { name: "Carnival Cruise Line", logo: "/images/cruise-lines/carnival.png", width: 522, height: 128, scale: 0.7 },
+  { name: "Princess Cruises", logo: "/images/cruise-lines/princess.png", width: 182, height: 128, scale: 1 },
 ];
 
 // One optical height for every mark, so a wide wordmark and a tall roundel
 // still read as one row.
-const LOGO_BOX = "h-7 sm:h-8";
+const LOGO_BOX = "h-9 sm:h-10";
 
 export const CruiseLineStrip = () => {
   const reduceMotion = useReducedMotion();
@@ -64,7 +71,8 @@ export const CruiseLineStrip = () => {
                       // No grayscale/invert filter on purpose: several of these
                       // brands prohibit altering the mark, and a CSS filter is
                       // an alteration. Supply the approved mono file instead.
-                      className="h-full w-auto object-contain opacity-80 transition-opacity hover:opacity-100"
+                      style={{ height: `${(line.scale ?? 1) * 100}%` }}
+                      className="w-auto object-contain opacity-80 transition-opacity hover:opacity-100"
                     />
                   ) : (
                     <span className="whitespace-nowrap text-sm font-black tracking-[-0.02em] text-royal-deep/72 sm:text-base lg:whitespace-normal">
