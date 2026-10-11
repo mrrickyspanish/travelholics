@@ -175,14 +175,25 @@ export async function POST(request: Request) {
     (row) => normalizeEmail(row.email || "") === email,
   );
 
+  // The verification columns are only written when the check actually ran.
+  // That keeps this deploy independent of the migration: until USPS is
+  // configured every result is "unchecked", the columns are left out of the
+  // payload entirely, and the form works whether or not
+  // 20261011120000_add_duck_hunt_address_verification.sql has been applied.
+  // A NULL still shows up in the shipping queue -- the index is on
+  // `IS DISTINCT FROM 'verified'`, which NULL satisfies.
+  const verificationColumns =
+    verification.status === "unchecked"
+      ? {}
+      : { address_verification: verificationStatus, address_verified_at: new Date().toISOString() };
+
   const addressPayload = {
     shipping_address1: addressToStore.address1,
     shipping_address2: addressToStore.address2 || null,
     shipping_city: addressToStore.city,
     shipping_state: addressToStore.state,
     shipping_zip: addressToStore.zip,
-    address_verification: verificationStatus,
-    address_verified_at: new Date().toISOString(),
+    ...verificationColumns,
     status: "claimed",
   };
 

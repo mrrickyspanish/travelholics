@@ -134,6 +134,18 @@ export async function POST(request: Request) {
         ? "unconfirmed_accepted"
         : "unchecked";
 
+  // The verification columns are only written when the check actually ran.
+  // That keeps this deploy independent of the migration: until USPS is
+  // configured every result is "unchecked", the columns are left out of the
+  // payload entirely, and the form works whether or not
+  // 20261011120000_add_duck_hunt_address_verification.sql has been applied.
+  // A NULL still shows up in the shipping queue -- the index is on
+  // `IS DISTINCT FROM 'verified'`, which NULL satisfies.
+  const verificationColumns =
+    verification.status === "unchecked"
+      ? {}
+      : { address_verification: verificationStatus, address_verified_at: new Date().toISOString() };
+
   if (!body.newsletterOptIn) {
     return NextResponse.json(
       { error: "Newsletter opt-in is required to claim the Duck Hunt reward." },
@@ -162,8 +174,7 @@ export async function POST(request: Request) {
     shipping_city: addressToStore.city,
     shipping_state: addressToStore.state,
     shipping_zip: addressToStore.zip,
-    address_verification: verificationStatus,
-    address_verified_at: new Date().toISOString(),
+    ...verificationColumns,
     newsletter_opt_in: true,
     consent_text: consentText,
     consented_at: new Date().toISOString(),
