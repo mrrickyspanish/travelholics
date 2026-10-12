@@ -145,10 +145,10 @@ function GalleryModal({
       className="fixed inset-0 z-[110] flex flex-col bg-black"
     >
       <div className="relative flex items-center justify-between px-4 py-3">
-        <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-white/50">
+        <span className="text-[0.875rem] font-bold uppercase tracking-[0.18em] text-white/50">
           {current + 1} / {images.length}
         </span>
-        <p className="absolute left-1/2 -translate-x-1/2 text-[0.72rem] font-semibold text-white/70">
+        <p className="absolute left-1/2 -translate-x-1/2 text-[0.875rem] font-semibold text-white/70">
           {productName}
         </p>
         <button
@@ -339,7 +339,7 @@ export default function ProductPageClient({ slug }: { slug: string }) {
                   {gallery.length > 4 && (
                     <button
                       onClick={() => setGalleryOpen(true)}
-                      className="flex aspect-square items-center justify-center rounded-xl bg-stone-100 text-[0.65rem] font-bold text-stone-500 transition-colors hover:bg-stone-200"
+                      className="flex aspect-square items-center justify-center rounded-xl bg-stone-100 text-[0.875rem] font-bold text-stone-500 transition-colors hover:bg-stone-200"
                     >
                       +{gallery.length - 4}
                     </button>
@@ -352,7 +352,7 @@ export default function ProductPageClient({ slug }: { slug: string }) {
             <div className="flex flex-col">
               {/* Badge */}
               <div className="mb-3 text-center">
-                <span className="inline-flex rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.62rem] font-black uppercase tracking-[0.16em] text-white">
+                <span className="inline-flex rounded-full bg-[#1e3a8a] px-3 py-[5px] text-[0.875rem] font-black uppercase tracking-[0.16em] text-white">
                   {product.badge}
                 </span>
               </div>
@@ -385,7 +385,7 @@ export default function ProductPageClient({ slug }: { slug: string }) {
               {/* Details list */}
               {product.details && product.details.length > 0 && (
                 <div className="mb-6">
-                  <p className="mb-3 text-[0.68rem] font-black uppercase tracking-[0.18em] text-stone-400">
+                  <p className="mb-3 text-[0.875rem] font-black uppercase tracking-[0.18em] text-stone-400">
                     Details
                   </p>
                   <ul className="flex flex-col gap-2">
@@ -402,11 +402,11 @@ export default function ProductPageClient({ slug }: { slug: string }) {
               {/* Size guide — apparel only */}
               {product.sizes.some((s) => s !== "One Size" && s !== "Standard") && (
                 <details className="mb-5 rounded-xl border border-stone-200 bg-stone-50 open:bg-white">
-                  <summary className="cursor-pointer select-none px-4 py-3 text-[0.75rem] font-black uppercase tracking-[0.14em] text-stone-500 hover:text-[#1e3a8a]">
+                  <summary className="cursor-pointer select-none px-4 py-3 text-[0.875rem] font-black uppercase tracking-[0.14em] text-stone-500 hover:text-[#1e3a8a]">
                     Size Guide
                   </summary>
                   <div className="overflow-x-auto px-4 pb-4 pt-2">
-                    <table className="w-full text-[0.78rem] text-stone-600">
+                    <table className="w-full text-[0.875rem] text-stone-600">
                       <thead>
                         <tr className="border-b border-stone-200">
                           {["Size", "Chest", "Waist", "Length"].map((h) => (
@@ -431,7 +431,7 @@ export default function ProductPageClient({ slug }: { slug: string }) {
                         ))}
                       </tbody>
                     </table>
-                    <p className="mt-3 text-[0.7rem] text-stone-400">All measurements in inches. When in between sizes, size up.</p>
+                    <p className="mt-3 text-[0.875rem] text-stone-400">All measurements in inches. When in between sizes, size up.</p>
                   </div>
                 </details>
               )}
@@ -501,7 +501,7 @@ export default function ProductPageClient({ slug }: { slug: string }) {
       {PRODUCT_VIDEOS[product.id] && (
         <section className="bg-[#0f172a] px-4 py-14">
           <div className="mx-auto max-w-md">
-            <p className="mb-1 text-center text-[0.62rem] font-black uppercase tracking-[0.22em] text-white/40">
+            <p className="mb-1 text-center text-[0.875rem] font-black uppercase tracking-[0.22em] text-white/40">
               As worn by
             </p>
             <h2 className="mb-8 text-center text-xl font-black text-white">

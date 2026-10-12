@@ -41,7 +41,7 @@ function GuideCard({
 
   return (
     <article className="flex flex-col rounded-[1.5rem] bg-cream p-6 shadow-[0_18px_50px_rgba(26,58,82,0.08)] ring-1 ring-white/70 transition-shadow hover:shadow-[0_22px_60px_rgba(26,58,82,0.12)]">
-      <div className="flex items-center gap-2 text-[0.68rem] font-bold uppercase tracking-[0.16em] text-stone">
+      <div className="flex items-center gap-2 text-[0.875rem] font-bold uppercase tracking-[0.16em] text-stone">
         <Icon className="h-3.5 w-3.5" aria-hidden />
         <span>{FORMAT_LABEL[guide.format]}</span>
         <span aria-hidden>·</span>
@@ -84,7 +84,7 @@ function GuideCard({
         <button
           type="button"
           onClick={() => onUnlock(guide)}
-          className="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-[0.85rem] font-semibold text-stone transition-colors hover:bg-ink/5 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
+          className="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-[0.875rem] font-semibold text-stone transition-colors hover:bg-ink/5 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
         >
           <Download className="h-3.5 w-3.5" aria-hidden />
           Or download the {FORMAT_LABEL[guide.format]}
@@ -125,7 +125,7 @@ export function GuidesClient({ guides }: { guides: FreeGuide[] }) {
                 type="button"
                 onClick={() => setActiveCategory(category)}
                 aria-pressed={active}
-                className={`rounded-full px-5 py-2 text-[0.82rem] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral ${
+                className={`rounded-full px-5 py-2 text-[0.875rem] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral ${
                   active
                     ? "bg-emerald-deep text-white"
                     : "bg-cream text-ink/70 ring-1 ring-ink/10 hover:text-ink"

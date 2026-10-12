@@ -119,9 +119,9 @@ export function ShopHeader() {
         style={{ top: showBands ? '7rem' : '5rem' }}
       >
         <div className="flex w-full items-center justify-between gap-3 px-3 leading-tight md:w-auto md:justify-center md:gap-4 md:px-0 md:leading-none">
-          <span className="font-semibold text-[0.68rem] md:text-xs whitespace-nowrap">Trusted by 5,000+ travelers</span>
+          <span className="font-semibold text-[0.875rem] md:text-xs whitespace-nowrap">Trusted by 5,000+ travelers</span>
           <span className="hidden md:inline">|</span>
-          <Link href="/shop-full#travelholics-finds" className="text-right text-[0.68rem] underline underline-offset-2 hover:text-coral md:text-sm md:text-left">
+          <Link href="/shop-full#travelholics-finds" className="text-right text-[0.875rem] underline underline-offset-2 hover:text-coral md:text-sm md:text-left">
             New here? Browse Travelholics Finds
           </Link>
         </div>

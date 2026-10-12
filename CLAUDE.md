@@ -33,8 +33,17 @@ This is the single most-reported issue on this project. It is not a nitpick.
 - Body copy: 18px (`text-lg`) at every width. Do not drop body paragraphs to `text-base`
   on mobile — 16px reads as fine print on a phone.
 - Form field labels: 16px (`text-base`) minimum.
-- `app/globals.css` has a base-layer guardrail that force-bumps any `text-[10px]`–`text-[13px]`
-  arbitrary class up to 14px. If you find yourself fighting it, the size is too small.
+- **Nothing renders below 14px.** `app/globals.css` has a base-layer guardrail that
+  force-bumps `text-xs` and any `text-[1px]`–`text-[13px]` arbitrary class up to 14px.
+  If you find yourself fighting it, the size is too small.
+- The guardrail is a set of attribute selectors, so it only sees class names. It cannot
+  see a raw `font-size` in a stylesheet, an arbitrary rem value, or an inline style —
+  and all three have shipped violations here (a `0.62rem` figcaption in
+  `mobile-polish.css`, a `text-[9px]` label that sat *below* the guardrail's old range,
+  and a `text-xs` submit button). **Verify with `npm run check:type-floor`**, which
+  measures what actually renders, across 7 pages at 390 / 768 / 1440.
+- Deliberate exceptions go in that script's `ALLOWED` list with a reason, not into the
+  page. There is one today: the cart count inside its 16px circle.
 
 ### Headline sizing
 

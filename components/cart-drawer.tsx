@@ -100,7 +100,7 @@ export function CartDrawer() {
                   <p className="text-[0.88rem] font-semibold text-stone-400">Your cart is empty</p>
                   <button
                     onClick={closeDrawer}
-                    className="mt-2 text-[0.8rem] font-semibold text-[#059669] underline underline-offset-2"
+                    className="mt-2 text-[0.875rem] font-semibold text-[#059669] underline underline-offset-2"
                   >
                     Continue shopping
                   </button>
@@ -117,7 +117,7 @@ export function CartDrawer() {
                       {/* Details */}
                       <div className="flex flex-1 flex-col justify-between min-w-0">
                         <div className="flex items-start justify-between gap-2">
-                          <p className="text-[0.85rem] font-bold leading-snug text-[#0a1a2e]">
+                          <p className="text-[0.875rem] font-bold leading-snug text-[#0a1a2e]">
                             {item.displayName ?? item.name}
                           </p>
                           <button
@@ -139,7 +139,7 @@ export function CartDrawer() {
                             >
                               <Minus className="h-3 w-3" />
                             </button>
-                            <span className="w-4 text-center text-[0.8rem] font-bold text-[#0a1a2e]">
+                            <span className="w-4 text-center text-[0.875rem] font-bold text-[#0a1a2e]">
                               {item.quantity}
                             </span>
                             <button
@@ -166,7 +166,7 @@ export function CartDrawer() {
             {items.length > 0 && (
               <div className="border-t border-stone-100 px-6 py-5">
                 <div className="mb-4 flex items-center justify-between">
-                  <span className="text-[0.85rem] font-semibold text-stone-500">Subtotal</span>
+                  <span className="text-[0.875rem] font-semibold text-stone-500">Subtotal</span>
                   <span className="text-[1.1rem] font-black text-[#0a1a2e]">{formatMerchPrice(subtotal)}</span>
                 </div>
 
@@ -183,7 +183,7 @@ export function CartDrawer() {
                   {!isPending && <ArrowRight className="h-4 w-4" />}
                 </button>
 
-                <div className="mt-3 flex items-center justify-center gap-1.5 text-[0.68rem] font-semibold text-stone-400">
+                <div className="mt-3 flex items-center justify-center gap-1.5 text-[0.875rem] font-semibold text-stone-400">
                   <ShieldCheck className="h-3 w-3 text-[#059669]" />
                   Secure checkout via Stripe
                 </div>

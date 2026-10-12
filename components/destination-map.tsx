@@ -355,7 +355,7 @@ export function DestinationMap() {
               transition={{ duration: 0.55 }}
               className="max-w-[32rem]"
             >
-              <p className="mb-4 text-[0.82rem] font-bold uppercase tracking-[0.16em] text-coral">
+              <p className="mb-4 text-[0.875rem] font-bold uppercase tracking-[0.16em] text-coral">
                 THE TRAVELHOLICS ATLAS
               </p>
               <h2 className="type-homepage-h2 font-serif text-ink">
@@ -389,14 +389,14 @@ export function DestinationMap() {
                   </p>
                 </div>
                 <div className="flex items-center gap-4 rounded-full bg-white/76 px-4 py-2 shadow-sm ring-1 ring-stone/10">
-                  <span className="inline-flex items-center gap-2 text-[0.82rem] font-bold text-stone">
+                  <span className="inline-flex items-center gap-2 text-[0.875rem] font-bold text-stone">
                     <svg width="10" height="14" viewBox="0 0 14 20" fill="none" className="shrink-0">
                       <path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#10755A" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" />
                     </svg>
                     Sailed
                   </span>
                   <span className="h-4 w-px bg-stone/14" aria-hidden="true" />
-                  <span className="inline-flex items-center gap-2 text-[0.82rem] font-bold text-stone">
+                  <span className="inline-flex items-center gap-2 text-[0.875rem] font-bold text-stone">
                     <svg width="10" height="14" viewBox="0 0 14 20" fill="none" className="shrink-0">
                       <path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#E85D5D" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" />
                     </svg>
@@ -542,7 +542,7 @@ export function DestinationMap() {
 
                 <div className="pointer-events-none absolute bottom-4 right-4 flex items-center gap-1.5 rounded-full bg-cream/86 px-3 py-1.5 shadow-sm ring-1 ring-stone/10 backdrop-blur">
                   <MapPinned className="h-3 w-3 text-stone/60" />
-                  <span className="text-[0.7rem] font-semibold text-stone/72">Click a pin to see Yolanda&apos;s notes</span>
+                  <span className="text-[0.875rem] font-semibold text-stone/72">Click a pin to see Yolanda&apos;s notes</span>
                 </div>
 
                 <AnimatePresence>
@@ -578,10 +578,10 @@ export function DestinationMap() {
 
                       <div className="p-4">
                         <p className="font-serif text-[1.2rem] font-semibold leading-tight tracking-[-0.03em] text-ink">{activeDestination.label}</p>
-                        <p className="mt-1 text-[0.86rem] font-medium leading-snug text-stone">{activeDestination.sub}</p>
+                        <p className="mt-1 text-[0.875rem] font-medium leading-snug text-stone">{activeDestination.sub}</p>
                         <a
                           href={DESTINATION_CTA_HREF}
-                          className="mt-4 inline-flex items-center rounded-none bg-coral px-4 py-2 text-[0.82rem] font-semibold text-white transition-colors hover:bg-coral-deep"
+                          className="mt-4 inline-flex items-center rounded-none bg-coral px-4 py-2 text-[0.875rem] font-semibold text-white transition-colors hover:bg-coral-deep"
                         >
                           Plan my cruise
                         </a>
@@ -601,7 +601,7 @@ export function DestinationMap() {
             className="lg:hidden"
           >
             <div className="mx-auto max-w-[28rem] text-center">
-              <p className="mb-3 text-[0.78rem] font-bold uppercase tracking-[0.16em] text-coral">THE TRAVELHOLICS ATLAS</p>
+              <p className="mb-3 text-[0.875rem] font-bold uppercase tracking-[0.16em] text-coral">THE TRAVELHOLICS ATLAS</p>
               <h2 className="font-serif text-[clamp(2.3rem,10vw,3.4rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-ink">
                 Where we&apos;ve sailed. Where we&apos;re sailing next.
               </h2>
@@ -612,12 +612,12 @@ export function DestinationMap() {
 
             <div className="-mx-9 mt-7 rounded-none bg-cream/86 p-3 shadow-[0_22px_60px_rgba(26,58,82,0.1)] ring-1 ring-white/80 sm:mx-auto sm:max-w-[28rem] sm:rounded-[2rem]">
               <div className="mb-3 flex items-center justify-center gap-4 rounded-full bg-white/76 px-4 py-2 shadow-sm ring-1 ring-stone/10">
-                <span className="inline-flex items-center gap-2 text-[0.76rem] font-bold text-stone">
+                <span className="inline-flex items-center gap-2 text-[0.875rem] font-bold text-stone">
                   <svg width="10" height="14" viewBox="0 0 14 20" fill="none"><path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#10755A" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" /></svg>
                   Sailed
                 </span>
                 <span className="h-4 w-px bg-stone/14" aria-hidden="true" />
-                <span className="inline-flex items-center gap-2 text-[0.76rem] font-bold text-stone">
+                <span className="inline-flex items-center gap-2 text-[0.875rem] font-bold text-stone">
                   <svg width="10" height="14" viewBox="0 0 14 20" fill="none"><path d="M7,0 L2,8.5 A6,6 0 1,1 12,8.5 Z" fill="#E85D5D" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinejoin="round" /></svg>
                   On the list
                 </span>
@@ -666,7 +666,7 @@ export function DestinationMap() {
                 </div>
               </div>
 
-              <div className="mt-3 flex items-center justify-center gap-1.5 text-[0.78rem] font-semibold text-stone/70">
+              <div className="mt-3 flex items-center justify-center gap-1.5 text-[0.875rem] font-semibold text-stone/70">
                 <MapPinned className="h-3.5 w-3.5" />
                 Tap a pin to see Yolanda&apos;s notes
               </div>

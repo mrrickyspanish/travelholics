@@ -90,7 +90,29 @@ body {
     text-wrap: balance;
   }
 
-  /* Guardrail: prevent ultra-small arbitrary text sizes from slipping into new files. */
+  /* Guardrail: nothing reader-facing renders below 14px.
+     This used to cover text-[10px] through text-[13px] only, which left two
+     holes that both shipped bugs: `text-xs` is a named scale class rather
+     than an arbitrary value, so a primary CTA label went out at 12px, and
+     text-[9px] sat BELOW the range, so four labels rendered at a true 9px.
+     Both are covered now, along with the single-digit sizes nobody has
+     written yet.
+
+     Deliberately NOT matching rem/em values. Enumerating them is whack-a-mole
+     (the next person writes 0.73rem), and a blanket rule would catch things
+     like the cart count in its 16px circle and burst them. Those are caught
+     by `npm run check:type-floor`, which measures what actually renders and
+     also sees raw CSS that no class selector can reach. */
+  [class*="text-xs"],
+  [class*="text-[1px]"],
+  [class*="text-[2px]"],
+  [class*="text-[3px]"],
+  [class*="text-[4px]"],
+  [class*="text-[5px]"],
+  [class*="text-[6px]"],
+  [class*="text-[7px]"],
+  [class*="text-[8px]"],
+  [class*="text-[9px]"],
   [class*="text-[10px]"],
   [class*="text-[11px]"],
   [class*="text-[12px]"],

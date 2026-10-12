@@ -207,7 +207,7 @@ export default function GroupCruiseStory() {
             </div>
             <h1 className="font-serif text-[clamp(4rem,11vw,10.5rem)] font-semibold leading-[0.8] tracking-[-0.07em] text-white">
               <span className="block">Your people.</span>
-              <span className="mt-2 block whitespace-nowrap text-[0.68em] text-coral sm:mt-3">One unforgettable cruise.</span>
+              <span className="mt-2 block whitespace-nowrap text-[0.875rem] text-coral sm:mt-3">One unforgettable cruise.</span>
             </h1>
           </motion.div>
 

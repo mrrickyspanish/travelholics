@@ -123,13 +123,13 @@ export function GuideUnlockModal({
               <Download className="h-4 w-4" />
               Download {guide.shortTitle}
             </a>
-            <p className="mt-3 text-[0.78rem] text-stone">
+            <p className="mt-3 text-[0.875rem] text-stone">
               This link works for the next 30 minutes.
             </p>
           </div>
         ) : (
           <>
-            <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-coral">
+            <p className="text-[0.875rem] font-bold uppercase tracking-[0.18em] text-coral">
               Free guide
             </p>
             <h2
@@ -176,7 +176,7 @@ export function GuideUnlockModal({
                 />
               </div>
 
-              <label className="flex cursor-pointer items-start gap-3 pt-1 text-[0.82rem] leading-relaxed text-stone">
+              <label className="flex cursor-pointer items-start gap-3 pt-1 text-[0.875rem] leading-relaxed text-stone">
                 <input
                   type="checkbox"
                   checked={optIn}
@@ -187,7 +187,7 @@ export function GuideUnlockModal({
               </label>
 
               {status === "error" && (
-                <p role="alert" className="text-[0.85rem] font-medium text-coral-deep">
+                <p role="alert" className="text-[0.875rem] font-medium text-coral-deep">
                   {errorMessage}
                 </p>
               )}

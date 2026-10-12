@@ -28,7 +28,7 @@ export default function GuidesPage() {
 
       <main className="bg-sand pb-20 pt-28 sm:pt-32">
         <section className="mx-auto max-w-3xl px-5 text-center lg:px-8">
-          <p className="text-[0.7rem] font-bold uppercase tracking-[0.2em] text-coral">
+          <p className="text-[0.875rem] font-bold uppercase tracking-[0.2em] text-coral">
             Free downloads
           </p>
           <h1 className="mt-3 font-serif text-[2.4rem] font-semibold leading-[1.08] tracking-[-0.03em] text-ink sm:text-[3rem]">
@@ -51,7 +51,7 @@ export default function GuidesPage() {
         </section>
 
         <section className="mx-auto mt-16 max-w-2xl px-5 text-center lg:px-8">
-          <p className="text-[0.85rem] leading-relaxed text-stone">
+          <p className="text-[0.875rem] leading-relaxed text-stone">
             Same goal. New level. And I&apos;m rooting for you.
           </p>
         </section>

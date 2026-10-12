@@ -71,7 +71,7 @@ function SectionBlock({ section }: { section: GuideSection }) {
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           {section.pros && (
             <div className="rounded-2xl bg-emerald-mid/[0.07] p-5">
-              <h3 className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-emerald-mid">
+              <h3 className="text-[0.875rem] font-bold uppercase tracking-[0.16em] text-emerald-mid">
                 Pros
               </h3>
               <ul className="mt-3 space-y-2">
@@ -87,7 +87,7 @@ function SectionBlock({ section }: { section: GuideSection }) {
 
           {section.cons && (
             <div className="rounded-2xl bg-coral/[0.07] p-5">
-              <h3 className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-coral-deep">
+              <h3 className="text-[0.875rem] font-bold uppercase tracking-[0.16em] text-coral-deep">
                 Cons
               </h3>
               <ul className="mt-3 space-y-2">
@@ -155,14 +155,14 @@ export default async function GuidePage({ params }: Props) {
         <article className="mx-auto max-w-3xl px-5 lg:px-8">
           <Link
             href="/guides"
-            className="inline-flex items-center gap-1.5 text-[0.82rem] font-semibold text-stone transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
+            className="inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-stone transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
           >
             <ChevronLeft className="h-3.5 w-3.5" aria-hidden />
             All free guides
           </Link>
 
           <header className="mt-6">
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.2em] text-coral">
+            <p className="text-[0.875rem] font-bold uppercase tracking-[0.2em] text-coral">
               {guide.category} · Free guide
             </p>
             <h1 className="mt-3 font-serif text-[2.2rem] font-semibold leading-[1.1] tracking-[-0.03em] text-ink sm:text-[2.7rem]">
@@ -200,7 +200,7 @@ export default async function GuidePage({ params }: Props) {
 
           {guide.tip && (
             <aside className="mt-12 rounded-[1.5rem] bg-emerald-deep p-6 text-white sm:p-8">
-              <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-white/50">
+              <p className="text-[0.875rem] font-bold uppercase tracking-[0.18em] text-white/50">
                 Travelholics tip
               </p>
               <p className="mt-3 text-[1.02rem] leading-relaxed text-white/90">{guide.tip}</p>
@@ -208,7 +208,7 @@ export default async function GuidePage({ params }: Props) {
           )}
 
           {guide.disclaimer && (
-            <p className="mt-8 text-[0.82rem] leading-relaxed text-stone">{guide.disclaimer}</p>
+            <p className="mt-8 text-[0.875rem] leading-relaxed text-stone">{guide.disclaimer}</p>
           )}
 
           <div className="mt-12 rounded-[1.5rem] bg-cream p-7 text-center shadow-[0_18px_50px_rgba(26,58,82,0.08)] ring-1 ring-white/70">
@@ -238,7 +238,7 @@ export default async function GuidePage({ params }: Props) {
                   href={`/guides/${item.slug}`}
                   className="group rounded-[1.25rem] bg-cream p-5 shadow-[0_14px_40px_rgba(26,58,82,0.07)] ring-1 ring-white/70 transition-shadow hover:shadow-[0_18px_50px_rgba(26,58,82,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral"
                 >
-                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-stone">
+                  <p className="text-[0.875rem] font-bold uppercase tracking-[0.16em] text-stone">
                     {item.category}
                   </p>
                   <h3 className="mt-2 font-serif text-[1.15rem] font-semibold leading-tight text-ink group-hover:text-emerald-mid">

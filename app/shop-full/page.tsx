@@ -157,10 +157,10 @@ function ImageGalleryModal({
         className="relative z-10 flex items-center justify-between px-4 py-3"
         onClick={(e) => e.stopPropagation()}
       >
-        <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-white/50">
+        <span className="text-[0.875rem] font-bold uppercase tracking-[0.18em] text-white/50">
           {current + 1} / {images.length}
         </span>
-        <p className="absolute left-1/2 -translate-x-1/2 text-[0.72rem] font-semibold text-white/70">
+        <p className="absolute left-1/2 -translate-x-1/2 text-[0.875rem] font-semibold text-white/70">
           {productName}
         </p>
         <button
@@ -663,7 +663,7 @@ function CommunityVideoCard({
         <button
           onClick={toggleMute}
           aria-label={muted ? "Unmute video" : "Mute video"}
-          className="absolute bottom-10 left-3 z-10 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.68rem] font-semibold text-white transition-colors hover:bg-black/70"
+          className="absolute bottom-10 left-3 z-10 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.875rem] font-semibold text-white transition-colors hover:bg-black/70"
           style={{ background: "rgba(0,0,0,0.52)" }}
         >
           {muted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
@@ -708,7 +708,7 @@ function CommunityVideoCard({
 
           {/* Name + price */}
           <div className="min-w-0 flex-1">
-            <p className="text-[0.62rem] font-bold uppercase tracking-[0.12em] text-[#059669]">
+            <p className="text-[0.875rem] font-bold uppercase tracking-[0.12em] text-[#059669]">
               Travelholics Original
             </p>
             <p className="truncate text-[0.88rem] font-extrabold leading-tight text-[#0a1a2e]">
@@ -719,7 +719,7 @@ function CommunityVideoCard({
                 {formatMerchPrice(product.price)}
               </span>
               {product.compareAtPrice && (
-                <span className="text-[0.72rem] font-semibold text-stone-400 line-through">
+                <span className="text-[0.875rem] font-semibold text-stone-400 line-through">
                   {formatMerchPrice(product.compareAtPrice)}
                 </span>
               )}
@@ -756,7 +756,7 @@ function CommunityVideoCard({
           <RippleButton
             onClick={() => onCheckout(qty)}
             disabled={isPending}
-            className="flex min-h-[38px] flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#059669] text-[0.8rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex min-h-[38px] flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#059669] text-[0.875rem] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isPending ? "Opening…" : "Add to Cart"}
             {!isPending && <ArrowRight className="h-3 w-3" />}
@@ -839,7 +839,7 @@ function DesktopProductCard({
             {formatMerchPrice(product.price)}
           </span>
           {product.compareAtPrice && (
-            <span className="text-[0.82rem] font-semibold text-stone-400 line-through">
+            <span className="text-[0.875rem] font-semibold text-stone-400 line-through">
               {formatMerchPrice(product.compareAtPrice)}
             </span>
           )}
@@ -955,7 +955,7 @@ export default function ShopFullPage() {
       </AnimatePresence>
 
       {/* ── Utility Bar ─────────────────────────────────────── */}
-      <div className="fixed left-0 right-0 top-0 z-[70] flex h-8 items-center justify-center bg-[#059669] text-[0.70rem] font-semibold tracking-wide text-white">
+      <div className="fixed left-0 right-0 top-0 z-[70] flex h-8 items-center justify-center bg-[#059669] text-[0.875rem] font-semibold tracking-wide text-white">
         Free shipping on orders over $50
       </div>
 
@@ -1026,7 +1026,7 @@ export default function ShopFullPage() {
             </div>
             {/* Breadcrumb row — sits just below the header bar */}
             <div className="px-5 pb-1">
-              <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-[0.65rem] font-semibold text-white/55">
+              <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-[0.875rem] font-semibold text-white/55">
                 <Link href="/" className="hover:text-white/80 transition-colors">Home</Link>
                 <span className="text-white/30">›</span>
                 <span className="text-white/75">Shop</span>
@@ -1074,14 +1074,14 @@ export default function ShopFullPage() {
                 </p>
               )}
               <div className="pointer-events-auto flex items-center gap-3">
-                <span className="flex items-center gap-1 text-[0.65rem] font-semibold text-white/75">
+                <span className="flex items-center gap-1 text-[0.875rem] font-semibold text-white/75">
                   <ShieldCheck className="h-3 w-3" />
                   Secure checkout via Stripe
                 </span>
                 <span className="text-white/30" aria-hidden>|</span>
                 <button
                   onClick={() => setTrustOpen(true)}
-                  className="text-[0.65rem] font-semibold text-white/75 underline underline-offset-2 transition-colors hover:text-white"
+                  className="text-[0.875rem] font-semibold text-white/75 underline underline-offset-2 transition-colors hover:text-white"
                 >
                   Why we recommend these →
                 </button>
@@ -1143,7 +1143,7 @@ export default function ShopFullPage() {
 
           {/* Desktop breadcrumb */}
           <div className="bg-white/5 px-10 py-2">
-            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[0.72rem] font-semibold text-white/50">
+            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[0.875rem] font-semibold text-white/50">
               <Link href="/" className="hover:text-white/80 transition-colors">Home</Link>
               <span className="text-white/25">›</span>
               <span className="text-white/75">Shop</span>
@@ -1185,7 +1185,7 @@ export default function ShopFullPage() {
 
             {/* Collection intro */}
             <div className="relative z-10 pt-12 pb-8 text-center">
-              <p className="mb-3 text-[0.62rem] font-bold uppercase tracking-[0.28em] text-white/50">
+              <p className="mb-3 text-[0.875rem] font-bold uppercase tracking-[0.28em] text-white/50">
                 Travelholics Originals
               </p>
               <h1 className="mb-3 text-[2.6rem] font-black leading-tight text-white">
@@ -1196,7 +1196,7 @@ export default function ShopFullPage() {
               </p>
               <button
                 onClick={() => setTrustOpen(true)}
-                className="text-[0.72rem] font-semibold text-white/55 underline underline-offset-2 transition-colors hover:text-white/85"
+                className="text-[0.875rem] font-semibold text-white/55 underline underline-offset-2 transition-colors hover:text-white/85"
               >
                 Why travelers trust these picks →
               </button>
@@ -1219,7 +1219,7 @@ export default function ShopFullPage() {
               </div>
 
               {/* Stripe trust note */}
-              <div className="mt-8 flex items-center justify-center gap-2 text-[0.68rem] font-semibold text-white/50">
+              <div className="mt-8 flex items-center justify-center gap-2 text-[0.875rem] font-semibold text-white/50">
                 <ShieldCheck className="h-3.5 w-3.5 text-[#34d399]" />
                 Secure checkout via Stripe
               </div>
@@ -1230,7 +1230,7 @@ export default function ShopFullPage() {
           <section className="bg-[#FAF9F6] py-14">
             {/* Header — constrained width */}
             <div className="mx-auto mb-10 max-w-[1240px] px-10 text-center">
-              <p className="mb-2 text-[0.62rem] font-bold uppercase tracking-[0.26em] text-[#059669]">
+              <p className="mb-2 text-[0.875rem] font-bold uppercase tracking-[0.26em] text-[#059669]">
                 Travelholics Community
               </p>
               <h2 className="text-[1.9rem] font-black text-[#0a1a2e]">
@@ -1277,7 +1277,7 @@ export default function ShopFullPage() {
 
               {/* Left — story */}
               <div className="flex-1">
-                <p className="mb-2 text-[0.65rem] font-bold uppercase tracking-[0.26em] text-[#4a5568]">
+                <p className="mb-2 text-[0.875rem] font-bold uppercase tracking-[0.26em] text-[#4a5568]">
                   The Story Behind
                 </p>
                 <h2
@@ -1297,7 +1297,7 @@ export default function ShopFullPage() {
                 </p>
                 <Link
                   href="/#about"
-                  className="inline-flex items-center gap-2 rounded-xl bg-[#059669] px-7 py-3.5 text-[0.82rem] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#047857]"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#059669] px-7 py-3.5 text-[0.875rem] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#047857]"
                 >
                   Meet Yolanda
                 </Link>
@@ -1336,7 +1336,7 @@ export default function ShopFullPage() {
                     <p className="text-[0.88rem] font-black uppercase tracking-[0.08em] text-[#0a1a2e]">
                       {label}
                     </p>
-                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-[#4a5568]">
+                    <p className="text-[0.875rem] font-semibold uppercase tracking-[0.08em] text-[#4a5568]">
                       {sub}
                     </p>
                   </div>
@@ -1370,7 +1370,7 @@ export default function ShopFullPage() {
                 aria-hidden
               />
               <div className="relative z-10">
-                <p className="mb-3 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-white/50">
+                <p className="mb-3 text-[0.875rem] font-bold uppercase tracking-[0.22em] text-white/50">
                   Plan the whole trip
                 </p>
                 <h2 className="mb-2 text-2xl font-bold text-white md:text-3xl">
