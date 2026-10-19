@@ -85,11 +85,11 @@ Both sticky mobile CTAs must clear the iOS home indicator. Use
 `components/mobile-cta.tsx` hides itself as `#contact` approaches so it never covers the
 form. Preserve that behavior in any new sticky bar.
 
-## Dead code to be aware of
+## Group cruise page structure
 
-`components/group-cruise-story.tsx` contains its own `#group-cruise-hero` block, but
-`app/group-cruises/page.tsx` hides it with an inline `<style>` and renders
-`GroupCruiseHeroMinimal` instead. Editing that hidden hero changes nothing on the live page.
+`app/group-cruises/page.tsx` owns the main landmark. Its visible hero and only mobile
+sticky CTA live in `components/group-cruise-hero-minimal.tsx`. The sections below the hero
+live in `components/group-cruise-story.tsx`; do not add a second hero or sticky CTA there.
 
 ## Local dev
 

@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
-import { ArrowDown, ArrowRight, CalendarDays, CheckCircle2, KeyRound, Ship, UsersRound } from 'lucide-react'
+import { ArrowRight, CalendarDays, CheckCircle2, KeyRound, Ship, UsersRound } from 'lucide-react'
 import GroupCruiseInquiryForm from '@/components/group-cruise-inquiry-form'
 
 const occasions = [
@@ -58,17 +58,20 @@ const steps = [
 ]
 
 const faqs = [
+  ['Is there an added planning fee?', 'No. Travel suppliers compensate Travelholics, so Yolanda\'s planning support comes without an added planning fee. Cruise fares, deposits, taxes, gratuities, and optional extras still apply. Yolanda will explain the costs for your sailing.'],
   ['How many people do I need for a group cruise?', 'It depends on the cruise line and sailing. Start with your estimated group size and Yolanda will help determine the best path.'],
   ['Do we have to know exactly which cruise we want?', 'No. You can come with a specific sailing in mind or ask Yolanda to help narrow down the right cruise for your group.'],
+  ['What does the group organizer need to do?', 'Bring an estimated headcount, a rough timeframe, and your group\'s priorities. Yolanda helps shape the sailing and booking process; you help keep your people informed and excited.'],
   ['Will everyone book through the group leader?', 'No. Once the group trip is set up, guests can review the trip and submit their own booking request to Travelholics.'],
   ['Does the group get one place for all the trip details?', 'Yes. Confirmed Travelholics group cruises receive a personalized trip hub with the information your group needs in one place.'],
+  ['Does this inquiry reserve cabins?', 'This starts a planning conversation. Yolanda will confirm availability, prices, and deposit terms with you before a booking is made. No payment is collected in this form.'],
 ]
 
 function ProcessVisual({ active }: { active: number }) {
   const imageForStep = active === 0 ? '/images/dest-caribbean.jpg' : active === 3 ? '/images/about-on-deck.jpg' : null
 
   return (
-    <div className="relative min-h-[32rem] overflow-hidden rounded-[1.35rem] bg-[#0b2b25] shadow-[0_30px_90px_rgba(6,33,28,0.24)]">
+    <div className="relative min-h-[42rem] overflow-hidden rounded-[1.35rem] bg-[#0b2b25] shadow-[0_30px_90px_rgba(6,33,28,0.24)]">
       <AnimatePresence mode="wait">
         {imageForStep ? (
           <motion.div
@@ -94,18 +97,17 @@ function ProcessVisual({ active }: { active: number }) {
             <h3 className="mt-3 max-w-sm font-serif text-4xl font-semibold leading-[0.95] tracking-[-0.045em]">Cabins people can compare without chasing screenshots.</h3>
             <div className="mt-8 border-t border-white/15">
               {[
-                ['Interior', '$899 pp', 'Best value'],
-                ['Ocean View', '$1,149 pp', 'More light'],
-                ['Balcony', '$1,399 pp', 'Most requested'],
-              ].map(([name, price, note], index) => (
+                ['Interior', 'An option for value'],
+                ['Ocean View', 'A view of the water'],
+                ['Balcony', 'Your own outdoor space'],
+              ].map(([name, note]) => (
                 <div key={name} className="grid grid-cols-[1fr_auto] gap-4 border-b border-white/15 py-5">
                   <div>
                     <p className="text-lg font-bold">{name}</p>
-                    <p className="mt-1 text-sm text-white/50">{note}</p>
+                    <p className="mt-1 text-lg leading-7 text-white/80">{note}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-serif text-2xl font-semibold text-coral">{price}</p>
-                    <p className="mt-1 text-[10px] uppercase tracking-[0.16em] text-white/38">sample</p>
+                    <p className="text-sm font-bold text-white/80">Example</p>
                   </div>
                 </div>
               ))}
@@ -115,22 +117,22 @@ function ProcessVisual({ active }: { active: number }) {
           <motion.div key="hub" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }} className="absolute inset-0 p-6 text-white sm:p-8">
             <div className="flex items-start justify-between gap-6 border-b border-white/15 pb-6">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-coral">Johnson Family Cruise</p>
-                <p className="mt-2 font-serif text-3xl font-semibold tracking-[-0.04em]">Eastern Caribbean · 2027</p>
+                <p className="text-sm font-black uppercase tracking-[0.2em] text-coral">Illustrative Trip Hub</p>
+                <p className="mt-2 font-serif text-3xl font-semibold tracking-[-0.04em]">Your sailing details</p>
               </div>
               <KeyRound className="mt-1 text-white/35" size={24} />
             </div>
             <div className="mt-6 grid grid-cols-3 border-y border-white/15 py-5 text-center">
-              {[['26', 'Travelers'], ['4', 'Cabin types'], ['Jun 12', 'Sail date']].map(([value, label]) => (
+              {[['Guests', 'Your group'], ['Cabins', 'Your options'], ['Dates', 'Your deadlines']].map(([value, label]) => (
                 <div key={label} className="border-r border-white/15 px-2 last:border-r-0">
                   <p className="font-serif text-2xl font-semibold text-coral">{value}</p>
-                  <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/42">{label}</p>
+                  <p className="mt-1 text-sm text-white/80">{label}</p>
                 </div>
               ))}
             </div>
             <div className="mt-7 space-y-3">
-              {['Cabin pricing ready to compare', 'Deposit deadline · Oct 18', 'Booking request status updated'].map((item, index) => (
-                <div key={item} className="flex items-center gap-3 border-b border-white/10 pb-3 text-sm text-white/72">
+              {['Cabin options and confirmed prices', 'Deposit and payment deadlines', 'Booking requests in one place'].map((item, index) => (
+                <div key={item} className="flex items-center gap-3 border-b border-white/10 pb-3 text-lg leading-7 text-white/90">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-coral text-[10px] font-black text-white">{index + 1}</span>
                   {item}
                 </div>
@@ -143,38 +145,6 @@ function ProcessVisual({ active }: { active: number }) {
   )
 }
 
-function MobileCruiseCTA() {
-  const [show, setShow] = useState(false)
-
-  useEffect(() => {
-    const hero = document.getElementById('group-cruise-hero')
-    const form = document.getElementById('start-planning')
-    if (!hero || !form) return
-
-    const update = () => {
-      const heroBottom = hero.getBoundingClientRect().bottom
-      const formTop = form.getBoundingClientRect().top
-      setShow(heroBottom < 0 && formTop > window.innerHeight * 0.7)
-    }
-
-    update()
-    window.addEventListener('scroll', update, { passive: true })
-    return () => window.removeEventListener('scroll', update)
-  }, [])
-
-  return (
-    <AnimatePresence>
-      {show ? (
-        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 14 }} className="fixed inset-x-4 bottom-4 z-40 md:hidden">
-          <Link href="#start-planning" className="flex min-h-13 items-center justify-center gap-2 rounded-full bg-coral px-5 py-3.5 text-sm font-black text-white shadow-[0_16px_50px_rgba(45,22,17,0.28)]">
-            Plan my group cruise <ArrowRight size={17} />
-          </Link>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
-  )
-}
-
 export default function GroupCruiseStory() {
   const reduceMotion = useReducedMotion()
   const processRef = useRef<HTMLElement>(null)
@@ -183,49 +153,7 @@ export default function GroupCruiseStory() {
   const progressHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
 
   return (
-    <main className="overflow-hidden bg-[#f4efe4] text-ink">
-      <section id="group-cruise-hero" className="relative min-h-[94svh] overflow-hidden bg-[#082d27] pt-28 text-white sm:pt-32 lg:pt-36">
-        <video
-          className="absolute inset-0 h-full w-full object-cover object-center"
-          aria-hidden="true"
-          autoPlay={!reduceMotion}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/images/about-with-travelers.jpg"
-        >
-          <source src="https://bnjcpfocmgtmutfbanhs.supabase.co/storage/v1/object/public/Images/travel_updated_hero_vid_2.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,32,27,.94)_0%,rgba(5,32,27,.75)_38%,rgba(5,32,27,.18)_74%,rgba(5,32,27,.38)_100%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-[42%] bg-gradient-to-t from-[#06241f] via-[#06241f]/18 to-transparent" />
-
-        <div className="relative mx-auto flex min-h-[calc(94svh-7rem)] max-w-[92rem] flex-col justify-end px-5 pb-10 sm:px-6 sm:pb-14 lg:px-10 lg:pb-16 xl:px-12">
-          <motion.div initial={reduceMotion ? false : { opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75 }} className="max-w-[74rem]">
-            <div className="mb-5 flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.22em] text-white/62 sm:text-[11px]">
-              <span className="h-px w-10 bg-coral" /> Group Cruises · Travelholics
-            </div>
-            <h1 className="font-serif text-[clamp(4rem,11vw,10.5rem)] font-semibold leading-[0.8] tracking-[-0.07em] text-white">
-              <span className="block">Your people.</span>
-              <span className="mt-2 block whitespace-nowrap text-[0.875rem] text-coral sm:mt-3">One unforgettable cruise.</span>
-            </h1>
-          </motion.div>
-
-          <div className="mt-8 grid gap-7 border-t border-white/20 pt-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,.55fr)] lg:items-end">
-            <p className="max-w-2xl text-lg font-medium leading-7 text-white/76 sm:leading-8">Bring the crew. Yolanda partners with you to shape the sailing, organize the details, and build a group experience that feels exciting from the first conversation to sail away.</p>
-            <div className="lg:text-right">
-              <p className="font-serif text-xl leading-tight text-white sm:text-2xl">The woman you know from TikTok is the woman helping you plan it.</p>
-              <p className="mt-2 text-sm text-white/48">A real partner, not a booking link and a good-luck email.</p>
-            </div>
-          </div>
-
-          <div className="mt-7 flex flex-wrap items-center gap-4">
-            <Link href="#start-planning" className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 text-sm font-black text-white transition hover:translate-y-[-1px] hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80">Start planning <ArrowDown size={17} /></Link>
-            <span className="text-sm font-semibold text-white/50">No cruise picked yet? Perfectly fine.</span>
-          </div>
-        </div>
-      </section>
-
+    <>
       <section id="group-occasions" className="mx-auto max-w-[92rem] px-5 py-20 sm:px-6 sm:py-28 lg:px-10 lg:py-32 xl:px-12">
         <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-end">
           <div>
@@ -237,14 +165,14 @@ export default function GroupCruiseStory() {
 
         <div className="mt-12 grid auto-rows-[18rem] gap-3 lg:grid-cols-12 lg:auto-rows-[15rem]">
           {occasions.map((item) => (
-            <motion.article key={item.title} whileHover={reduceMotion ? undefined : { y: -3 }} transition={{ duration: 0.2 }} className={`group relative overflow-hidden rounded-[1.2rem] ${item.className}`}>
-              <Image src={item.image} alt="" fill className="object-cover transition duration-700 group-hover:scale-[1.025]" sizes="(max-width: 1024px) 100vw, 60vw" />
+            <article key={item.title} className={`relative overflow-hidden rounded-[1.2rem] ${item.className}`}>
+              <Image src={item.image} alt="" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 60vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/12 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-7">
                 <h3 className="font-serif text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">{item.title}</h3>
-                <p className="mt-2 max-w-md text-sm leading-6 text-white/66">{item.copy}</p>
+                <p className="mt-2 max-w-md text-lg leading-7 text-white/90">{item.copy}</p>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
       </section>
@@ -261,6 +189,7 @@ export default function GroupCruiseStory() {
               <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">Experience with a face</p>
               <h2 className="mt-5 max-w-[11ch] font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-royal-deep">Cruise knowledge is better when it comes with a person.</h2>
               <p className="mt-7 max-w-xl text-lg leading-7 text-stone sm:leading-8">Yolanda brings 20+ years of travel experience, firsthand experience across 6+ cruise lines, and a community of 20K+ travelers who follow along for practical cruise advice. When you plan a group with Travelholics, that experience becomes part of your trip.</p>
+              <Link href="/videos" className="mt-5 inline-flex min-h-11 items-center gap-2 text-base font-bold text-emerald-mid underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-mid">Watch Cruise School <ArrowRight size={17} aria-hidden="true" /></Link>
             </div>
 
             <div className="mt-12 grid grid-cols-3 border-y border-ink/12 py-6">
@@ -275,7 +204,7 @@ export default function GroupCruiseStory() {
         </div>
       </section>
 
-      <section id="group-process" ref={processRef} className="relative bg-[#082d27] py-20 text-white sm:py-28 lg:py-32">
+      <section id="group-process" ref={processRef} className="relative scroll-mt-24 bg-[#082d27] py-20 text-white sm:py-28 lg:py-32">
         <div className="mx-auto max-w-[92rem] px-5 sm:px-6 lg:px-10 xl:px-12">
           <div className="max-w-4xl">
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">The process</p>
@@ -297,7 +226,7 @@ export default function GroupCruiseStory() {
                   <span className={`absolute -left-10 top-11 h-3.5 w-3.5 rounded-full border transition sm:-left-14 sm:h-5 sm:w-5 ${activeStep === index ? 'border-coral bg-coral' : 'border-white/28 bg-[#082d27]'}`} />
                   <p className="text-[10px] font-black uppercase tracking-[0.22em] text-coral">0{index + 1} · {step.kicker}</p>
                   <h3 className="mt-4 max-w-xl font-serif text-4xl font-semibold leading-[0.95] tracking-[-0.045em] sm:text-5xl">{step.title}</h3>
-                  <p className="mt-5 max-w-lg text-lg leading-7 text-white/58">{step.copy}</p>
+                  <p className="mt-5 max-w-lg text-lg leading-7 text-white/80">{step.copy}</p>
                 </motion.article>
               ))}
             </div>
@@ -320,7 +249,7 @@ export default function GroupCruiseStory() {
             <p className="mt-6 max-w-md text-lg leading-7 text-stone sm:leading-8">Once your cruise is locked in, Travelholics creates a personalized Trip Hub for the group. One place for cabin choices, group pricing, important dates, itinerary details, and booking requests.</p>
             <div className="mt-8 space-y-3 border-t border-ink/12 pt-6">
               {['Private group access code', 'Cabin choices with transparent pricing', 'Important deadlines in one place', 'One clear booking request flow'].map((item) => (
-                <p key={item} className="flex items-center gap-3 text-sm font-semibold text-ink"><CheckCircle2 size={17} className="text-emerald-mid" />{item}</p>
+                <p key={item} className="flex items-center gap-3 text-lg leading-7 font-semibold text-ink"><CheckCircle2 size={17} className="shrink-0 text-emerald-mid" />{item}</p>
               ))}
             </div>
           </div>
@@ -329,56 +258,47 @@ export default function GroupCruiseStory() {
             <div className="relative overflow-hidden rounded-[1.3rem] border border-ink/10 bg-[#0a3029] shadow-[0_40px_110px_rgba(21,58,49,0.22)]">
               <div className="flex items-center justify-between border-b border-white/12 px-5 py-4 text-white sm:px-7">
                 <div className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-coral" /><span className="h-2.5 w-2.5 rounded-full bg-white/22" /><span className="h-2.5 w-2.5 rounded-full bg-white/22" /></div>
-                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/40">Travelholics Trip Hub</p>
+                <p className="text-sm font-black uppercase tracking-[0.12em] text-white/90">Illustrative Trip Hub</p>
               </div>
               <div className="grid lg:grid-cols-[0.38fr_0.62fr]">
                 <div className="border-b border-white/12 p-6 text-white lg:border-b-0 lg:border-r sm:p-7">
-                  <p className="text-[10px] font-black uppercase tracking-[0.18em] text-coral">Johnson Family Cruise</p>
+                  <p className="text-sm font-black uppercase tracking-[0.18em] text-coral">Example group cruise</p>
                   <h3 className="mt-3 font-serif text-4xl font-semibold leading-[0.95] tracking-[-0.045em]">Eastern Caribbean<br />2027</h3>
-                  <div className="mt-7 space-y-4 border-t border-white/12 pt-5 text-sm text-white/58">
-                    <p className="flex items-center gap-2"><Ship size={15} /> Wonder of the Seas</p>
-                    <p className="flex items-center gap-2"><CalendarDays size={15} /> June 12–19</p>
-                    <p className="flex items-center gap-2"><UsersRound size={15} /> 26 travelers</p>
+                  <div className="mt-7 space-y-4 border-t border-white/12 pt-5 text-lg leading-7 text-white/90">
+                    <p className="flex items-center gap-2"><Ship size={18} className="shrink-0" /> Your selected ship</p>
+                    <p className="flex items-center gap-2"><CalendarDays size={18} className="shrink-0" /> Your sailing dates</p>
+                    <p className="flex items-center gap-2"><UsersRound size={18} className="shrink-0" /> Your guest list</p>
                   </div>
                   <div className="mt-9 border-t border-white/12 pt-5">
-                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/38">Next deadline</p>
-                    <p className="mt-2 font-serif text-3xl font-semibold text-coral">Oct 18</p>
-                    <p className="mt-1 text-sm text-white/52">Deposit due</p>
+                    <p className="text-sm font-black uppercase tracking-[0.16em] text-white/80">Deposit deadline</p>
+                    <p className="mt-2 text-lg leading-7 font-semibold text-coral">Confirmed for your sailing</p>
                   </div>
                 </div>
                 <div className="bg-[#fffaf2] p-5 sm:p-7">
-                  <div className="grid grid-cols-3 border-y border-ink/10 py-4 text-center">
-                    {[['4', 'Cabin choices'], ['18', 'Booked'], ['8', 'Planning']].map(([value, label]) => (
-                      <div key={label} className="border-r border-ink/10 px-2 last:border-r-0">
-                        <p className="font-serif text-2xl font-semibold text-royal-deep">{value}</p>
-                        <p className="mt-1 text-[10px] font-black uppercase tracking-[0.12em] text-stone/60">{label}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  <div className="grid gap-3 sm:grid-cols-2">
                     <div className="border border-ink/10 bg-white p-4">
                       <p className="text-[10px] font-black uppercase tracking-[0.16em] text-coral">Cabin spotlight</p>
                       <p className="mt-2 font-serif text-2xl font-semibold text-royal-deep">Ocean View Balcony</p>
-                      <p className="mt-2 text-sm text-stone">$1,399 per person</p>
+                      <p className="mt-2 text-lg leading-7 text-stone">Compare cabin types and confirmed prices.</p>
                     </div>
                     <div className="border border-ink/10 bg-white p-4">
-                      <p className="text-[10px] font-black uppercase tracking-[0.16em] text-coral">Day 3</p>
+                      <p className="text-sm font-black uppercase tracking-[0.16em] text-coral">Your itinerary</p>
                       <p className="mt-2 font-serif text-2xl font-semibold text-royal-deep">Perfect Day at CocoCay</p>
-                      <p className="mt-2 text-sm text-stone">7:00 AM arrival</p>
+                      <p className="mt-2 text-lg leading-7 text-stone">Port times shared with your group.</p>
                     </div>
                   </div>
                   <div className="mt-3 border border-ink/10 bg-white p-4">
                     <div className="flex items-center justify-between gap-4">
                       <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.16em] text-coral">Your next move</p>
-                        <p className="mt-1 text-sm font-bold text-ink">Choose a cabin and send your booking request.</p>
+                        <p className="text-sm font-black uppercase tracking-[0.16em] text-coral">Booking requests</p>
+                        <p className="mt-1 text-lg leading-7 font-bold text-ink">Each guest sends their request to Travelholics.</p>
                       </div>
-                      <ArrowRight className="shrink-0 text-emerald-mid" size={20} />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <p className="mt-4 text-lg leading-7 text-stone">Illustrative preview. Your sailing details, prices, and deadlines are confirmed with Yolanda.</p>
           </motion.div>
         </div>
       </section>
@@ -391,13 +311,13 @@ export default function GroupCruiseStory() {
               <h2 className="mt-4 font-serif text-5xl font-semibold leading-[0.9] tracking-[-0.055em] text-royal-deep sm:text-6xl">Before you rally the crew.</h2>
             </div>
             <div className="border-t border-ink/15">
-              {faqs.map(([question, answer], index) => (
+              {faqs.map(([question, answer]) => (
                 <details key={question} className="group border-b border-ink/15 py-5 sm:py-6">
-                  <summary className="flex cursor-pointer list-none items-start justify-between gap-6 text-base font-bold text-ink sm:text-lg">
+                  <summary className="flex min-h-11 cursor-pointer list-none items-start justify-between gap-6 text-lg leading-7 font-bold text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-mid focus-visible:ring-offset-4">
                     <span>{question}</span>
-                    <span className="mt-1 text-coral transition-transform group-open:rotate-45">+</span>
+                    <span aria-hidden="true" className="mt-1 text-coral transition-transform group-open:rotate-45">+</span>
                   </summary>
-                  <p className="mt-4 max-w-2xl pr-10 text-base leading-6 text-stone sm:text-lg sm:leading-7">{answer}</p>
+                  <p className="mt-4 max-w-2xl pr-4 text-lg leading-7 text-stone sm:pr-10">{answer}</p>
                 </details>
               ))}
             </div>
@@ -411,13 +331,12 @@ export default function GroupCruiseStory() {
             <p className="text-[11px] font-black uppercase tracking-[0.2em] text-coral">Your turn</p>
             <h2 className="mt-4 max-w-[9ch] font-serif text-[clamp(2.6rem,4.2vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-royal-deep">Tell us who&apos;s coming. We&apos;ll build from there.</h2>
             <p className="mt-6 max-w-md text-lg leading-7 text-stone">You do not need a perfect plan. Give Yolanda the starting point and she will help turn it into a cruise worth getting everybody together for.</p>
-            <p className="mt-8 flex items-start gap-3 border-t border-ink/12 pt-5 text-sm leading-6 text-stone"><CalendarDays size={19} className="mt-0.5 shrink-0 text-emerald-mid" />After you submit, you can optionally schedule time with Yolanda right away.</p>
+            <p className="mt-8 flex items-start gap-3 border-t border-ink/12 pt-5 text-lg leading-7 text-stone"><CalendarDays size={19} className="mt-1 shrink-0 text-emerald-mid" />Yolanda reviews your request and follows up using your preferred contact method.</p>
           </div>
           <GroupCruiseInquiryForm />
         </div>
       </section>
 
-      <MobileCruiseCTA />
-    </main>
+    </>
   )
 }

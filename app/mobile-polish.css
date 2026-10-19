@@ -329,8 +329,12 @@
 
   #group-cruise-hero-minimal > div:last-child {
     min-height: 82svh !important;
-    padding-top: 6rem !important;
+    padding-top: 10.5rem !important;
     padding-bottom: 2rem !important;
+  }
+
+  #group-cruise-hero-minimal .group-hero-shade {
+    background: linear-gradient(180deg, rgba(5, 32, 27, .35), rgba(5, 32, 27, .72) 65%, rgba(5, 32, 27, .92)) !important;
   }
 
   /* Sized so "unforgettable cruise." stays on one line at 390px. Going larger
@@ -342,15 +346,11 @@
     letter-spacing: -0.05em !important;
   }
 
-  #group-cruise-hero-minimal h1 + a {
+  #group-cruise-hero-minimal .group-hero-actions {
     margin-top: 1.5rem !important;
   }
 
-  /* Group Cruises story: preserve all content, compress the mobile reading path.
-     Targeted by id. These were nth-of-type chains counting from a #group-cruise-hero
-     that app/group-cruises/page.tsx hides with display:none -- hidden, but still
-     counted, so deleting that dead hero would have shifted all 34 rules by one and
-     silently restyled the whole page. */
+  /* Group Cruises story sections are targeted by id, independent of page order. */
   .group-cruise-mobile-optimized #group-occasions {
     padding-top: 3.5rem !important;
     padding-bottom: 3.5rem !important;
@@ -370,11 +370,10 @@
   /* One column, not a 2x2 mosaic. The middle pair shared a row at 137px, and
      "Milestone birthdays" needs 235px at this heading size -- which is how it
      and "Friends trips" each ended up stranding their last word. Cards are
-     shortened to 10rem so four full-width bands cost only ~90px more height
-     than the three rows they replace. */
+     sized to 12rem to leave room for readable 18px captions. */
   .group-cruise-mobile-optimized #group-occasions > div:nth-child(2) {
     grid-template-columns: 1fr !important;
-    grid-auto-rows: 10rem !important;
+    grid-auto-rows: 12rem !important;
     margin-top: 2rem !important;
   }
 
@@ -393,8 +392,8 @@
 
   .group-cruise-mobile-optimized #group-occasions article p {
     margin-top: 0.35rem !important;
-    font-size: 0.875rem !important;
-    line-height: 1.25rem !important;
+    font-size: 1.125rem !important;
+    line-height: 1.75rem !important;
   }
 
   /* Yolanda on Group Cruises */
@@ -537,11 +536,11 @@
     padding-bottom: 1.4rem !important;
   }
 
-  .group-cruise-mobile-optimized #start-planning form button[type="button"] {
+  .group-cruise-mobile-optimized #start-planning .cruise-stage-choice {
     padding: 1rem !important;
   }
 
-  .group-cruise-mobile-optimized #start-planning form button[type="button"] svg {
+  .group-cruise-mobile-optimized #start-planning .cruise-stage-choice > svg {
     margin-bottom: 0.75rem !important;
   }
 

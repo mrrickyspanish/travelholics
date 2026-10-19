@@ -8,20 +8,25 @@ import '../mobile-polish.css'
 
 export const metadata: Metadata = {
   title: 'Group Cruises with Yolanda',
-  description: 'Plan an unforgettable group cruise with Yolanda and Travelholics. From the first idea to a personalized trip hub, your group gets one organized, fun experience.',
+  description: 'Plan a group cruise with Yolanda Harris. Compare sailings, coordinate cabins, and give every guest a clear next step with no added planning fee.',
   alternates: { canonical: '/group-cruises' },
+  openGraph: {
+    title: 'Group Cruise Planning with Yolanda | Travelholics',
+    description: 'Bring your people. Yolanda helps with the sailing, cabins, and booking details, with no added planning fee.',
+    url: '/group-cruises',
+    type: 'website',
+  },
 }
 
 export default function GroupCruisesPage() {
   return (
     <>
       <Header />
-      <GroupCruiseHeroMinimal />
-      <CruiseLineStrip />
-      <div className="group-cruise-story-restraint group-cruise-mobile-optimized">
-        <style>{`.group-cruise-story-restraint #group-cruise-hero { display: none; }`}</style>
+      <main className="group-cruise-mobile-optimized overflow-x-clip bg-[#f4efe4] text-ink">
+        <GroupCruiseHeroMinimal />
+        <CruiseLineStrip />
         <GroupCruiseStory />
-      </div>
+      </main>
       <Footer />
     </>
   )
