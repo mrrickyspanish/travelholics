@@ -12,6 +12,8 @@ import { Testimonials } from "@/components/testimonials";
 import { ContactForm } from "@/components/contact-form";
 import { Footer } from "@/components/footer";
 import { MobileCTA } from "@/components/mobile-cta";
+import { OceanPause } from "@/components/ocean-pause";
+import { SectionEntrances } from "@/components/motion/section-entrances";
 import { getFeaturedLongForm, getShorts } from "@/lib/youtube-feed";
 import "./mobile-polish.css";
 import "./home.css";
@@ -40,6 +42,7 @@ export default async function Home() {
     <>
       <Header />
       <MobileCTA />
+      <SectionEntrances />
       <main className="home-mobile-optimized">
         {/* Meet the planner early; optional browsing follows proof.
             home.css owns the homepage layout through named classes. */}
@@ -47,6 +50,7 @@ export default async function Home() {
         <AdventureShelf />
         <MeetYolanda />
         <HowItWorks />
+        <OceanPause />
         <Testimonials />
         <CruiseLineStrip />
         <GroupTrips />

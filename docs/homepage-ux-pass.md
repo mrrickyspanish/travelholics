@@ -132,3 +132,31 @@ checks, headline/type-floor checks and automated accessibility scans. No product
 deployment or pull request was made.
 
 Final automated accessibility scans report zero violations at 390, 768 and 1440px, including live, upcoming-show and offline header themes.
+
+**Owner refinement — breathing room, color and visible entrance motion**
+
+The owner accepted the compact layouts and requested more separation, brand color,
+an ocean-video break, and sections visibly growing to full size as they enter view.
+This direction supersedes the earlier no-parallax motion treatment above.
+
+- Added 16–24px of space per section edge while preserving the compact content
+  arrangements. Yolanda's section uses sea-glass; reviews use a pale coral field.
+- Added one shallow ocean divider after the process section: 168px on phones,
+  about 259px at 1440px, capped at 320px. It reuses the existing `/go` shoreline
+  footage, reframed for a wide strip, compressed, and stripped of audio. Source:
+  `lib/travelholics-launch.ts` → `backgroundVideoSrc`. The new public assets are
+  `videos/ocean-shoreline.mp4` and `images/ocean-shoreline.webp`.
+- Video loads only when visible, pauses offscreen or in background tabs, and has
+  a manual play/pause control whose paused state survives scrolling away/back.
+  A gentle scroll-linked media offset adds depth in supporting browsers.
+- Every content section after the hero grows once from 97% to 100% as it reaches
+  the main viewport. Content remains opaque and readable. Focus immediately
+  settles the section. No layout dimensions change during the effect.
+- Reduced motion and no JavaScript keep full-size content and the still ocean
+  image. Motion preference changes stop active effects and playback immediately.
+  The group-cruise hero remains photo-only.
+
+At a 900px viewport height, the homepage measures 8,540px at 390px width, 6,709px
+at 768px, and 6,381px at 1440px. The new 1440px process section is 528px tall;
+the previous oversized version was 797px. Updated total-height budgets account
+for the requested spacing and one divider; per-section limits remain compact.

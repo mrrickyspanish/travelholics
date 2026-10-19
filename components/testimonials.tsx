@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/motion/reveal";
 import { HomeCardRail } from "@/components/home-card-rail";
 
 import Image from "next/image";
@@ -25,10 +24,10 @@ const testimonials = [
 export const Testimonials = () => (
   <section id="testimonials" className="home-testimonials" aria-labelledby="testimonials-title">
     <div className="home-container">
-      <Reveal className="home-section-heading">
+      <div className="home-section-heading">
         <div><p className="home-eyebrow">From the crew</p><h2 id="testimonials-title" className="home-heading">The trip should feel good before you even leave.</h2></div>
         <p className="home-body">The proof is not just the itinerary. It is whether people felt taken care of, understood the plan, and came home ready to do it again.</p>
-      </Reveal>
+      </div>
       <HomeCardRail id="traveler-reviews" label="Traveler reviews" className="home-review-rail">
         {testimonials.map(testimonial => (
           <li key={testimonial.name} className="home-quote">

@@ -68,6 +68,12 @@ contact panels. Avoid full-height storytelling bands below the hero. Do not redu
 body-copy sizes to fit. `npm run check:home-ux` checks section-height budgets and
 that every process card remains reachable with native scrolling and controls.
 
+The latest owner refinement adds breathing room around those compact layouts,
+sea-glass and pale coral fields, and one shallow ocean-video pause after the
+process section. Keep the group-cruise hero as a photo. Section entrances grow
+once from 97% to full size while remaining fully visible; do not reintroduce
+opacity fades. Reduced motion uses full-size content and the ocean's still image.
+
 ## Mobile styling lives in a separate stylesheet
 
 `app/mobile-polish.css` (imported by both `app/page.tsx` and `app/group-cruises/page.tsx`)
