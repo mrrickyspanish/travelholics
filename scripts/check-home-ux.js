@@ -40,7 +40,9 @@ async function visible(locator) { await locator.waitFor({ state: 'visible' }); }
       assert.equal(measurements.overflow, false, `page overflow at ${width}`);
       if (width === 1440) {
         // The owner wants one prominent topic with a preview of the next.
-        assert(measurements.height <= 7600, 'desktop height budget'); assert(measurements.portrait < 1500, 'desktop portrait reach');
+        assert(measurements.height <= 7600, 'desktop height budget');
+        // The approved destination portraits and separate group banner precede Yolanda.
+        assert(measurements.portrait < 1950, 'desktop portrait reach after destination showcase');
         for (const [id, limit] of Object.entries({ 'how-it-works': 800, testimonials: 800, 'group-trips': 740, videos: 900 })) assert(measurements.sections[id] <= limit, `${id}: desktop section height`);
       }
       if (width === 390) {

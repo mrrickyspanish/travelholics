@@ -10,20 +10,28 @@
 .home-button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 44px; padding: .8rem 1.25rem; background: var(--color-coral); color: var(--color-ink); font-size: .875rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
 .home-mobile-optimized :is(a,button,input,select,textarea,[tabindex]):focus-visible { outline: 2px solid var(--color-coral-deep); outline-offset: 4px; }
 .home-mobile-optimized .home-card-scrim { position: absolute; inset: 0; background: linear-gradient(transparent 15%,rgba(4,22,20,.82)); pointer-events: none; }
-.home-shelf { position: relative; z-index: 1; margin-top: -2rem; padding-bottom: 1rem; background: linear-gradient(transparent 2rem,#fbf7ef 2rem); }
+.home-shelf { position: relative; z-index: 1; margin-top: -2rem; padding-bottom: 2rem; background: linear-gradient(transparent 2rem,#fbf7ef 2rem); }
 .home-destinations { padding-top: 1.75rem; border-radius: .75rem .75rem 0 0; background: #fbf7ef; }
-.home-destination-rail { display: flex; gap: 1rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; margin-top: 1rem; padding: .25rem .25rem .75rem; }
-.home-destination-rail > li { flex: 0 0 84%; scroll-snap-align: start; }
-.home-destination-card { position: relative; display: block; height: 12rem; overflow: hidden; background: #082d27; color: white; border-radius: .5rem; }
+.home-destination-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.25rem 1rem; margin-top: 1.5rem; }
+.home-destination-grid > li { min-width: 0; }
+.home-destination-grid > li:first-child { grid-column: 1 / -1; }
+.home-destination-card { display: block; }
+.home-destination-image { position: relative; aspect-ratio: 1; overflow: hidden; background: #082d27; color: white; border-radius: .25rem; }
+.home-destination-grid > li:first-child .home-destination-image { aspect-ratio: 7 / 5; }
 .home-destination-card img { transition: transform var(--dur-hover) var(--ease-sail); }
-.home-destination-caption { position: absolute; inset: auto 0 0; padding: 1rem; }
-.home-destination-caption h3 { padding-right: 1rem; font-family: var(--font-fraunces),Georgia,serif; font-size: 1.5rem; font-weight: 600; line-height: 1.1; letter-spacing: -.04em; }
-.home-destination-caption p { margin-top: .4rem; max-width: 26ch; font-size: 1.125rem; line-height: 1.4; }
-.home-card-arrow { position: absolute; top: 1rem; right: 1rem; transition: transform var(--dur-hover) var(--ease-sail); }
-.home-rail-controls,.home-card-rail-controls { display: flex; align-items: center; justify-content: space-between; font-size: .875rem; font-variant-numeric: tabular-nums; }
-.home-rail-controls > div,.home-card-rail-controls > div { display: flex; gap: .5rem; }
-.home-rail-controls button,.home-card-rail-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #1a2e2a40; border-radius: 50%; }
-.home-rail-controls button:disabled,.home-card-rail-controls button:disabled { opacity: .35; }
+.home-destination-caption { position: absolute; inset: auto 0 0; padding: .625rem; }
+.home-destination-caption h3 { font-family: var(--font-fraunces),Georgia,serif; font-size: clamp(1.125rem,5vw,1.375rem); font-weight: 600; line-height: 1.1; letter-spacing: -.04em; white-space: nowrap; }
+.home-destination-grid > li:first-child .home-destination-caption { padding: 1.25rem; }
+.home-destination-grid > li:first-child h3 { font-size: clamp(1.75rem,7vw,2rem); }
+.home-destination-note { margin-top: .75rem; font-size: 1.125rem; line-height: 1.5; color: #53675d; }
+.home-destination-grid > li:not(:first-child) .home-destination-note { display: none; }
+.home-destination-group { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; margin-top: 2rem; padding: 1.25rem; background: #f9ded5; color: var(--color-ink); }
+.home-destination-group h3 { font-family: var(--font-fraunces),Georgia,serif; font-size: 1.5rem; font-weight: 600; line-height: 1.2; letter-spacing: -.025em; }
+.home-destination-group p { margin-top: .375rem; font-size: 1.125rem; line-height: 1.5; }
+.home-card-rail-controls { display: flex; align-items: center; justify-content: space-between; font-size: .875rem; font-variant-numeric: tabular-nums; }
+.home-card-rail-controls > div { display: flex; gap: .5rem; }
+.home-card-rail-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #1a2e2a40; border-radius: 50%; }
+.home-card-rail-controls button:disabled { opacity: .35; }
 .home-about,.home-how,.home-testimonials,.home-videos { padding-block: 3rem; }
 .home-about { background: #edf4ee; }
 .home-testimonials { background: #fff0e9; }
@@ -149,7 +157,6 @@
 @media (min-width: 640px) {
   .home-about-grid { grid-template-columns: .36fr .64fr; gap: 1.5rem; }
   .home-about-photo { height: auto; min-height: 20rem; }
-  .home-destination-rail > li { flex-basis: 44%; }
   .home-card-rail-viewport > li { flex-basis: calc(50% - .5rem); }
   .home-review-rail .home-card-rail-viewport { display: grid; grid-template-columns: 1fr 1fr; overflow: visible; }
   .home-review-rail .home-card-rail-controls { display: none; }
@@ -158,6 +165,17 @@
   .home-group-panel { padding: 2rem; }
 }
 @media (min-width: 768px) {
+  .home-destination-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.25rem; }
+  .home-destination-grid > li:first-child { grid-column: auto; }
+  .home-destination-grid .home-destination-image,
+  .home-destination-grid > li:first-child .home-destination-image { aspect-ratio: 10 / 11; }
+  .home-destination-grid .home-destination-caption,
+  .home-destination-grid > li:first-child .home-destination-caption { padding: 1.5rem; }
+  .home-destination-grid .home-destination-caption h3,
+  .home-destination-grid > li:first-child h3 { font-size: clamp(1.375rem,2.4vw,2rem); }
+  .home-destination-grid > li:not(:first-child) .home-destination-note { display: block; }
+  .home-destination-group { flex-direction: row; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; }
+  .home-destination-group .home-button { flex-shrink: 0; }
   .home-heading { font-size: clamp(2rem,2.8vw,2.5rem); }
   .home-about,.home-testimonials,.home-videos { padding-block: 4rem; }
   .home-how { padding-block: 2rem; }
@@ -188,9 +206,6 @@
   .home-group-panel .group-trip-moment:first-child img { object-position: center 30%; }
   .home-shelf { margin-top: -3rem; background: linear-gradient(transparent 3rem,#fbf7ef 3rem); }
   .home-destinations { padding-top: 2rem; }
-  .home-destination-rail { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); overflow: visible; }
-  .home-destination-card { height: 13rem; }
-  .home-rail-controls { display: none; }
   .home-about-grid { grid-template-columns: .32fr .68fr; gap: 2.5rem; align-items: stretch; }
   .home-about-photo { min-height: 22rem; }
   .home-process-layout { grid-template-columns: .36fr .64fr; align-items: start; gap: 2.5rem; }
@@ -229,7 +244,6 @@
   .home-mobile-optimized #hero .hero-tagline { display: none; }
   .home-mobile-optimized #hero img { object-position: 68% 0%; }
   .home-mobile-optimized #hero .hero-mobile-shade { background: linear-gradient(180deg,rgba(4,18,15,.18) 0%,rgba(4,18,15,.12) 30%,rgba(4,18,15,.86) 55%,#04120f 100%) !important; }
-  .home-destination-card { height: 13rem; }
   .home-shelf { padding-bottom: 2rem; }
 }
 @keyframes hero-ink { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
@@ -245,7 +259,8 @@
 }
 @media (hover:hover) and (prefers-reduced-motion:no-preference) {
   .home-destination-card:hover img,.home-product:hover img { transform: scale(1.04); }
-  .home-destination-card:hover .home-card-arrow,.home-product:hover .home-product-arrow { transform: translate(2px,-2px); }
+  .home-destination-card:hover h3 { text-decoration: underline; text-underline-offset: .2em; }
+  .home-product:hover .home-product-arrow { transform: translate(2px,-2px); }
 }
 @media (prefers-reduced-motion:no-preference) {
   .home-mobile-optimized .hero-underline path { stroke-dasharray: 1; animation: hero-ink 600ms var(--ease-sail) 100ms backwards; }

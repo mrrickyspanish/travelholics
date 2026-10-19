@@ -1,35 +1,14 @@
-"use client";
-
-import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const tiles = [
-  { label: "Caribbean", note: "Warm water, big ships, easy yes.", href: "/cruises/caribbean", image: "/images/Charlotte_Amalie_StThomas.jpg", alt: "Charlotte Amalie harbour with cruise ships docked" },
-  { label: "Alaska", note: "Glaciers, wildlife, and the kind of quiet you remember.", href: "/cruises/alaska", image: "/images/dest-alaska-glaciers.jpg", alt: "Snow-capped mountains above still water in Alaska" },
-  { label: "Mediterranean", note: "Wake up somewhere different every morning.", href: "/cruises/mediterranean", image: "/images/about-port-of-call.jpg", alt: "A traveller overlooking a Mediterranean hillside village" },
-  { label: "Group Trips", note: "Your people. More support. No planning fees.", href: "/group-cruises", image: "/images/about-with-travelers.jpg", alt: "A Travelholics group in matching shirts on board" },
+  { label: "Caribbean", note: "Warm water, big ships, easy yes.", href: "/cruises/caribbean", image: "/images/destinations/caribbean-hero.png", alt: "Turquoise Caribbean water and a palm-lined beach at sunset" },
+  { label: "Alaska", note: "Glaciers, wildlife, and the kind of quiet you remember.", href: "/cruises/alaska", image: "/images/destinations/alaska-hero.png", alt: "A cruise ship on still water between snow-capped Alaska mountains" },
+  { label: "Mediterranean", note: "Wake up somewhere different every morning.", href: "/cruises/mediterranean", image: "/images/destinations/mediterranean-hero.png", alt: "Blue-domed churches overlooking the Mediterranean coast at sunset" },
 ];
 
 export const AdventureShelf = () => {
-  const rail = useRef<HTMLUListElement>(null);
-  const [active, setActive] = useState(0);
-  const measure = () => {
-    const el = rail.current;
-    if (!el) return;
-    const cards = Array.from(el.children) as HTMLElement[];
-    const left = el.getBoundingClientRect().left;
-    const index = cards.reduce((best, card, i) => Math.abs(card.getBoundingClientRect().left - left) < Math.abs(cards[best].getBoundingClientRect().left - left) ? i : best, 0);
-    setActive(index);
-  };
-  const move = (direction: number) => {
-    const next = Math.max(0, Math.min(tiles.length - 1, active + direction));
-    const el = rail.current;
-    const card = el?.children[next] as HTMLElement | undefined;
-    if (el && card) el.scrollBy({ left: card.getBoundingClientRect().left - el.getBoundingClientRect().left, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
-  };
-
   return (
     <section id="adventure-shelf" className="home-shelf" aria-labelledby="destinations-title">
       <div id="destination-discovery" className="home-container home-destinations">
@@ -40,24 +19,26 @@ export const AdventureShelf = () => {
             <Link href="/#contact" className="home-text-link">Help me choose <ArrowUpRight size={16} /></Link>
           </div>
         </div>
-        <ul ref={rail} id="destination-rail" className="home-destination-rail" onScroll={measure} aria-label="Cruise destinations and group trips">
-          {tiles.map(tile => (
+        <ul id="destination-choices" className="home-destination-grid" aria-label="Cruise destinations">
+          {tiles.map((tile, index) => (
             <li key={tile.label}>
-              <Link href={tile.href} className="home-destination-card">
-                <Image src={tile.image} alt={tile.alt} fill sizes="(min-width: 1024px) 24vw, 78vw" className="object-cover" />
-                <div className="home-card-scrim" />
-                <div className="home-destination-caption"><h3>{tile.label}</h3><p>{tile.note}</p></div>
-                <ArrowUpRight className="home-card-arrow" size={20} aria-hidden="true" />
+              <Link href={tile.href} className="home-destination-card" aria-label={`Explore ${tile.label} cruises`}>
+                <div className="home-destination-image">
+                  <Image src={tile.image} alt={tile.alt} fill quality={90} sizes={index === 0 ? "(min-width: 1344px) 403px, (min-width: 768px) 31vw, 90vw" : "(min-width: 1344px) 403px, (min-width: 768px) 31vw, 44vw"} className="object-cover" />
+                  <div className="home-card-scrim" />
+                  <div className="home-destination-caption"><h3>{tile.label}</h3></div>
+                </div>
+                <p className="home-destination-note">{tile.note}</p>
               </Link>
             </li>
           ))}
         </ul>
-        <div className="home-rail-controls">
-          <span aria-live="polite" aria-atomic="true">{active + 1} / {tiles.length}</span>
+        <div className="home-destination-group" aria-labelledby="destination-groups-title">
           <div>
-            <button type="button" aria-label="Previous destination" aria-controls="destination-rail" onClick={() => move(-1)} disabled={active === 0}><ArrowLeft size={18} /></button>
-            <button type="button" aria-label="Next destination" aria-controls="destination-rail" onClick={() => move(1)} disabled={active === tiles.length - 1}><ArrowRight size={18} /></button>
+            <h3 id="destination-groups-title">Group Trips</h3>
+            <p>Your people. More support. No planning fees.</p>
           </div>
+          <Link href="/group-cruises" className="home-button">Explore group cruises <ArrowUpRight size={17} aria-hidden="true" /></Link>
         </div>
       </div>
     </section>
