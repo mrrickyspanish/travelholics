@@ -187,12 +187,7 @@
     line-height: 1.55 !important;
   }
 
-  /* Map and proof stay useful, but lose desktop-sized breathing room. */
-  .home-mobile-optimized #map {
-    padding-top: 2.75rem !important;
-    padding-bottom: 2.75rem !important;
-  }
-
+  /* Keep the proof strip compact on mobile. */
   .home-mobile-optimized #proof > div > div > div {
     padding-top: 1.5rem !important;
     padding-bottom: 1.5rem !important;

@@ -8,7 +8,6 @@ import { CruiseLineStrip } from "@/components/cruise-line-strip";
 import { MeetYolanda } from "@/components/meet-yolanda";
 import { StatsStrip } from "@/components/stats-strip";
 import { LatestVideos } from "@/components/latest-videos";
-import { DestinationMap } from "@/components/destination-map";
 import { GroupTrips } from "@/components/group-trips";
 import { ShopStrip } from "@/components/shop-strip";
 import { Testimonials } from "@/components/testimonials";
@@ -45,7 +44,7 @@ export default async function Home() {
       <main className="home-mobile-optimized">
         {/* Order is deliberate: say what this is (Hero, HowItWorks),
             then who says it (MeetYolanda, StatsStrip, Testimonials), then the
-            wider offer (GroupTrips, DestinationMap, LatestVideos, ShopStrip),
+            wider offer (GroupTrips, LatestVideos, ShopStrip),
             then the ask. Nothing sells merch ahead of social proof.
 
             NOTE: app/mobile-polish.css targets these sections by id, not by
@@ -60,7 +59,6 @@ export default async function Home() {
         <StatsStrip />
         <Testimonials />
         <GroupTrips />
-        <DestinationMap />
         <LatestVideos featured={featuredVideo} shorts={shorts} />
         <ShopStrip />
         <ContactForm />

@@ -19,7 +19,7 @@ const travelLinks = [
   { label: "Plan a Cruise",   href: "/#contact"      },
   { label: "Group Cruises",   href: "/group-cruises" },
   { label: "Upcoming Trips",  href: "/#group-trips"  },
-  { label: "Destinations",    href: "/#map"          },
+  { label: "Destinations",    href: "/#destination-discovery" },
   { label: "Cruise Lines",    href: "/#contact"      },
 ];
 
