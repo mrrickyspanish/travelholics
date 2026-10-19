@@ -73,8 +73,8 @@ RESEND_FROM_EMAIL=Travelholics <hello@yourdomain.com>
 # USPS address verification (optional — Duck Hunt shipping addresses)
 # Free credentials from https://developer.usps.com. Leave unset and
 # addresses are still format-checked, just not verified against USPS.
-USPS_CLIENT_ID=your_usps_consumer_key
-USPS_CLIENT_SECRET=your_usps_consumer_secret
+USPS_CONSUMER_KEY=your_usps_consumer_key
+USPS_CONSUMER_SECRET=your_usps_consumer_secret
 ```
 
 ### 3. Set Up Supabase
@@ -138,14 +138,14 @@ For production on Vercel, confirm these environment variables are set:
 | `RESEND_API_KEY` | Email notifications for forms and newsletter signups |
 | `RESEND_FROM_EMAIL` | Branded sender address once the sending domain is verified in Resend |
 | `NEWSLETTER_AUTOREPLY_ENABLED` | Optional. Set to `false` to disable subscriber confirmation emails |
-| `USPS_CLIENT_ID` | Optional. Verifying Duck Hunt shipping addresses against the USPS Addresses API |
-| `USPS_CLIENT_SECRET` | Optional. Pairs with `USPS_CLIENT_ID` |
+| `USPS_CONSUMER_KEY` | Optional. Verifying Duck Hunt shipping addresses against the USPS Addresses API. Named as developer.usps.com issues it |
+| `USPS_CONSUMER_SECRET` | Optional. Pairs with `USPS_CONSUMER_KEY` |
 | `USPS_API_BASE` | Optional. Defaults to `https://apis.usps.com`; set to `https://apis-tem.usps.com` for USPS's test environment |
 
 ### Duck Hunt address verification
 
 Shipping addresses are always format-checked on the server (`lib/address-validation.ts`,
-covered by `npm run check:address`). With `USPS_CLIENT_ID` / `USPS_CLIENT_SECRET` set they
+covered by `npm run check:address`). With `USPS_CONSUMER_KEY` / `USPS_CONSUMER_SECRET` set they
 are additionally checked against the USPS Addresses API.
 
 The USPS check is advisory and fails open. If it is unconfigured, USPS is unreachable, or

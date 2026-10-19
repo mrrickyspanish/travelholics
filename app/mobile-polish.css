@@ -102,66 +102,41 @@
     line-height: 1.1 !important;
   }
 
-  /* Meet Yolanda: portrait becomes a feature image, not an entire screen. */
-  .home-mobile-optimized #about > div > div:first-child {
-    min-height: 22rem !important;
-  }
-
-  .home-mobile-optimized #about > div > div:first-child > div:last-child {
-    padding: 1.25rem !important;
-  }
-
-  /* The name is the big one. This rule used to put 1.65rem on p:last-child --
-     the "Certified Cruise Specialist" caption -- which rendered the subtitle
-     LARGER than "Yolanda Harris" above it. The size belongs to the name; the
-     caption only needs the gap. */
-  .home-mobile-optimized #about > div > div:first-child > div:last-child p:first-child {
-    font-size: 1.65rem !important;
-    line-height: 1 !important;
-  }
-
-  .home-mobile-optimized #about > div > div:first-child > div:last-child p:last-child {
-    margin-top: 0.5rem !important;
-  }
-
-  .home-mobile-optimized #about > div > div:nth-child(2) {
-    padding: 3rem 1.25rem !important;
+  /* Meet Yolanda. The section is one grid now, so these hook onto a class and
+     the element type rather than a child-index chain into a structure that has
+     already changed once. The old block also styled `#about blockquote` --
+     there was no blockquote in the component, so three of its rules had never
+     matched anything. */
+  .home-mobile-optimized #about {
+    padding-top: 3.25rem !important;
+    padding-bottom: 3.25rem !important;
   }
 
   .home-mobile-optimized #about h2 {
-    margin-top: 0.85rem !important;
+    margin-top: 0.75rem !important;
     max-width: 13ch !important;
     font-size: 2.65rem !important;
     line-height: 0.92 !important;
     letter-spacing: -0.055em !important;
   }
 
-  .home-mobile-optimized #about blockquote {
-    margin-top: 1.6rem !important;
-    padding-left: 1rem !important;
+  .home-mobile-optimized #about h2 + p {
+    margin-top: 1rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .home-mobile-optimized #about figcaption {
+    padding: 1.25rem !important;
+  }
+
+  .home-mobile-optimized #about figcaption p:first-child {
+    font-size: 1.65rem !important;
+    line-height: 1 !important;
   }
 
   .home-mobile-optimized #about blockquote p {
-    font-size: 1.55rem !important;
+    font-size: 1.5rem !important;
     line-height: 1.12 !important;
-  }
-
-  .home-mobile-optimized #about blockquote + p {
-    margin-top: 1.35rem !important;
-    line-height: 1.65 !important;
-  }
-
-  .home-mobile-optimized #about > div > div:nth-child(2) > div:last-child {
-    margin-top: 2rem !important;
-  }
-
-  .home-mobile-optimized #about > div > div:nth-child(2) > div:last-child > div:first-child {
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
-  }
-
-  .home-mobile-optimized #about > div > div:nth-child(2) > div:last-child > div:first-child p:first-child {
-    font-size: 2.2rem !important;
   }
 
   /* Group cruise homepage teaser: keep the editorial collage without a 500px lead image. */

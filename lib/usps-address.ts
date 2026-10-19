@@ -5,7 +5,7 @@ import type { UsAddressInput } from "./address-validation";
 //
 // The legacy Web Tools XML API was retired in January 2026; this is the
 // OAuth2 REST replacement. Credentials come from developer.usps.com and are
-// read from USPS_CLIENT_ID / USPS_CLIENT_SECRET.
+// read from USPS_CONSUMER_KEY / USPS_CONSUMER_SECRET.
 //
 // FAIL-OPEN, DELIBERATELY. Every failure path -- not configured, token
 // refused, USPS down, request timed out, response unparseable -- returns
@@ -91,8 +91,11 @@ async function getToken(base: string, id: string, secret: string): Promise<strin
 }
 
 export async function verifyUsAddress(input: UsAddressInput): Promise<UspsResult> {
-  const clientId = process.env.USPS_CLIENT_ID;
-  const clientSecret = process.env.USPS_CLIENT_SECRET;
+  // USPS's developer portal issues these as "Consumer Key" and "Consumer
+  // Secret", so the env vars carry those names. The older USPS_CLIENT_* pair
+  // is read as a fallback so an existing deployment doesn't go dark on rename.
+  const clientId = process.env.USPS_CONSUMER_KEY || process.env.USPS_CLIENT_ID;
+  const clientSecret = process.env.USPS_CONSUMER_SECRET || process.env.USPS_CLIENT_SECRET;
   const base = process.env.USPS_API_BASE || DEFAULT_BASE;
 
   if (!clientId || !clientSecret) {
