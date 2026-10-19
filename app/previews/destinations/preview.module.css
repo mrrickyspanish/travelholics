@@ -17,15 +17,23 @@
 .destinations { display: grid; gap: 20px; list-style: none; margin: 0; padding: 0; }
 .destinations > li { min-width: 0; }
 .destination { display: block; text-decoration: none; }
-.option[data-layout=portraits] .photoFrame { border: 1px solid #1a2e2a59; padding: 7px; }
-.option[data-layout=portraits] .photo { border-radius: 0; }
+.option[data-layout=portraits] .destination { display: flex; flex-direction: column; height: 100%; border: 2px solid #111753; background: var(--destination-color); box-shadow: 4px 4px 0 #111753; }
+.option[data-layout=portraits] li:nth-child(1) { --destination-color: #f26a75; }
+.option[data-layout=portraits] li:nth-child(2) { --destination-color: #c6ded5; }
+.option[data-layout=portraits] li:nth-child(3) { --destination-color: #f2d791; }
+.option[data-layout=portraits] .photoFrame { padding: 8px 8px 0; }
+.option[data-layout=portraits] .photo { border: 1px solid #111753; border-radius: 0; }
+.cardBody { display: flex; flex: 1; flex-direction: column; padding: 18px 20px 20px; color: #111753; }
+.cardBody h3 { font-size: clamp(22px,2.25vw,32px); line-height: 1.1; }
+.cardBody p { margin-top: 8px; }
+.cardAction { width: fit-content; margin-top: auto; padding-top: 20px; font-size: 14px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; }
 .photo { position: relative; overflow: hidden; background: #082d27; border-radius: 3px; }
 .photo img { object-fit: cover; transition: transform .3s ease; }
 .caption { position: absolute; inset: 50% 0 0; display: flex; align-items: end; padding: 24px; background: linear-gradient(transparent,rgba(5,24,22,.82)); }
 .caption h3 { color: white; font-size: clamp(22px,2.25vw,32px); line-height: 1.1; }
 .destination > p { margin-top: 12px; color: #53675d; }
 .option[data-layout=portraits] .destinations { grid-template-columns: repeat(3,minmax(0,1fr)); }
-.option[data-layout=portraits] .photo { height: 460px; }
+.option[data-layout=portraits] .photo { height: 420px; }
 .option[data-layout=panorama] .destinations { grid-template-columns: 1.45fr 1fr; gap: 20px 24px; }
 .option[data-layout=panorama] .destinations > li:first-child { grid-row: 1/3; }
 .option[data-layout=panorama] .destinations > li:first-child .photo { height: 470px; }
@@ -46,10 +54,12 @@
   .option { padding: 28px 20px; }
   .intro { grid-template-columns: 1fr; gap: 16px; margin-bottom: 20px; }
   .intro h2 { font-size: 32px; }
-  .option[data-layout=portraits] .destinations { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; gap: 16px; scrollbar-width: none; padding: 4px; margin: -4px; }
+  .option[data-layout=portraits] .destinations { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; gap: 16px; scrollbar-width: none; padding: 4px 8px 8px 4px; margin: -4px -8px -8px -4px; }
   .option[data-layout=portraits] .destinations::-webkit-scrollbar { display: none; }
   .option[data-layout=portraits] .destinations > li { flex: 0 0 86%; scroll-snap-align: start; }
-  .option[data-layout=portraits] .photo { height: 340px; }
+  .option[data-layout=portraits] .photo { height: 320px; }
+  .cardBody { padding: 16px; }
+  .cardBody h3 { font-size: clamp(24px,7.4vw,32px); }
   .caption h3 { font-size: clamp(24px,7.4vw,32px); }
   .page .swipeHint { display: block; margin-top: 12px; font-size: 14px; color: #53675d; }
   .option[data-layout=panorama] .destinations { grid-template-columns: 1fr 1fr; gap: 16px; }

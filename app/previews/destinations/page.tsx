@@ -38,9 +38,13 @@ function DestinationOption({ variant }: { variant: "portraits" | "panorama" }) {
               <div className={styles.photoFrame}><div className={styles.photo}>
                 <Image src={`/images/destinations/${destination.slug}-hero.png`} alt={destination.alt} fill quality={90}
                   sizes={variant === "portraits" ? "(max-width: 767px) 700px, 900px" : "(max-width: 767px) 100vw, 60vw"} />
-                <div className={styles.caption}><h3>{destination.name}</h3></div>
+                {variant === "panorama" && <div className={styles.caption}><h3>{destination.name}</h3></div>}
               </div></div>
-              <p>{destination.note}</p>
+              {variant === "portraits" ? <div className={styles.cardBody}>
+                <h3>{destination.name}</h3>
+                <p>{destination.note}</p>
+                <span className={styles.cardAction}>Explore cruises</span>
+              </div> : <p>{destination.note}</p>}
             </Link>
           </li>
         ))}
@@ -59,7 +63,7 @@ export default function DestinationPreview() {
     <main className={styles.page}>
       <header className={styles.reviewHeader}>
         <h1>Destination layout preview</h1>
-        <p>Option A selected. Review the framed destination images and coastal parallax below. Option B remains below for reference.</p>
+        <p>Option A selected. Review the brighter destination cards and coastal parallax below. Option B remains below for reference.</p>
         <nav aria-label="Compare destination layouts"><a href="#option-a">Option A</a><a href="#option-b">Option B</a></nav>
       </header>
       <DestinationOption variant="portraits" />

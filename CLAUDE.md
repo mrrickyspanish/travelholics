@@ -82,8 +82,10 @@ Reduced motion uses full-size content and a static coastal image.
 The coastal image now follows scroll through `OceanPause`, including browsers
 without CSS scroll timelines. Keep its overscan larger than its travel so no edge
 shows, and preserve the shallow strip height. The owner selected destination
-Option A: three equal portraits, each inside a thin rectangular frame with a
-small sand inset. Review it at `/previews/destinations`; keep previews out of search.
+Option A: three equal destination cards with brighter photos, bold navy outlines,
+and unified caption panels in coral, sea-glass, and warm yellow. The thin picture
+frames felt too much like a gallery. Review it at `/previews/destinations`; keep
+previews out of search.
 
 ## Mobile styling lives in a separate stylesheet
 
