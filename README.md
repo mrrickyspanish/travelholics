@@ -122,6 +122,22 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### Browser validation
+
+With the development server running, install Chromium once with `npx playwright install chromium`, then run:
+
+```bash
+npm run check:home-ux
+npm run check:orphans
+npm run check:type-floor
+```
+
+`check:home-ux` covers responsive layouts, keyboard navigation, reduced motion,
+no-JavaScript content, campaign attribution, and contact validation/failure/retry.
+It intercepts lead and email requests with synthetic data; it does not send live inquiries.
+For an existing system Chromium, set `PLAYWRIGHT_CHROMIUM_PATH=/usr/bin/chromium`.
+Set `UX_BASE_URL` to check another local server with `check:home-ux`.
+
 ## 📧 Form Submission Flow (V1)
 
 ### Newsletter and Duck Hunt production setup

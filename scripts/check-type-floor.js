@@ -64,7 +64,7 @@ function collect(floor) {
 
 (async () => {
   const { base, paths } = parseArgs(process.argv.slice(2));
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH || undefined });
   let violations = 0;
   let allowed = 0;
 

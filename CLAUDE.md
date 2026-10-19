@@ -19,8 +19,12 @@ This is the single most-reported issue on this project. It is not a nitpick.
   size), lowering the font size, adding a deliberate `<span className="block">` break at a
   sensible point, or rewording. **Reword only with the owner's sign-off — the copy is theirs.**
 - **Verify the rendered wrap, do not eyeball the markup.** Run `npm run check:orphans`
-  (dev server must be running). It reports every heading that wraps to a lone last word, at
-  390 / 768 / 1024 / 1440.
+  (dev server must be running). It checks the homepage at eleven widths from 320 to
+  1920px and group cruises at 390 / 768 / 1024 / 1440.
+- Avoid excessive headline stacking as well as orphans. Homepage section headlines
+  must fit within two rendered lines. Give long introductions more width, especially
+  on tablets, and scale phone type to the available space. The same checker enforces
+  this limit; do not shorten the owner's copy or add forced breaks to satisfy it.
 - Any change to a headline's font size, `max-w-[Nch]`, `leading`, or copy changes its wrap.
   Re-run the check after those edits — including changes that only *look* like they affect
   desktop, because `mobile-polish.css` sizes some headings independently.
@@ -53,6 +57,16 @@ which should not creep back up:
 
 - Hero `h1`: `clamp(3.4rem, 7vw, 6.75rem)` — about 100px at 1440.
 - Section `h2`: `clamp(2.6rem, 4.2vw, 4.5rem)` — about 60px at 1440.
+- Homepage section headlines use the tighter 40px ceiling in `app/home.css`.
+  Preserve that scale; the larger ceiling above applies to other page layouts.
+
+### Homepage section density
+
+The owner's reference is Evyssa Vacations' compact editorial presentation. Use
+introductions beside image cards, small review portraits, and contained group and
+contact panels. Avoid full-height storytelling bands below the hero. Do not reduce
+body-copy sizes to fit. `npm run check:home-ux` checks section-height budgets and
+that every process card remains reachable with native scrolling and controls.
 
 ## Mobile styling lives in a separate stylesheet
 

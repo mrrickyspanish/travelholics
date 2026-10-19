@@ -1,142 +1,62 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 
-// Quick-nav off the hero. This deliberately shares destinations with the
-// editorial "Where should we wake up next?" section further down -- that one is
-// the considered browse, this is the fast jump-off. They use DIFFERENT imagery
-// imagery so the repeat reads as a shortcut rather than a duplicated section:
-// real photographs from Yolanda's own sailings here, the rendered hero art
-// there. Pick tile images by LOOKING at them -- the dest-*.jpg filenames
-// describe destinations but the files are traveller portraits.
 const tiles = [
-  {
-    label: "Caribbean",
-    href: "/cruises/caribbean",
-    image: "/images/Charlotte_Amalie_StThomas.jpg",
-    alt: "Aerial view of Charlotte Amalie harbour in St. Thomas with cruise ships docked",
-  },
-  {
-    label: "Alaska",
-    href: "/cruises/alaska",
-    image: "/images/dest-alaska-glaciers.jpg",
-    alt: "Snow-capped mountains above still water on an Alaska cruise route",
-  },
-  {
-    label: "Mediterranean",
-    href: "/cruises/mediterranean",
-    image: "/images/about-port-of-call.jpg",
-    alt: "A traveller looking out over a whitewashed Mediterranean hillside village",
-  },
-  {
-    label: "Group Trips",
-    href: "/group-cruises",
-    image: "/images/about-with-travelers.jpg",
-    alt: "A Travelholics group in matching shirts on board together",
-  },
+  { label: "Caribbean", note: "Warm water, big ships, easy yes.", href: "/cruises/caribbean", image: "/images/Charlotte_Amalie_StThomas.jpg", alt: "Charlotte Amalie harbour with cruise ships docked" },
+  { label: "Alaska", note: "Glaciers, wildlife, and the kind of quiet you remember.", href: "/cruises/alaska", image: "/images/dest-alaska-glaciers.jpg", alt: "Snow-capped mountains above still water in Alaska" },
+  { label: "Mediterranean", note: "Wake up somewhere different every morning.", href: "/cruises/mediterranean", image: "/images/about-port-of-call.jpg", alt: "A traveller overlooking a Mediterranean hillside village" },
+  { label: "Group Trips", note: "Your people. More support. No planning fees.", href: "/group-cruises", image: "/images/about-with-travelers.jpg", alt: "A Travelholics group in matching shirts on board" },
 ];
 
-const ArrowDoodle = () => (
-  <svg className="mt-3 h-7 w-24 text-royal-deep" viewBox="0 0 100 34" fill="none" aria-hidden="true">
-    <g stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 8C24 30 56 34 88 22" />
-      <path d="M88 22 76 21M88 22 80 31" />
-    </g>
-  </svg>
-);
-
 export const AdventureShelf = () => {
-  const scroller = useRef<HTMLDivElement>(null);
-  const [canScroll, setCanScroll] = useState(false);
-
-  // The next button only earns its place when the rail actually overflows --
-  // with four tiles it does not on a wide desktop.
-  const measure = useCallback(() => {
-    const el = scroller.current;
+  const rail = useRef<HTMLUListElement>(null);
+  const [active, setActive] = useState(0);
+  const measure = () => {
+    const el = rail.current;
     if (!el) return;
-    const more = el.scrollWidth - el.clientWidth > 8 && el.scrollLeft + el.clientWidth < el.scrollWidth - 8;
-    setCanScroll((prev) => (prev === more ? prev : more));
-  }, []);
-
-  // ResizeObserver rather than a measure() call in the effect body: observing
-  // fires its first callback asynchronously, so the initial measurement happens
-  // without a synchronous setState and the cascading render it causes. It also
-  // catches the rail changing width without a window resize.
-  useEffect(() => {
-    const el = scroller.current;
-    if (!el) return;
-    const observer = new ResizeObserver(measure);
-    observer.observe(el);
-    el.addEventListener("scroll", measure, { passive: true });
-    return () => {
-      observer.disconnect();
-      el.removeEventListener("scroll", measure);
-    };
-  }, [measure]);
-
-  const next = () => scroller.current?.scrollBy({ left: Math.round(scroller.current.clientWidth * 0.8), behavior: "smooth" });
+    const cards = Array.from(el.children) as HTMLElement[];
+    const left = el.getBoundingClientRect().left;
+    const index = cards.reduce((best, card, i) => Math.abs(card.getBoundingClientRect().left - left) < Math.abs(cards[best].getBoundingClientRect().left - left) ? i : best, 0);
+    setActive(index);
+  };
+  const move = (direction: number) => {
+    const next = Math.max(0, Math.min(tiles.length - 1, active + direction));
+    const el = rail.current;
+    const card = el?.children[next] as HTMLElement | undefined;
+    if (el && card) el.scrollBy({ left: card.getBoundingClientRect().left - el.getBoundingClientRect().left, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  };
 
   return (
-    <section id="adventure-shelf" className="relative z-10 -mt-8 sm:-mt-12 lg:-mt-14">
-      <div className="mx-auto max-w-[96rem] px-5 sm:px-8 lg:px-12 xl:px-16">
-        <div className="relative flex flex-col overflow-hidden rounded-xl bg-white shadow-[0_22px_60px_rgba(5,28,24,0.22)] lg:flex-row lg:items-stretch">
-          <div className="m-2 shrink-0 rounded-lg bg-mint px-6 py-5 lg:m-3 lg:flex lg:w-[15rem] lg:flex-col lg:justify-center lg:px-7 lg:py-7">
-            <p className="font-script text-[2rem] leading-none text-royal-deep">Find your</p>
-            <p className="mt-1.5 text-lg font-black uppercase tracking-[0.04em] text-royal-deep">Next adventure</p>
-            <ArrowDoodle />
+    <section id="adventure-shelf" className="home-shelf" aria-labelledby="destinations-title">
+      <div id="destination-discovery" className="home-container home-destinations">
+        <div className="home-section-heading">
+          <div><p className="home-eyebrow">Start with a feeling</p><h2 id="destinations-title" className="home-heading">Where should we wake up next?</h2></div>
+          <div>
+            <p className="home-body">You do not need to know the ship yet. Pick the kind of trip you want to feel, then let Yolanda help narrow down the sailing that actually fits.</p>
+            <Link href="/#contact" className="home-text-link">Help me choose <ArrowUpRight size={16} /></Link>
           </div>
-
-          <div className="relative min-w-0 flex-1">
-          <div
-            ref={scroller}
-            className="flex gap-3 overflow-x-auto scroll-smooth px-5 py-5 [scrollbar-width:none] sm:gap-4 lg:px-6 [&::-webkit-scrollbar]:hidden"
-          >
-            {tiles.map((tile) => (
-              <Link
-                key={tile.label}
-                href={tile.href}
-                className="group w-[12.5rem] shrink-0 snap-start overflow-hidden rounded-lg bg-white shadow-[0_3px_14px_rgba(5,28,24,0.14)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_26px_rgba(5,28,24,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral sm:w-[13.25rem]"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={tile.image}
-                    alt={tile.alt}
-                    fill
-                    sizes="(max-width: 640px) 14rem, 15rem"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                  />
-                </div>
-                <div className="flex items-center justify-between gap-3 px-4 py-3">
-                  <span className="truncate text-sm font-black uppercase tracking-[0.07em] text-royal-deep">{tile.label}</span>
-                  <ChevronRight size={18} strokeWidth={2.75} className="shrink-0 text-ink/55 transition group-hover:translate-x-0.5 group-hover:text-coral" />
-                </div>
+        </div>
+        <ul ref={rail} id="destination-rail" className="home-destination-rail" onScroll={measure} aria-label="Cruise destinations and group trips">
+          {tiles.map(tile => (
+            <li key={tile.label}>
+              <Link href={tile.href} className="home-destination-card">
+                <Image src={tile.image} alt={tile.alt} fill sizes="(min-width: 1024px) 24vw, 78vw" className="object-cover" />
+                <div className="home-card-scrim" />
+                <div className="home-destination-caption"><h3>{tile.label}</h3><p>{tile.note}</p></div>
+                <ArrowUpRight className="home-card-arrow" size={20} aria-hidden="true" />
               </Link>
-            ))}
-          </div>
-
-          {/* Touch devices get a fade instead of a control -- swiping is the
-              native affordance there, and an overlaid arrow just covers a tile
-              on a narrow rail. The button appears from lg, and only when the
-              rail actually overflows. */}
-          {canScroll && (
-            <>
-              <div
-                className="pointer-events-none absolute inset-y-5 right-0 w-10 bg-gradient-to-l from-white to-transparent lg:hidden"
-                aria-hidden="true"
-              />
-              <button
-                type="button"
-                onClick={next}
-                aria-label="Show more destinations"
-                className="absolute right-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-ink/12 bg-white text-ink shadow-[0_6px_20px_rgba(5,28,24,0.18)] transition hover:bg-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral lg:flex"
-              >
-                <ChevronRight size={20} />
-              </button>
-            </>
-          )}
+            </li>
+          ))}
+        </ul>
+        <div className="home-rail-controls">
+          <span aria-live="polite" aria-atomic="true">{active + 1} / {tiles.length}</span>
+          <div>
+            <button type="button" aria-label="Previous destination" aria-controls="destination-rail" onClick={() => move(-1)} disabled={active === 0}><ArrowLeft size={18} /></button>
+            <button type="button" aria-label="Next destination" aria-controls="destination-rail" onClick={() => move(1)} disabled={active === tiles.length - 1}><ArrowRight size={18} /></button>
           </div>
         </div>
       </div>

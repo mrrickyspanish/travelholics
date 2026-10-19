@@ -1,22 +1,14 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ArrowRight, Pause, Play } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 export default function GroupCruiseHeroMinimal() {
   const reduceMotion = useReducedMotion()
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [videoPaused, setVideoPaused] = useState(true)
   const [showSticky, setShowSticky] = useState(false)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-    if (reduceMotion !== false) video.pause()
-    else void video.play().catch(() => {})
-  }, [reduceMotion])
 
   useEffect(() => {
     const hero = document.getElementById('group-cruise-hero-minimal')
@@ -41,21 +33,14 @@ export default function GroupCruiseHeroMinimal() {
   return (
     <>
       <section id="group-cruise-hero-minimal" className="relative min-h-[94svh] overflow-hidden bg-[#082d27] text-white">
-        <video
-          ref={videoRef}
-          className="absolute inset-0 h-full w-full object-cover object-center"
-          aria-hidden="true"
-          autoPlay={reduceMotion === false}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/images/about-with-travelers.jpg"
-          onPlay={() => setVideoPaused(false)}
-          onPause={() => setVideoPaused(true)}
-        >
-          <source src="https://bnjcpfocmgtmutfbanhs.supabase.co/storage/v1/object/public/Images/travel_updated_hero_vid_2.mp4" type="video/mp4" />
-        </video>
+        <Image
+          src="/images/about-with-travelers.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
 
         <div
           className="group-hero-shade absolute inset-0"
@@ -66,21 +51,6 @@ export default function GroupCruiseHeroMinimal() {
           }}
         />
         <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-[#06241f]/90 via-[#06241f]/18 to-transparent" aria-hidden="true" />
-
-        <button
-          type="button"
-          onClick={() => {
-            const video = videoRef.current
-            if (!video) return
-            if (video.paused) void video.play().catch(() => {})
-            else video.pause()
-          }}
-          aria-label={videoPaused ? 'Play background video' : 'Pause background video'}
-          className="absolute right-5 top-28 z-10 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/30 bg-[#06241f]/80 px-4 py-2 text-sm font-bold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:right-6 lg:right-10"
-        >
-          {videoPaused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
-          {videoPaused ? 'Play video' : 'Pause video'}
-        </button>
 
         <div className="relative mx-auto flex min-h-[94svh] max-w-[92rem] flex-col justify-end px-5 pb-10 pt-28 sm:px-6 sm:pb-14 lg:px-10 lg:pb-16 xl:px-12">
           <motion.div

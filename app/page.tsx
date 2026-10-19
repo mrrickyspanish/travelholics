@@ -3,10 +3,8 @@ import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { AdventureShelf } from "@/components/adventure-shelf";
 import { HowItWorks } from "@/components/how-it-works";
-import { IntentCards } from "@/components/intent-cards";
 import { CruiseLineStrip } from "@/components/cruise-line-strip";
 import { MeetYolanda } from "@/components/meet-yolanda";
-import { StatsStrip } from "@/components/stats-strip";
 import { LatestVideos } from "@/components/latest-videos";
 import { GroupTrips } from "@/components/group-trips";
 import { ShopStrip } from "@/components/shop-strip";
@@ -16,6 +14,7 @@ import { Footer } from "@/components/footer";
 import { MobileCTA } from "@/components/mobile-cta";
 import { getFeaturedLongForm, getShorts } from "@/lib/youtube-feed";
 import "./mobile-polish.css";
+import "./home.css";
 
 export const metadata: Metadata = {
   title: "Travelholics | Certified Cruise Specialist — Yolanda Harris",
@@ -42,26 +41,18 @@ export default async function Home() {
       <Header />
       <MobileCTA />
       <main className="home-mobile-optimized">
-        {/* Order is deliberate: say what this is (Hero, HowItWorks),
-            then who says it (MeetYolanda, StatsStrip, Testimonials), then the
-            wider offer (GroupTrips, LatestVideos, ShopStrip),
-            then the ask. Nothing sells merch ahead of social proof.
-
-            NOTE: app/mobile-polish.css targets these sections by id, not by
-            position. If you add or move a section, keep its id — do not
-            reintroduce nth-child/adjacent-sibling selectors there. */}
+        {/* Meet the planner early; optional browsing follows proof.
+            home.css owns the homepage layout through named classes. */}
         <Hero />
         <AdventureShelf />
-        <HowItWorks />
-        <IntentCards />
-        <CruiseLineStrip />
         <MeetYolanda />
-        <StatsStrip />
+        <HowItWorks />
         <Testimonials />
+        <CruiseLineStrip />
         <GroupTrips />
         <LatestVideos featured={featuredVideo} shorts={shorts} />
-        <ShopStrip />
         <ContactForm />
+        <ShopStrip />
       </main>
       <Footer />
     </>

@@ -1,7 +1,5 @@
-"use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
 
 // Each line renders its approved logo when one is present in
 // public/images/cruise-lines/, and a styled wordmark until then. The two
@@ -39,22 +37,17 @@ const cruiseLines: CruiseLine[] = [
 const LOGO_BOX = "h-9 sm:h-10";
 
 export const CruiseLineStrip = () => {
-  const reduceMotion = useReducedMotion();
 
   return (
     <section id="cruise-lines" className="overflow-hidden border-y border-ink/10 bg-[#f1ebdf] text-ink">
       <div className="mx-auto max-w-[96rem] px-5 py-9 sm:px-8 sm:py-11 lg:px-12 xl:px-16">
-        <div className="grid gap-6 lg:grid-cols-[0.32fr_0.68fr] lg:items-center lg:gap-10">
-          <p className="max-w-[19ch] font-serif text-2xl font-semibold leading-[1.02] tracking-[-0.04em] text-royal-deep sm:text-3xl">
+        <div className="grid gap-6 lg:grid-cols-[0.45fr_0.55fr] lg:items-center lg:gap-10">
+          <p data-headline className="text-balance font-serif text-[clamp(1.375rem,2.1vw,1.75rem)] font-semibold leading-[1.1] tracking-[-0.04em] text-royal-deep">
             Different ships. Different personalities. We know the difference.
           </p>
 
           <div className="relative overflow-hidden lg:overflow-visible">
-            <motion.ul
-              initial={reduceMotion ? false : { opacity: 0, x: 18 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.35 }}
-              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            <ul tabIndex={0} aria-label="Cruise lines"
               className="-mx-5 flex gap-7 overflow-x-auto px-5 py-2 [scrollbar-width:none] sm:-mx-8 sm:gap-9 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-x-9 lg:gap-y-6 lg:overflow-visible lg:px-0 [&::-webkit-scrollbar]:hidden"
             >
               {cruiseLines.map((line) => (
@@ -81,7 +74,7 @@ export const CruiseLineStrip = () => {
                   )}
                 </li>
               ))}
-            </motion.ul>
+            </ul>
           </div>
         </div>
       </div>

@@ -74,7 +74,7 @@ export default async function BlogPage({
               {/* Featured article — only on unfiltered view */}
               {featured && (
                 <div className="mt-10 mb-4">
-                  <p className="type-kicker text-stone mb-4">Featured</p>
+                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-stone mb-4">Featured</p>
                   <ArticleCard article={featured} featured />
                 </div>
               )}

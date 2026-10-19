@@ -1,8 +1,6 @@
-"use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 // Hand-drawn underline under "booked.". preserveAspectRatio="none" lets it
@@ -10,13 +8,13 @@ import { ArrowRight } from "lucide-react";
 // asset. Drawn rather than imported so it recolors with the token.
 const Underline = () => (
   <svg
-    className="pointer-events-none absolute -bottom-[0.18em] left-0 h-[0.22em] w-full overflow-visible text-teal"
+    className="hero-underline pointer-events-none absolute -bottom-[0.18em] left-0 h-[0.22em] w-full overflow-visible text-teal"
     viewBox="0 0 300 20"
     preserveAspectRatio="none"
     aria-hidden="true"
   >
-    <path d="M3 13.5C52 6 108 3.5 164 5c38 1 92 4.5 133 9" fill="none" stroke="currentColor" strokeWidth="5.5" strokeLinecap="round" />
-    <path d="M14 19c46-5.5 104-7.5 157-6.5 30 .6 76 3 118 6.5" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" opacity="0.72" />
+    <path pathLength="1" d="M3 13.5C52 6 108 3.5 164 5c38 1 92 4.5 133 9" fill="none" stroke="currentColor" strokeWidth="5.5" strokeLinecap="round" />
+    <path pathLength="1" d="M14 19c46-5.5 104-7.5 157-6.5 30 .6 76 3 118 6.5" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" opacity="0.72" />
   </svg>
 );
 
@@ -36,7 +34,6 @@ const Sparkle = () => (
 );
 
 export const Hero = () => {
-  const reduceMotion = useReducedMotion();
 
   return (
     <section id="hero" className="relative min-h-[96svh] overflow-hidden bg-[#071f1b] text-white">
@@ -71,7 +68,7 @@ export const Hero = () => {
         }}
       />
       <div
-        className="absolute inset-0 md:hidden"
+        className="hero-mobile-shade absolute inset-0 md:hidden"
         aria-hidden="true"
         style={{
           background:
@@ -84,10 +81,7 @@ export const Hero = () => {
       <div className="relative mx-auto flex min-h-[96svh] max-w-[96rem] flex-col px-5 pb-12 pt-28 sm:px-8 sm:pb-16 lg:px-12 lg:pb-[4.5rem] xl:px-16">
         <div className="flex-1" />
 
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        <div
           className="max-w-[62rem]"
         >
           <p className="mb-4 text-sm font-black uppercase tracking-[0.2em] text-white/70">
@@ -116,7 +110,7 @@ export const Hero = () => {
 
           <div className="mt-7 flex flex-col gap-5 sm:max-w-[40rem] sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="hero-actions flex flex-wrap items-center gap-3">
               <Link
                 href="/group-cruises"
                 className="group inline-flex min-h-11 w-fit shrink-0 items-center gap-4 rounded-none bg-coral py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
@@ -126,18 +120,18 @@ export const Hero = () => {
                   <ArrowRight size={17} strokeWidth={2.75} />
                 </span>
               </Link>
-              <Link href="/cruise-interest" className="inline-flex min-h-11 items-center justify-center border border-white/60 px-5 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+              <Link href="/#contact" className="inline-flex min-h-11 items-center justify-center border border-white/60 px-5 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                 Plan my cruise
               </Link>
               </div>
 
-              <p className="relative mt-4 w-fit text-sm font-black uppercase tracking-[0.045em] text-white/75 sm:tracking-[0.12em]">
+              <p className="hero-tagline relative mt-4 w-fit text-sm font-black uppercase tracking-[0.045em] text-white/75 sm:tracking-[0.12em]">
                 Your people. More support. No planning fees.
                 <span className="absolute -bottom-1.5 left-0 block h-[3px] w-full bg-teal/85" aria-hidden="true" />
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
       </div>
     </section>

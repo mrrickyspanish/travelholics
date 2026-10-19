@@ -123,7 +123,16 @@ export function parseFeed(xml: string): RawFeedEntry[] {
 
 /** First non-empty line of a video description, trimmed for a card blurb. */
 export function firstLine(description: string, max = 140): string | undefined {
-  const line = description.split("\n").map((l) => l.trim()).find(Boolean);
+  const line = description.split(/\r?\n/).map((value) => value
+    .replace(/\[([^\]]+)\]\((?:https?:\/\/|www\.)[^)]+\)/gi, "$1")
+    .replace(/\b(?:https?:\/\/|www\.)[^\s<>]+/gi, "")
+    .replace(/\s+/g, " ")
+    .replace(/[\s:|–—-]+$/u, "")
+    .trim()).find(Boolean);
   if (!line) return undefined;
-  return line.length > max ? `${line.slice(0, max - 1).trimEnd()}…` : line;
+  if (line.length <= max) return line;
+  const prefix = line.slice(0, Math.max(0, max - 1));
+  const boundary = prefix.lastIndexOf(" ");
+  // Omit an overlong first word rather than splitting it mid-word.
+  return boundary > 0 ? `${prefix.slice(0, boundary).replace(/[:|–—-]+$/u, "")}…` : "…";
 }

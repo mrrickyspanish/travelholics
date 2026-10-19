@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { CURATED_VIDEOS, START_HERE_IDS, videoNextStep } from "../lib/youtube-catalog";
 import { PUBLISHABLE_GUIDES } from "../lib/free-guides";
-import { mergeChannelVideos, parseFeed, type Video } from "../lib/youtube";
+import { firstLine, mergeChannelVideos, parseFeed, type Video } from "../lib/youtube";
 import { buildGroupInquiryNotes, validateGroupInquiryContact } from "../lib/group-inquiry";
 import { appendLeadAttribution, captureLeadAttribution, sanitizeCampaign } from "../lib/lead-attribution";
 
@@ -20,6 +20,13 @@ assert(!merged.some((video) => video.id === "RoG1LhSLq50"));
 const parsed = parseFeed('<feed><entry><yt:videoId>N4O_Km9eqFk</yt:videoId><title>Packing &amp; planning</title><published>2026-07-13</published></entry><entry><yt:videoId>../../bad</yt:videoId></entry></feed>');
 assert.equal(parsed.length, 1);
 assert.equal(parsed[0].title, "Packing & planning");
+
+assert.equal(firstLine("Plan with Yolanda: https://yotravelholic.com/group-cruises?utm_source=youtube"), "Plan with Yolanda");
+assert.equal(firstLine("https://example.com/?utm_source=youtube\nChoose your ship."), "Choose your ship.");
+assert.equal(firstLine("\nwww.example.com\n"), undefined);
+assert.equal(firstLine("[Cruise advice](https://example.com)"), "Cruise advice");
+assert.equal(firstLine("Choose a cruise with confidence", 20), "Choose a cruise…");
+assert.equal(firstLine("Supercalifragilistic", 8), "…");
 
 const base = { leaderName: "Example Organizer", email: "example@example.com", groupType: "Family reunion", preferredContact: "email" };
 assert.equal(validateGroupInquiryContact(base), null);
