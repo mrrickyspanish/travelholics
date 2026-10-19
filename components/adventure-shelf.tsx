@@ -25,10 +25,8 @@ export const AdventureShelf = () => {
               <Link href={tile.href} className="home-destination-card" aria-label={`Explore ${tile.label} cruises`}>
                 <div className="home-destination-image">
                   <Image src={tile.image} alt={tile.alt} fill quality={90} sizes={index === 0 ? "(min-width: 1344px) 403px, (min-width: 768px) 31vw, 90vw" : "(min-width: 1344px) 403px, (min-width: 768px) 31vw, 44vw"} className="object-cover" />
-                  <div className="home-card-scrim" />
-                  <div className="home-destination-caption"><h3>{tile.label}</h3></div>
                 </div>
-                <p className="home-destination-note">{tile.note}</p>
+                <div className="home-destination-caption"><h3>{tile.label}</h3><ArrowUpRight size={18} aria-hidden="true" /></div>
               </Link>
             </li>
           ))}
