@@ -8,6 +8,7 @@ import { Breadcrumb } from "@/components/breadcrumb";
 import { supabase } from "@/lib/supabase";
 import { sendFormEmail } from "@/lib/form-email";
 import { RippleButton } from "@/components/ripple-button";
+import { appendLeadAttribution } from "@/lib/lead-attribution";
 
 type ContactMethod = "Email" | "Text" | "Phone Call";
 type ChildrenTraveling = "Yes" | "No" | "Not sure";
@@ -144,6 +145,7 @@ export default function CruiseInterestPage() {
       return;
     }
 
+    const attributedFormData = { ...formData, additionalNotes: appendLeadAttribution(formData.additionalNotes) };
     try {
       if (supabase) {
         const { error } = await supabase.from("cruise_inquiries").insert([
@@ -151,7 +153,7 @@ export default function CruiseInterestPage() {
             name: formData.fullName,
             email: formData.email,
             phone: formData.phone || null,
-            message: buildInquiryMessage(formData),
+            message: buildInquiryMessage(attributedFormData),
           },
         ]);
 
@@ -162,7 +164,7 @@ export default function CruiseInterestPage() {
 
       await sendFormEmail({
         formType: "cruise-interest",
-        ...formData,
+        ...attributedFormData,
       });
 
       setIsSuccess(true);

@@ -1,24 +1,23 @@
 import { NextResponse } from 'next/server'
 import { createSupabaseAdmin } from '@/lib/supabase-admin'
 import { sendGroupInquiryInternal, sendGroupInquiryReceipt } from '@/lib/group-trip-email'
+import { validateGroupInquiryContact, buildGroupInquiryNotes } from '@/lib/group-inquiry'
 
 export async function POST(request: Request) {
-  const body = await request.json() as Record<string, unknown>
+  const input = await request.json().catch(() => null)
+  if (!input || typeof input !== 'object' || Array.isArray(input)) {
+    return NextResponse.json({ error: 'Please send a valid group cruise inquiry.' }, { status: 400 })
+  }
+  const body = input as Record<string, unknown>
   const leaderName = String(body.leaderName ?? '').trim()
   const email = String(body.email ?? '').trim().toLowerCase()
   const phone = String(body.phone ?? '').trim()
   const preferredContact = String(body.preferredContact ?? '')
   const cruiseStage = body.cruiseStage === 'specific' ? 'specific' : 'help'
 
-  if (!leaderName || !email || !email.includes('@')) {
-    return NextResponse.json({ error: 'Please add your name and a valid email address.' }, { status: 400 })
-  }
-  if (!['phone', 'text', 'email'].includes(preferredContact)) {
-    return NextResponse.json({ error: 'Choose how you prefer Yolanda to contact you.' }, { status: 400 })
-  }
-  if (preferredContact === 'text' && body.smsConsent !== true) {
-    return NextResponse.json({ error: 'SMS consent is required when text is selected.' }, { status: 400 })
-  }
+  const validationError = validateGroupInquiryContact(body)
+  if (validationError) return NextResponse.json({ error: validationError }, { status: 400 })
+  const notes = buildGroupInquiryNotes(body)
 
   const estimatedGroupSize = Number(body.estimatedGroupSize)
   const supabase = createSupabaseAdmin()
@@ -39,7 +38,7 @@ export async function POST(request: Request) {
       cruise_line: cruiseStage === 'specific' ? String(body.cruiseLine ?? '').trim() || null : null,
       ship: cruiseStage === 'specific' ? String(body.ship ?? '').trim() || null : null,
       sailing_date: cruiseStage === 'specific' && body.sailingDate ? String(body.sailingDate) : null,
-      notes: String(body.notes ?? '').trim() || null,
+      notes: notes || null,
     })
     .select('id')
     .single()
@@ -56,6 +55,7 @@ export async function POST(request: Request) {
     email,
     phone,
     cruiseStage,
+    notes,
   }
   await Promise.allSettled([
     sendGroupInquiryReceipt({ name: leaderName, email }),

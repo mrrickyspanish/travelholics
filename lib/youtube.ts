@@ -25,7 +25,8 @@ export const SUBSCRIBE_URL = `${CHANNEL_URL}?sub_confirmation=1`;
 
 // ── Optional manual overrides (see header) ───────────────────────────────────
 export const PINNED_FEATURED_ID = "";
-export const HIDDEN_IDS: string[] = [];
+// This dated promotion has expired. Keep it out of the evergreen website library.
+export const HIDDEN_IDS: string[] = ["RoG1LhSLq50"];
 export const FORCE_FORMAT: Record<string, VideoFormat> = {};
 
 export type VideoFormat = "long" | "short";
@@ -39,6 +40,21 @@ export interface Video {
   blurb?: string;
   /** ISO timestamp the video was published. Drives newest-first order. */
   published: string;
+}
+
+/** Preserve known lessons when RSS fails or its limited window omits them. */
+export function mergeChannelVideos(recent: Video[], curated: Video[]): Video[] {
+  const seen = new Set(HIDDEN_IDS);
+  const result: Video[] = [];
+  const orderedRecent = [...recent].sort(
+    (a, b) => (Date.parse(b.published) || 0) - (Date.parse(a.published) || 0),
+  );
+  for (const video of [...orderedRecent, ...curated]) {
+    if (seen.has(video.id)) continue;
+    seen.add(video.id);
+    result.push(video);
+  }
+  return result;
 }
 
 /** Privacy-friendly embed URL (no cookies until playback). */
@@ -91,7 +107,7 @@ export function parseFeed(xml: string): RawFeedEntry[] {
 
   for (const block of entryBlocks) {
     const id = block.match(/<yt:videoId>([^<]+)<\/yt:videoId>/)?.[1]?.trim();
-    if (!id) continue;
+    if (!id || !/^[A-Za-z0-9_-]{11}$/.test(id)) continue;
 
     const title = decodeXml(block.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim() ?? "");
     const published = block.match(/<published>([^<]+)<\/published>/)?.[1]?.trim() ?? "";

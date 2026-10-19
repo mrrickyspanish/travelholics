@@ -25,7 +25,7 @@ export const travelholicsLaunch: LaunchConfig = {
   headline: "Your next vacation",
   accentHeadline: "starts right here.",
   description:
-    "Cruise planning, packing guides, daily lives, and travel gear — all in one place.",
+    "Plan a group cruise, learn with Yolanda, and get ready for your next vacation.",
   enterLabel: "Enter Travelholics",
   // The full site is the full experience. This used to open a second menu of
   // the same four links, wrapped in placeholder copy from the page template.
@@ -33,7 +33,7 @@ export const travelholicsLaunch: LaunchConfig = {
   transitionLabel: "Setting sail",
   liveScheduleHref: "/live",
   // Rendered after "© {year}" by LaunchExperience.
-  footerNote: "Travelholics — Yolanda Harris. Same price as booking direct, zero planning fees.",
+  footerNote: "Travelholics · Yolanda Harris. Expert cruise planning with no planning fees.",
   footerLinks: [
     { label: "Full site", href: "/" },
     { label: "Privacy", href: "/privacy" },
@@ -51,14 +51,29 @@ export const travelholicsLaunch: LaunchConfig = {
   backgroundPosterSrc: "/images/Charlotte_Amalie_StThomas.jpg",
   actions: [
     {
+      id: "group-plan",
+      label: "Plan a Group Cruise",
+      eyebrow: "Your people. Yolanda handles the planning.",
+      href: "/group-cruises",
+      icon: "ship",
+      featured: true,
+    },
+    {
       id: "plan",
       label: "Plan My Cruise",
-      eyebrow: "Free — no planning fees",
+      eyebrow: "Free planning support",
       // The full intake form, not the homepage's short contact block. It
       // pre-qualifies destination, dates, budget, and party size in one pass.
       href: "/cruise-interest",
       icon: "compass",
-      featured: true,
+      featured: false,
+    },
+    {
+      id: "watch",
+      label: "Watch Cruise School",
+      eyebrow: "Real cruise answers from Yolanda",
+      href: "/videos",
+      icon: "video",
     },
     {
       id: "destinations",
@@ -83,14 +98,7 @@ export const travelholicsLaunch: LaunchConfig = {
           href: "/cruises/mediterranean",
         },
       ],
-      previewFooter: { label: "Group trips", href: "/#group-trips" },
-    },
-    {
-      id: "watch",
-      label: "Watch the Latest Videos",
-      eyebrow: "Ship tours & cruise news",
-      href: "/videos",
-      icon: "video",
+      previewFooter: { label: "Plan a group cruise", href: "/group-cruises" },
     },
     {
       id: "guides",
@@ -143,7 +151,7 @@ export const travelholicsLaunch: LaunchConfig = {
         },
       ],
       previewFooter: { label: "Everything in the shop", href: "/shop-full" },
-      note: "Amazon links are affiliate links — Travelholics may earn a commission at no extra cost to you.",
+      note: "Amazon links are affiliate links. Travelholics may earn a commission at no extra cost to you.",
     },
   ],
   socials: [

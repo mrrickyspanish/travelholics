@@ -50,7 +50,7 @@ export const HowItWorks = () => {
           </div>
           <div className="lg:justify-self-end">
             <p className="max-w-xl text-lg leading-7 text-white/68 sm:leading-8">
-              Yolanda is a Certified Cruise Specialist. She plans the whole thing with you — and because cruise lines pay her, not you, the trip costs the same as booking it yourself.
+              Yolanda is a Certified Cruise Specialist. She helps you choose the sailing, cabins, and details that fit your trip. Travel suppliers compensate her, so you get her planning support without an added planning fee.
             </p>
           </div>
         </motion.div>
@@ -78,7 +78,7 @@ export const HowItWorks = () => {
 
         <div className="mt-10 flex flex-col gap-6 border-t border-white/14 pt-8 sm:mt-12 lg:flex-row lg:items-center lg:justify-between">
           <p className="max-w-[26ch] font-serif text-2xl font-semibold leading-[1.05] tracking-[-0.04em] text-white sm:max-w-[34ch] sm:text-3xl">
-            Same price as booking direct. <span className="text-coral">Zero planning fees.</span>
+            Personal guidance from start to sailing. <span className="text-coral">No planning fees.</span>
           </p>
           <Link
             href="/#contact"

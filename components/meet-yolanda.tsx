@@ -71,7 +71,7 @@ export const MeetYolanda = () => {
 
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/#contact" className="inline-flex min-h-11 w-fit items-center justify-center rounded-none bg-coral px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80">Plan with Yolanda</Link>
-              <Link href="/live" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-none border border-ink/20 px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-ink transition hover:border-ink/40 hover:bg-white/60">See her cruise advice <ArrowUpRight size={16} /></Link>
+              <Link href="/videos" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-none border border-ink/20 px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-ink transition hover:border-ink/40 hover:bg-white/60">See her cruise advice <ArrowUpRight size={16} /></Link>
             </div>
           </div>
         </motion.div>

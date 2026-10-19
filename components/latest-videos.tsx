@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Youtube } from "lucide-react";
 import { VideoEmbed } from "@/components/video-embed";
 import { SUBSCRIBE_URL, type Video } from "@/lib/youtube";
+import { videoNextStep } from "@/lib/youtube-catalog";
 
 type LatestVideosProps = {
   featured: Video | null;
@@ -67,18 +68,21 @@ export const LatestVideos = ({ featured, shorts }: LatestVideosProps) => {
                 />
               </div>
               <div className="mt-5 border-t border-white/14 pt-5">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-coral">Latest episode</p>
+                <p className="text-sm font-black uppercase tracking-[0.2em] text-coral">Featured lesson</p>
                 <h3 className="mt-2 max-w-3xl font-serif text-3xl font-semibold leading-[1] tracking-[-0.045em] sm:text-4xl">
                   {featured.title}
                 </h3>
-                {featured.blurb && <p className="mt-3 max-w-2xl text-sm leading-6 text-white/54 sm:text-base sm:leading-7">{featured.blurb}</p>}
+                {featured.blurb && <p className="mt-3 max-w-2xl text-lg leading-7 text-white/70">{featured.blurb}</p>}
+                <Link href={videoNextStep(featured.id).href} className="mt-5 inline-flex min-h-11 items-center gap-2 text-base font-bold text-coral hover:underline">
+                  {videoNextStep(featured.id).label} <ArrowUpRight size={16} />
+                </Link>
               </div>
             </div>
           )}
 
           {shorts.length > 0 && (
             <div className="border-t border-white/14 pt-5 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
-              <p className="mb-5 text-[10px] font-black uppercase tracking-[0.2em] text-white/42">Quick hits this week</p>
+              <p className="mb-5 text-sm font-black uppercase tracking-[0.2em] text-white/60">Quick cruise answers</p>
               <div className="grid grid-cols-3 gap-3 lg:grid-cols-1 lg:gap-6">
                 {shorts.map((short, index) => (
                   <div key={short.id} className={index > 0 ? "lg:border-t lg:border-white/12 lg:pt-6" : ""}>

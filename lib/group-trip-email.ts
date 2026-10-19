@@ -83,12 +83,13 @@ export async function sendGroupInquiryInternal(input: Record<string, unknown> & 
       <p><strong>Group leader:</strong> ${escapeHtml(input.leaderName)}</p>
       <p><strong>Email:</strong> ${escapeHtml(input.email)}</p>
       <p><strong>Phone:</strong> ${escapeHtml(input.phone || 'Not provided')}</p>
+      <p><strong>Preferred contact:</strong> ${escapeHtml(input.preferredContact || 'Email')}</p>
       <p><strong>Group type:</strong> ${escapeHtml(input.groupType || 'Not provided')}</p>
       <p><strong>Estimated size:</strong> ${escapeHtml(input.estimatedGroupSize || 'Not provided')}</p>
       <p><strong>Trip direction:</strong> ${escapeHtml(input.cruiseStage === 'specific' ? 'Already has a cruise in mind' : 'Needs help choosing')}</p>
       <p><strong>Destination:</strong> ${escapeHtml(input.destination || 'Open')}</p>
       <p><strong>Preferred dates:</strong> ${escapeHtml(input.preferredDates || 'Open')}</p>
-      <p><strong>Experience vision:</strong> ${escapeHtml(input.notes || 'Not provided')}</p>
+      <p style="white-space:pre-line"><strong>Planning details:</strong> ${escapeHtml(input.notes || 'Not provided')}</p>
       <a href="${SITE_URL}/admin/group-trips?inquiry=${encodeURIComponent(input.id)}" style="display:inline-block;margin-top:12px;background:#10755A;color:white;text-decoration:none;font-weight:700;padding:12px 16px;border-radius:10px">Open in Travelholics Admin</a>
     `),
   })

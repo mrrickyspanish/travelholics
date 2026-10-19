@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, ArrowRight, Check, Ship, Sparkles } from 'lucide-react'
+import { appendLeadAttribution } from '@/lib/lead-attribution'
 
 const inputClass = 'mt-2 w-full border-0 border-b border-ink/20 bg-transparent px-0 py-3 text-base text-ink outline-none transition placeholder:text-stone/45 focus:border-emerald-mid focus:ring-0'
 const labelClass = 'block text-base font-bold text-ink'
@@ -13,8 +14,8 @@ export default function GroupCruiseInquiryForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [form, setForm] = useState({
-    cruiseStage: 'help', groupType: '', estimatedGroupSize: '', destination: '', preferredDates: '', cruiseLine: '', ship: '', sailingDate: '', notes: '',
-    leaderName: '', email: '', phone: '', preferredContact: 'phone', smsConsent: false,
+    cruiseStage: 'help', groupType: '', estimatedGroupSize: '', estimatedCabins: '', budgetPerPerson: '', destination: '', preferredDates: '', cruiseLine: '', ship: '', sailingDate: '', notes: '',
+    leaderName: '', email: '', phone: '', preferredContact: 'email', smsConsent: false,
   })
 
   function set(key: keyof typeof form, value: string | boolean) {
@@ -23,13 +24,17 @@ export default function GroupCruiseInquiryForm() {
 
   async function submit(event: React.FormEvent) {
     event.preventDefault()
+    if (step === 1) {
+      setStep(2)
+      return
+    }
     setLoading(true)
     setError('')
     try {
       const response = await fetch('/api/group-cruise-inquiries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, source: 'group-cruises-page', estimatedGroupSize: form.estimatedGroupSize ? Number(form.estimatedGroupSize) : null }),
+        body: JSON.stringify({ ...form, notes: appendLeadAttribution(form.notes), source: 'group-cruises-page', estimatedGroupSize: form.estimatedGroupSize ? Number(form.estimatedGroupSize) : null }),
       })
       const data = await response.json()
       if (!response.ok) throw new Error(data.error || 'Unable to send your request.')
@@ -86,8 +91,10 @@ export default function GroupCruiseInquiryForm() {
             </div>
 
             <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
-              <label className={labelClass}>What are we celebrating or bringing together?<select className={inputClass} value={form.groupType} onChange={(e) => set('groupType', e.target.value)}><option value="">Choose one</option><option>Family reunion</option><option>Birthday</option><option>Friends trip</option><option>Church group</option><option>Wedding / celebration</option><option>Organization / club</option><option>Just because</option><option>Something else</option></select></label>
-              <label className={labelClass}>About how many travelers?<input type="number" min="2" className={inputClass} value={form.estimatedGroupSize} onChange={(e) => set('estimatedGroupSize', e.target.value)} placeholder="20" /></label>
+              <label className={labelClass}>What are we bringing together? *<select required className={inputClass} value={form.groupType} onChange={(e) => set('groupType', e.target.value)}><option value="">Choose one</option><option>Family reunion</option><option>Birthday</option><option>Friends trip</option><option>Church group</option><option>Wedding / celebration</option><option>Organization / club</option><option>Just because</option><option>Something else</option></select></label>
+              <label className={labelClass}>About how many travelers?<input type="number" min="2" step="1" className={inputClass} value={form.estimatedGroupSize} onChange={(e) => set('estimatedGroupSize', e.target.value)} placeholder="20, or leave blank if not sure" /></label>
+              <label className={labelClass}>About how many cabins?<input type="number" min="1" step="1" className={inputClass} value={form.estimatedCabins} onChange={(e) => set('estimatedCabins', e.target.value)} placeholder="10, or leave blank if not sure" /></label>
+              <label className={labelClass}>Cruise budget per person<input maxLength={120} className={inputClass} value={form.budgetPerPerson} onChange={(e) => set('budgetPerPerson', e.target.value)} placeholder="$1,500-$2,000 before flights, or not sure" /></label>
               <label className={labelClass}>Destination or region<input className={inputClass} value={form.destination} onChange={(e) => set('destination', e.target.value)} placeholder="Caribbean, Alaska, Mediterranean..." /></label>
               <label className={labelClass}>Preferred dates or timeframe<input className={inputClass} value={form.preferredDates} onChange={(e) => set('preferredDates', e.target.value)} placeholder="Summer 2027, June 10–17..." /></label>
             </div>
@@ -105,7 +112,8 @@ export default function GroupCruiseInquiryForm() {
 
             <label className={labelClass}>What kind of experience should this feel like?<textarea className={`${inputClass} min-h-28 resize-y`} value={form.notes} onChange={(e) => set('notes', e.target.value)} placeholder="Relaxed, adventurous, celebratory, family-friendly, elevated, or a mix. Tell Yolanda what matters most to your group." /></label>
 
-            <button type="button" onClick={() => setStep(2)} className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 text-sm font-black text-white transition hover:translate-y-[-1px] hover:bg-coral-deep sm:w-auto">Keep planning <ArrowRight size={17} /></button>
+            <p className="text-lg leading-7 text-stone">Estimates are enough. Leave anything you have not decided blank and Yolanda will help shape the plan.</p>
+            <button type="submit" className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 text-base font-black text-white transition hover:translate-y-[-1px] hover:bg-coral-deep sm:w-auto">Keep planning <ArrowRight size={17} /></button>
           </div>
         ) : (
           <div className="space-y-9">
@@ -118,7 +126,7 @@ export default function GroupCruiseInquiryForm() {
             <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
               <label className={labelClass}>Full name *<input required className={inputClass} value={form.leaderName} onChange={(e) => set('leaderName', e.target.value)} autoComplete="name" /></label>
               <label className={labelClass}>Email *<input required type="email" className={inputClass} value={form.email} onChange={(e) => set('email', e.target.value)} autoComplete="email" /></label>
-              <label className={labelClass}>Phone<input type="tel" className={inputClass} value={form.phone} onChange={(e) => set('phone', e.target.value)} autoComplete="tel" /></label>
+              <label className={labelClass}>Phone{form.preferredContact !== 'email' ? ' *' : ' (optional)'}<input required={form.preferredContact !== 'email'} type="tel" className={inputClass} value={form.phone} onChange={(e) => set('phone', e.target.value)} autoComplete="tel" /></label>
               <label className={labelClass}>Best way to reach you *<select className={inputClass} value={form.preferredContact} onChange={(e) => set('preferredContact', e.target.value)}><option value="phone">Phone call</option><option value="text">Text</option><option value="email">Email</option></select></label>
             </div>
 

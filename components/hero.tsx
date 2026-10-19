@@ -111,23 +111,28 @@ export const Hero = () => {
           </h1>
 
           <p className="mt-6 max-w-[46ch] text-lg leading-7 text-white/85 sm:leading-8">
-            Cruise planning with Yolanda Harris. Same price as booking direct — zero planning fees. More clarity, less stress, and a trip that actually feels like you.
+            Cruise planning with Yolanda Harris for your family, your friends, or the whole group. Expert guidance, no planning fees, and a trip that actually feels like you.
           </p>
 
           <div className="mt-7 flex flex-col gap-5 sm:max-w-[40rem] sm:flex-row sm:items-center sm:justify-between">
             <div>
+              <div className="flex flex-wrap items-center gap-3">
               <Link
-                href="/#contact"
+                href="/group-cruises"
                 className="group inline-flex min-h-11 w-fit shrink-0 items-center gap-4 rounded-none bg-coral py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
               >
-                Plan my cruise
+                Plan a group cruise
                 <span className="flex h-8 w-8 items-center justify-center bg-white text-coral transition group-hover:translate-x-0.5">
                   <ArrowRight size={17} strokeWidth={2.75} />
                 </span>
               </Link>
+              <Link href="/cruise-interest" className="inline-flex min-h-11 items-center justify-center border border-white/60 px-5 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                Plan my cruise
+              </Link>
+              </div>
 
               <p className="relative mt-4 w-fit text-sm font-black uppercase tracking-[0.045em] text-white/75 sm:tracking-[0.12em]">
-                Same price. More support. Zero fees.
+                Your people. More support. No planning fees.
                 <span className="absolute -bottom-1.5 left-0 block h-[3px] w-full bg-teal/85" aria-hidden="true" />
               </p>
             </div>

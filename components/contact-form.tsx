@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { buildFallbackMailto, sendFormEmail } from "@/lib/form-email";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import { appendLeadAttribution } from "@/lib/lead-attribution";
 
 const DESTINATION_OPTIONS = [
   "Caribbean",
@@ -92,6 +93,7 @@ export const ContactForm = () => {
       return;
     }
 
+    const inquiryMessage = appendLeadAttribution(formData.message);
     try {
       if (supabase) {
         const { error } = await supabase.from("cruise_inquiries").insert([{
@@ -102,7 +104,7 @@ export const ContactForm = () => {
           phone: formData.phone,
           destination: formData.destination,
           timing: formData.timing,
-          message: formData.message,
+          message: inquiryMessage,
         }]);
         if (error) console.warn("Supabase insert failed, continuing:", error);
       }
@@ -112,7 +114,7 @@ export const ContactForm = () => {
         name: fullName,
         email: formData.email,
         phone: formData.phone,
-        message: `Destination: ${formData.destination}\nTiming: ${formData.timing}\n\n${formData.message}`,
+        message: `Destination: ${formData.destination}\nTiming: ${formData.timing}\n\n${inquiryMessage}`,
       });
 
       fireConfetti();

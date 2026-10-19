@@ -8,9 +8,11 @@ import {
   firstLine,
   looksLikeShortFromText,
   parseFeed,
+  mergeChannelVideos,
   type Video,
   type VideoFormat,
 } from "@/lib/youtube";
+import { CURATED_VIDEOS } from "@/lib/youtube-catalog";
 
 /** How long to cache the feed (seconds). New uploads appear within this window. */
 const FEED_REVALIDATE = 60 * 30; // 30 min
@@ -50,6 +52,8 @@ async function probeIsShort(id: string): Promise<boolean | null> {
 
 async function classify(id: string, title: string, description: string): Promise<VideoFormat> {
   if (FORCE_FORMAT[id]) return FORCE_FORMAT[id];
+  const known = CURATED_VIDEOS.find((video) => video.id === id);
+  if (known) return known.format;
   if (looksLikeShortFromText(title, description)) return "short";
   const probed = await probeIsShort(id);
   if (probed === true) return "short";
@@ -58,17 +62,17 @@ async function classify(id: string, title: string, description: string): Promise
 
 /**
  * Live list of the channel's recent videos, newest first, with Short/long
- * classification resolved. Memoised per request; falls back to an empty list
- * (never throws) so the UI degrades gracefully if YouTube is unreachable.
+ * classification resolved. Memoised per request; retains verified lessons
+ * when YouTube is unreachable instead of presenting an empty channel.
  */
 export const getChannelVideos = cache(async (): Promise<Video[]> => {
   let xml: string;
   try {
     const res = await fetchWithTimeout(FEED_URL, { next: { revalidate: FEED_REVALIDATE } });
-    if (!res.ok) return [];
+    if (!res.ok) return mergeChannelVideos([], CURATED_VIDEOS);
     xml = await res.text();
   } catch {
-    return [];
+    return mergeChannelVideos([], CURATED_VIDEOS);
   }
 
   const entries = parseFeed(xml).filter((e) => !HIDDEN_IDS.includes(e.id));
@@ -83,9 +87,7 @@ export const getChannelVideos = cache(async (): Promise<Video[]> => {
     })),
   );
 
-  return videos.sort(
-    (a, b) => new Date(b.published).getTime() - new Date(a.published).getTime(),
-  );
+  return mergeChannelVideos(videos, CURATED_VIDEOS);
 });
 
 export async function getLongForm(limit?: number): Promise<Video[]> {

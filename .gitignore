@@ -42,3 +42,4 @@ next-env.d.ts
 
 # compiled output for `npm run check:address`
 .address-check
+.growth-check

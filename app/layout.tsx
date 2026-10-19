@@ -5,6 +5,7 @@ import { CartProvider } from "@/lib/cart-context";
 import { CartDrawer } from "@/components/cart-drawer";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { PageTransition } from "@/components/page-transition";
+import { LeadAttribution } from "@/components/lead-attribution";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yotravelholic.com";
@@ -164,6 +165,7 @@ export default function RootLayout({
           <CartDrawer />
         </CartProvider>
         <ScrollToTop />
+        <LeadAttribution />
         <Analytics />
       </body>
     </html>
