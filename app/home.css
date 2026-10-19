@@ -234,15 +234,9 @@
 }
 @keyframes hero-ink { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes sticky-arrival { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.home-ocean-pause { position: relative; height: clamp(8.925rem,15.3vw,17rem); overflow: hidden; background: #138c91; }
-.home-ocean-media { position: absolute; inset: -2rem 0; pointer-events: none; }
+.home-ocean-pause { --ocean-overscan: clamp(3.5rem,8vw,7rem); position: relative; height: clamp(8.925rem,15.3vw,17rem); overflow: hidden; background: #138c91; }
+.home-ocean-media { position: absolute; inset: calc(-1 * var(--ocean-overscan)) 0; pointer-events: none; transform: translate3d(0,var(--ocean-shift,0px),0); }
 .home-ocean-media img { object-position: center 63%; }
-@keyframes ocean-drift { from { transform: translateY(-1rem); } to { transform: translateY(1rem); } }
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion:no-preference) {
-    .home-ocean-media { animation: ocean-drift linear both; animation-timeline: view(); animation-range: entry 0% exit 100%; }
-  }
-}
 @media (hover:hover) and (prefers-reduced-motion:no-preference) {
   .home-destination-card:hover img,.home-product:hover img { transform: scale(1.04); }
   .home-destination-card:hover .home-card-arrow,.home-product:hover .home-product-arrow { transform: translate(2px,-2px); }
@@ -252,6 +246,7 @@
   .home-sticky-cta { animation: sticky-arrival 200ms ease-out; }
 }
 @media (prefers-reduced-motion:reduce) {
+  .home-ocean-media { transform: none; }
   .home-mobile-optimized *,.home-mobile-optimized *::before,.home-mobile-optimized *::after,
   .site-header,.site-header *,.home-mobile-optimized + footer * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
 }

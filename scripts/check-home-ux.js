@@ -191,12 +191,24 @@ async function visible(locator) { await locator.waitFor({ state: 'visible' }); }
     const imageUrl = new URL(await coastImage.evaluate(el => el.currentSrc));
     assert(Number(imageUrl.searchParams.get('w')) >= 1440, 'desktop coastal image is delivered without upscaling');
     assert.equal(imageUrl.searchParams.get('q'), '90', 'coastal image uses high quality encoding');
+    const coastTop = await motionPage.locator('#ocean-pause').evaluate(el => el.getBoundingClientRect().top + scrollY);
+    const coastOffsets = [];
+    for (const position of [.7, .15]) {
+      await motionPage.evaluate(({ top, position }) => scrollTo(0, top - innerHeight * position), { top: coastTop, position });
+      await motionPage.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      const strip = await motionPage.locator('#ocean-pause').boundingBox();
+      const media = await motionPage.locator('.home-ocean-media').boundingBox();
+      assert(media.y <= strip.y && media.y + media.height >= strip.y + strip.height, 'parallax image fills the strip throughout its travel');
+      coastOffsets.push(await motionPage.locator('.home-ocean-media').evaluate(el => new DOMMatrixReadOnly(getComputedStyle(el).transform).m42));
+    }
+    assert(coastOffsets[1] - coastOffsets[0] > 60, 'coastal strip has visible parallax as the page scrolls');
     await motionPage.locator('#hero').scrollIntoViewIfNeeded();
     await motionPage.locator('#testimonials').scrollIntoViewIfNeeded();
     assert.equal(await stage.getAttribute('data-section-entrance'), 'complete', 'section entrances do not replay');
     await motionPage.locator('#firstName').focus();
     assert.equal(await motionPage.locator('#contact > .home-container').getAttribute('data-section-entrance'), 'complete', 'keyboard focus settles the section immediately');
     await motionPage.emulateMedia({ reducedMotion: 'reduce' });
+    await motionPage.waitForFunction(() => getComputedStyle(document.querySelector('.home-ocean-media')).transform === 'none');
     await motionPage.waitForFunction(() => document.getAnimations().every(animation => animation.playState !== 'running'));
     assert.equal(await motionPage.evaluate(() => document.getAnimations().filter(animation => animation.playState === 'running').length), 0, 'changing motion preference stops all effects');
     console.log('✓ scroll-driven growth, steady scale when idle, stable layout, sharp coastal image, keyboard focus, live reduced-motion changes');

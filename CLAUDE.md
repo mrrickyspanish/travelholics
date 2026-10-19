@@ -79,6 +79,10 @@ get 74svh of space so the next topic appears as a preview. Growth follows scroll
 position from 94% on desktop (97% on phones) to full size as the topic reaches the
 main viewport; settled sections stay full size. Do not reintroduce opacity fades.
 Reduced motion uses full-size content and a static coastal image.
+The coastal image now follows scroll through `OceanPause`, including browsers
+without CSS scroll timelines. Keep its overscan larger than its travel so no edge
+shows, and preserve the shallow strip height. Destination options A and B can be
+compared back to back at `/previews/destinations`; keep previews out of search.
 
 ## Mobile styling lives in a separate stylesheet
 
