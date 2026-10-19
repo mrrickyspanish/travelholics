@@ -130,6 +130,9 @@ async function visible(locator) { await locator.waitFor({ state: 'visible' }); }
     assert(await opener.evaluate(el => el === document.activeElement), 'menu returns focus');
     assert.equal(await page.locator('.home-sticky-cta').count(), 0, 'sticky CTA hidden in hero');
     await page.evaluate(() => scrollTo(0, document.getElementById('about').offsetTop));
+    await page.locator('.home-sticky-cta').waitFor({ state: 'detached' });
+    assert.equal(await page.locator('.home-sticky-cta').count(), 0, 'sticky CTA gives the bio room');
+    await page.evaluate(() => scrollTo(0, document.getElementById('how-it-works').offsetTop));
     await visible(page.locator('.home-sticky-cta'));
     await page.locator('.home-sticky-cta a').click();
     await page.locator('.home-sticky-cta').waitFor({ state: 'detached' });
