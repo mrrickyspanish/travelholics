@@ -55,6 +55,17 @@
 .home-card-rail-viewport > li { flex: 0 0 86%; min-width: 0; scroll-snap-align: start; }
 .home-card-rail-controls { margin-top: .5rem; }
 .home-card-rail[data-scrollable=false] .home-card-rail-controls { visibility: hidden; }
+.home-card-rail[data-controls=edge] { display: grid; grid-template-columns: minmax(0,1fr) 44px; gap: .5rem .5rem; align-items: start; }
+.home-card-rail[data-controls=edge] .home-card-rail-viewport { grid-column: 1; grid-row: 1; scrollbar-width: none; scroll-padding-inline: .25rem; }
+.home-card-rail[data-controls=edge] .home-card-rail-viewport::-webkit-scrollbar { display: none; }
+.home-card-rail-next { grid-column: 2; grid-row: 1; align-self: center; display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 0; background: transparent; color: var(--color-ink); cursor: pointer; }
+.home-card-rail-next:disabled { opacity: .25; cursor: default; }
+.home-card-rail-edge-footer { grid-column: 1; display: flex; align-items: center; justify-content: space-between; min-height: 44px; font-size: .875rem; font-variant-numeric: tabular-nums; }
+.home-card-rail-edge-footer button { min-width: 44px; min-height: 44px; text-decoration: underline; text-underline-offset: .25rem; }
+.home-card-rail-edge-footer button:disabled { visibility: hidden; }
+@media (max-width: 639px) {
+  .home-card-rail[data-controls=edge] .home-card-rail-viewport > li { flex-basis: 100%; }
+}
 .home-process-photo { position: relative; height: 9rem; overflow: hidden; border-radius: .5rem; }
 .home-process-photo > span { position: absolute; left: .75rem; bottom: .75rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; background: var(--color-coral); color: var(--color-ink); font-family: var(--font-fraunces),Georgia,serif; font-size: 1.5rem; font-weight: 600; border-radius: 50%; }
 .home-process-card h3 { margin-top: 1rem; font-family: var(--font-fraunces),Georgia,serif; font-size: 1.375rem; font-weight: 600; line-height: 1.15; letter-spacing: -.03em; color: var(--color-royal-deep); }

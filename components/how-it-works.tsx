@@ -50,7 +50,7 @@ export const HowItWorks = () => {
             </p>
             <Link href="/#contact" className="home-button">Plan my cruise <ArrowUpRight size={17} /></Link>
         </div>
-        <HomeCardRail id="planning-steps" label="Planning steps" className="home-process-rail">
+        <HomeCardRail id="planning-steps" label="Planning steps" className="home-process-rail" controls="edge">
           {steps.map((step) => (
             <li
               key={step.number}

@@ -1,11 +1,11 @@
 "use client";
 
 import { Children, useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 
 /** Native scrolling keeps every card available to touch, keyboard, and no-JS users. */
-export function HomeCardRail({ id, label, className, children }: {
-  id: string; label: string; className: string; children: ReactNode;
+export function HomeCardRail({ id, label, className, children, controls = 'below' }: {
+  id: string; label: string; className: string; children: ReactNode; controls?: 'below' | 'edge';
 }) {
   const rail = useRef<HTMLUListElement>(null);
   const count = Children.count(children);
@@ -29,26 +29,32 @@ export function HomeCardRail({ id, label, className, children }: {
   }, []);
   const move = (direction: number) => {
     const el = rail.current;
-    const first = el?.firstElementChild;
+    const first = el?.firstElementChild as HTMLElement | undefined;
     if (!el || !first) return;
     const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
-    el.scrollBy({ left: direction * (first.getBoundingClientRect().width + gap), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    el.scrollBy({ left: direction * (first.offsetWidth + gap), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   };
   return (
-    <div className={`home-card-rail ${className}`} data-scrollable={position.previous || position.next}>
+    <div className={`home-card-rail ${className}`} data-scrollable={position.previous || position.next} data-controls={controls}>
       <ul ref={rail} id={id} tabIndex={0} aria-label={label} className="home-card-rail-viewport" onScroll={measure}
         onKeyDown={event => {
           if (event.target === event.currentTarget && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) {
             event.preventDefault(); move(event.key === 'ArrowRight' ? 1 : -1);
           }
         }}>{children}</ul>
-      <div className="home-card-rail-controls">
+      {controls === 'edge' ? <>
+        <button type="button" className="home-card-rail-next" aria-label={`Next ${label.toLowerCase()}`} aria-controls={id} disabled={!position.next} onClick={() => move(1)}><ChevronRight size={26} strokeWidth={1.5} /></button>
+        <div className="home-card-rail-edge-footer">
+          <button type="button" aria-label={`Previous ${label.toLowerCase()}`} aria-controls={id} disabled={!position.previous} onClick={() => move(-1)}>Back</button>
+          <span aria-live="polite" aria-atomic="true">{position.first}{position.last > position.first ? `–${position.last}` : ''} / {count}</span>
+        </div>
+      </> : <div className="home-card-rail-controls">
         <span aria-live="polite" aria-atomic="true">{position.first}{position.last > position.first ? `–${position.last}` : ''} / {count}</span>
         <div>
           <button type="button" aria-label={`Previous ${label.toLowerCase()}`} aria-controls={id} disabled={!position.previous} onClick={() => move(-1)}><ArrowLeft size={18} /></button>
           <button type="button" aria-label={`Next ${label.toLowerCase()}`} aria-controls={id} disabled={!position.next} onClick={() => move(1)}><ArrowRight size={18} /></button>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

@@ -64,6 +64,12 @@ async function visible(locator) { await locator.waitFor({ state: 'visible' }); }
       assert.equal(overlaps, false, `collage overlap at ${width}`);
       const planningRail = page.locator('#planning-steps');
       const nextStep = page.getByRole('button', { name: 'Next planning steps', exact: true });
+      const railFrame = await planningRail.boundingBox();
+      const nextFrame = await nextStep.boundingBox();
+      assert(nextFrame.x >= railFrame.x + railFrame.width, 'process arrow sits beyond the visible cards');
+      assert(Math.abs(nextFrame.y + nextFrame.height / 2 - railFrame.y - railFrame.height / 2) < 2, 'process arrow aligns with the middle of the cards');
+      assert.equal(await planningRail.evaluate(el => getComputedStyle(el).scrollbarWidth), 'none', 'process rail hides its native scrollbar');
+      assert(await page.getByRole('button', { name: 'Previous planning steps', exact: true, includeHidden: true }).isDisabled(), 'Back stays disabled at the first step');
       for (let step = 0; step < 3 && await nextStep.isEnabled(); step++) {
         await nextStep.click();
         // Scroll events update the end-control state on the next paint.
@@ -78,6 +84,11 @@ async function visible(locator) { await locator.waitFor({ state: 'visible' }); }
       await planningRail.focus();
       await page.keyboard.press('ArrowLeft');
       assert(await planningRail.evaluate((el, end) => el.scrollLeft < end, endPosition), 'planning rail supports keyboard navigation');
+      if (width === 390) {
+        const keyboardPosition = await planningRail.evaluate(el => el.scrollLeft);
+        await page.getByRole('button', { name: 'Previous planning steps', exact: true }).click();
+        assert(await planningRail.evaluate((el, previous) => el.scrollLeft < previous, keyboardPosition), 'quiet Back control reaches earlier steps');
+      }
       if (width === 390) {
         await page.evaluate(() => document.querySelectorAll('footer details').forEach(el => { el.open = true; }));
         const undersized = await page.evaluate(() => [...document.querySelectorAll('a,button,input:not([type=hidden]),select,textarea,summary')]

@@ -67,6 +67,9 @@ introductions beside image cards and small review portraits. The group panel spa
 the desktop width and stays contained on phones; contact stays contained. Do not reduce
 body-copy sizes to fit. `npm run check:home-ux` checks section-height budgets and
 that every process card remains reachable with native scrolling and controls.
+The process rail has no visible scrollbar. Its plain forward chevron sits outside
+the last visible card, vertically centered on the cards; a text Back control lets
+visitors return. Keep its touch targets at least 44px and keyboard scrolling intact.
 
 The latest owner refinement adds breathing room around those compact layouts,
 sea-glass and pale coral fields, and a shallow coastal-image pause after the
