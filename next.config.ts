@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     "/api/guides/download": ["./private/guides/**"],
   },
   images: {
+    qualities: [75, 90],
     remotePatterns: [
       {
         protocol: "https",

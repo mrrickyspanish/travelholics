@@ -27,6 +27,7 @@
 .home-about,.home-how,.home-testimonials,.home-videos { padding-block: 3rem; }
 .home-about { background: #edf4ee; }
 .home-testimonials { background: #fff0e9; }
+.home-groups,.home-videos,.home-contact { margin-top: 2rem; }
 .home-testimonials .home-quote { background: #fbf7ef; }
 .home-about-grid { display: grid; gap: 1rem 1.25rem; }
 .home-about-photo { position: relative; height: 20rem; overflow: hidden; border-radius: .5rem; }
@@ -165,6 +166,15 @@
   .home-shorts { grid-column: 1; grid-row: 2; }
 }
 @media (min-width: 1024px) {
+  /* Keep the content concise; let each major topic occupy the main view. */
+  .home-about,.home-how,.home-testimonials,.home-groups,.home-videos,.home-contact {
+    min-height: 74svh; display: grid; align-content: center;
+  }
+  .home-videos,.home-contact { margin-top: clamp(3rem,7svh,7rem); }
+  .home-mobile-optimized #group-trips { padding-top: clamp(5rem,10svh,8rem); padding-bottom: clamp(3rem,6svh,5rem); }
+  .home-groups > .home-container { width: 100%; padding-inline: 0; }
+  .home-group-panel { border-radius: 0; padding: clamp(3rem,6svh,5rem) clamp(3rem,5vw,8rem); grid-template-columns: minmax(0,.42fr) minmax(0,.58fr); gap: clamp(2rem,5vw,7rem); }
+  .home-group-panel .group-trip-moment:first-child img { object-position: center 30%; }
   .home-shelf { margin-top: -3rem; background: linear-gradient(transparent 3rem,#fbf7ef 3rem); }
   .home-destinations { padding-top: 2rem; }
   .home-destination-rail { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); overflow: visible; }
@@ -175,7 +185,7 @@
   .home-process-layout { grid-template-columns: .36fr .64fr; align-items: start; gap: 2.5rem; }
   .home-process-intro .home-heading { font-size: clamp(2rem,2.6vw,2.375rem); }
   .home-process-rail .home-card-rail-viewport > li { flex-basis: calc(50% - .5rem); }
-  .home-mobile-optimized .group-trip-gallery { grid-template-rows: repeat(2,8.5rem); }
+  .home-mobile-optimized .group-trip-gallery { grid-template-rows: repeat(2,clamp(9rem,11vw,14rem)); }
   .home-video-layout { column-gap: 2.5rem; }
   .home-shop-rail { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); overflow: visible; }
   .home-contact-intro,.home-contact-panel { padding: 2rem; }
@@ -213,11 +223,9 @@
 }
 @keyframes hero-ink { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes sticky-arrival { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.home-ocean-pause { position: relative; height: clamp(10.5rem,18vw,20rem); overflow: hidden; background: #138c91; }
+.home-ocean-pause { position: relative; height: clamp(8.925rem,15.3vw,17rem); overflow: hidden; background: #138c91; }
 .home-ocean-media { position: absolute; inset: -2rem 0; pointer-events: none; }
-.home-ocean-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.home-ocean-control { display: none; position: absolute; right: max(1.25rem,calc((100vw - 78rem)/2)); bottom: 1rem; align-items: center; justify-content: center; gap: .5rem; min-height: 44px; padding: .6rem 1rem; border: 1px solid #ffffff65; border-radius: 2rem; background: #082d27ed; color: white; font-size: .875rem; font-weight: 700; }
-.home-ocean-pause[data-video-ready=true] .home-ocean-control { display: inline-flex; }
+.home-ocean-media img { object-position: center 63%; }
 @keyframes ocean-drift { from { transform: translateY(-1rem); } to { transform: translateY(1rem); } }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion:no-preference) {
@@ -233,7 +241,6 @@
   .home-sticky-cta { animation: sticky-arrival 200ms ease-out; }
 }
 @media (prefers-reduced-motion:reduce) {
-  .home-ocean-pause[data-video-ready=true] .home-ocean-control,.home-ocean-media video { display: none; }
   .home-mobile-optimized *,.home-mobile-optimized *::before,.home-mobile-optimized *::after,
   .site-header,.site-header *,.home-mobile-optimized + footer * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
 }

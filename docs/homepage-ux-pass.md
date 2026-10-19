@@ -160,3 +160,23 @@ At a 900px viewport height, the homepage measures 8,540px at 390px width, 6,709p
 at 768px, and 6,381px at 1440px. The new 1440px process section is 528px tall;
 the previous oversized version was 797px. Updated total-height budgets account
 for the requested spacing and one divider; per-section limits remain compact.
+
+**Owner refinement — full-width desktop and one topic at a time**
+
+- The group-cruise panel now spans the desktop viewport with square outer edges;
+  its phone layout stays contained. The collage scales across wide screens.
+- Reduced the coastal strip by 15% at every width: 142.8px minimum, 15.3vw,
+  272px maximum. Removed the soft shoreline video and its controls/assets.
+  The strip now uses the existing 4096×2313 St. Thomas photo at image quality 90,
+  retaining gentle parallax. Its rendered image delivery is checked against the
+  desktop viewport width. No new or upscaled imagery was generated.
+- Major desktop topics each occupy at least 74svh, with additional separation
+  before group cruises, cruise advice and the inquiry. The content stays compact;
+  spacing gives the current topic focus and leaves a preview of the next.
+- Replaced the timed entrance with scroll-driven growth: 94% to full size on
+  desktop, 97% on phones. Scale holds when scrolling stops and reaches full size
+  when the section's leading edge reaches 20% of the viewport. Completed sections
+  stay full size; keyboard focus settles them immediately. No fading or layout shifts.
+- Expanded browser checks to nine widths, including 1920px and 2560px, and added
+  checks for full-width geometry, shorter image strip, image resolution/quality,
+  and scale progression tied to scrolling. Reduced motion remains static.

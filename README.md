@@ -134,8 +134,9 @@ npm run check:type-floor
 
 `check:home-ux` covers responsive layouts, keyboard navigation, reduced motion,
 no-JavaScript content, campaign attribution, and contact validation/failure/retry.
-It also checks visible section scaling, stable layout height, lazy ocean-video
-loading, pause/resume, offscreen playback, and live motion-preference changes.
+It also checks scroll-driven section scaling, stable layout height, full-width
+desktop group presentation, high-resolution coastal imagery, and live
+motion-preference changes.
 It intercepts lead and email requests with synthetic data; it does not send live inquiries.
 For an existing system Chromium, set `PLAYWRIGHT_CHROMIUM_PATH=/usr/bin/chromium`.
 Set `UX_BASE_URL` to check another local server with `check:home-ux`.

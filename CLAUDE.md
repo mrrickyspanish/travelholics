@@ -63,16 +63,19 @@ which should not creep back up:
 ### Homepage section density
 
 The owner's reference is Evyssa Vacations' compact editorial presentation. Use
-introductions beside image cards, small review portraits, and contained group and
-contact panels. Avoid full-height storytelling bands below the hero. Do not reduce
+introductions beside image cards and small review portraits. The group panel spans
+the desktop width and stays contained on phones; contact stays contained. Do not reduce
 body-copy sizes to fit. `npm run check:home-ux` checks section-height budgets and
 that every process card remains reachable with native scrolling and controls.
 
 The latest owner refinement adds breathing room around those compact layouts,
-sea-glass and pale coral fields, and one shallow ocean-video pause after the
-process section. Keep the group-cruise hero as a photo. Section entrances grow
-once from 97% to full size while remaining fully visible; do not reintroduce
-opacity fades. Reduced motion uses full-size content and the ocean's still image.
+sea-glass and pale coral fields, and a shallow coastal-image pause after the
+process section. Its native source is 4096px wide; do not substitute a soft video
+or upscale a small still. Keep the group-cruise hero as a photo. Desktop major topics
+get 74svh of space so the next topic appears as a preview. Growth follows scroll
+position from 94% on desktop (97% on phones) to full size as the topic reaches the
+main viewport; settled sections stay full size. Do not reintroduce opacity fades.
+Reduced motion uses full-size content and a static coastal image.
 
 ## Mobile styling lives in a separate stylesheet
 

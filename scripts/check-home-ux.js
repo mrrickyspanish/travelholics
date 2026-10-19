@@ -3,7 +3,7 @@
 const assert = require('node:assert/strict');
 const { chromium } = require('playwright');
 const base = process.env.UX_BASE_URL || 'http://localhost:3000';
-const widths = [320, 360, 390, 768, 1024, 1280, 1440];
+const widths = [320, 360, 390, 768, 1024, 1280, 1440, 1920, 2560];
 const sections = ['hero', 'adventure-shelf', 'about', 'how-it-works', 'ocean-pause', 'testimonials', 'cruise-lines', 'group-trips', 'videos', 'contact', 'shop-strip'];
 
 async function ready(page, path = '/') {
@@ -39,15 +39,24 @@ async function visible(locator) { await locator.waitFor({ state: 'visible' }); }
       }));
       assert.equal(measurements.overflow, false, `page overflow at ${width}`);
       if (width === 1440) {
-        // Allow the requested section breathing room and one shallow ocean divider.
-        assert(measurements.height <= 6700, 'desktop height budget'); assert(measurements.portrait < 1500, 'desktop portrait reach');
-        for (const [id, limit] of Object.entries({ 'how-it-works': 540, testimonials: 560, 'group-trips': 460, videos: 760 })) assert(measurements.sections[id] <= limit, `${id}: desktop section should remain compact`);
+        // The owner wants one prominent topic with a preview of the next.
+        assert(measurements.height <= 7600, 'desktop height budget'); assert(measurements.portrait < 1500, 'desktop portrait reach');
+        for (const [id, limit] of Object.entries({ 'how-it-works': 800, testimonials: 800, 'group-trips': 740, videos: 900 })) assert(measurements.sections[id] <= limit, `${id}: desktop section height`);
       }
       if (width === 390) {
         assert(measurements.height <= 8800, 'mobile height budget'); assert(measurements.portrait < 2532, 'mobile portrait reach');
         for (const [id, limit] of Object.entries({ 'how-it-works': 900, testimonials: 800, 'group-trips': 650, contact: 1200 })) assert(measurements.sections[id] <= limit, `${id}: mobile section should remain compact`);
       }
       if (width === 768) assert(measurements.height <= 7200, 'tablet height budget');
+      if (width >= 1024) {
+        const panel = await page.locator('.home-group-panel').boundingBox();
+        assert(Math.abs(panel.x) < 1 && Math.abs(panel.width - width) < 1, `desktop group panel spans the viewport at ${width}`);
+        for (const id of ['about', 'how-it-works', 'testimonials', 'group-trips', 'videos', 'contact']) assert(measurements.sections[id] >= 900 * .74, `${id}: major topic gets its own space`);
+      }
+      const coastal = page.locator('#ocean-pause');
+      assert.equal(await coastal.locator('video').count(), 0, 'coastal divider uses a sharp still image');
+      const dividerHeight = await coastal.evaluate(el => el.getBoundingClientRect().height);
+      assert(Math.abs(dividerHeight - Math.min(272, Math.max(142.8, width * .153))) < 1, 'divider is 15% shorter');
       const overlaps = await page.locator('.group-trip-moment').evaluateAll(items => {
         const rects = items.map(el => el.getBoundingClientRect());
         return rects.some((a, i) => rects.slice(i + 1).some(b => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top));
@@ -150,37 +159,36 @@ async function visible(locator) { await locator.waitFor({ state: 'visible' }); }
     const motionPage = await browser.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
     motionPage.setDefaultTimeout(15000);
     await ready(motionPage);
-    const ocean = motionPage.locator('#ocean-pause video');
-    assert.equal(await ocean.getAttribute('src'), null, 'ocean video waits until its divider is visible');
     const stage = motionPage.locator('#testimonials > .home-container');
     await motionPage.waitForFunction(() => document.querySelector('#testimonials > .home-container').dataset.sectionEntrance === 'waiting');
     assert.equal(await stage.evaluate(el => getComputedStyle(el).opacity), '1', 'entrance content stays fully visible');
-    assert(Math.abs(await stage.evaluate(el => new DOMMatrixReadOnly(getComputedStyle(el).transform).a) - .97) < .001, 'sections start subtly smaller');
+    assert(Math.abs(await stage.evaluate(el => new DOMMatrixReadOnly(getComputedStyle(el).transform).a) - .94) < .001, 'desktop sections start visibly smaller');
     const layoutHeight = await motionPage.evaluate(() => document.documentElement.scrollHeight);
     await motionPage.evaluate(() => scrollTo(0, document.getElementById('testimonials').offsetTop - innerHeight * .7));
+    await motionPage.waitForFunction(() => document.querySelector('#testimonials > .home-container').dataset.sectionEntrance === 'growing');
+    const partialScale = await stage.evaluate(el => new DOMMatrixReadOnly(getComputedStyle(el).transform).a);
+    assert(partialScale > .94 && partialScale < .99, 'growth follows scroll position while the next section approaches');
+    await motionPage.waitForTimeout(850);
+    assert(Math.abs(await stage.evaluate(el => new DOMMatrixReadOnly(getComputedStyle(el).transform).a) - partialScale) < .001, 'growth holds when scrolling stops');
+    await motionPage.evaluate(() => scrollTo(0, document.getElementById('testimonials').offsetTop - innerHeight * .15));
     await motionPage.waitForFunction(() => document.querySelector('#testimonials > .home-container').dataset.sectionEntrance === 'complete');
     assert.equal(await stage.evaluate(el => getComputedStyle(el).transform), 'none', 'section reaches full size and releases its transform');
     assert.equal(await motionPage.evaluate(() => document.documentElement.scrollHeight), layoutHeight, 'section scaling does not change layout height');
     await motionPage.locator('#ocean-pause').scrollIntoViewIfNeeded();
-    await motionPage.waitForFunction(() => !document.querySelector('#ocean-pause video').paused);
-    await motionPage.getByRole('button', { name: 'Pause ocean video', exact: true }).click();
-    assert(await ocean.evaluate(el => el.paused), 'ocean pause control works');
+    const coastImage = motionPage.locator('#ocean-pause img');
+    await motionPage.waitForFunction(() => document.querySelector('#ocean-pause img').complete && document.querySelector('#ocean-pause img').naturalWidth > 0);
+    const imageUrl = new URL(await coastImage.evaluate(el => el.currentSrc));
+    assert(Number(imageUrl.searchParams.get('w')) >= 1440, 'desktop coastal image is delivered without upscaling');
+    assert.equal(imageUrl.searchParams.get('q'), '90', 'coastal image uses high quality encoding');
     await motionPage.locator('#hero').scrollIntoViewIfNeeded();
-    await motionPage.locator('#ocean-pause').scrollIntoViewIfNeeded();
-    assert(await ocean.evaluate(el => el.paused), 'manual pause survives leaving and returning');
-    await motionPage.getByRole('button', { name: 'Play ocean video', exact: true }).click();
-    await motionPage.waitForFunction(() => !document.querySelector('#ocean-pause video').paused);
-    await motionPage.locator('#hero').scrollIntoViewIfNeeded();
-    await motionPage.waitForFunction(() => document.querySelector('#ocean-pause video').paused);
     await motionPage.locator('#testimonials').scrollIntoViewIfNeeded();
     assert.equal(await stage.getAttribute('data-section-entrance'), 'complete', 'section entrances do not replay');
     await motionPage.locator('#firstName').focus();
     assert.equal(await motionPage.locator('#contact > .home-container').getAttribute('data-section-entrance'), 'complete', 'keyboard focus settles the section immediately');
     await motionPage.emulateMedia({ reducedMotion: 'reduce' });
     await motionPage.waitForFunction(() => document.getAnimations().every(animation => animation.playState !== 'running'));
-    assert(await ocean.evaluate(el => el.paused), 'reduced motion stops the ocean');
     assert.equal(await motionPage.evaluate(() => document.getAnimations().filter(animation => animation.playState === 'running').length), 0, 'changing motion preference stops all effects');
-    console.log('✓ visible scale entrances, stable layout, lazy ocean playback, pause/resume, offscreen pause, keyboard focus, live reduced-motion changes');
+    console.log('✓ scroll-driven growth, steady scale when idle, stable layout, sharp coastal image, keyboard focus, live reduced-motion changes');
     await motionPage.close();
 
     for (const mode of ['no-js', 'reduced-motion']) {
@@ -188,7 +196,7 @@ async function visible(locator) { await locator.waitFor({ state: 'visible' }); }
       await ready(p);
       const invisible = await p.locator('main h1, main h2, main blockquote').evaluateAll(items => items.filter(el => !el.checkVisibility({ opacityProperty: true, visibilityProperty: true })).map(el => el.textContent));
       assert.deepEqual(invisible, [], `${mode}: reading content stays visible`);
-      assert.equal(await p.locator('#ocean-pause video').getAttribute('src'), null, `${mode}: ocean uses its still image`);
+      assert.equal(await p.locator('#ocean-pause video').count(), 0, `${mode}: coast remains a still image`);
       if (mode === 'no-js') await visible(p.getByRole('link', { name: 'Email directly instead' }));
       else {
         for (const section of await p.locator('main > section').all()) await section.scrollIntoViewIfNeeded();
