@@ -81,8 +81,9 @@ main viewport; settled sections stay full size. Do not reintroduce opacity fades
 Reduced motion uses full-size content and a static coastal image.
 The coastal image now follows scroll through `OceanPause`, including browsers
 without CSS scroll timelines. Keep its overscan larger than its travel so no edge
-shows, and preserve the shallow strip height. Destination options A and B can be
-compared back to back at `/previews/destinations`; keep previews out of search.
+shows, and preserve the shallow strip height. The owner selected destination
+Option A: three equal portraits, each inside a thin rectangular frame with a
+small sand inset. Review it at `/previews/destinations`; keep previews out of search.
 
 ## Mobile styling lives in a separate stylesheet
 
