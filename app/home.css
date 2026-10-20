@@ -91,6 +91,7 @@
 .home-quote-credit p:last-child { color: #53675d; }
 .home-mobile-optimized #cruise-lines { background: transparent; }
 .home-mobile-optimized #cruise-lines > div { padding-block: 1.5rem; }
+.home-cruise-logo-track .home-cruise-logo-duplicate,.home-cruise-logo-toggle { display: none; }
 .home-mobile-optimized #group-trips { padding-block: 2rem; }
 .home-groups { margin-top: 1rem; }
 .home-group-panel { display: grid; gap: 1.5rem; padding: 1.25rem; border-radius: .75rem; background: #082d27; color: white; }
@@ -219,6 +220,25 @@
   .home-contact-grid { grid-template-columns: .4fr .6fr; }
 }
 @media (max-width: 767px) {
+  .home-mobile-optimized #hero,
+  .home-section-heading,.home-process-intro,.home-video-intro,.home-video-caption,
+  .home-group-panel > div:first-child,.home-contact-intro,.home-shorts > .home-eyebrow,
+  .home-about-copy .home-heading,.home-about-name,.home-about-intro,.home-process-card h3,.home-process-card .home-body,
+  .home-cruise-lines-heading,.home-testimonials > .home-container { text-align: center; }
+  .home-mobile-optimized #hero h1,.home-mobile-optimized #hero h1 + p,
+  .home-group-panel h2 + p { margin-inline: auto; }
+  .home-process-intro .home-eyebrow,.home-video-actions,.home-about-actions { justify-content: center; }
+  .home-process-intro .home-eyebrow::before { display: none; }
+  .home-destination-group { align-items: center; text-align: center; }
+  .home-group-panel > div:first-child > a { width: 100%; }
+  .home-quote { text-align: left; }
+  .home-proof { text-align: center; }
+  .home-cruise-logo-track { width: max-content; overflow: visible; margin-inline: 0; padding-inline: 0; gap: 1.75rem; animation: cruise-logo-river 36s linear infinite; }
+  .home-cruise-logo-track .home-cruise-logo-duplicate { display: flex; }
+  .home-cruise-logo-window[data-paused=true] .home-cruise-logo-track,
+  .home-cruise-logo-window:hover .home-cruise-logo-track { animation-play-state: paused; }
+  .home-cruise-logo-toggle { display: grid; place-items: center; width: 44px; height: 44px; margin: .5rem auto 0; border: 1px solid #1a2e2a40; border-radius: 50%; }
+  .home-cruise-logo-toggle:focus-visible { outline: 2px solid var(--color-coral-deep); outline-offset: 3px; }
   .home-about-grid { grid-template-columns: minmax(0,1fr); gap: 1.25rem; }
   .home-about-copy { display: contents; }
   .home-about-copy .home-heading { grid-row: 1; }
@@ -252,6 +272,11 @@
   .home-shelf { padding-bottom: 2rem; }
 }
 @keyframes hero-ink { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes cruise-logo-river { to { transform: translateX(calc(-50% - .875rem)); } }
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .home-cruise-logo-track { width: 100%; flex-wrap: wrap; justify-content: center; animation: none; }
+  .home-cruise-logo-track .home-cruise-logo-duplicate,.home-cruise-logo-toggle { display: none; }
+}
 @keyframes sticky-arrival { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .home-ocean-pause { position: relative; height: clamp(8.925rem,15.3vw,17rem); overflow: hidden; background: #138c91; }
 .home-ocean-media { position: absolute; inset: -2rem 0; pointer-events: none; }

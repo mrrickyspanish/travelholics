@@ -50,7 +50,7 @@ export default async function Home() {
         <HowItWorks />
         <OceanPause />
         <Testimonials />
-        <CruiseLineStrip />
+        <CruiseLineStrip river />
         <GroupTrips />
         <LatestVideos featured={featuredVideo} shorts={shorts} />
         <ContactForm />
