@@ -5,7 +5,10 @@ import { useRouter, useParams } from 'next/navigation'
 import { createBrowserSupabase } from '@/lib/supabase-browser'
 import type { Article } from '@/types/article'
 import { categoryFromTopicCluster } from '@/lib/article-clusters'
-import { contentToBlocks } from '@/lib/articles'
+import { contentToBlocks, type Block } from '@/lib/articles'
+import type { JSONContent } from '@tiptap/react'
+import TravelArticleEditor from '@/components/admin/travel-article-editor'
+import { blocksToPlainText, blocksToTipTap, tipTapToBlocks } from '@/lib/tiptap/travel-article'
 import { CoverImageUploader } from '@/components/cover-image-uploader'
 import { ExternalLink, Save, Trash2 } from 'lucide-react'
 
@@ -21,7 +24,7 @@ export default function ArticleDetailPage() {
   // Editable fields
   const [title, setTitle] = useState('')
   const [slug, setSlug] = useState('')
-  const [content, setContent] = useState('')
+  const [editorDoc, setEditorDoc] = useState<JSONContent>({ type: 'doc', content: [{ type: 'paragraph' }] })
   const [excerpt, setExcerpt] = useState('')
   const [seoTitle, setSeoTitle] = useState('')
   const [seoDescription, setSeoDescription] = useState('')
@@ -42,7 +45,8 @@ export default function ArticleDetailPage() {
           setArticle(data)
           setTitle(data.title)
           setSlug(data.slug)
-          setContent(data.content ?? '')
+          const storedBlocks = Array.isArray(data.body) ? (data.body as Block[]) : contentToBlocks(data.content ?? '')
+          setEditorDoc(blocksToTipTap(storedBlocks))
           setExcerpt(data.excerpt ?? '')
           setSeoTitle(data.seo_title ?? '')
           setSeoDescription(data.seo_description ?? '')
@@ -55,12 +59,18 @@ export default function ArticleDetailPage() {
       })
   }, [id])
 
+  function currentBlocks() {
+    return tipTapToBlocks(editorDoc)
+  }
+
   function wordCount() {
-    return content.trim().split(/\s+/).filter(Boolean).length
+    return blocksToPlainText(currentBlocks()).trim().split(/\s+/).filter(Boolean).length
   }
 
   async function handleSave() {
     setSaving(true)
+    const blocks = currentBlocks()
+    const content = blocksToPlainText(blocks)
     const supabase = createBrowserSupabase()
     const { error } = await supabase
       .from('articles')
@@ -78,7 +88,7 @@ export default function ArticleDetailPage() {
         word_count: wordCount(),
         published: status === 'published',
         category: categoryFromTopicCluster(article?.topic_cluster ?? null),
-        body: contentToBlocks(content),
+        body: blocks,
         published_at: status === 'published' && !article?.published_at ? new Date().toISOString() : article?.published_at,
         updated_at: new Date().toISOString(),
       })
@@ -256,16 +266,14 @@ export default function ArticleDetailPage() {
 
         {/* Content */}
         <div>
-          <div className="flex items-center justify-between mb-1">
-            <label className="text-xs font-medium text-gray-500">Content</label>
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <label className="text-xs font-medium text-gray-500">Article Content</label>
+              <p className="mt-0.5 text-xs text-gray-400">Rich editor with inline images, video, links, lists, quotes, and headings.</p>
+            </div>
             <span className="text-xs text-gray-400">{wordCount()} words</span>
           </div>
-          <textarea
-            rows={28}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm font-mono leading-relaxed resize-y focus:outline-none focus:ring-2 focus:ring-[#10755A]"
-          />
+          <TravelArticleEditor value={editorDoc} onChange={setEditorDoc} />
         </div>
 
         {/* Danger zone */}
