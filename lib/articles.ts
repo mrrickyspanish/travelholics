@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { STATIC_ARTICLES } from './static-articles';
 
 export type ArticleCategory = 'trip-blog' | 'cruise-news' | 'deal' | 'shop-announcement';
 
@@ -76,25 +77,47 @@ export async function getArticles(options?: {
   limit?: number;
   featured?: boolean;
 }): Promise<Article[]> {
+  const staticMatches = STATIC_ARTICLES.filter((article) => {
+    if (!article.published) return false;
+    if (options?.category && article.category !== options.category) return false;
+    if (options?.featured !== undefined && article.featured !== options.featured) return false;
+    return true;
+  });
+
   const client = getClient();
-  if (!client) return [];
+  let remoteArticles: Article[] = [];
 
-  let query = client
-    .from('articles')
-    .select('*')
-    .eq('published', true)
-    .order('published_at', { ascending: false });
+  if (client) {
+    let query = client
+      .from('articles')
+      .select('*')
+      .eq('published', true)
+      .order('published_at', { ascending: false });
 
-  if (options?.category) query = query.eq('category', options.category);
-  if (options?.featured !== undefined) query = query.eq('featured', options.featured);
-  if (options?.limit) query = query.limit(options.limit);
+    if (options?.category) query = query.eq('category', options.category);
+    if (options?.featured !== undefined) query = query.eq('featured', options.featured);
 
-  const { data, error } = await query;
-  if (error || !data) return [];
-  return data as Article[];
+    const { data, error } = await query;
+    if (!error && data) remoteArticles = data as Article[];
+  }
+
+  const staticSlugs = new Set(staticMatches.map((article) => article.slug));
+  const combined = [
+    ...staticMatches,
+    ...remoteArticles.filter((article) => !staticSlugs.has(article.slug)),
+  ].sort((a, b) => {
+    const aTime = a.published_at ? new Date(a.published_at).getTime() : 0;
+    const bTime = b.published_at ? new Date(b.published_at).getTime() : 0;
+    return bTime - aTime;
+  });
+
+  return options?.limit ? combined.slice(0, options.limit) : combined;
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
+  const staticArticle = STATIC_ARTICLES.find((article) => article.slug === slug && article.published);
+  if (staticArticle) return staticArticle;
+
   const client = getClient();
   if (!client) return null;
 
@@ -110,16 +133,17 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
 }
 
 export async function getAllPublishedSlugs(): Promise<string[]> {
+  const staticSlugs = STATIC_ARTICLES.filter((article) => article.published).map((article) => article.slug);
   const client = getClient();
-  if (!client) return [];
+  if (!client) return staticSlugs;
 
   const { data, error } = await client
     .from('articles')
     .select('slug')
     .eq('published', true);
 
-  if (error || !data) return [];
-  return data.map((row: { slug: string }) => row.slug);
+  if (error || !data) return staticSlugs;
+  return Array.from(new Set([...staticSlugs, ...data.map((row: { slug: string }) => row.slug)]));
 }
 
 export function formatDate(dateStr: string | null): string {
