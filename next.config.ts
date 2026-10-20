@@ -17,6 +17,11 @@ const nextConfig: NextConfig = {
         hostname: "i.ytimg.com",
         pathname: "/vi/**",
       },
+      {
+        protocol: "https",
+        hostname: "d2ol7oe51mr4n9.cloudfront.net",
+        pathname: "/**",
+      },
     ],
   },
   async redirects() {
