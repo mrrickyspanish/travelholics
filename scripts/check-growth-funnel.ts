@@ -6,6 +6,7 @@ import { buildGroupInquiryNotes, validateGroupInquiryContact } from "../lib/grou
 import { appendLeadAttribution, captureLeadAttribution, sanitizeCampaign } from "../lib/lead-attribution";
 
 const offline = mergeChannelVideos([], CURATED_VIDEOS);
+assert.equal(offline.find((video) => video.format === "long")?.id, "r8YbyrbIq-I", 'feed failure retains the latest verified episode');
 assert(offline.some((video) => video.format === "long"));
 assert(offline.some((video) => video.format === "short"));
 assert(START_HERE_IDS.every((id) => offline.some((video) => video.id === id)));

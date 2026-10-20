@@ -17,6 +17,9 @@ import { getFeaturedLongForm, getShorts } from "@/lib/youtube-feed";
 import "./mobile-polish.css";
 import "./home.css";
 
+// Retry even when a build temporarily falls back to the verified video catalog.
+export const revalidate = 300;
+
 export const metadata: Metadata = {
   title: "Travelholics | Certified Cruise Specialist — Yolanda Harris",
   description:
