@@ -42,14 +42,12 @@ export const STATIC_ARTICLES: Article[] = [
       { type: 'p', text: 'I would rather have three ports I am excited about than five stops that do not really interest me. The number of destinations matters a lot less than whether those destinations fit the vacation you want.' },
 
       { type: 'h2', text: 'Pay attention to your port times' },
-      { type: 'img', src: '/blog/cruise-school-ep4/check-port-times.jpg', alt: 'Cruise School graphic reminding travelers to check cruise port arrival and departure times' },
       { type: 'p', text: 'This is something a lot of first-time cruisers overlook.' },
       { type: 'p', text: 'You might see a destination you have always wanted to visit and get excited because it is listed on the itinerary. Then you look closer and realize the ship is only there for a few hours.' },
       { type: 'p', text: 'A port day that runs from 7 a.m. until 6 p.m. gives you a very different experience from arriving at 1 p.m. and leaving at 7. That can completely change what you are able to do.' },
       { type: 'p', text: 'If there is a certain beach, excursion, restaurant, tour, or attraction you really want to experience, make sure it actually fits into the amount of time the ship will be in port. Do not just look at the destination name. Look at the **arrival time and departure time too.**' },
 
       { type: 'h2', text: 'Know whether you are visiting a tender port' },
-      { type: 'img', src: '/blog/cruise-school-ep4/tender-ports.jpg', alt: 'Cruise School graphic explaining tender ports' },
       { type: 'p', text: 'At some ports, your cruise ship docks directly at the pier and you simply walk off. At others, the ship anchors offshore and smaller boats take passengers back and forth between the ship and land. Those smaller boats are called tenders.' },
       { type: 'p', text: 'Tendering is not necessarily a bad thing. Plenty of great destinations use tenders. But it can add extra time to your port day. You may need to wait before getting ashore, and weather can sometimes affect the process.' },
       { type: 'p', text: 'That does not mean you should avoid those ports. It just means you should know what you booked before you get there.' },
@@ -70,7 +68,6 @@ export const STATIC_ARTICLES: Article[] = [
       { type: 'p', text: 'The headline tells you where you are generally going. The itinerary tells you what the vacation will actually look like.' },
 
       { type: 'h2', text: 'The cheapest cruise is not always the best value' },
-      { type: 'img', src: '/blog/cruise-school-ep4/value-over-cheapest-fare.jpg', alt: 'Cruise School graphic about choosing value over the cheapest cruise fare' },
       { type: 'p', text: 'I understand why people start with price. But the least expensive cruise on the screen is not automatically the best cruise for you.' },
       { type: 'p', text: 'Maybe it does not visit the ports you really wanted. Maybe the port times are shorter. Maybe the departure city requires expensive airfare. Maybe the ship itself does not have what you want. Or maybe the overall experience just does not match the kind of vacation you had in mind.' },
       { type: 'p', text: 'Instead of asking **“What is the cheapest cruise?”** ask **“Which cruise gives me the experience I want for what I am spending?”** That is a much better way to compare your options.' },
@@ -96,7 +93,7 @@ export const STATIC_ARTICLES: Article[] = [
     ],
     category: 'trip-blog',
     author: 'Yolanda Harris',
-    cover_image: '/blog/cruise-school-ep4/choosing-the-right-itinerary.jpg',
+    cover_image: 'https://i.ytimg.com/vi/r8YbyrbIq-I/maxresdefault.jpg',
     cover_alt: 'Cruise School: Choosing the Right Itinerary',
     tags: ['Cruise School', 'cruise itinerary', 'cruise planning', 'sea days', 'cruise ports', 'tender ports'],
     featured: true,
