@@ -5,7 +5,7 @@ const LINK_CLASS = 'text-[#10755A] underline hover:text-[#0d6a51]';
 
 // Matches, in priority order: **bold**, markdown [text](url) links, bare
 // https:// URLs, and bare mentions of the site's own domain.
-const INLINE_PATTERN = /\*\*([^*]+)\*\*|\[([^\]]+)\]\(([^)]+)\)|(https?:\/\/[^\s)]+)|\b(yotravelholic\.com(?:\/[^\s)]*)?)/g;
+const INLINE_PATTERN = /\*\*([^*]+)\*\*|\*([^*]+)\*|\[([^\]]+)\]\(([^)]+)\)|(https?:\/\/[^\s)]+)|\b(yotravelholic\.com(?:\/[^\s)]*)?)/g;
 
 function splitTrailingPunctuation(raw: string): [string, string] {
   const m = raw.match(/^(.*[^.,!?;:])([.,!?;:]+)$/);
@@ -55,10 +55,12 @@ export function renderInline(text: string): ReactNode[] {
 
     if (match[1] !== undefined) {
       nodes.push(<strong key={key++}>{match[1]}</strong>);
-    } else if (match[3] !== undefined) {
-      nodes.push(renderLink(match[2], match[3], key++));
+    } else if (match[2] !== undefined) {
+      nodes.push(<em key={key++}>{match[2]}</em>);
+    } else if (match[4] !== undefined) {
+      nodes.push(renderLink(match[3], match[4], key++));
     } else {
-      const [url, trailing] = splitTrailingPunctuation(match[4] ?? match[5]);
+      const [url, trailing] = splitTrailingPunctuation(match[5] ?? match[6]);
       nodes.push(renderLink(url, url, key++));
       if (trailing) nodes.push(trailing);
     }
