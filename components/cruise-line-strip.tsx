@@ -52,7 +52,7 @@ export const CruiseLineStrip = ({ river = false }: { river?: boolean }) => {
           </p>
 
           <div className={`${river ? 'home-cruise-logo-window ' : ''}relative overflow-hidden lg:overflow-visible`} data-paused={paused}>
-            <ul aria-label="Cruise lines"
+            <ul tabIndex={0} aria-label="Cruise lines"
               className={`${river ? 'home-cruise-logo-track ' : ''}-mx-5 flex gap-7 overflow-x-auto px-5 py-2 [scrollbar-width:none] sm:-mx-8 sm:gap-9 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-x-9 lg:gap-y-6 lg:overflow-visible lg:px-0 [&::-webkit-scrollbar]:hidden`}
             >
               {(river ? [...cruiseLines, ...cruiseLines] : cruiseLines).map((line, index) => (

@@ -236,6 +236,7 @@
   .home-cruise-logo-track { width: max-content; overflow: visible; margin-inline: 0; padding-inline: 0; gap: 1.75rem; animation: cruise-logo-river 36s linear infinite; }
   .home-cruise-logo-track .home-cruise-logo-duplicate { display: flex; }
   .home-cruise-logo-window[data-paused=true] .home-cruise-logo-track,
+  .home-cruise-logo-track:focus,
   .home-cruise-logo-window:hover .home-cruise-logo-track { animation-play-state: paused; }
   .home-cruise-logo-toggle { display: grid; place-items: center; width: 44px; height: 44px; margin: .5rem auto 0; border: 1px solid #1a2e2a40; border-radius: 50%; }
   .home-cruise-logo-toggle:focus-visible { outline: 2px solid var(--color-coral-deep); outline-offset: 3px; }
