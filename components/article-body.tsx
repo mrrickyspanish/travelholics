@@ -58,9 +58,20 @@ export function ArticleBody({ blocks }: Props) {
               </ul>
             );
 
+          case 'ordered-list':
+            return (
+              <ol key={i} className="space-y-2 pl-6 list-decimal">
+                {block.items.map((item, j) => (
+                  <li key={j} className="text-base sm:text-lg text-ink/90 pl-1">
+                    {renderInline(item)}
+                  </li>
+                ))}
+              </ol>
+            );
+
           case 'img':
             return (
-              <figure key={i} className="my-8">
+              <figure key={i} className={`my-8 ${block.size === 'column' ? 'max-w-xl mx-auto' : block.size === 'full' ? 'sm:-mx-8' : ''}`}>
                 <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-sand">
                   <Image
                     src={block.src}
@@ -70,6 +81,22 @@ export function ArticleBody({ blocks }: Props) {
                     sizes="(max-width: 768px) 100vw, 720px"
                   />
                 </div>
+                {block.caption && (
+                  <figcaption className="text-center text-sm text-stone mt-2">{block.caption}</figcaption>
+                )}
+              </figure>
+            );
+
+          case 'video':
+            return (
+              <figure key={i} className="my-8">
+                <video
+                  src={block.src}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="w-full rounded-xl bg-black"
+                />
                 {block.caption && (
                   <figcaption className="text-center text-sm text-stone mt-2">{block.caption}</figcaption>
                 )}
