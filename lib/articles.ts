@@ -35,7 +35,9 @@ export type Block =
   | { type: 'h3'; text: string }
   | { type: 'quote'; text: string; attribution?: string }
   | { type: 'list'; items: string[] }
-  | { type: 'img'; src: string; alt: string; caption?: string }
+  | { type: 'ordered-list'; items: string[] }
+  | { type: 'img'; src: string; alt: string; caption?: string; size?: 'column' | 'wide' | 'full' }
+  | { type: 'video'; src: string; caption?: string }
   | { type: 'divider' };
 
 export interface Article {
