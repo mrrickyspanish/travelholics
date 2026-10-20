@@ -25,7 +25,6 @@ export const STATIC_ARTICLES: Article[] = [
       { type: 'quote', text: 'There is no one perfect cruise. There is the cruise that is right for you.', attribution: 'Yolanda' },
 
       { type: 'h2', text: 'Think about how many sea days you actually want' },
-      { type: 'img', src: '/blog/cruise-school-ep4/sea-days-matter.jpg', alt: 'Cruise School graphic about why sea days matter when choosing an itinerary' },
       { type: 'p', text: 'Some people absolutely love sea days. I do.' },
       { type: 'p', text: 'They give you time to sleep in, sit by the pool, catch a show, play trivia, visit the spa, eat, relax, and actually enjoy the ship.' },
       { type: 'p', text: 'Other travelers would much rather wake up somewhere different every morning. If that sounds like you, several sea days may start to feel like too much time onboard.' },
@@ -61,7 +60,6 @@ export const STATIC_ARTICLES: Article[] = [
       { type: 'p', text: 'Be realistic about the kind of traveler you are. The vacation that sounds impressive on paper is not always the vacation you will enjoy the most.' },
 
       { type: 'h2', text: 'Remember that the itinerary starts before you get on the ship' },
-      { type: 'img', src: '/blog/cruise-school-ep4/getting-to-the-port.jpg', alt: 'Cruise School graphic about travel logistics for getting to the departure port' },
       { type: 'p', text: 'Where the cruise begins matters too. Can you drive to the departure port? Do you have to fly? Will you need a hotel the night before? What will transportation cost? What about parking?' },
       { type: 'p', text: 'I always recommend arriving the day before your cruise if you are flying. That gives you some breathing room if there is a flight delay, weather issue, or another travel problem before embarkation.' },
       { type: 'p', text: 'I have seen clients choose what looked like the cheaper sailing and then spend hundreds more once airfare, hotel, transportation, and everything else required to reach the port were added in. Compare the **whole trip**, not just the advertised cruise fare.' },
