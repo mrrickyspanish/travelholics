@@ -268,7 +268,8 @@
   .home-mobile-optimized #hero .hero-actions { flex-direction: column; align-items: stretch; gap: .75rem; }
   .home-mobile-optimized #hero .hero-actions > a { width: 100%; justify-content: center; }
   .home-mobile-optimized #hero .hero-tagline { display: none; }
-  .home-mobile-optimized #hero img { object-position: 68% 0%; }
+  /* Lift the portrait above centered copy; the lower scrim blends into the hero background. */
+  .home-mobile-optimized #hero img { object-position: 68% 0%; transform: translateY(calc(-1 * clamp(2.5rem,7svh,4.5rem))); }
   .home-mobile-optimized #hero .hero-mobile-shade { background: linear-gradient(180deg,rgba(4,18,15,.18) 0%,rgba(4,18,15,.12) 30%,rgba(4,18,15,.86) 55%,#04120f 100%) !important; }
   .home-shelf { padding-bottom: 2rem; }
 }
