@@ -22,7 +22,7 @@ export const LatestVideos = ({ featured, shorts }: LatestVideosProps) => {
           </div>
         )}
         {shorts.length > 0 && (
-          <div className="home-shorts"><p className="home-eyebrow">Quick cruise answers</p><ul>{shorts.map(short => <li key={short.id}><VideoEmbed id={short.id} title={short.title} format="short" sizes="(min-width: 768px) 10rem, 29vw" /><p>{short.title}</p></li>)}</ul></div>
+          <div className="home-shorts"><p className="home-eyebrow">Quick cruise answers</p><ul tabIndex={0} aria-label="Quick cruise answer videos">{shorts.map(short => <li key={short.id}><VideoEmbed id={short.id} title={short.title} format="short" sizes="(min-width: 768px) 18vw, 58vw" /><p>{short.title}</p></li>)}</ul></div>
         )}
       </div>
     </section>

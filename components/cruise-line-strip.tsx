@@ -42,8 +42,8 @@ export const CruiseLineStrip = () => {
     <section id="cruise-lines" className="overflow-hidden border-y border-ink/10 bg-[#f1ebdf] text-ink">
       <div className="mx-auto max-w-[96rem] px-5 py-9 sm:px-8 sm:py-11 lg:px-12 xl:px-16">
         <div className="grid gap-6 lg:grid-cols-[0.45fr_0.55fr] lg:items-center lg:gap-10">
-          <p data-headline className="text-balance font-serif text-[clamp(1.375rem,2.1vw,1.75rem)] font-semibold leading-[1.1] tracking-[-0.04em] text-royal-deep">
-            Different ships. Different personalities. We know the difference.
+          <p data-headline className="home-cruise-lines-heading text-balance font-serif text-[clamp(1.375rem,2.1vw,1.75rem)] font-semibold leading-[1.1] tracking-[-0.04em] text-royal-deep">
+            Find your cruise line.
           </p>
 
           <div className="relative overflow-hidden lg:overflow-visible">

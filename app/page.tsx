@@ -11,7 +11,6 @@ import { ShopStrip } from "@/components/shop-strip";
 import { Testimonials } from "@/components/testimonials";
 import { ContactForm } from "@/components/contact-form";
 import { Footer } from "@/components/footer";
-import { MobileCTA } from "@/components/mobile-cta";
 import { OceanPause } from "@/components/ocean-pause";
 import { SectionEntrances } from "@/components/motion/section-entrances";
 import { getFeaturedLongForm, getShorts } from "@/lib/youtube-feed";
@@ -41,7 +40,6 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <MobileCTA />
       <SectionEntrances />
       <main className="home-mobile-optimized">
         {/* Meet the planner early; optional browsing follows proof.

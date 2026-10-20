@@ -40,16 +40,17 @@ async function visible(locator) { await locator.waitFor({ state: 'visible' }); }
       assert.equal(measurements.overflow, false, `page overflow at ${width}`);
       if (width === 1440) {
         // The owner wants one prominent topic with a preview of the next.
-        assert(measurements.height <= 7600, 'desktop height budget');
+        // Larger destination, Shorts, and product imagery is owner-approved.
+        assert(measurements.height <= 8800, 'desktop height budget with image-led browsing');
         // The approved destination portraits and separate group banner precede Yolanda.
         assert(measurements.portrait < 1950, 'desktop portrait reach after destination showcase');
-        for (const [id, limit] of Object.entries({ 'how-it-works': 800, testimonials: 800, 'group-trips': 740, videos: 900 })) assert(measurements.sections[id] <= limit, `${id}: desktop section height`);
+        for (const [id, limit] of Object.entries({ 'how-it-works': 800, testimonials: 800, 'group-trips': 740, videos: 1500 })) assert(measurements.sections[id] <= limit, `${id}: desktop section height`);
       }
       if (width === 390) {
-        assert(measurements.height <= 8800, 'mobile height budget'); assert(measurements.portrait < 2532, 'mobile portrait reach');
+        assert(measurements.height <= 10000, 'mobile height budget with larger video and product images'); assert(measurements.portrait < 2532, 'mobile portrait reach');
         for (const [id, limit] of Object.entries({ 'how-it-works': 900, testimonials: 800, 'group-trips': 650, contact: 1200 })) assert(measurements.sections[id] <= limit, `${id}: mobile section should remain compact`);
       }
-      if (width === 768) assert(measurements.height <= 7200, 'tablet height budget');
+      if (width === 768) assert(measurements.height <= 8500, 'tablet height budget with larger media');
       if (width >= 1024) {
         const panel = await page.locator('.home-group-panel').boundingBox();
         assert(Math.abs(panel.x) < 1 && Math.abs(panel.width - width) < 1, `desktop group panel spans the viewport at ${width}`);
@@ -68,8 +69,13 @@ async function visible(locator) { await locator.waitFor({ state: 'visible' }); }
       const nextStep = page.getByRole('button', { name: 'Next planning steps', exact: true });
       const railFrame = await planningRail.boundingBox();
       const nextFrame = await nextStep.boundingBox();
-      assert(nextFrame.x >= railFrame.x + railFrame.width, 'process arrow sits beyond the visible cards');
-      assert(Math.abs(nextFrame.y + nextFrame.height / 2 - railFrame.y - railFrame.height / 2) < 2, 'process arrow aligns with the middle of the cards');
+      assert(nextFrame.y >= railFrame.y + railFrame.height, 'process controls sit below the cards');
+      assert(nextFrame.x + nextFrame.width <= railFrame.x + railFrame.width + 1, 'process controls stay within the content width');
+      assert.equal(await page.locator('.home-process-rail [aria-live]').count(), 0, 'process counter is removed');
+      if (width < 768) {
+        const cardFrame = await planningRail.locator('li').first().boundingBox();
+        assert(Math.abs(cardFrame.width - railFrame.width) < 1, 'mobile process card fills the rail');
+      }
       assert.equal(await planningRail.evaluate(el => getComputedStyle(el).scrollbarWidth), 'none', 'process rail hides its native scrollbar');
       assert(await page.getByRole('button', { name: 'Previous planning steps', exact: true, includeHidden: true }).isDisabled(), 'Back stays disabled at the first step');
       for (let step = 0; step < 3 && await nextStep.isEnabled(); step++) {
@@ -128,14 +134,13 @@ async function visible(locator) { await locator.waitFor({ state: 'visible' }); }
     await page.keyboard.press('Escape');
     await dialog.waitFor({ state: 'hidden' });
     assert(await opener.evaluate(el => el === document.activeElement), 'menu returns focus');
-    assert.equal(await page.locator('.home-sticky-cta').count(), 0, 'sticky CTA hidden in hero');
+    assert.equal(await page.locator('.home-sticky-cta').count(), 0, 'homepage has no floating CTA');
     await page.evaluate(() => scrollTo(0, document.getElementById('about').offsetTop));
     await page.locator('.home-sticky-cta').waitFor({ state: 'detached' });
     assert.equal(await page.locator('.home-sticky-cta').count(), 0, 'sticky CTA gives the bio room');
     await page.evaluate(() => scrollTo(0, document.getElementById('how-it-works').offsetTop));
-    await visible(page.locator('.home-sticky-cta'));
-    await page.locator('.home-sticky-cta a').click();
-    await page.locator('.home-sticky-cta').waitFor({ state: 'detached' });
+    assert.equal(await page.locator('.home-sticky-cta').count(), 0, 'process stays unobstructed');
+    await page.locator('#how-it-works').getByRole('link', { name: 'Plan my cruise' }).click();
     const submit = page.locator('#contact').getByRole('button', { name: 'Start planning my trip' });
     await submit.click();
     assert.equal(await page.locator('#firstName').getAttribute('aria-invalid'), 'true');

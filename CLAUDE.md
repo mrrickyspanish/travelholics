@@ -67,9 +67,9 @@ introductions beside image cards and small review portraits. The group panel spa
 the desktop width and stays contained on phones; contact stays contained. Do not reduce
 body-copy sizes to fit. `npm run check:home-ux` checks section-height budgets and
 that every process card remains reachable with native scrolling and controls.
-The process rail has no visible scrollbar. Its plain forward chevron sits outside
-the last visible card, vertically centered on the cards; a text Back control lets
-visitors return. Keep its touch targets at least 44px and keyboard scrolling intact.
+The process rail has no visible scrollbar or counter. Its previous/next controls sit
+below the cards so each phone card fills the content width. Keep touch targets at
+least 44px and keyboard scrolling intact.
 
 The latest owner refinement adds breathing room around those compact layouts,
 sea-glass and pale coral fields, and a shallow coastal-image pause after the
@@ -103,6 +103,9 @@ absorbs all the free space, and the element collapses to zero width — the imag
 invisibly and leaves a dead gap. Use explicit placement (`col-start-N`) instead.
 
 ## Sticky CTAs
+
+The homepage has no floating booking bar. The owner's latest mobile review removed
+it because it covered photos and competed with in-page planning buttons.
 
 Both sticky mobile CTAs must clear the iOS home indicator. Use
 `env(safe-area-inset-bottom)` (see `components/mobile-cta.tsx` and

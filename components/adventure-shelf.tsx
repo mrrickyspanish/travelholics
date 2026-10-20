@@ -15,7 +15,7 @@ export const AdventureShelf = () => {
         <div className="home-section-heading">
           <div><p className="home-eyebrow">Start with a feeling</p><h2 id="destinations-title" className="home-heading">Where should we wake up next?</h2></div>
           <div>
-            <p className="home-body">You do not need to know the ship yet. Pick the kind of trip you want to feel, then let Yolanda help narrow down the sailing that actually fits.</p>
+            <p className="home-body">Pick the kind of trip you want to feel, then let Yolanda help narrow down the sailing that actually fits.</p>
             <Link href="/#contact" className="home-text-link">Help me choose <ArrowUpRight size={16} /></Link>
           </div>
         </div>

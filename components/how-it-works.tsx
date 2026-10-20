@@ -43,20 +43,20 @@ export const HowItWorks = () => {
         <div className="home-process-intro">
             <p className="home-eyebrow">How it works</p>
             <h2 id="process-title" className="home-heading">
-              A cruise specialist, not a booking site.
+              Your cruise, made easy.
             </h2>
             <p className="home-body">
-              Yolanda is a Certified Cruise Specialist. She helps you choose the sailing, cabins, and details that fit your trip. Travel suppliers compensate her, so you get her planning support without an added planning fee.
+              Expert help from your first question to sail day. No planning fees.
             </p>
             <Link href="/#contact" className="home-button">Plan my cruise <ArrowUpRight size={17} /></Link>
         </div>
-        <HomeCardRail id="planning-steps" label="Planning steps" className="home-process-rail" controls="edge">
+        <HomeCardRail id="planning-steps" label="Planning steps" className="home-process-rail" showCounter={false}>
           {steps.map((step) => (
             <li
               key={step.number}
               className="home-process-card"
             >
-              <div className="home-process-photo"><Image src={step.image} alt={step.alt} fill sizes="(min-width: 1024px) 22vw, 78vw" className="object-cover" /><span aria-hidden="true">{step.number}</span></div>
+              <div className="home-process-photo"><Image src={step.image} alt={step.alt} fill sizes="(min-width: 1024px) 28vw, (min-width: 768px) 48vw, 94vw" className="object-cover" /><span aria-hidden="true">{step.number}</span></div>
               <h3>
                 {step.title}
               </h3>

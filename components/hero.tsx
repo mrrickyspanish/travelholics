@@ -116,8 +116,8 @@ export const Hero = () => {
                 className="group inline-flex min-h-11 w-fit shrink-0 items-center gap-4 rounded-none bg-coral py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:-translate-y-0.5 hover:bg-coral-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
               >
                 Plan a group cruise
-                <span className="flex h-8 w-8 items-center justify-center bg-white text-coral transition group-hover:translate-x-0.5">
-                  <ArrowRight size={17} strokeWidth={2.75} />
+                <span className="flex h-8 w-8 items-center justify-center text-ink transition group-hover:translate-x-0.5">
+                  <ArrowRight size={17} strokeWidth={2.75} aria-hidden="true" />
                 </span>
               </Link>
               <Link href="/#contact" className="inline-flex min-h-11 items-center justify-center border border-white/60 px-5 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">

@@ -44,11 +44,11 @@ export const ShopStrip = () => (
         <div><p className="home-eyebrow">Travelholics Originals</p><h2 id="shop-title" className="home-shop-heading">Bring a little cruise life home.</h2></div>
         <div><p className="home-body">Travel pieces, cabin personality, and small reminders that your next trip is never as far away as it feels.</p><Link href="/shop-full" className="home-text-link">Shop the collection <ArrowUpRight size={16} /></Link></div>
       </div>
-      <ul className="home-shop-rail" aria-label="Travelholics products">
+      <ul className="home-shop-rail" tabIndex={0} aria-label="Travelholics products">
         {products.map(product => (
           <li key={product.name}>
             <Link href={product.href} className="home-product">
-              <div className="home-product-image"><Image src={product.image} alt={product.imageAlt} fill sizes="(min-width: 1024px) 20vw, 70vw" className="object-contain" /><ArrowUpRight className="home-product-arrow" size={18} aria-hidden="true" /></div>
+              <div className="home-product-image"><Image src={product.image} alt={product.imageAlt} fill sizes="(min-width: 1024px) 22vw, 76vw" className="object-contain" /><ArrowUpRight className="home-product-arrow" size={18} aria-hidden="true" /></div>
               <h3>{product.name}</h3><p>{product.price}</p>
             </Link>
           </li>

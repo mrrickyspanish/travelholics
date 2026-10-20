@@ -4,8 +4,8 @@ import { Children, useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 
 /** Native scrolling keeps every card available to touch, keyboard, and no-JS users. */
-export function HomeCardRail({ id, label, className, children, controls = 'below' }: {
-  id: string; label: string; className: string; children: ReactNode; controls?: 'below' | 'edge';
+export function HomeCardRail({ id, label, className, children, controls = 'below', showCounter = true }: {
+  id: string; label: string; className: string; children: ReactNode; controls?: 'below' | 'edge'; showCounter?: boolean;
 }) {
   const rail = useRef<HTMLUListElement>(null);
   const count = Children.count(children);
@@ -46,10 +46,10 @@ export function HomeCardRail({ id, label, className, children, controls = 'below
         <button type="button" className="home-card-rail-next" aria-label={`Next ${label.toLowerCase()}`} aria-controls={id} disabled={!position.next} onClick={() => move(1)}><ChevronRight size={26} strokeWidth={1.5} /></button>
         <div className="home-card-rail-edge-footer">
           <button type="button" aria-label={`Previous ${label.toLowerCase()}`} aria-controls={id} disabled={!position.previous} onClick={() => move(-1)}>Back</button>
-          <span aria-live="polite" aria-atomic="true">{position.first}{position.last > position.first ? `–${position.last}` : ''} / {count}</span>
+          {showCounter && <span aria-live="polite" aria-atomic="true">{position.first}{position.last > position.first ? `–${position.last}` : ''} / {count}</span>}
         </div>
       </> : <div className="home-card-rail-controls">
-        <span aria-live="polite" aria-atomic="true">{position.first}{position.last > position.first ? `–${position.last}` : ''} / {count}</span>
+        {showCounter && <span aria-live="polite" aria-atomic="true">{position.first}{position.last > position.first ? `–${position.last}` : ''} / {count}</span>}
         <div>
           <button type="button" aria-label={`Previous ${label.toLowerCase()}`} aria-controls={id} disabled={!position.previous} onClick={() => move(-1)}><ArrowLeft size={18} /></button>
           <button type="button" aria-label={`Next ${label.toLowerCase()}`} aria-controls={id} disabled={!position.next} onClick={() => move(1)}><ArrowRight size={18} /></button>
