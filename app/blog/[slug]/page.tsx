@@ -222,7 +222,7 @@ function ArticleHeroMeta({ article, meta, readTime, expired, daysLeft }: HeroMet
         )}
       </div>
 
-      <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-2 text-cream">
+      <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-2 text-ink">
         {article.title}
       </h1>
 
