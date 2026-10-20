@@ -93,7 +93,7 @@ export const STATIC_ARTICLES: Article[] = [
     ],
     category: 'trip-blog',
     author: 'Yolanda Harris',
-    cover_image: 'https://i.ytimg.com/vi/r8YbyrbIq-I/maxresdefault.jpg',
+    cover_image: '/blog/cruise-school-ep4/choosing-the-right-itinerary.jpg',
     cover_alt: 'Cruise School: Choosing the Right Itinerary',
     tags: ['Cruise School', 'cruise itinerary', 'cruise planning', 'sea days', 'cruise ports', 'tender ports'],
     featured: true,
