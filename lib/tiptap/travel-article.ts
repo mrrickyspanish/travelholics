@@ -62,3 +62,14 @@ export function tipTapToBlocks(doc: JSONContent): Block[] {
   }
   return blocks
 }
+
+
+export function blocksToPlainText(blocks: Block[]): string {
+  return blocks.map((block) => {
+    if (block.type === 'p' || block.type === 'h2' || block.type === 'h3' || block.type === 'quote') return block.text
+    if (block.type === 'list' || block.type === 'ordered-list') return block.items.join('\n')
+    if (block.type === 'img') return block.caption ?? block.alt
+    if (block.type === 'video') return block.caption ?? ''
+    return ''
+  }).filter(Boolean).join('\n\n')
+}
