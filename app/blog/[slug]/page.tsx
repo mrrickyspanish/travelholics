@@ -103,31 +103,24 @@ export default async function ArticlePage({
       <Header />
       <main className="min-h-screen bg-sand">
         {/* Hero */}
-        <div className="relative pt-20">
-          {a.cover_image ? (
-            <div className="relative h-72 sm:h-96 lg:h-[480px] w-full">
-              <Image
-                src={a.cover_image}
-                alt={a.cover_alt ?? a.title}
-                fill
-                className="object-cover"
-                priority
-                sizes="100vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/30 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
-                <div className="max-w-4xl mx-auto">
-                  <ArticleHeroMeta article={a} meta={meta} readTime={readTime} expired={expired} daysLeft={daysLeft} />
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className={`${meta.bgColor} px-6 pb-10 pt-8`}>
-              <div className="max-w-4xl mx-auto">
-                <ArticleHeroMeta article={a} meta={meta} readTime={readTime} expired={expired} daysLeft={daysLeft} />
+        <div className="pt-20">
+          {a.cover_image && (
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-5 sm:pt-8">
+              <div className="relative w-full aspect-[16/9] overflow-hidden rounded-2xl sm:rounded-3xl bg-cream shadow-sm">
+                <Image
+                  src={a.cover_image}
+                  alt={a.cover_alt ?? a.title}
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 1152px"
+                />
               </div>
             </div>
           )}
+          <div className="max-w-4xl mx-auto px-6 pt-7 sm:pt-10 pb-4">
+            <ArticleHeroMeta article={a} meta={meta} readTime={readTime} expired={expired} daysLeft={daysLeft} />
+          </div>
         </div>
 
         {/* Article content */}
@@ -218,12 +211,12 @@ function ArticleHeroMeta({ article, meta, readTime, expired, daysLeft }: HeroMet
           {meta.label}
         </span>
         {article.category === 'deal' && !expired && daysLeft !== null && daysLeft <= 5 && (
-          <span className="bg-white/20 text-white px-2.5 py-1 rounded-full text-xs font-bold">
+          <span className="bg-ink/10 text-ink px-2.5 py-1 rounded-full text-xs font-bold">
             {daysLeft === 0 ? 'Ends today' : `${daysLeft} day${daysLeft !== 1 ? 's' : ''} left`}
           </span>
         )}
         {expired && (
-          <span className="bg-stone/40 text-white px-2.5 py-1 rounded-full text-xs font-bold">
+          <span className="bg-stone/15 text-stone px-2.5 py-1 rounded-full text-xs font-bold">
             Expired
           </span>
         )}
@@ -234,11 +227,11 @@ function ArticleHeroMeta({ article, meta, readTime, expired, daysLeft }: HeroMet
       </h1>
 
       {article.subtitle && (
-        <p className="text-lg sm:text-xl mb-4 text-cream/75">{article.subtitle}</p>
+        <p className="text-lg sm:text-xl mb-4 text-stone">{article.subtitle}</p>
       )}
 
-      <div className="flex flex-wrap items-center gap-4 text-sm text-cream/70">
-        <span className="font-semibold text-cream">{article.author}</span>
+      <div className="flex flex-wrap items-center gap-4 text-sm text-stone">
+        <span className="font-semibold text-ink">{article.author}</span>
         <span className="flex items-center gap-1">
           <Calendar className="h-3.5 w-3.5" />
           {formatDate(article.published_at)}
