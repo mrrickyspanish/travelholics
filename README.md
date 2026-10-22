@@ -75,6 +75,15 @@ RESEND_FROM_EMAIL=Travelholics <hello@yourdomain.com>
 # addresses are still format-checked, just not verified against USPS.
 USPS_CONSUMER_KEY=your_usps_consumer_key
 USPS_CONSUMER_SECRET=your_usps_consumer_secret
+
+# Scheduled jobs. Vercel only sends the Authorization header when this is set,
+# and /api/cron/group-trip-reminders rejects every request without it.
+CRON_SECRET=a_long_random_string_you_generate
+
+# Optional. Signs newsletter unsubscribe links. Falls back to
+# SUPABASE_SERVICE_ROLE_KEY when unset; changing it invalidates links in
+# already-delivered email.
+NEWSLETTER_UNSUBSCRIBE_SECRET=another_long_random_string
 ```
 
 ### 3. Set Up Supabase
@@ -160,6 +169,8 @@ For production on Vercel, confirm these environment variables are set:
 | `USPS_CONSUMER_KEY` | Optional. Verifying Duck Hunt shipping addresses against the USPS Addresses API. Named as developer.usps.com issues it |
 | `USPS_CONSUMER_SECRET` | Optional. Pairs with `USPS_CONSUMER_KEY` |
 | `USPS_API_BASE` | Optional. Defaults to `https://apis.usps.com`; set to `https://apis-tem.usps.com` for USPS's test environment |
+| `CRON_SECRET` | **Required for scheduled jobs.** Without it `/api/cron/group-trip-reminders` returns 401 on every run and no reminder is ever sent |
+| `NEWSLETTER_UNSUBSCRIBE_SECRET` | Optional. Signs unsubscribe links; falls back to `SUPABASE_SERVICE_ROLE_KEY` |
 
 ### Duck Hunt address verification
 
@@ -315,3 +326,34 @@ Questions? Contact: info@creativeeyestudios.com
 ---
 
 Built with ❤️ by Creative Eye Studios
+
+
+### Newsletter unsubscribe
+
+Every signup form on the site promises "I understand I can unsubscribe anytime".
+`/unsubscribe` is where that promise is kept.
+
+Links are signed. The token is an HMAC of the recipient's address
+(`lib/newsletter-unsubscribe-token.ts`), so a link only works for the address it
+was issued for — without that, anyone who can guess an address could unsubscribe
+that person, or walk a list and unsubscribe everybody. `npm run check:unsubscribe`
+covers the forgery cases: wrong address, wrong key, truncated, padded, flipped
+character, and garbage.
+
+List email carries both halves of the mechanism:
+
+- a visible **Unsubscribe** link in the footer, and
+- `List-Unsubscribe` / `List-Unsubscribe-Post` headers (RFC 2369 / RFC 8058), which
+  give Gmail and Outlook their native unsubscribe control. That control is what
+  keeps recipients off the "mark as spam" button, which is what damages sending
+  reputation.
+
+The endpoint accepts a JSON post from the confirmation page, a plain form post
+(so it still works with JavaScript off — mail clients often open links in a
+stripped-down webview), and the one-click header post. A browser navigation is
+redirected to a confirmation page; a mail client gets a plain 200.
+
+Unsubscribing sets `consent_status = 'unsubscribed'` and stamps `unsubscribed_at`.
+**Any future send must filter on `consent_status = 'subscribed'`.** Re-subscribing
+is still possible through any opt-in form, which is deliberate: each of those forms
+carries its own consent text, so a later opt-in is genuine re-consent.

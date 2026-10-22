@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
+import { unsubscribeFooterHtml, unsubscribeHeaders } from "@/lib/newsletter-unsubscribe";
 
 const DEFAULT_CONSENT_TEXT =
   "Yes, sign me up for the Travelholics Cruise Life list so I can receive cruise deals, shop drops, travel tips, and Travelholics updates. I understand I can unsubscribe anytime.";
@@ -127,7 +128,7 @@ async function sendNewsletterSignupAutoReply({
       ? "You are still on the Travelholics Cruise Life list"
       : "Welcome to the Travelholics Cruise Life list";
 
-    const html = already
+    const body = already
       ? `
         <p>Hi ${name},</p>
         <p>You are already subscribed to Travelholics Cruise Life updates. We will keep sending cruise deals, shop drops, and travel tips to this email address.</p>
@@ -141,12 +142,19 @@ async function sendNewsletterSignupAutoReply({
         <p>Best,<br />Travelholics Team<br />${NEWSLETTER_CONTACT_EMAIL}<br />${NEWSLETTER_WEBSITE_URL}</p>
       `;
 
+    // This is list email, not a transactional receipt: it needs a visible way
+    // out and the headers that give Gmail and Outlook their native
+    // Unsubscribe control. Every signup form on this site promises the
+    // recipient can leave anytime; this is where that promise is kept.
+    const html = `${body}${unsubscribeFooterHtml(email)}`;
+
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: [email],
       subject,
       html,
       replyTo: TO_EMAIL,
+      headers: unsubscribeHeaders(email),
     });
 
     if (error) {

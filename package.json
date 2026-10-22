@@ -11,7 +11,8 @@
     "check:growth": "tsc lib/youtube.ts lib/youtube-catalog.ts lib/group-inquiry.ts lib/lead-attribution.ts scripts/check-growth-funnel.ts --outDir .growth-check --module commonjs --moduleResolution node --target es2022 --skipLibCheck --esModuleInterop && node .growth-check/scripts/check-growth-funnel.js",
     "check:address": "rm -rf .address-check && tsc lib/us-states.ts lib/address-validation.ts scripts/check-address-validation.ts --outDir .address-check --module commonjs --moduleResolution node --target es2022 --skipLibCheck && node .address-check/scripts/check-address-validation.js",
     "check:type-floor": "node scripts/check-type-floor.js",
-    "check:home-ux": "node scripts/check-home-ux.js"
+    "check:home-ux": "node scripts/check-home-ux.js",
+    "check:unsubscribe": "rm -rf .unsubscribe-check && tsc lib/newsletter-unsubscribe-token.ts scripts/check-unsubscribe.ts --outDir .unsubscribe-check --module commonjs --moduleResolution node --target es2022 --skipLibCheck && node .unsubscribe-check/scripts/check-unsubscribe.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.1",

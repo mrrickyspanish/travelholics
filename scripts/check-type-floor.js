@@ -27,7 +27,7 @@ try {
 
 const FLOOR = 14;
 const WIDTHS = [390, 768, 1440];
-const DEFAULT_PATHS = ['/', '/group-cruises', '/shop', '/blog', '/live', '/duck-hunt', '/cruises/caribbean'];
+const DEFAULT_PATHS = ['/', '/group-cruises', '/shop', '/blog', '/live', '/duck-hunt', '/cruises/caribbean', '/unsubscribe'];
 
 // Deliberate exceptions, matched against the element's class attribute.
 // A count badge in a 16px circle cannot hold 14px type; making it bigger
