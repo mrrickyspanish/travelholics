@@ -13,7 +13,9 @@
     "check:type-floor": "node scripts/check-type-floor.js",
     "check:home-ux": "node scripts/check-home-ux.js",
     "check:unsubscribe": "rm -rf .unsubscribe-check && tsc lib/newsletter-unsubscribe-token.ts scripts/check-unsubscribe.ts --outDir .unsubscribe-check --module commonjs --moduleResolution node --target es2022 --skipLibCheck && node .unsubscribe-check/scripts/check-unsubscribe.js",
-    "check:email-campaigns": "rm -rf .campaign-check && tsc lib/email-campaign-schedule.ts scripts/check-email-campaigns.ts --outDir .campaign-check --module commonjs --moduleResolution node --target es2022 --skipLibCheck && node .campaign-check/scripts/check-email-campaigns.js"
+    "check:email-campaigns": "rm -rf .campaign-check && tsc lib/email-campaign-schedule.ts scripts/check-email-campaigns.ts --outDir .campaign-check --module commonjs --moduleResolution node --target es2022 --skipLibCheck && node .campaign-check/scripts/check-email-campaigns.js",
+    "preview:emails": "rm -rf .preview-build && tsc lib/email-campaign-templates.ts scripts/preview-emails.ts --outDir .preview-build --module commonjs --moduleResolution node --target es2022 --skipLibCheck && node .preview-build/scripts/preview-emails.js",
+    "build:campaign-seed": "rm -rf .seed-build && tsc lib/email-campaign-templates.ts scripts/build-campaign-seed.ts --outDir .seed-build --module commonjs --moduleResolution node --target es2022 --skipLibCheck && node .seed-build/scripts/build-campaign-seed.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.1",

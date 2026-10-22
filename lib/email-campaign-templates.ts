@@ -1,5 +1,3 @@
-import { unsubscribeFooterHtml } from "@/lib/newsletter-unsubscribe";
-
 /**
  * Drip email bodies, keyed by the `template_key` on email_campaign_steps.
  *
@@ -100,19 +98,24 @@ export function templateKeys(): string[] {
 }
 
 /**
- * Builds the full HTML for one drip email. The unsubscribe footer is appended
- * here rather than left to each template, so a new template cannot ship
- * without one.
+ * Builds the full HTML for one drip email.
+ *
+ * The footer is passed in rather than imported, for two reasons: the real one
+ * needs a signing key and so lives behind `server-only`, and this module has
+ * to stay importable by `npm run preview:emails` so the owner can see exactly
+ * what will send before approving the copy. A footer is still required --
+ * the parameter is not optional -- so no drip email can be assembled without
+ * a way out.
  */
 export function renderCampaignEmail(
   templateKey: string,
   context: TemplateContext,
-  recipientEmail: string,
+  footerHtml: string,
 ): string | null {
   const template = TEMPLATES[templateKey];
   if (!template) return null;
   return `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;color:#1a2e2a;max-width:560px">
     ${template(context)}
-    ${unsubscribeFooterHtml(recipientEmail)}
+    ${footerHtml}
   </div>`;
 }

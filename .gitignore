@@ -45,3 +45,6 @@ next-env.d.ts
 .growth-check
 .unsubscribe-check
 .campaign-check
+.preview-build
+email-review
+.seed-build

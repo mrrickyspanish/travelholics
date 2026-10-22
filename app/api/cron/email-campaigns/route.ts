@@ -11,7 +11,7 @@ import {
   type SendRecord,
 } from "@/lib/email-campaign-schedule";
 import { renderCampaignEmail } from "@/lib/email-campaign-templates";
-import { unsubscribeHeaders } from "@/lib/newsletter-unsubscribe";
+import { unsubscribeFooterHtml, unsubscribeHeaders } from "@/lib/newsletter-unsubscribe";
 
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 const REPLY_TO = "news@yotravelholic.com";
@@ -201,7 +201,11 @@ export async function GET(request: Request) {
           .eq("step_id", step.id);
       }
 
-      const html = renderCampaignEmail(step.templateKey, { firstName: subscriber.first_name }, subscriber.email);
+      const html = renderCampaignEmail(
+        step.templateKey,
+        { firstName: subscriber.first_name },
+        unsubscribeFooterHtml(subscriber.email),
+      );
 
       if (!html) {
         await supabase
