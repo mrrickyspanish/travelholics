@@ -357,3 +357,51 @@ Unsubscribing sets `consent_status = 'unsubscribed'` and stamps `unsubscribed_at
 **Any future send must filter on `consent_status = 'subscribed'`.** Re-subscribing
 is still possible through any opt-in form, which is deliberate: each of those forms
 carries its own consent text, so a later opt-in is genuine re-consent.
+
+
+### Email drip campaigns
+
+Supabase is the only subscriber list. Nothing is mirrored into a hosted email
+tool, because a second copy means two answers to "has this person
+unsubscribed" — and the wrong answer mails someone who asked you to stop.
+
+`/api/cron/email-campaigns` runs hourly and does two things per active
+campaign: enrols eligible new subscribers, then sends at most one due step per
+enrollment.
+
+Four rules carry the safety of this, each covered by
+`npm run check:email-campaigns`:
+
+1. **One row per (enrollment, step), enforced by a unique constraint.** The
+   worker *claims* a send by inserting that row **before** calling Resend, so a
+   retry, an overlapping run or a second worker collides on the constraint
+   instead of sending twice.
+2. **`enroll_from` bounds enrollment.** A campaign only ever reaches
+   subscribers who joined at or after it went live. Without this, activating a
+   campaign would enrol the whole back catalogue and mail years of subscribers
+   at once — which is how a sending reputation dies in an afternoon.
+3. **Consent is re-checked immediately before each send**, not just at
+   enrollment. Anyone who unsubscribed mid-drip has their enrollment cancelled.
+4. **One step per run.** A long-overdue enrollment catches up at one email per
+   hour rather than firing the whole sequence in a minute.
+
+A send stuck at `pending` means the worker died after handing the message to
+Resend. It is deliberately **not** retried: Resend may already have delivered
+it, and a duplicate is worse than a miss. Only `failed` rows retry, up to
+`MAX_SEND_ATTEMPTS`.
+
+Campaigns ship as `status = 'draft'` and send nothing. Activating one is a
+deliberate act:
+
+```sql
+update public.email_campaigns
+   set status = 'active', enroll_from = now()
+ where slug = 'cruise-life-welcome';
+```
+
+Set `enroll_from = now()` as you activate, so the drip starts with the people
+who join next rather than everyone who ever joined.
+
+Bodies live in `lib/email-campaign-templates.ts`, keyed by `template_key`.
+`renderCampaignEmail` appends the unsubscribe footer, so no drip email can be
+assembled without one.
