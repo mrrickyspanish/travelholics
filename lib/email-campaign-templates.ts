@@ -72,6 +72,25 @@ const TEMPLATES: Record<string, (context: TemplateContext) => string> = {
   `,
 };
 
+/**
+ * The welcome series: the one definition the seed SQL, the review previews
+ * and the live send all read from, so a subject line or a delay cannot drift
+ * between what was reviewed and what goes out.
+ *
+ * `delayHours` is measured from enrollment, not from the previous email.
+ */
+export const WELCOME_SERIES = {
+  slug: "cruise-life-welcome",
+  name: "Cruise Life welcome series",
+  steps: [
+    { position: 1, delayHours: 0,   templateKey: "welcome-01-start",  subject: "Welcome to Cruise Life" },
+    { position: 2, delayHours: 48,  templateKey: "welcome-02-ship",   subject: "Big ship or small ship?" },
+    { position: 3, delayHours: 120, templateKey: "welcome-03-price",  subject: "That cruise price is not the final total" },
+    { position: 4, delayHours: 216, templateKey: "welcome-04-plan",   subject: "Want me to just tell you what to book?" },
+    { position: 5, delayHours: 336, templateKey: "welcome-05-groups", subject: "Cruising with other people? Read this first" },
+  ],
+} as const;
+
 export function hasTemplate(key: string): boolean {
   return key in TEMPLATES;
 }
