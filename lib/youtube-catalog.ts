@@ -5,6 +5,7 @@ import type { Video } from "./youtube";
  * Keep the editorial order here; a working feed puts newer uploads first.
  */
 export const CURATED_VIDEOS: Video[] = [
+  { id: "r8YbyrbIq-I", format: "long", title: "Ship or Destination? How to Choose the Right Cruise Itinerary | Cruise School Ep. 4", published: "", blurb: "A beautiful ship can't save the wrong itinerary." },
   { id: "J_AuPIpB938", format: "long", title: "Big Ship vs. Small Ship: Which Cruise Is Right for You?", published: "", blurb: "Compare the ship experience before choosing the cruise that fits your people." },
   { id: "FedmhJzYwdE", format: "long", title: "How to Choose the Right Cruise", published: "", blurb: "Start Cruise School with the decisions that shape your vacation." },
   { id: "Y4-Klol5hRU", format: "long", title: "Welcome to Cruise School with Yolanda", published: "", blurb: "Meet Yolanda and find your starting point." },

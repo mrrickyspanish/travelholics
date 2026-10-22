@@ -1,27 +1,31 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { ArrowUp } from "lucide-react";
 
 export const ScrollToTop = () => {
+  const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 600);
+    const onScroll = () => setVisible(window.scrollY > (pathname === "/" ? window.innerHeight * 1.5 : 600));
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.button
-          initial={{ opacity: 0, y: 12 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 12 }}
-          transition={{ duration: 0.25 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          transition={{ duration: reduceMotion ? 0 : 0.25 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: reduceMotion ? "instant" : "smooth" })}
           className="fixed bottom-8 right-6 z-50 hidden lg:flex h-11 w-11 items-center justify-center rounded-full bg-coral text-white shadow-lg hover:bg-coral-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2"
           aria-label="Scroll to top"
         >

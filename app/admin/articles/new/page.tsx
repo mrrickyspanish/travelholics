@@ -4,6 +4,10 @@ import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { TOPIC_CLUSTERS, AUDIENCE_SCENARIOS } from '@/lib/article-clusters'
 import type { ArticleGenerateMeta } from '@/types/article'
+import type { JSONContent } from '@tiptap/react'
+import TravelArticleEditor from '@/components/admin/travel-article-editor'
+import { contentToBlocks } from '@/lib/articles'
+import { blocksToPlainText, blocksToTipTap, tipTapToBlocks } from '@/lib/tiptap/travel-article'
 import { CoverImageUploader } from '@/components/cover-image-uploader'
 import { RotateCcw, Save, Zap } from 'lucide-react'
 
@@ -38,6 +42,7 @@ export default function NewArticlePage() {
   // Parsed output
   const [meta, setMeta] = useState<Partial<ArticleGenerateMeta>>({})
   const [articleContent, setArticleContent] = useState('')
+  const [editorDoc, setEditorDoc] = useState<JSONContent>({ type: 'doc', content: [{ type: 'paragraph' }] })
   const [complianceFlags, setComplianceFlags] = useState<string[]>([])
   const [coverImage, setCoverImage] = useState('')
   const [coverAlt, setCoverAlt] = useState('')
@@ -98,7 +103,9 @@ export default function NewArticlePage() {
     const separatorIdx = raw.indexOf('<<<CONTENT>>>')
     if (separatorIdx === -1) {
       // Fallback: treat entire output as content
-      setArticleContent(raw.trim())
+      const fallback = raw.trim()
+      setArticleContent(fallback)
+      setEditorDoc(blocksToTipTap(contentToBlocks(fallback)))
       return
     }
 
@@ -118,6 +125,7 @@ export default function NewArticlePage() {
     }
 
     setArticleContent(content)
+    setEditorDoc(blocksToTipTap(contentToBlocks(content)))
   }
 
   function countWords(text: string) {
@@ -127,13 +135,16 @@ export default function NewArticlePage() {
   async function saveDraft() {
     setSaving(true)
     try {
+      const blocks = tipTapToBlocks(editorDoc)
+      const richContent = blocksToPlainText(blocks)
       const res = await fetch('/api/articles', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: meta.title ?? 'Untitled',
           slug: meta.slug ?? `article-${Date.now()}`,
-          content: articleContent,
+          content: richContent,
+          body: blocks,
           excerpt: meta.excerpt ?? null,
           seo_title: meta.seo_title ?? null,
           seo_description: meta.seo_description ?? null,
@@ -141,7 +152,7 @@ export default function NewArticlePage() {
           keyword: meta.keyword ?? keyword ?? null,
           scenario: scenario ?? null,
           status: 'draft',
-          word_count: countWords(articleContent),
+          word_count: countWords(richContent),
           compliance_flags: complianceFlags,
           cover_image: coverImage || null,
           cover_alt: coverAlt || null,
@@ -394,16 +405,14 @@ export default function NewArticlePage() {
 
           {/* Content editor */}
           <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-medium text-gray-500">Article Content</label>
-              <span className="text-xs text-gray-400">{countWords(articleContent)} words</span>
+            <div className="flex items-center justify-between mb-2">
+              <div>
+                <label className="text-xs font-medium text-gray-500">Article Content</label>
+                <p className="mt-0.5 text-xs text-gray-400">Format the story and add inline photos or video before saving.</p>
+              </div>
+              <span className="text-xs text-gray-400">{countWords(blocksToPlainText(tipTapToBlocks(editorDoc)))} words</span>
             </div>
-            <textarea
-              rows={24}
-              value={articleContent}
-              onChange={(e) => setArticleContent(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-mono leading-relaxed resize-y focus:outline-none focus:ring-2 focus:ring-[#10755A]"
-            />
+            <TravelArticleEditor value={editorDoc} onChange={setEditorDoc} />
           </div>
 
           {/* Save */}

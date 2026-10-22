@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
       title: body.title,
       slug: body.slug,
       content: body.content,
+      body: body.body ?? [],
       excerpt: body.excerpt,
       seo_title: body.seo_title,
       seo_description: body.seo_description,
@@ -27,6 +28,7 @@ export async function POST(req: NextRequest) {
       compliance_flags: body.compliance_flags ?? [],
       cover_image: body.cover_image ?? null,
       cover_alt: body.cover_alt ?? null,
+      published: body.status === 'published',
     })
     .select('id')
     .single()

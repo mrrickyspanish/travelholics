@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: { title: "Cruise School with Yolanda", description: "Real cruise answers, useful guides, and a clear next step for your vacation.", url: "/videos", type: "website" },
 };
 
-export const revalidate = 1800;
+export const revalidate = 300;
 
 function LongCard({ video }: { video: Video }) {
   const next = videoNextStep(video.id);

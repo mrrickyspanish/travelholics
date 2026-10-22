@@ -10,7 +10,8 @@
     "check:orphans": "node scripts/check-orphans.js",
     "check:growth": "tsc lib/youtube.ts lib/youtube-catalog.ts lib/group-inquiry.ts lib/lead-attribution.ts scripts/check-growth-funnel.ts --outDir .growth-check --module commonjs --moduleResolution node --target es2022 --skipLibCheck --esModuleInterop && node .growth-check/scripts/check-growth-funnel.js",
     "check:address": "rm -rf .address-check && tsc lib/us-states.ts lib/address-validation.ts scripts/check-address-validation.ts --outDir .address-check --module commonjs --moduleResolution node --target es2022 --skipLibCheck && node .address-check/scripts/check-address-validation.js",
-    "check:type-floor": "node scripts/check-type-floor.js"
+    "check:type-floor": "node scripts/check-type-floor.js",
+    "check:home-ux": "node scripts/check-home-ux.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.1",
@@ -32,7 +33,12 @@
     "resend": "^6.12.3",
     "server-only": "^0.0.1",
     "stripe": "^22.0.2",
-    "tailwind-merge": "^2.3.0"
+    "tailwind-merge": "^2.3.0",
+    "@tiptap/extension-image": "^3.11.0",
+    "@tiptap/extension-link": "^3.11.0",
+    "@tiptap/extension-placeholder": "^3.11.0",
+    "@tiptap/react": "^3.11.0",
+    "@tiptap/starter-kit": "^3.11.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -46,6 +52,7 @@
     "@types/react-simple-maps": "^3.0.6",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "playwright": "1.64.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

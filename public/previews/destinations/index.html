@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Destination layout previews | Travelholics</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fbf7ef; color: #1a2e2a; font: 18px/1.55 system-ui, sans-serif; }
+    main { max-width: 1488px; padding: 32px 24px 64px; margin: auto; }
+    h1, h2 { color: #111753; line-height: 1.2; text-wrap: balance; }
+    h1 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 16px; }
+    h2 { font-size: 28px; margin: 0 0 12px; }
+    p { max-width: 75ch; margin: 12px 0; }
+    a { color: inherit; text-underline-offset: 4px; }
+    a:focus-visible, summary:focus-visible { outline: 3px solid #111753; outline-offset: 4px; }
+    nav { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
+    nav a { padding: 12px 20px; background: #f9ded5; font-weight: 650; }
+    section { padding-top: 32px; margin-top: 32px; border-top: 1px solid #1a2e2a33; }
+    figure { margin: 24px 0; }
+    img { display: block; width: 100%; height: auto; border: 1px solid #1a2e2a22; }
+    .phone { width: min(100%, 390px); }
+    figcaption { margin-top: 8px; font-size: 16px; }
+    summary { width: fit-content; min-height: 44px; padding: 10px 0; cursor: pointer; font-weight: 650; }
+    .note { color: #53675d; }
+    @media (max-width: 639px) { main { padding-inline: 20px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Destination layout previews</h1>
+      <p>Two ways to let the destination imagery lead. These are mockups for comparison; the homepage destination section is unchanged.</p>
+      <p class="note">Tap any image to open it at full size. Open the phone preview beneath each option to compare mobile layouts.</p>
+      <nav aria-label="Compare options"><a href="#option-a">Option A</a><a href="#option-b">Option B</a></nav>
+    </header>
+    <section id="option-a" aria-labelledby="heading-a">
+      <h2 id="heading-a">A — Three destination portraits</h2>
+      <p>Recommended: Caribbean, Alaska, and Mediterranean each get a large image and equal visual presence. On phones, visitors swipe between destination portraits.</p>
+      <figure>
+        <a href="option-a-1440.png" aria-label="Open option A desktop preview at full size"><img src="option-a-1440.png" width="1440" height="886" alt="Option A: three equally sized destination photos with destination names, short descriptions, and a separate coral invitation for group trips."></a>
+        <figcaption>Option A — desktop</figcaption>
+      </figure>
+      <details><summary>View option A on a phone</summary>
+        <figure class="phone">
+          <a href="option-a-390.png" aria-label="Open option A phone preview at full size"><img src="option-a-390.png" width="390" height="979" alt="Option A phone layout showing one large destination portrait and a glimpse of the next destination."></a>
+          <figcaption>Option A — phone</figcaption>
+        </figure>
+      </details>
+    </section>
+    <section id="option-b" aria-labelledby="heading-b">
+      <h2 id="heading-b">B — Panorama and supporting images</h2>
+      <p>A large Caribbean panorama leads, with Alaska and Mediterranean stacked alongside it. On phones, the panorama sits above the two smaller destination photos.</p>
+      <figure>
+        <a href="option-b-1440.png" aria-label="Open option B desktop preview at full size"><img src="option-b-1440.png" width="1440" height="869" alt="Option B: a large Caribbean image beside stacked Alaska and Mediterranean images, with a separate coral invitation for group trips."></a>
+        <figcaption>Option B — desktop</figcaption>
+      </figure>
+      <details><summary>View option B on a phone</summary>
+        <figure class="phone">
+          <a href="option-b-390.png" aria-label="Open option B phone preview at full size"><img src="option-b-390.png" width="390" height="1048" alt="Option B phone layout with a Caribbean panorama above smaller Alaska and Mediterranean photos."></a>
+          <figcaption>Option B — phone</figcaption>
+        </figure>
+      </details>
+    </section>
+  </main>
+</body>
+</html>

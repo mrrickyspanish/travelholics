@@ -15,10 +15,10 @@ import {
 import { CURATED_VIDEOS } from "@/lib/youtube-catalog";
 
 /** How long to cache the feed (seconds). New uploads appear within this window. */
-const FEED_REVALIDATE = 60 * 30; // 30 min
+const FEED_REVALIDATE = 60 * 5; // 5 min
 /** Classification is permanent per video, so cache probes for much longer. */
 const PROBE_REVALIDATE = 60 * 60 * 24 * 7; // 1 week
-const FETCH_TIMEOUT_MS = 4000;
+const FETCH_TIMEOUT_MS = 8000;
 
 async function fetchWithTimeout(url: string, init: RequestInit & { next?: { revalidate: number } }) {
   const controller = new AbortController();
