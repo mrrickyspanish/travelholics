@@ -4,7 +4,7 @@
  * preview:emails`) and the live send all read from.
  *
  * GENERATED from the reviewed copy in the Creative Eye Agent OS
- * (projects/travelholics/outputs/14-nurture-email-copy.md) by
+ * (projects/travelholics/email/2026-11-10-approved-copy.md) by
  * projects/travelholics/email/import-copy.py. Edit the reviewed copy and
  * re-import, so what ships is what was approved.
  *
@@ -89,7 +89,8 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "paragraphs": [
           "The first thing most people ask me is which cruise line is best.",
           "Here is what I tell them. There is no one best cruise line. There is only the cruise line that's the best fit for you.",
-          "Two people can take a cruise to the exact same Caribbean island and come home from two completely different vacations. [YOLANDA TO CONFIRM: her own example of what makes the two vacations different]",
+          "Two people can take a cruise to the exact same Caribbean island and come home from two completely different vacations. One couple does not want a lot of walking, so they take the trolley tour, see the highlights and stop for souvenirs and a drink. Another couple sees the mountain and books the excursion to climb it.",
+          "I have done both on St. Kitts. One time we took a little train ride around town. Real leisurely, no muss, no fuss. Another time we climbed Mount Misery. Same island, two totally different experiences.",
           "So start with the experience you want. What do you want your vacation to feel like?",
           "Then ask one question about every cruise line you look at: does this cruise line consistently offer the experience I said I wanted?",
           "I walk through all of this in Cruise School."
@@ -107,7 +108,8 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "preheader": "Write this down first. It makes every price easier to read.",
         "paragraphs": [
           "Before you start comparing prices, I want you to write down your top three vacation priorities.",
-          "Here is why. The fare you see advertised is usually not everything you will spend. Depending on the line and the sailing, things like gratuities, taxes and port fees, drinks, wi-fi, specialty dining and excursions can sit outside it. [YOLANDA TO CONFIRM: this list, and how she wants to say it]",
+          "Here is why. The fare you see advertised is usually not everything you will spend. Think about the excursions you want to do, a drink package if you want one, specialty dining, spa services, wi-fi and gratuities. Then think about how you get to the ship. If you are flying in, how are you getting from the airport or your hotel to the port?",
+          "Those are all extras you need to account for if you are looking at the full cost of your vacation.",
           "That is not a trick. It is just how cruise pricing is quoted. But it means two fares side by side tell you very little on their own.",
           "Your three priorities tell you a lot more. If great food is on your list, look at the dining. If you need to stay connected, look at the wi-fi. Compare the things you will actually use, not just the number in the ad."
         ],
@@ -125,7 +127,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "paragraphs": [
           "If you have been reading these and thinking, \"I would still rather someone just tell me what to book,\" that is what I do.",
           "You tell me what you want your vacation to feel like. I help you find the cruise line, the ship and the sailing that fit it.",
-          "[YOLANDA TO CONFIRM: one or two sentences on her own cruising experience, for example which lines or ships she has sailed. Her facts, no numbers unless she supplies them.]",
+          "I have been cruising for over 25 years. I have sailed Royal Caribbean, Carnival, Princess, Norwegian, Holland America and MSC, so I can tell you how they really compare.",
           "Personal planning support. No added planning fee.",
           "Tell me where your mind keeps going."
         ],
@@ -142,8 +144,8 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "preheader": "Your people. One unforgettable cruise. A rough headcount is enough to start.",
         "paragraphs": [
           "This is the last note in my welcome series.",
-          "If your cruise involves other people (a birthday, an anniversary, a reunion, a girls' trip), please do not try to run it all from a group chat.",
-          "When I plan a group, everybody sees the same trip details and books their own cabin, so you are not chasing anyone. [YOLANDA TO CONFIRM: that this is how her group bookings work today, in her words]",
+          "If your cruise involves other people (a birthday, an anniversary, a reunion, a multi-generational family trip), please do not try to run it all from a group chat.",
+          "When I plan a group, everybody sees the same trip details. Then each person chooses the cabin they want and their own extras: drink packages, specialty dining, spa services, and whether to prepay gratuities or pay as they go. Nobody has to decide for anybody else, and you are not chasing anyone.",
           "You do not need every detail to get started. A rough headcount is enough to start.",
           "Your people. One unforgettable cruise."
         ],
@@ -168,7 +170,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "preheader": "Thank you for playing the Travelholics Duck Hunt and for joining the list.",
         "paragraphs": [
           "You found the duck! Thank you for scanning it, claiming it and joining my list. Spotting a little duck on a big ship takes a good eye.",
-          "[YOLANDA TO CONFIRM: one line about the prize, in her words. No shipping date, no delivery timing.]",
+          "Your prize is an adorable souvenir magnet that represents your ticket to cruising.",
           "You have already been on board, so you know the feeling. Over the next couple of weeks I will send you a few short notes to help you plan the next one.",
           "If you want a first look, start with Cruise School. Watch before you book."
         ],
@@ -203,7 +205,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "paragraphs": [
           "You can book a cruise on your own. Plenty of people do.",
           "But if you would rather have someone in your corner, that is what I do. You tell me what you want your vacation to feel like, and I help you find the cruise line, the ship and the sailing that fit.",
-          "[YOLANDA TO CONFIRM: one or two sentences, in her words, on why people plan with her. Her own experience and approach, not results, numbers or client quotes.]",
+          "I have been cruising for over 25 years, so I have seen it all and done most of it. And I have been in the travel business for over 10 years.",
           "Personal planning support. No added planning fee.",
           "Tell me where your mind keeps going."
         ],
@@ -221,7 +223,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "paragraphs": [
           "This is the last note in this series.",
           "You found a duck on a ship full of people. Next time, what if the people were yours?",
-          "Birthdays, anniversaries, reunions, girls' trips. I plan group cruises so everybody sails together and nobody has to run it all from a group chat. [YOLANDA TO CONFIRM: which group occasions she wants to name]",
+          "Birthdays, anniversaries, reunions, multi-generational family trips. I plan group cruises so everybody sails together and nobody has to run it all from a group chat.",
           "You do not need every detail to get started. A rough headcount is enough to start.",
           "Your people. One unforgettable cruise."
         ],
@@ -249,7 +251,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "paragraphs": [
           "Thank you for grabbing one of my free packing guides. If you need it again, it is always on the guides page.",
           "Here is one tip that is not about packing at all: do not leave your pool towel outside your room. Take it back to the towel station.",
-          "[YOLANDA TO CONFIRM: the reason, in her words. Why it matters on board.]",
+          "If a towel is not returned, the cruise line can charge you for it. And anybody can pick up a towel left in the hallway, including the crew, because they keep those hallways clear.",
           "I will check in again in a few days."
         ],
         "button": {
