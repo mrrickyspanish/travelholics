@@ -89,7 +89,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "paragraphs": [
           "The first thing most people ask me is which cruise line is best.",
           "Here is what I tell them. There is no one best cruise line. There is only the cruise line that's the best fit for you.",
-          "Two people can take a cruise to the exact same Caribbean island and come home from two completely different vacations. One couple does not want a lot of walking, so they take the trolley tour, see the highlights and stop for souvenirs and a drink. Another couple sees the mountain and books the excursion to climb it.",
+          "Two couples can take a cruise to the exact same Caribbean island and come home with completely different vacations. One couple does not want a lot of walking, so they take the trolley tour, see the highlights and stop for souvenirs and a drink. Another couple sees the mountain and books the excursion to climb it.",
           "I have done both on St. Kitts. One time we took a little train ride around town. Real leisurely, no muss, no fuss. Another time we climbed Mount Misery. Same island, two totally different experiences.",
           "So start with the experience you want. What do you want your vacation to feel like?",
           "Then ask one question about every cruise line you look at: does this cruise line consistently offer the experience I said I wanted?",
@@ -110,7 +110,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
           "Before you start comparing prices, I want you to write down your top three vacation priorities.",
           "Here is why. The fare you see advertised is usually not everything you will spend. Think about the excursions you want to do, a drink package if you want one, specialty dining, spa services, wi-fi and gratuities. Then think about how you get to the ship. If you are flying in, how are you getting from the airport or your hotel to the port?",
           "Those are all extras you need to account for if you are looking at the full cost of your vacation.",
-          "That is not a trick. It is just how cruise pricing is quoted. But it means two fares side by side tell you very little on their own.",
+          "That is not a trick. Most of it is just how cruise pricing is quoted. But it means two fares side by side tell you very little on their own.",
           "Your three priorities tell you a lot more. If great food is on your list, look at the dining. If you need to stay connected, look at the wi-fi. Compare the things you will actually use, not just the number in the ad."
         ],
         "button": {
@@ -127,7 +127,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "paragraphs": [
           "If you have been reading these and thinking, \"I would still rather someone just tell me what to book,\" that is what I do.",
           "You tell me what you want your vacation to feel like. I help you find the cruise line, the ship and the sailing that fit it.",
-          "I have been cruising for over 25 years. I have sailed Royal Caribbean, Carnival, Princess, Norwegian, Holland America and MSC, so I can tell you how they really compare.",
+          "I have been cruising for over 25 years. I have sailed Royal Caribbean, Carnival, Princess, Norwegian, Holland America and MSC.",
           "Personal planning support. No added planning fee.",
           "Tell me where your mind keeps going."
         ],
@@ -144,8 +144,8 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "preheader": "Your people. One unforgettable cruise. A rough headcount is enough to start.",
         "paragraphs": [
           "This is the last note in my welcome series.",
-          "If your cruise involves other people (a birthday, an anniversary, a reunion, a multi-generational family trip), please do not try to run it all from a group chat.",
-          "When I plan a group, everybody sees the same trip details. Then each person chooses the cabin they want and their own extras: drink packages, specialty dining, spa services, and whether to prepay gratuities or pay as they go. Nobody has to decide for anybody else, and you are not chasing anyone.",
+          "If your cruise involves other people (a birthday, an anniversary, a reunion, a multi-generational trip), please do not try to run it all from a group chat.",
+          "When I plan a group, everybody sees the same trip details. Then each person chooses the cabin they want and their own extras: drink packages, specialty dining, spa services, and whether to prepay gratuities or pay as they go. Everyone can decide that on their own.",
           "You do not need every detail to get started. A rough headcount is enough to start.",
           "Your people. One unforgettable cruise."
         ],
@@ -205,7 +205,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "paragraphs": [
           "You can book a cruise on your own. Plenty of people do.",
           "But if you would rather have someone in your corner, that is what I do. You tell me what you want your vacation to feel like, and I help you find the cruise line, the ship and the sailing that fit.",
-          "I have been cruising for over 25 years, so I have seen it all and done most of it. And I have been in the travel business for over 10 years.",
+          "I have been cruising for over 25 years, so I have seen it all and done most of it. And I have been in the business for over 10 years.",
           "Personal planning support. No added planning fee.",
           "Tell me where your mind keeps going."
         ],
@@ -223,7 +223,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "paragraphs": [
           "This is the last note in this series.",
           "You found a duck on a ship full of people. Next time, what if the people were yours?",
-          "Birthdays, anniversaries, reunions, multi-generational family trips. I plan group cruises so everybody sails together and nobody has to run it all from a group chat.",
+          "Birthdays, anniversaries, reunions, multi-generational trips. I plan group cruises so everybody sails together and nobody has to run it all from a group chat.",
           "You do not need every detail to get started. A rough headcount is enough to start.",
           "Your people. One unforgettable cruise."
         ],
@@ -251,7 +251,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         "paragraphs": [
           "Thank you for grabbing one of my free packing guides. If you need it again, it is always on the guides page.",
           "Here is one tip that is not about packing at all: do not leave your pool towel outside your room. Take it back to the towel station.",
-          "If a towel is not returned, the cruise line can charge you for it. And anybody can pick up a towel left in the hallway, including the crew, because they keep those hallways clear.",
+          "If a towel is not returned, the cruise line can charge you for it. And anybody can pick up a towel left in the hallway, including the crew, because they keep those hallways clean.",
           "I will check in again in a few days."
         ],
         "button": {
