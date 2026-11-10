@@ -131,7 +131,7 @@ export const CAMPAIGNS: CampaignDefinition[] = [
         ],
         "button": {
           "label": "Plan my cruise",
-          "path": "/#contact"
+          "path": "/cruise-interest"
         }
       },
       {
@@ -170,11 +170,11 @@ export const CAMPAIGNS: CampaignDefinition[] = [
           "You found the duck! Thank you for scanning it, claiming it and joining my list. Spotting a little duck on a big ship takes a good eye.",
           "[YOLANDA TO CONFIRM: one line about the prize, in her words. No shipping date, no delivery timing.]",
           "You have already been on board, so you know the feeling. Over the next couple of weeks I will send you a few short notes to help you plan the next one.",
-          "And if you want a little Travelholics at home too, the shop is open."
+          "If you want a first look, start with Cruise School. Watch before you book."
         ],
         "button": {
-          "label": "See the Travelholics shop",
-          "path": "/shop"
+          "label": "Start with Cruise School",
+          "path": "/videos"
         }
       },
       {
