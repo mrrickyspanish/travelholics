@@ -37,7 +37,12 @@ export function isMailable(subscriber: SubscriberState): boolean {
   return subscriber.consentStatus === "subscribed";
 }
 
-export function meetsTargeting(subscriber: SubscriberState, requiredInterest: string | null): boolean {
+export function meetsTargeting(
+  subscriber: SubscriberState,
+  requiredInterest: string | null,
+  excludeInterests: readonly string[] = [],
+): boolean {
+  if (excludeInterests.some((interest) => subscriber.interests.includes(interest))) return false;
   if (!requiredInterest) return true;
   return subscriber.interests.includes(requiredInterest);
 }
@@ -53,6 +58,7 @@ export function shouldEnroll({
   campaignStatus,
   enrollFrom,
   requiredInterest,
+  excludeInterests = [],
   subscriber,
   subscriberCreatedAt,
   alreadyEnrolled,
@@ -60,6 +66,7 @@ export function shouldEnroll({
   campaignStatus: "draft" | "active" | "paused";
   enrollFrom: Date;
   requiredInterest: string | null;
+  excludeInterests?: readonly string[];
   subscriber: SubscriberState;
   subscriberCreatedAt: Date;
   alreadyEnrolled: boolean;
@@ -67,7 +74,7 @@ export function shouldEnroll({
   if (campaignStatus !== "active") return false;
   if (alreadyEnrolled) return false;
   if (!isMailable(subscriber)) return false;
-  if (!meetsTargeting(subscriber, requiredInterest)) return false;
+  if (!meetsTargeting(subscriber, requiredInterest, excludeInterests)) return false;
   return subscriberCreatedAt.getTime() >= enrollFrom.getTime();
 }
 

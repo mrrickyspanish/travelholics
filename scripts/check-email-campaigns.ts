@@ -8,6 +8,7 @@ import {
   type CampaignStep,
   type SendRecord,
 } from "../lib/email-campaign-schedule";
+import { ALLOWED_PATHS, CAMPAIGNS } from "../lib/email-campaign-copy";
 
 let failures = 0;
 function check(label: string, actual: unknown, expected: unknown) {
@@ -36,6 +37,9 @@ check("pending is not mailable", isMailable({ consentStatus: "pending", interest
 check("no requirement matches everyone", meetsTargeting({ consentStatus: "subscribed", interests: [] }, null), true);
 check("matching interest passes", meetsTargeting({ consentStatus: "subscribed", interests: ["guides"] }, "guides"), true);
 check("missing interest fails", meetsTargeting({ consentStatus: "subscribed", interests: ["shop_deals"] }, "guides"), false);
+check("excluded interest blocks even when required matches", meetsTargeting({ consentStatus: "subscribed", interests: ["newsletter", "duck_hunt"] }, "newsletter", ["duck_hunt", "guides"]), false);
+check("exclusion ignored when the subscriber lacks it", meetsTargeting({ consentStatus: "subscribed", interests: ["newsletter"] }, "newsletter", ["duck_hunt", "guides"]), true);
+check("exclusion with no requirement", meetsTargeting({ consentStatus: "subscribed", interests: ["duck_hunt"] }, null, ["duck_hunt"]), false);
 
 // --- enrollment -----------------------------------------------------------
 const enrollBase = {
@@ -47,6 +51,7 @@ const enrollBase = {
   alreadyEnrolled: false,
 };
 check("enrols a new subscriber", shouldEnroll(enrollBase), true);
+check("never enrols a subscriber carrying the excluded interest", shouldEnroll({ ...enrollBase, excludeInterests: ["duck_hunt"], subscriber: { consentStatus: "subscribed", interests: ["newsletter", "duck_hunt"] } }), false);
 check("draft campaign enrols nobody", shouldEnroll({ ...enrollBase, campaignStatus: "draft" }), false);
 check("paused campaign enrols nobody", shouldEnroll({ ...enrollBase, campaignStatus: "paused" }), false);
 check("never enrols twice", shouldEnroll({ ...enrollBase, alreadyEnrolled: true }), false);
@@ -107,9 +112,39 @@ check("a pending row does not count as complete", isComplete(steps, [...allSent.
 check("no steps is not complete", isComplete([], []), false);
 check("nothing is due once complete", nextDueStep({ enrollment: active, steps, sends: allSent, now: at(1000) }), null);
 
+// --- copy rules ------------------------------------------------------------
+// The copy is reviewed by humans; these catch what a reviewer can miss.
+const seenKeys = new Set<string>();
+const pendingYolanda: string[] = [];
+const seenSlugs = new Set<string>();
+for (const campaign of CAMPAIGNS) {
+  check(`${campaign.slug}: unique slug`, seenSlugs.has(campaign.slug), false);
+  seenSlugs.add(campaign.slug);
+  check(`${campaign.slug}: has steps`, campaign.steps.length > 0, true);
+  check(`${campaign.slug}: does not require and exclude the same interest`, campaign.requiredInterest !== null && campaign.excludeInterests.includes(campaign.requiredInterest), false);
+  campaign.steps.forEach((step, i) => {
+    const id = `${campaign.slug} #${step.position}`;
+    check(`${id}: positions run 1..n`, step.position, i + 1);
+    if (i > 0) check(`${id}: delays increase`, step.delayHours > campaign.steps[i - 1].delayHours, true);
+    check(`${id}: unique template key`, seenKeys.has(step.templateKey), false);
+    seenKeys.add(step.templateKey);
+    const text = [step.subject, step.preheader, step.button.label, ...step.paragraphs].join("\n");
+    check(`${id}: no em dashes`, /\u2014|&mdash;/.test(text), false);
+    if (/YOLANDA TO CONFIRM/.test(text)) pendingYolanda.push(id);
+    check(`${id}: subject present`, step.subject.trim().length > 0, true);
+    check(`${id}: preview text under 90 characters`, step.preheader.length > 0 && step.preheader.length < 90, true);
+    check(`${id}: has body`, step.paragraphs.length > 0, true);
+    check(`${id}: button points at a live page`, (ALLOWED_PATHS as readonly string[]).includes(step.button.path), true);
+  });
+}
+
+if (pendingYolanda.length) {
+  console.warn(`! ${pendingYolanda.length} email(s) still have YOLANDA TO CONFIRM lines (the seed refuses to build until resolved): ${pendingYolanda.join(", ")}`);
+}
+
 if (failures > 0) {
   console.error(`\n✗ email campaign checks failed: ${failures}`);
   process.exit(1);
 }
 
-console.log("✓ email campaigns clean — suppression, back-catalogue guard, one-step-per-run pacing, and no-resend-on-pending all hold");
+console.log(`✓ email campaigns clean: suppression, exclusion, back-catalogue guard, one-step-per-run pacing, no resend on pending, and copy rules for ${CAMPAIGNS.length} campaigns`);

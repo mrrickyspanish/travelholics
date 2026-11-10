@@ -28,6 +28,7 @@ type CampaignRow = {
   status: "draft" | "active" | "paused";
   enroll_from: string;
   required_interest: string | null;
+  exclude_interests?: string[] | null;
 };
 
 export async function GET(request: Request) {
@@ -46,7 +47,7 @@ export async function GET(request: Request) {
 
   const { data: campaigns } = await supabase
     .from("email_campaigns")
-    .select("id, slug, status, enroll_from, required_interest")
+    .select("id, slug, status, enroll_from, required_interest, exclude_interests")
     .eq("status", "active");
 
   if (!campaigns?.length) {
@@ -93,6 +94,7 @@ export async function GET(request: Request) {
           campaignStatus: campaign.status,
           enrollFrom: new Date(campaign.enroll_from),
           requiredInterest: campaign.required_interest,
+          excludeInterests: campaign.exclude_interests ?? [],
           subscriber: {
             consentStatus: candidate.consent_status as "subscribed",
             interests: (candidate.interests as string[]) || [],
